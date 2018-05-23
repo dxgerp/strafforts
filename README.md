@@ -70,7 +70,8 @@ Development guide can be found [here](docs/development-guide.md) if needed.
 
 ## License
 
-Strafforts is a project developed and maintained by [Yi Zeng][yizeng.me], licensed under [MIT License](LICENSE).
+Strafforts is a project developed and maintained by [Yi Zeng][yizeng.me],
+licensed under [GNU Affero General Public License v3.0](LICENSE).
 
 [GitHub Tags]: https://github.com/yizeng/strafforts/tags
 [Strafforts Travis]: https://travis-ci.org/yizeng/strafforts
