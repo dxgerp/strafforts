@@ -6,7 +6,6 @@
 [![Travis](https://img.shields.io/travis/yizeng/strafforts/master.svg?style=flat-square)][Strafforts Travis]
 [![Codecov](https://img.shields.io/codecov/c/github/yizeng/strafforts/master.svg?style=flat-square)][Strafforts Codecov]
 [![Code Climate](https://img.shields.io/codeclimate/maintainability/yizeng/strafforts.svg?style=flat-square)][Strafforts Code Climate]
-[![Gemnasium](https://img.shields.io/gemnasium/yizeng/strafforts.svg?style=flat-square)][Strafforts Gemnasium]
 
 ## An Analytics App for Strava Best Efforts, PBs/PRs and Races
 
@@ -77,7 +76,6 @@ licensed under [GNU Affero General Public License v3.0](LICENSE).
 [Strafforts Travis]: https://travis-ci.org/yizeng/strafforts
 [Strafforts Codecov]: https://codecov.io/gh/yizeng/strafforts
 [Strafforts Code Climate]: https://codeclimate.com/github/yizeng/strafforts
-[Strafforts Gemnasium]: https://gemnasium.com/yizeng/strafforts
 [Strava API]: https://strava.github.io/api/
 [Strava Support Best Efforts]: https://support.strava.com/hc/en-us/articles/216917127-Estimated-Best-Efforts-for-Running
 [Side by side Best Efforts Image]: https://support.strava.com/attachments/token/B2NpmmMYGEVEzCJn7ZjoMFtsk/?name=Side+by+Side-+Best+Effort.png
