@@ -64,6 +64,15 @@ class AuthController < ApplicationController
       athlete = ::Creators::AthleteCreator.create_or_update(access_token, result['athlete'], false)
       ::Creators::HeartRateZonesCreator.create_or_update(result['athlete']['id']) # Create default heart rate zones.
 
+      if ENV['ENABLE_EARLY_BIRDS_PRO_ON_LOGIN']
+        # Automatically apply 'Early Birds PRO' Plan on login for everyone for now.
+        begin
+          ::Creators::SubscriptionCreator.create('Early Birds PRO', athlete.id)
+        rescue StandardError => e
+          Rails.logger.error("Automatically applying Early Birds PRO failed for athlete '#{athlete.id}'. #{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}") # rubocop:disable LineLength
+        end
+      end
+
       # Subsribe or update to mailing list.
       SubscribeToMailingListJob.perform_later(athlete)
 
