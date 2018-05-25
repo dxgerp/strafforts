@@ -1,9 +1,8 @@
 import { AppHelpers } from '../helpers/appHelpers';
 import { ChartCreator } from '../helpers/chartCreators';
-import { ChartType } from '../helpers/chartHelper';
 import { HtmlHelpers } from '../helpers/htmlHelpers';
+import NotFoundView from './404NotFound';
 import BaseView from './baseView';
-import NavigationSidebar from './navigationSidebar';
 
 export default class BestEffortsByDistanceView extends BaseView {
     private distance: string;
@@ -108,6 +107,11 @@ export default class BestEffortsByDistanceView extends BaseView {
                 });
                 chartCreator.createWorkoutTypeChart('workout-type-chart');
                 chartCreator.createGearCountChart('gear-count-chart');
+            },
+            error: (xhr, ajaxOptions, thrownError) => {
+                if (xhr.status === 404) {
+                    new NotFoundView().load();
+                }
             },
         });
     }

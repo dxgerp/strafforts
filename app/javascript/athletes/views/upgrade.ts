@@ -10,7 +10,9 @@ export default class UpgradeView extends BaseView {
         this.createView();
     }
 
-    protected createViewTemplate(): void { }
+    protected createViewTemplate(): void {
+        // No need to create a template.
+    }
 
     protected createView(): void {
         const content = `

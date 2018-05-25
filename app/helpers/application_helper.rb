@@ -7,6 +7,14 @@ module ApplicationHelper
     RACES = 'races'.freeze
   end
 
+  class Message
+    ATHLETE_NOT_FOUND = 'The requested athlete could not be found.'
+    ATHLETE_NOT_ACCESSIBLE = 'The requested athlete could not be accessed without logged in.'
+    DISTANCE_NOT_FOUND = 'The requested distance could not be found.'
+    PRO_ACCOUNTS_ONLY = 'This feature is only available for accounts with PRO subscriptions.'  
+    YEAR_NOT_FOUND = 'The requested year could not be found.'
+  end
+
   class Helper
     MAX_DISTANCES_TO_SHOW = 4
     MAX_ITEM_ALLOWED_PER_DISTANCE = 5

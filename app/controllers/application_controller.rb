@@ -27,7 +27,16 @@ class ApplicationController < ActionController::Base
     '&approval_prompt=auto&scope=view_private'
   end
 
-  def self.get_meta(athlete_id) # rubocop:disable CyclomaticComplexity, MethodLength
+  def self.get_meta(athlete_id) # rubocop:disable MethodLength
+    athlete = Athlete.find_by(id: athlete_id)
+    return {} if athlete.nil?
+
+    athlete = AthleteDecorator.decorate(athlete)
+    athlete_info = {
+      has_pro_subscription: athlete.pro_subscription?,
+      pro_subscription_expires_at: athlete.pro_subscription_expires_at
+    }
+
     best_efforts_meta = []
     ApplicationHelper::Helper.all_best_effort_types.each do |item|
       model = BestEffortType.find_by_name(item[:name])
@@ -83,6 +92,7 @@ class ApplicationController < ActionController::Base
     end
 
     {
+      athlete_info: athlete_info,
       best_efforts: best_efforts_meta,
       personal_bests: personal_bests_meta,
       races_by_distance: races_by_distance_meta,
@@ -103,15 +113,5 @@ class ApplicationController < ActionController::Base
   def self.raise_athlete_not_accessible_error(id)
     error_message = "Could not access athlete '#{id}'."
     raise ActionController::RoutingError, error_message
-  end
-
-  def self.raise_item_not_found_error(item_type, item_name)
-    error_message = "Could not find requested #{item_type} '#{item_name}'."
-    raise ActionController::BadRequest, error_message
-  end
-
-  def self.raise_user_not_current_error
-    error_message = 'Could not update a user that is not the current user.'
-    raise ActionController::BadRequest, error_message
   end
 end

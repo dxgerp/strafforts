@@ -1,9 +1,10 @@
 import { AppHelpers } from '../helpers/appHelpers';
 import { ChartCreator } from '../helpers/chartCreators';
-import { ChartType } from '../helpers/chartHelper';
 import { HtmlHelpers } from '../helpers/htmlHelpers';
+import NotFoundView from './404NotFound';
 import BaseView from './baseView';
 import NavigationSidebar from './navigationSidebar';
+import UpgradeView from './upgrade';
 
 export default class PersonalBestsByDistanceView extends BaseView {
 
@@ -132,6 +133,13 @@ export default class PersonalBestsByDistanceView extends BaseView {
                 chartCreator.createWorkoutTypeChart('workout-type-chart');
                 chartCreator.createHeartRatesChart('heart-rates-chart');
                 chartCreator.createAverageHrZonesChart('average-hr-zones-chart');
+            },
+            error: (xhr, ajaxOptions, thrownError) => {
+                if (xhr.status === 403) {
+                    new UpgradeView().load();
+                } else if (xhr.status === 404) {
+                    new NotFoundView().load();
+                }
             },
         });
     }

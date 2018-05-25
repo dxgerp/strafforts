@@ -1,9 +1,11 @@
 import { AppHelpers } from '../helpers/appHelpers';
 import { ChartCreator } from '../helpers/chartCreators';
-import { ChartHelpers, ChartType } from '../helpers/chartHelper';
+import { ChartHelpers } from '../helpers/chartHelper';
 import { HtmlHelpers } from '../helpers/htmlHelpers';
+import NotFoundView from './404NotFound';
 import BaseView from './baseView';
 import NavigationSidebar from './navigationSidebar';
+import UpgradeView from './upgrade';
 
 export default class RacesByDistanceView extends BaseView {
 
@@ -141,6 +143,13 @@ export default class RacesByDistanceView extends BaseView {
                 chartCreator.createHeartRatesChart('heart-rates-chart');
                 chartCreator.createAverageHrZonesChart('average-hr-zones-chart');
                 chartCreator.createGearMileageChart('gear-mileage-chart');
+            },
+            error: (xhr, ajaxOptions, thrownError) => {
+                if (xhr.status === 403) {
+                    new UpgradeView().load();
+                } else if (xhr.status === 404) {
+                    new NotFoundView().load();
+                }
             },
         });
     }

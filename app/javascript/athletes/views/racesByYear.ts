@@ -1,8 +1,10 @@
 import { AppHelpers } from '../helpers/appHelpers';
 import { ChartCreator } from '../helpers/chartCreators';
 import { HtmlHelpers } from '../helpers/htmlHelpers';
+import NotFoundView from './404NotFound';
 import BaseView from './baseView';
 import NavigationSidebar from './navigationSidebar';
+import UpgradeView from './upgrade';
 
 export default class RacesByYearView extends BaseView {
 
@@ -132,6 +134,13 @@ export default class RacesByYearView extends BaseView {
                 chartCreator.createAverageHrZonesChart('average-hr-zones-chart');
                 chartCreator.createGearCountChart('gear-count-chart');
                 chartCreator.createGearMileageChart('gear-mileage-chart');
+            },
+            error: (xhr, ajaxOptions, thrownError) => {
+                if (xhr.status === 403) {
+                    new UpgradeView().load();
+                } else if (xhr.status === 404) {
+                    new NotFoundView().load();
+                }
             },
         });
     }
