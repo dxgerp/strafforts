@@ -15,12 +15,7 @@ export default class FaqView extends BaseView {
         const mainContent = $('#main-content');
         mainContent.empty(); // Empty main content.
 
-        const showLoadingIcon = true;
-        const content = `
-            <div class="row pane-faq">
-            ${HtmlHelpers.getLoadingIcon()}
-            </div>
-        `;
+        const content = `<div class="row pane-faq">${HtmlHelpers.getLoadingIcon()}</div>`;
         mainContent.append(content).hide().fadeIn();
     }
 
