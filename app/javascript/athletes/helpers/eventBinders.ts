@@ -9,13 +9,7 @@ export namespace EventBinders {
 
     export function bindAll() {
         const eventBinders = () => {
-            // Enable Bootstrap tooltip.
-            ($('[data-toggle="tooltip"]') as any).tooltip({
-                trigger : 'hover',
-            });
-            $('[data-toggle="tooltip"]').on('click', (event) => {
-                ($(event.currentTarget) as any).tooltip('hide');
-            });
+            AppHelpers.enableTooltips();
 
             // Disable double clicking for logo and navigation items.
             const selectors = '.main-header .logo, a[id^="personal-bests-for-"], a[id^="races-for-"]';

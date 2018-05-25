@@ -21,6 +21,16 @@ export namespace AppHelpers {
         return getBaseUrl(true);
     }
 
+    export function enableTooltips() {
+        // Enable Bootstrap tooltip.
+        ($('[data-toggle="tooltip"]') as any).tooltip({
+            trigger : 'hover',
+        });
+        $('[data-toggle="tooltip"]').on('click', (event) => {
+            ($(event.currentTarget) as any).tooltip('hide');
+        });
+    }
+
     export function formatDistanceForUrl(distance: string) {
         return distance.trim().replace(/\//g, '_').replace(/\s/g, '-').toLowerCase();
     }
