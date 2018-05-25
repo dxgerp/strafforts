@@ -38,6 +38,8 @@
             <span class="pull-right"><%= @athlete.pro_subscription_expires_at %></span>
           </label>
         </div>
+      <% else %>
+        <a href="?view=upgrade" class="btn btn-block btn-flat btn-danger">Upgrade</a>
       <% end %>
 
       <%= form_tag({controller: 'athletes', action: 'save_profile'}, class: 'form-save-profile') do %>

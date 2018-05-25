@@ -3,4 +3,6 @@ export enum ViewType {
     PersonalBests = 'personal-bests',
     Races = 'races',
     Timeline = 'timeline',
+    Faq = 'faq',
+    Upgrade = 'upgrade',
 }
