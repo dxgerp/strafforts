@@ -7,11 +7,11 @@
 [![Codecov](https://img.shields.io/codecov/c/github/yizeng/strafforts/master.svg?style=flat-square)][Strafforts Codecov]
 [![Code Climate](https://img.shields.io/codeclimate/maintainability/yizeng/strafforts.svg?style=flat-square)][Strafforts Code Climate]
 
-## An Analytics App for Strava Best Efforts, PBs/PRs and Races
+## An Analytics App for Your Strava Running Best Efforts, PBs/PRs and Races
 
 Strafforts is a web app that calls [Strava API][Strava API]
-to fetch athletes' best efforts, [personal bests][Strava Support Best Efforts] and [races][Use Run Type Tags]
-and visualize them in forms of data tables, line charts and pie charts,
+to fetch athletes' running best efforts, [personal bests][Strava Support Best Efforts] and [races][Use Run Type Tags]
+and visualize them in forms of data tables, line charts, pie charts etc.,
 in such way athletes can perform some analysis like half marathon PB progression,
 fastest shoes used for a 10K race, how often 5K PB gets set, etc.
 
@@ -70,7 +70,14 @@ Development guide can be found [here](docs/development-guide.md) if needed.
 ## License
 
 Strafforts is a project developed and maintained by [Yi Zeng][yizeng.me],
-licensed under [GNU Affero General Public License v3.0](LICENSE).
+licensed under [GNU Affero General Public License v3.0](LICENSE),
+which means if you ever want to spin up your own fork or re-use any of the Strafforts components,
+your app must be open source and following the same license.
+
+    Strafforts is licensed under the
+
+    GNU Affero General Public License v3.0
+    Permissions of this strongest copyleft license are conditioned on making available complete source code of licensed works and modifications, which include larger works using a licensed work, under the same license. Copyright and license notices must be preserved. Contributors provide an express grant of patent rights. When a modified version is used to provide a service over a network, the complete source code of the modified version must be made available.
 
 [GitHub Tags]: https://github.com/yizeng/strafforts/tags
 [Strafforts Travis]: https://travis-ci.org/yizeng/strafforts

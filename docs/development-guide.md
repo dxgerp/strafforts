@@ -108,15 +108,7 @@ but configurations in `config/database.yml` and `Gemfile` need to be updated acc
 
 1. Fetch data manually if needed
 
-    Foreman's worker process should fetch all best efforts once Strafforts has connected to Strava. Alternatively, the same can be achieved by the following rake tasks defined in `/lib/tasks/fetch.rake`.
-
-       bundle exec rails fetch:all                                # Fetch all data for all athletes
-       bundle exec rails fetch:best_efforts MODE=[all/latest]     # Fetch best efforts for all athletes
-       bundle exec rails fetch:latest                             # Fetch the latest data for all athletes
-       bundle exec rails fetch:races MODE=[all/latest]            # Fetch races for all athletes
-
-       # Fetch data for athletes in the given comma separated email/id list
-       bundle exec rails athlete:fetch MODE=[all/latest] ID=[Comma Separated list] 
+    Foreman's worker process should fetch all best efforts once Strafforts has connected to Strava. Alternatively, the same can be achieved by the following rake tasks defined in `/lib/tasks/fetch.rake` and `/lib/tasks/athlete.rake`.
 
 1. Run tests
 
@@ -124,15 +116,15 @@ but configurations in `config/database.yml` and `Gemfile` need to be updated acc
 
       - Make sure testing DB has been created
 
-            RAILS_ENV=test bundle exec rails db:create
+            RAILS_ENV=test bundle exec bin/rails db:create
 
       - Run unit tests.
 
-            bundle exec rails test
+            bundle exec bin/rails test
 
       - Run Rails system tests.
 
-            bundle exec rails test:system
+            bundle exec bin/rails test:system
 
       - Alternatively, use `yarn test:all` to run both sets of tests.
 
@@ -162,7 +154,7 @@ but configurations in `config/database.yml` and `Gemfile` need to be updated acc
 
 1. Setup Heroku Scheduler
 
-    In Heroku's Add-ons page, setup the scheduler with `bundle exec rails fetch:latest` command
+    In Heroku's Add-ons page, setup the scheduler with `bundle exec bin/rails fetch:latest` command
     to tell it to fetch the latest data from Strava API periodically.
     Note that Strava API application has a rate limit of 600 requests every 15 minutes, 30000 daily,
     please set the scheduler to run on a reasonable interval.
