@@ -23,7 +23,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   SOCIAL_SHARING_BUTTONS = %w[Facebook Vkontakte Twitter LinkedIn Email WhatsApp Telegram More].freeze
 
-  FAQ_CATEGORIES = ['Account', 'Support', 'Personal Bests', 'Races', 'Miscellaneous'].freeze
+  FAQ_CATEGORIES = ['Account', 'Best Efforts', 'Personal Bests', 'Races', 'Miscellaneous', 'Support'].freeze
 
   MAJOR_DISTANCES = [
     'Marathon', 'Half Marathon', '10k', '5k'
