@@ -26,7 +26,7 @@ namespace :athlete do
   end
 
   desc 'Delete all data assiociated with athletes in the given comma separated email/id list.'
-  # Usage: bundle exec bin/rails athlete:destroy EMAIL=[Comma Separated list] ID=[Comma Separated list] DRY_RUN=[true/false]
+  # Usage: bundle exec bin/rails athlete:destroy EMAIL=[Comma Separated list] ID=[Comma Separated list] DRY_RUN=[true/false] # rubocop:disable LineLength
   # Only to destroy when DRY_RUN is explicitly set to false.
   task destroy: :environment do
     counter = 0
