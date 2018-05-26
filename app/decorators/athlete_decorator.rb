@@ -28,14 +28,14 @@ class AthleteDecorator < Draper::Decorator
 
   def pro_subscription_expires_at
     if pro_subscription?
-      final_expiration_date = DateTime.new(1970, 1, 1) # Initialize to a past date.
+      currently_valid_to = Time.now.utc # Initialize to now, so it can be compared.
       object.subscriptions.each do |subscription|
         expires_at = subscription.expires_at
-        return 'N/A' if expires_at.blank? # Lifetime PRO has no expiration date.
+        return 'Indefinite' if expires_at.blank? # Lifetime PRO has no expiration date.
 
-        final_expiration_date = expires_at if expires_at > Time.now.utc && expires_at > final_expiration_date # rubocop:disable LineLength
+        currently_valid_to = expires_at if expires_at > currently_valid_to
       end
-      return final_expiration_date.strftime('%Y/%m/%d')
+      return currently_valid_to.strftime('%Y/%m/%d')
     end
     nil
   end

@@ -44,11 +44,19 @@ class MailChimpApiWrapper
   private
 
   def create_merge_fields(athlete)
+    athlete = AthleteDecorator.decorate(athlete)
+    pro_expires_at = athlete.pro_subscription_expires_at
+    pro_expiration_date = '1970/01/01' # Default to Unix start time.
+    unless pro_expires_at.blank?
+      pro_expiration_date = 'Indefinite'.casecmp(pro_expires_at).zero? ? '2999/12/31' : pro_expires_at
+    end
+
     {
       ATHLETE_ID: athlete.id.to_s,
       JOIN_DATE: athlete.created_at.strftime('%Y/%m/%d'),
       FNAME: athlete.athlete_info.firstname,
       LNAME: athlete.athlete_info.lastname,
+      PRO_EXPIRE: pro_expiration_date,
       LAST_LOGIN: Time.now.utc.to_date.strftime('%Y/%m/%d'),
       URL: "#{Settings.app.production_url}/athletes/#{athlete.id}",
       STRAVA_URL: "#{Settings.strava.athletes_base_url}/#{athlete.id}"

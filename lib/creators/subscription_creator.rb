@@ -1,24 +1,31 @@
 module Creators
   class SubscriptionCreator
-    def self.create(subscription_plan_name, athlete_id)
+    def self.create(subscription_plan_name, athlete_id) # rubocop:disable CyclomaticComplexity, PerceivedComplexity, MethodLength, LineLength
       subscription_plan = SubscriptionPlan.find_by(name: subscription_plan_name)
       raise "Subscription plan '#{subscription_plan_name}' cannot be found." if subscription_plan.blank?
 
-      # Expire all current subscriptions first.
+      # Find out what date it's currently valid to.
+      is_currently_indefinite = false
+      currently_valid_to = Time.now.utc # Initialize to now, so it can be compared.
       current_subscriptions = Subscription.where(athlete_id: athlete_id)
       current_subscriptions.each do |current_subscription|
         expires_at = current_subscription.expires_at
-        current_subscription.expires_at = Time.now.utc if expires_at.nil? || expires_at > Time.now.utc
-        current_subscription.save!
+        if expires_at.nil?
+          is_currently_indefinite = true
+          break
+        elsif expires_at > currently_valid_to
+          currently_valid_to = expires_at
+        end
       end
-  
+
+      raise 'The athlete is already on Lifetime PRO plan.' if is_currently_indefinite
+
       # Create a new subscription.
-      plan_duration = subscription_plan.duration
       subscription = Subscription.new
       subscription.athlete_id = athlete_id
       subscription.subscription_plan_id = subscription_plan.id
-      subscription.starts_at = Time.now.utc
-      subscription.expires_at = plan_duration.blank? ? nil : Time.now.utc + plan_duration.days # It's Lifetime PRO when expires_at is nil.
+      subscription.starts_at = currently_valid_to
+      subscription.expires_at = currently_valid_to + subscription_plan.duration.days
       subscription.save!
     end
   end

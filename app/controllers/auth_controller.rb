@@ -67,7 +67,10 @@ class AuthController < ApplicationController
       if ENV['ENABLE_EARLY_BIRDS_PRO_ON_LOGIN']
         # Automatically apply 'Early Birds PRO' Plan on login for everyone for now.
         begin
-          ::Creators::SubscriptionCreator.create('Early Birds PRO', athlete.id)
+          athlete = AthleteDecorator.decorate(athlete)
+          unless athlete.pro_subscription?
+            ::Creators::SubscriptionCreator.create('Early Birds PRO', athlete.id)
+          end
         rescue StandardError => e
           Rails.logger.error("Automatically applying Early Birds PRO failed for athlete '#{athlete.id}'. #{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}") # rubocop:disable LineLength
         end
