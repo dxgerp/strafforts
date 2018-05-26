@@ -15,7 +15,7 @@ export default class FaqView extends BaseView {
         const mainContent = $('#main-content');
         mainContent.empty(); // Empty main content.
 
-        const content = `<div class="row pane-faq">${HtmlHelpers.getLoadingIcon()}</div>`;
+        const content = `<div class="pane-faq">${HtmlHelpers.getLoadingIcon()}</div>`;
         mainContent.append(content).hide().fadeIn();
     }
 
@@ -42,43 +42,55 @@ export default class FaqView extends BaseView {
                 const pane = $('#main-content .pane-faq');
                 pane.empty();
 
-                let accordions = ``;
-                categories.forEach((category: string) => {
-                    let accordionContent = '';
-                    faqs.forEach((faq: object, index: number) => {
+                let tabHeaders = '';
+                let tabContent = '';
+                categories.forEach((category: string, index: number) => {
+                    tabHeaders += `
+                        <li ${index === 0 ? 'class="active"' : ''}>
+                            <a href="#${category}" data-toggle="tab">
+                                ${Helpers.toTitleCase(category.replace(/-/g, ' '))}
+                            </a>
+                        </li>
+                    `;
+                });
+                categories.forEach((category: string, index: number) => {
+                    let tabItems = '';
+                    faqs.forEach((faq: object) => {
                         if (faq['category'] === category) {
-                            accordionContent += `
-                                    <div class="panel box">
-                                        <div class="box-header with-border">
-                                            <h4 class="box-title">
-                                                <a data-toggle="collapse" data-parent="#accordion-${category}"
-                                                    href="#accordion-${category}-${index}">
-                                                    ${faq['title']}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                        <div id="accordion-${category}-${index}" class="panel-collapse collapse">
-                                            <div class="box-body">${faq['content']}</div>
+                            tabItems += `
+                                <div class="box box-default">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">${faq['title']}</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="box box-solid">
+                                            <div class="box-body">
+                                                ${faq['content']}
+                                            </div>
                                         </div>
                                     </div>
-                                `;
+                                </div>
+                            `;
                         }
                     });
-                    const accordion = `
-                            <div class="box faq-panel">
-                                <div class="box-header">
-                                    <h3 class="box-title">${Helpers.toTitleCase(category.replace(/-/g, ' '))}</h3>
-                                </div>
-                                <div class="box-body">
-                                    <div class="box-group accordion" id="accordion-${category}">
-                                        ${accordionContent}
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    accordions += accordion;
+                    tabContent += `
+                        <div class="tab-pane ${index === 0 ? 'active' : ''}" id="${category}">
+                            ${tabItems}
+                        </div>
+                    `;
                 });
-                pane.append(accordions).hide().fadeIn();
+
+                const content = `
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            ${tabHeaders}
+                        </ul>
+                        <div class="tab-content">
+                            ${tabContent}
+                        </div>
+                    </div>
+                `;
+                pane.append(content).hide().fadeIn();
             },
         });
     }
