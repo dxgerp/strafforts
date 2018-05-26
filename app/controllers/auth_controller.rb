@@ -50,7 +50,7 @@ class AuthController < ApplicationController
 
   private
 
-  def handle_token_exchange(code)
+  def handle_token_exchange(code) # rubocop:disable MethodLength, CyclomaticComplexity, PerceivedComplexity
     response = Net::HTTP.post_form(
       URI(STRAVA_API_AUTH_TOKEN_URL),
       'code' => code,
@@ -66,8 +66,8 @@ class AuthController < ApplicationController
 
       if ENV['ENABLE_EARLY_BIRDS_PRO_ON_LOGIN']
         # Automatically apply 'Early Birds PRO' Plan on login for everyone for now.
+        athlete = AthleteDecorator.decorate(athlete)
         begin
-          athlete = AthleteDecorator.decorate(athlete)
           unless athlete.pro_subscription?
             ::Creators::SubscriptionCreator.create('Early Birds PRO', athlete.id)
           end

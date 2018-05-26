@@ -38,6 +38,9 @@
             <span class="pull-right"><%= @athlete.pro_subscription_expires_at %></span>
           </label>
         </div>
+          <% unless @athlete.pro_subscription_expires_at.blank? || 'Indefinite'.casecmp(@athlete.pro_subscription_expires_at).zero? %>
+            <a href="?view=upgrade" class="btn btn-block btn-flat btn-danger">Renew</a>
+          <% end %>
       <% else %>
         <a href="?view=upgrade" class="btn btn-block btn-flat btn-danger">Upgrade</a>
       <% end %>

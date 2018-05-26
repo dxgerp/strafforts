@@ -111,7 +111,7 @@ export default class UpgradeView extends BaseView {
                     <div class="pricingTable">
                         <div class="pricingTable-header">
                             <h3 class="title">PRO </h3>
-                            <span class="sub-title">Annually</span>
+                            <span class="sub-title">Annual</span>
                             <span class="year">Only <br>$5.99/year</span>
                         </div>
                         <div class="price-value">
