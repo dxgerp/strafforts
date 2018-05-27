@@ -25,6 +25,7 @@ class AuthController < ApplicationController
         HeartRateZones.where(athlete_id: athlete_id).destroy_all
         Activity.where(athlete_id: athlete_id).destroy_all
         AthleteInfo.where(athlete_id: athlete_id).destroy_all
+        Subscription.where(athlete_id: athlete_id).update_all(is_deleted: true)
         Athlete.where(id: athlete_id).destroy_all
       end
 

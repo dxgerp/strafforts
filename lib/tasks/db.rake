@@ -25,8 +25,8 @@ namespace :db do
     puts "Executing: #{command}"
     system command
 
-    # Run db:migrate.
-    system 'bundle exec rails db:migrate'
+    # Run db:migrate and db:seed.
+    system 'bundle exec rails db:migrate && bundle exec rails db:seed'
   end
 
   desc 'Convert development DB to Rails test fixtures'

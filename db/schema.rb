@@ -238,6 +238,7 @@ ActiveRecord::Schema.define(version: 20180507095014) do
     t.datetime "updated_at", null: false
     t.datetime "starts_at"
     t.datetime "expires_at"
+    t.boolean "is_deleted", default: false
   end
 
   create_table "workout_types", id: :serial, force: :cascade do |t|

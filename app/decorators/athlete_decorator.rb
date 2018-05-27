@@ -19,8 +19,9 @@ class AthleteDecorator < Draper::Decorator
   def pro_subscription?
     unless object.subscriptions.nil?
       object.subscriptions.each do |subscription|
+        is_deleted = subscription.is_deleted
         expires_at = subscription.expires_at
-        return true if expires_at.blank? || expires_at > Time.now.utc
+        return true if !is_deleted && (expires_at.blank? || expires_at > Time.now.utc)
       end
     end
     false
@@ -30,10 +31,11 @@ class AthleteDecorator < Draper::Decorator
     if pro_subscription?
       currently_valid_to = Time.now.utc # Initialize to now, so it can be compared.
       object.subscriptions.each do |subscription|
+        is_deleted = subscription.is_deleted
         expires_at = subscription.expires_at
-        return 'Indefinite' if expires_at.blank? # Lifetime PRO has no expiration date.
+        return 'Indefinite' if !is_deleted && expires_at.blank? # Lifetime PRO has no expiration date.
 
-        currently_valid_to = expires_at if expires_at > currently_valid_to
+        currently_valid_to = expires_at if !is_deleted && expires_at > currently_valid_to
       end
       return currently_valid_to.strftime('%Y/%m/%d')
     end
