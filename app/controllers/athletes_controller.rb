@@ -27,10 +27,18 @@ class AthletesController < ApplicationController
 
   def save_profile
     athlete = Athlete.find_by(id: params[:id])
-    ApplicationController.raise_item_not_found_error('athlete', params[:id]) if athlete.nil?
+    if athlete.nil?
+      Rails.logger.warn("Could not save profile for athlete '#{params[:id]}' that could not be found.")
+      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_FOUND }.to_json, status: 404
+      return
+    end
 
     @is_current_user = athlete.access_token == cookies.signed[:access_token]
-    ApplicationController.raise_user_not_current_error unless @is_current_user
+    unless @is_current_user
+      Rails.logger.warn("Could not save profile for an athlete #{params[:id]} that is not the currently logged in.")
+      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_ACCESSIBLE }.to_json, status: 403
+      return
+    end
 
     is_public = params[:is_public].blank? || params[:is_public]
     athlete.update(is_public: is_public)
@@ -38,22 +46,50 @@ class AthletesController < ApplicationController
 
   def fetch_latest
     athlete = Athlete.find_by(id: params[:id])
-    ApplicationController.raise_item_not_found_error('athlete', params[:id]) if athlete.nil?
+    if athlete.nil?
+      Rails.logger.warn("Could not fetch latest for athlete '#{params[:id]}' that could not be found.")
+      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_FOUND }.to_json, status: 404
+      return
+    end
 
     @is_current_user = athlete.access_token == cookies.signed[:access_token]
-    ApplicationController.raise_user_not_current_error unless @is_current_user
+    unless @is_current_user
+      Rails.logger.warn("Could not fetch latest for an athlete #{params[:id]} that is not the currently logged in.")
+      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_ACCESSIBLE }.to_json, status: 403
+      return
+    end
+
+    athlete = AthleteDecorator.decorate(athlete)
+    unless athlete.pro_subscription?
+      render json: { error: ApplicationHelper::Message::PRO_ACCOUNTS_ONLY }.to_json, status: 403
+      return
+    end
 
     # Add a delayed_job to fetch the latest data for this athlete.
     fetcher = ::ActivityFetcher.new(athlete.access_token)
     fetcher.delay.fetch_all(mode: 'latest')
   end
 
-  def reset_profile
+  def reset_profile # rubocop:disable MethodLength
     athlete = Athlete.find_by(id: params[:id])
-    ApplicationController.raise_item_not_found_error('athlete', params[:id]) if athlete.nil?
+    if athlete.nil?
+      Rails.logger.warn("Could not reset profile for an athlete '#{params[:id]}' that could not be found.")
+      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_FOUND }.to_json, status: 404
+      return
+    end
 
     @is_current_user = athlete.access_token == cookies.signed[:access_token]
-    ApplicationController.raise_user_not_current_error unless @is_current_user
+    unless @is_current_user
+      Rails.logger.warn("Could not reset profile for an athlete #{params[:id]} that is not the currently logged in.")
+      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_ACCESSIBLE }.to_json, status: 403
+      return
+    end
+
+    athlete = AthleteDecorator.decorate(athlete)
+    unless athlete.pro_subscription?
+      render json: { error: ApplicationHelper::Message::PRO_ACCOUNTS_ONLY }.to_json, status: 403
+      return
+    end
 
     if params[:is_hard_reset].to_s == 'true'
       # Delete all activity data except for the athlete itself.

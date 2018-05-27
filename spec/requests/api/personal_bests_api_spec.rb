@@ -9,9 +9,9 @@ RSpec.describe Api::PersonalBestsController, type: :request do
         .to raise_error(ActionController::RoutingError, "Could not find athlete '12345678' by id.")
     end
 
-    it 'should be a bad request with an invalid distance' do
-      expect { get '/api/athletes/123/personal-bests/100m' }
-        .to raise_error(ActionController::BadRequest, "Could not find requested best effort type '100m'.")
+    it 'should be a 404 with an invalid distance' do
+      get '/api/athletes/123/personal-bests/100m'
+      expect(response).to have_http_status(404)
     end
 
     it 'should be empty when best effort type is not specified' do
@@ -19,8 +19,8 @@ RSpec.describe Api::PersonalBestsController, type: :request do
       expect(response.body).to eq('[]')
     end
 
-    context 'should be successful' do
-      it 'for getting items for overview' do
+    context 'for an athlete with PRO subscription' do
+      it 'should be successful getting items for overview' do
         # arrange.
         url = '/api/athletes/9123806/personal-bests/overview'
         expected = "#{expected_folder}/#{url}.json"
@@ -33,7 +33,7 @@ RSpec.describe Api::PersonalBestsController, type: :request do
         expect(response.body).to eq(File.read(expected))
       end
 
-      it 'for getting recent items' do
+      it 'should be successful getting recent items' do
         # arrange.
         url = '/api/athletes/9123806/personal-bests/recent'
         expected = "#{expected_folder}/#{url}.json"
@@ -48,7 +48,7 @@ RSpec.describe Api::PersonalBestsController, type: :request do
 
       distances = BestEffortType.all
       distances.each do |distance|
-        it "for best effort type '#{distance.name}'" do
+        it "should be successful getting best effort type '#{distance.name}'" do
           # arrange.
           url = "/api/athletes/9123806/personal-bests/#{distance.name.tr('/', '_')}"
           expected = "#{expected_folder}#{url}.json"
@@ -60,6 +60,41 @@ RSpec.describe Api::PersonalBestsController, type: :request do
           expect(response).to have_http_status(:success)
           expect(response.body).to eq(File.read(expected))
         end
+      end
+    end
+
+    context 'for an athlete without PRO subscription' do
+      it 'should be successful getting items for overview' do
+        # arrange.
+        url = '/api/athletes/123/personal-bests/overview'
+
+        # act.
+        get url
+
+        # assert.
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'should be successful getting recent items' do
+        # arrange.
+        url = '/api/athletes/123/personal-bests/recent'
+
+        # act.
+        get url
+
+        # assert.
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'should be 403 getting a non-major best effort type' do
+        # arrange.
+        url = '/api/athletes/123/personal-bests/1k'
+
+        # act.
+        get url
+
+        # assert.
+        expect(response).to have_http_status(403)
       end
     end
   end

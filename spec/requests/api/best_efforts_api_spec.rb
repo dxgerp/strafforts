@@ -9,9 +9,9 @@ RSpec.describe Api::BestEffortsController, type: :request do
         .to raise_error(ActionController::RoutingError, "Could not find athlete '12345678' by id.")
     end
 
-    it 'should be a bad request with an invalid distance' do
-      expect { get '/api/athletes/123/best-efforts/100m' }
-        .to raise_error(ActionController::BadRequest, "Could not find requested best effort type '100m'.")
+    it 'should be a 404 with an invalid distance' do
+      get '/api/athletes/123/best-efforts/100m'
+      expect(response).to have_http_status(404)
     end
 
     it 'should be empty when best effort type is not specified' do

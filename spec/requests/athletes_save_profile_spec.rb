@@ -2,18 +2,15 @@ require 'rails_helper'
 
 RSpec.describe AthletesController, type: :request do
   describe 'POST save_profile' do
-    context 'should be a bad request' do
-      it 'when requested athlete does not exist' do
-        expect { post '/athletes/12345678/save_profile' }
-          .to raise_error(ActionController::BadRequest, "Could not find requested athlete '12345678'.")
-      end
+    it 'should return 404 when the requested athlete does not exist' do
+      post '/athletes/12345678/save_profile'
+      expect(response).to have_http_status(404)
+    end
 
-      it 'when requested athlete is not the current user' do
-        expect {
-          setup_cookie(nil)
-          post '/athletes/123/save_profile'
-        }.to raise_error(ActionController::BadRequest, 'Could not update a user that is not the current user.')
-      end
+    it 'should return 403 when requested athlete is not the current user' do
+      setup_cookie(nil)
+      post '/athletes/123/save_profile'
+      expect(response).to have_http_status(403)
     end
 
     context 'should set is_public to true' do

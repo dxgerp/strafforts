@@ -1,0 +1,83 @@
+.main-sidebar {
+    .user-panel {
+        overflow: hidden;
+
+        padding-bottom: 0;
+        .image {
+            margin-bottom: 6px;
+
+            img {
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        .info {
+            font-weight: bold;
+
+            position: static;
+
+            padding-left: 5px;
+
+            span {
+                padding-top: 4px;
+            }
+
+            p {
+                margin-top: 10px;
+            }
+
+            a {
+                font-size: inherit;
+                font-weight: 600;
+
+                margin-top: inherit;
+                margin-bottom: 9px;
+                padding-right: inherit;
+            }
+        }
+    }
+
+    .sidebar-menu {
+        .treeview-header:not(.disabled) {
+            &:hover {
+                box-shadow: inset 3px 0 0 $color-strava;
+            }
+        }
+
+        .treeview-menu {
+            li a {
+                @include transition(all .2s ease-in-out);
+
+                &:hover {
+                    box-shadow: inset 3px 0 0 $color-strava;
+                }
+            }
+        }
+
+        .disabled {
+            cursor: default;
+        }
+
+        .pro-only a,
+        .pro-only span,
+        .pro-only i,
+        .pro-only label {
+            cursor: not-allowed;
+
+            opacity: .65;
+            -webkit-box-shadow: none;
+                    box-shadow: none;
+
+            filter: alpha(opacity=65);
+        }
+
+        .subscription-badge {
+            position: absolute;
+            top: 50%;
+            right: 2px;
+
+            margin-top: -10px;
+        }
+    }
+}

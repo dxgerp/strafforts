@@ -23,7 +23,7 @@ export default class NavigationSidebar {
         $(`#treeview-menu-${elementIdPrefix}`).parent().find('li:not(.treeview-expander)').remove();
         $.each(data, (key, value) => {
             const itemText = value['name'];
-            const itemId = value['name'].replace(/\s/g, '-').replace(/\//g, '-').toLowerCase();
+            const itemId = value['name'].replace(/\s/g, '-').replace(/\//g, '_').toLowerCase();
             const elementId = `${elementIdPrefix}-${itemId}-navigation`;
             const count = value['count'];
 

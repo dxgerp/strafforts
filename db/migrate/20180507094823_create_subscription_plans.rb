@@ -1,0 +1,12 @@
+class CreateSubscriptionPlans < ActiveRecord::Migration[5.1]
+  def change
+    create_table :subscription_plans do |t|
+      t.float :amount
+      t.string :name
+      t.string :description
+      t.integer :duration # length of the subscription plan in days.
+
+      t.timestamps
+    end
+  end
+end

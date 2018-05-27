@@ -16,6 +16,32 @@ class AthleteDecorator < Draper::Decorator
     object.athlete_info.profile if valid_url?(object.athlete_info.profile)
   end
 
+  def pro_subscription?
+    unless object.subscriptions.nil?
+      object.subscriptions.each do |subscription|
+        is_deleted = subscription.is_deleted
+        expires_at = subscription.expires_at
+        return true if !is_deleted && (expires_at.blank? || expires_at > Time.now.utc)
+      end
+    end
+    false
+  end
+
+  def pro_subscription_expires_at
+    if pro_subscription?
+      currently_valid_to = Time.now.utc # Initialize to now, so it can be compared.
+      object.subscriptions.each do |subscription|
+        is_deleted = subscription.is_deleted
+        expires_at = subscription.expires_at
+        return 'Indefinite' if !is_deleted && expires_at.blank? # Lifetime PRO has no expiration date.
+
+        currently_valid_to = expires_at if !is_deleted && expires_at > currently_valid_to
+      end
+      return currently_valid_to.strftime('%Y/%m/%d')
+    end
+    nil
+  end
+
   def following_url
     if object.id.blank?
       STRAVA_URL
@@ -60,7 +86,7 @@ class AthleteDecorator < Draper::Decorator
   def display_location
     return location unless location.length > MAX_INFO_TEXT_LENGTH
     return object.athlete_info.city.name unless object.athlete_info.city.nil? || object.athlete_info.city.name.blank?
-    return object.athlete_info.country.name unless object.athlete_info.country.nil? || object.athlete_info.country.name.blank? # rubocop:disable 
+    return object.athlete_info.country.name unless object.athlete_info.country.nil? || object.athlete_info.country.name.blank? # rubocop:disable LineLength
   end
 
   def friend_count

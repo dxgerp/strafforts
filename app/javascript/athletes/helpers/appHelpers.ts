@@ -21,6 +21,16 @@ export namespace AppHelpers {
         return getBaseUrl(true);
     }
 
+    export function enableTooltips() {
+        // Enable Bootstrap tooltip.
+        ($('[data-toggle="tooltip"]') as any).tooltip({
+            trigger : 'hover',
+        });
+        $('[data-toggle="tooltip"]').on('click', (event) => {
+            ($(event.currentTarget) as any).tooltip('hide');
+        });
+    }
+
     export function formatDistanceForUrl(distance: string) {
         return distance.trim().replace(/\//g, '_').replace(/\s/g, '-').toLowerCase();
     }
@@ -76,19 +86,18 @@ export namespace AppHelpers {
         let navigationAnchor: JQuery | null = null;
 
         const distance = Helpers.getUrlParameter('distance');
-        const distanceId = distance ? distance.replace('_', '-') : undefined;
         const year = Helpers.getUrlParameter('year');
 
         // Determine the view type first.
         // If it's personal bests, races by distances or races by year,
         // set the active navigation item by URL.
-        if (viewName === ViewType.PersonalBests && distanceId) {
-            navigationAnchor = $(`.main-sidebar a[id^="personal-bests-for-distance-${distanceId}"]`);
+        if (viewName === ViewType.PersonalBests && distance) {
+            navigationAnchor = $(`.main-sidebar a[id^="personal-bests-for-distance-${distance}"]`);
         }
 
         if (viewName === ViewType.Races) {
-            if (distanceId) {
-                navigationAnchor = $(`.main-sidebar a[id^="races-for-distance-${distanceId}"]`);
+            if (distance) {
+                navigationAnchor = $(`.main-sidebar a[id^="races-for-distance-${distance}"]`);
             }
 
             if (year && /^20\d\d$/g.test(year)) {

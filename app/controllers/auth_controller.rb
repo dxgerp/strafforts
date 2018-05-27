@@ -25,6 +25,7 @@ class AuthController < ApplicationController
         HeartRateZones.where(athlete_id: athlete_id).destroy_all
         Activity.where(athlete_id: athlete_id).destroy_all
         AthleteInfo.where(athlete_id: athlete_id).destroy_all
+        Subscription.where(athlete_id: athlete_id).update_all(is_deleted: true)
         Athlete.where(id: athlete_id).destroy_all
       end
 
@@ -50,7 +51,7 @@ class AuthController < ApplicationController
 
   private
 
-  def handle_token_exchange(code)
+  def handle_token_exchange(code) # rubocop:disable MethodLength, CyclomaticComplexity, PerceivedComplexity
     response = Net::HTTP.post_form(
       URI(STRAVA_API_AUTH_TOKEN_URL),
       'code' => code,
@@ -63,6 +64,18 @@ class AuthController < ApplicationController
       access_token = result['access_token']
       athlete = ::Creators::AthleteCreator.create_or_update(access_token, result['athlete'], false)
       ::Creators::HeartRateZonesCreator.create_or_update(result['athlete']['id']) # Create default heart rate zones.
+
+      if ENV['ENABLE_EARLY_BIRDS_PRO_ON_LOGIN'] == 'true'
+        # Automatically apply 'Early Birds PRO' Plan on login for everyone for now.
+        athlete = AthleteDecorator.decorate(athlete)
+        begin
+          unless athlete.pro_subscription?
+            ::Creators::SubscriptionCreator.create('Early Birds PRO', athlete.id)
+          end
+        rescue StandardError => e
+          Rails.logger.error("Automatically applying Early Birds PRO failed for athlete '#{athlete.id}'. #{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}") # rubocop:disable LineLength
+        end
+      end
 
       # Subsribe or update to mailing list.
       SubscribeToMailingListJob.perform_later(athlete)

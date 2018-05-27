@@ -6,7 +6,8 @@ module Api
       add('account', 'Does Strafforts need/store my Strava password?', "
 <p>No, Strafforts connects to your Strava account via
 Strava's <a href='https://strava.github.io/api/v3/oauth/' target='_blank'>authentication API</a>.</p>
-<p>All you need to do is to login to your Strava account then connect Strafforts with Strava.</p>")
+<p>It means all you need to do is to login to your Strava account then connect Strafforts with Strava and
+no sensitive information will be stored on Strafforts server at all.</p>")
       add('account', 'Is it possible to remove all my data on Strafforts?', "
 <p>Yes, abusolutely. First make sure you have connected and logged into Strafforts,
 then go to your 'Settings' sidebar by clicking <code><i class='fa fa-gears'></i></code> at top right corner of the app,
@@ -14,16 +15,20 @@ and choosing <code><i class='fa fa-wrench'></i></code> tab,
 then click 'Delete' button to remove yourself from Strafforts server.</p>
 <p>If you've changed your mind,
 you can re-connect to give Strafforts permission to retrieve your Strava data again.
-However, since all data has been deleted on our server, it might take a while to retrieve everything again.</p>")
+However, since all data has been deleted on our server, it might take a while to retrieve everything again.</p>
+<p><b>Note:</b> If you had PRO subscriptions, they will be gone too.</p>")
+      add('account', 'Does Strafforts share my data to any third parties?', "
+<p>Not at all! Strafforts only gets your Strava data with your permission
+and displays to you via tables and charts for analysis.</p>")
 
-      add('support', 'How to contact Strava support?', "
-You can submit a request at Strava's support site
-<a href='https://support.strava.com/hc/en-us/requests/new' target='_blank'>here</a>.")
-      add('support', 'How to contact Strafforts support?', "
-<p>Please email us at <a href='mailto:support@strafforts.com'>support@strafforts.com</a> with your enquiries.</p>
-<p>Alternatively, if you have a GitHub account,
-you can also raise an issue <a href='https://github.com/yizeng/strafforts/issues' target='_blank'>here</a>.
-</p>")
+      add('best-efforts', 'How is "Best Efforts" different from "Personal Bests"?', "
+<p>As the names suggest, 'Personal bests' on Strafforts are PBs/PRs,
+more specifically, they are those gold best estimated efforts trophies on Strava running activities,
+while 'Best Efforts' are not neccessarily PBs/PRs,
+but your top 100 best bests of each distance.</p>
+<p>For example, if your current 5k PB is 17:00, and you ran 17:10 today,
+17:10 is not your PB/PR and won't show up in 'Personal Bests' view,
+but mostly likely to be included in 'Best Efforts' (if 17:10 is within top 100 of all your 5k efforts).</p>")
 
       add('personal-bests', "Why can't I find some of my personal bests?", "
 <p>Personal bests on Strafforts are just those gold best estimated efforts trophies on Strava running activities.</p>
@@ -117,8 +122,9 @@ then Strafforts will put this activity under distance of 'Other Distances'.
 <p>See <a href='https://github.com/yizeng/strafforts/blob/master/docs/acknowledgements.md'
 target='_blank'>Acknowledgements page</a> for a comprehensive list.</p>")
       add('miscellaneous', 'How to contribute to Strafforts?', "
-<p>Strafforts is an open source project hosted on
-<a href='https://github.com/yizeng/strafforts/' target='_blank'>GitHub</a>.</p>
+<p>Strafforts is an open source project licensed under
+<a href='https://github.com/yizeng/strafforts/blob/master/LICENSE' target='_blank'>AGPLv 3</a>
+and hosted on <a href='https://github.com/yizeng/strafforts/' target='_blank'>GitHub</a>.</p>
 <p>You can <a href='https://github.com/yizeng/strafforts/issues' target='_blank'>raise issues</a>,
 <a href='https://github.com/yizeng/strafforts/pulls' target='_blank'>provide PRs</a> or even simply
 <a href='https://donorbox.org/help-push-strafforts-forward?amount=25' target='_blank'>donate</a>.</p>")
@@ -126,7 +132,16 @@ target='_blank'>Acknowledgements page</a> for a comprehensive list.</p>")
 <p>The photo was taken in Listbon, Portugal, and the bridge in the background is the
 <a href='https://en.wikipedia.org/wiki/25_de_Abril_Bridge' target='_blank'>25 de Abril Bridge</a>.</p>
 <p>It was the period I started this project while travelling in Europe,
-where I did Lisbon Rock'n'Roll half marathon and had one of my most memorable holidays in my life.</p>")
+where I did Lisbon Rock'n'Roll half marathon.</p>")
+
+      add('support', 'How to contact Strava support?', "
+You can submit a request at Strava's support site
+<a href='https://support.strava.com/hc/en-us/requests/new' target='_blank'>here</a>.")
+      add('support', 'How to contact Strafforts support?', "
+<p>Please email us at <a href='mailto:support@strafforts.com'>support@strafforts.com</a> with your enquiries.</p>
+<p>Alternatively, if you have a GitHub account,
+you can also raise an issue <a href='https://github.com/yizeng/strafforts/issues' target='_blank'>here</a>.
+</p>")
     end
 
     def to_json
