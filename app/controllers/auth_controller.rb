@@ -64,7 +64,7 @@ class AuthController < ApplicationController
       athlete = ::Creators::AthleteCreator.create_or_update(access_token, result['athlete'], false)
       ::Creators::HeartRateZonesCreator.create_or_update(result['athlete']['id']) # Create default heart rate zones.
 
-      if ENV['ENABLE_EARLY_BIRDS_PRO_ON_LOGIN']
+      if ENV['ENABLE_EARLY_BIRDS_PRO_ON_LOGIN'] == 'true'
         # Automatically apply 'Early Birds PRO' Plan on login for everyone for now.
         athlete = AthleteDecorator.decorate(athlete)
         begin
