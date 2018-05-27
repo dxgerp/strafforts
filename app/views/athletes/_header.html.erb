@@ -21,7 +21,7 @@
       <ul class="nav navbar-nav">
         <% unless ENV['HIDE_FACEBOOK_LIKE'] == 'true' %>
         <li>
-          <div class="fb-like hidden-xs-down" data-href="<%= Settings.app.facebook_page_url %>" data-layout="button_count"
+          <div class="fb-like" data-href="<%= Settings.app.facebook_page_url %>" data-layout="button_count"
             data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
         </li>
         <% end %>
@@ -78,7 +78,7 @@
           </ul>
         </li>
 
-        <li>
+        <li class="hidden-xs-down">
           <a class='subscription-badge'>
             <span class="<%= @athlete.pro_subscription? ? 'pro-account' : 'free-account' %>">
               <%= @athlete.pro_subscription? ? 'PRO' : 'FREE' %>

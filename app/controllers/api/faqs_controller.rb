@@ -16,7 +16,7 @@ then click 'Delete' button to remove yourself from Strafforts server.</p>
 <p>If you've changed your mind,
 you can re-connect to give Strafforts permission to retrieve your Strava data again.
 However, since all data has been deleted on our server, it might take a while to retrieve everything again.</p>
-<p><b>Note:</b>If you had PRO subscriptions, they will be gone too.</p>")
+<p><b>Note:</b> If you had PRO subscriptions, they will be gone too.</p>")
       add('account', 'Does Strafforts share my data to any third parties?', "
 <p>Not at all! Strafforts only gets your Strava data with your permission
 and displays to you via tables and charts for analysis.</p>")
