@@ -57,10 +57,11 @@
 
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
-        <li>
-          <div class="fb-like hidden-xs-down" data-href="https://www.facebook.com/strafforts" data-layout="button_count"
+        <li class="hidden-xs-down">
+          <div class="fb-like" data-href="https://www.facebook.com/strafforts" data-layout="button_count"
             data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
         </li>
+
         <li class="dropdown user user-menu">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <img alt="User Image" class="athlete-image user-image" src="https://www.tonystark.com/large.jpg">
@@ -104,25 +105,35 @@
             </li>
           </ul>
         </li>
+
+        <li class="hidden-xs-down">
+          <a class='subscription-badge'>
+            <span class="free-account">
+              FREE
+            </span>
+          </a>
+        </li>
+
         <li>
           <a class="social-sharing-toggle hidden-xs-down" href="#" data-toggle="modal" data-target="#modal-social-sharing" title="Share Your Profile">
             <i class="fa fa-share-alt"></i>
           </a>
         </li>
+
         <li>
           <a class="show-faq" href="?view=faq" title="Show FAQ">
             <i class="fa fa-question-circle"></i>
           </a>
         </li>
+
           <li>
             <a href="#" class="control-sidebar-toggle" data-toggle="control-sidebar" title="Show Settings">
               <i class="fa fa-gears"></i>
             </a>
           </li>
       </ul>
-  </ul>
-</div>
-</nav>
+    </div>
+  </nav>
 </header>
 
 <!-- Modal - Heart Rate Zones -->
@@ -139,10 +150,10 @@
       </div>
       <div class="modal-body">
           <p class="text-center"><strong>Remember to set your profile to public before sharing your profile.</strong></p>
-        <div class='loading-icon-panel text-center'>
-            <button type='button' class='btn btn-default btn-lrg' title='Loading Sharing Plugin...'>
+        <div class='loading-icon-panel text-center overlay'>
+            <span title='Loading Sharing Plugin...'>
                 <i class='fa fa-spin fa-refresh'></i>
-            </button>
+            </span>
         </div>
         <!-- Go to www.addthis.com/dashboard to customize your tools -->
         <div class="addthis_inline_share_toolbox text-center"></div>
@@ -169,6 +180,13 @@
       <div class="info">
         <span id="athlete-id" class="hidden">123</span>
         <span class="athlete-name">Tony Stark</span>
+
+        <p class='subscription-badge'>
+          <span class="label free-account">
+            FREE
+          </span>
+        </p>
+
           <p><small class="athlete-location">Christchurch, New Zealand</small></p>
       </div>
     </div>
@@ -178,13 +196,6 @@
         <a class="show-overview treeview-header" href="?view=overview">
           <i class="fa fa-home"></i>
           <span>Overview</span>
-        </a>
-      </li>
-
-      <li>
-        <a class="show-races-timeline treeview-header" href="?view=timeline&type=races">
-          <i class="fa fa-calendar"></i>
-          <span>Races Timeline</span>
         </a>
       </li>
 
@@ -204,13 +215,11 @@
         <ul class="treeview-menu">
           <li id="treeview-menu-personal-bests-for-distance" class="treeview-expander treeview">
             <a href="#" class="show-more-distance">
-              <i class="fa fa-circle-o"></i>More Distances
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+              <i class="fa fa-circle-o"> </i>More Distances
+              <span class='subscription-badge'><span class="label">PRO</span></span>
             </a>
 
-            <ul class="treeview-menu"></ul>
+            <ul class="treeview-menu disabled pro-only"></ul>
           </li>
         </ul>
       </li>
@@ -225,24 +234,31 @@
 
           <li id="treeview-menu-races-for-distance" class="treeview-expander treeview">
             <a href="#" class="show-more-distance">
-              <i class="fa fa-circle-o"></i>More Distances
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+              <i class="fa fa-circle-o"> </i>More Distances
+              <span class='subscription-badge'><span class="label">PRO</span></span>
             </a>
 
-            <ul class="treeview-menu"></ul>
+            <ul class="treeview-menu disabled pro-only"></ul>
           </li>
         </ul>
+      </li>
+
+      <li>
+        <a class="show-races-timeline treeview-header" href="?view=timeline&type=races">
+          <i class="fa fa-calendar"></i>
+          <span>Races Timeline</span>
+          <span class='subscription-badge'><span class="label">PRO</span></span>
+        </a>
       </li>
 
       <li class="active treeview">
         <a class="treeview-header disabled" href="#">
           <i class="fa fa-line-chart"></i>
           <span>Races by Year</span>
+          <span class='subscription-badge'><span class="label">PRO</span></span>
         </a>
 
-        <ul class="treeview-menu">
+        <ul class="treeview-menu disabled pro-only">
           <li id="treeview-menu-races-for-year" class="treeview-expander treeview hidden"></li>
         </ul>
       </li>
@@ -273,8 +289,10 @@
 
       <!-- Main content -->
       <section class="content" id="main-content">
-        <div class='loading-icon-panel text-center'>
-          <span title='Loading Data...'><i class='fa fa-spin fa-refresh'></i></span>
+        <div class='loading-icon-panel text-center overlay'>
+          <span title='Loading Data...'>
+            <i class='fa fa-spin fa-refresh'></i>
+          </span>
         </div>
       </section>
     </div><!-- /.content-wrapper -->
@@ -282,18 +300,19 @@
     <footer class="main-footer">
   <span class="hidden-xs-down">
     <small>
-      Enjoyed Strafforts?
-      <a class="custom-dbox-popup" href="https://donorbox.org/help-push-strafforts-forward?amount=25" 
-        title="Donate to Strafforts">Help push us forward</a>!
+      Created by <a class="external" href="http://yizeng.me" target="_blank">Yi Zeng</a> and GitHub'ed at
+      <a class="external" href="https://github.com/yizeng/strafforts" target="_blank">yizeng/strafforts</a>.
     </small>
   </span>
+
   <span class="pull-right">
-      <a class="bg-strava btn label" href="https://www.strava.com/athletes/9123806" target="_blank">Follow me on Strava</a>
+      <div class="fb-like hidden-xs-up" data-href="https://www.facebook.com/strafforts" data-layout="button_count"
+            data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
+      <a class="bg-strava btn label hidden-xs-down" href="https://www.strava.com/athletes/9123806" target="_blank">Follow me on Strava</a>
       <a class="bg-strava btn label" href="mailto:support@strafforts.com" target="_blank">Contact Us</a>
           <small>v1.3.1</small>
   </span>
 </footer>
-<script> window.DonorBox = { widgetLinkClassName: 'custom-dbox-popup' } </script>
 
 
       <!-- Control Sidebar -->
@@ -320,6 +339,18 @@
   <div class="tab-content">
     <!-- Profile tab content -->
     <div class="tab-pane active" id="control-sidebar-profile-tab">
+      <h3 class="control-sidebar-heading">Subscription</h3>
+      <div class="form-group">
+        <label class="control-sidebar-subheading">Status:
+          <span class='subscription-badge pull-right'>
+            <span class="label free-account">
+              FREE
+            </span>
+          </span>
+        </label>
+      </div>
+        <a href="?view=upgrade" class="btn btn-block btn-flat btn-danger">Upgrade</a>
+
       <form class="form-save-profile" action="/athletes/123/save_profile" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
       <h3 class="control-sidebar-heading">Profile Settings</h3>
       <div class="form-group">
@@ -353,7 +384,6 @@
         </p>
       </div>
       <button class="btn btn-block btn-default btn-flat submit-form" type="submit">
-        <i class="fa fa-floppy-o"></i>
         Save
       </button>
 </form>
@@ -368,7 +398,11 @@
 
     <!-- Data tab content -->
     <div class="tab-pane" id="control-sidebar-data-tab">
-      <h3 class="control-sidebar-heading">Data Settings</h3>
+      <h3 class="control-sidebar-heading">Data Settings
+          <span class='subscription-badge pull-right'>
+            <span class="label">PRO</span>
+          </span>
+      </h3>
       <p>
         Slowly getting implemented...
       </p>
@@ -391,12 +425,6 @@
             </a>
           </label>
         </div>
-        <div>
-          <form class="form-fetch-latest-activities" action="/athletes/123/fetch_latest" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
-            <button type="submit" class="btn btn-block btn-default btn-flat submit-form">
-              Fetch Latest
-            </button>
-</form>        </div>
       </div>
 
       <div class="form-group">
@@ -405,13 +433,23 @@
         <label class="pull-right">2017-12-17 15:55 UTC</label>
       </div>
 
+      <div class="form-group">
+        <h3 class="control-sidebar-heading">Fetch Now<span class='subscription-badge pull-right'><span class="label">PRO</span></span></h3>
+        <div>
+          <form class="form-fetch-latest-activities" action="/athletes/123/fetch_latest" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+            <button type="submit" class="btn btn-block btn-default btn-flat submit-form" disabled>
+              Fetch Now
+            </button>
+</form>        </div>
+      </div>
+
       <div class="form-group reset-profile">
-        <h3 class="control-sidebar-heading">Reset Profile</h3>
+        <h3 class="control-sidebar-heading">Reset Profile<span class='subscription-badge pull-right'><span class="label">PRO</span></span></h3>
         <p>
           <label class="control-sidebar-subheading checkbox inline" for="is_hard_reset">Delete existing data:</label>
-          <input type="checkbox" name="is_hard_reset" id="is_hard_reset" value="false" class="pull-right" />
+          <input type="checkbox" name="is_hard_reset" id="is_hard_reset" value="false" class="pull-right" disabled="disabled" />
         </p>
-        <button type="button" class="btn btn-block btn-danger btn-flat" data-toggle="modal" data-target="#confirm-reset-profile">
+        <button type="button" class="btn btn-block btn-danger btn-flat" data-toggle="modal" data-target="#confirm-reset-profile" disabled>
           Reset
         </button>
       </div>
