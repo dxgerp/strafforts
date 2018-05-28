@@ -235,7 +235,7 @@ ActiveRecord::Schema.define(version: 20180507095014) do
 
   create_table "subscriptions", force: :cascade do |t|
     t.integer "athlete_id"
-    t.integer "subscription_plan_id"
+    t.uuid "subscription_plan_id"
     t.integer "promo_code_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
