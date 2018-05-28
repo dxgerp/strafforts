@@ -126,8 +126,7 @@ target='_blank'>Acknowledgements page</a> for a comprehensive list.</p>")
 <a href='https://github.com/yizeng/strafforts/blob/master/LICENSE' target='_blank'>AGPLv 3</a>
 and hosted on <a href='https://github.com/yizeng/strafforts/' target='_blank'>GitHub</a>.</p>
 <p>You can <a href='https://github.com/yizeng/strafforts/issues' target='_blank'>raise issues</a>,
-<a href='https://github.com/yizeng/strafforts/pulls' target='_blank'>provide PRs</a> or even simply
-<a href='https://donorbox.org/help-push-strafforts-forward?amount=25' target='_blank'>donate</a>.</p>")
+<a href='https://github.com/yizeng/strafforts/pulls' target='_blank'>provide PRs</a>.</p>")
       add('miscellaneous', 'Where was the homepage background photo taken?', "
 <p>The photo was taken in Listbon, Portugal, and the bridge in the background is the
 <a href='https://en.wikipedia.org/wiki/25_de_Abril_Bridge' target='_blank'>25 de Abril Bridge</a>.</p>

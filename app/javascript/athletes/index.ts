@@ -1,5 +1,3 @@
-import './../vendor/donorbox.js';
-
 import { Helpers } from './../common/helpers';
 import { AppHelpers } from './helpers/appHelpers';
 import { EventBinders } from './helpers/eventBinders';
