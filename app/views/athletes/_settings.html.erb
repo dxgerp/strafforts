@@ -39,10 +39,10 @@
           </label>
         </div>
           <% unless @athlete.pro_subscription_expires_at.blank? || 'Indefinite'.casecmp(@athlete.pro_subscription_expires_at).zero? %>
-            <a href="?view=upgrade" class="btn btn-block btn-flat btn-danger">Renew</a>
+            <a href="/athletes/<%= @athlete.id %>/get-pro" class="btn btn-block btn-flat btn-danger">Renew</a>
           <% end %>
       <% else %>
-        <a href="?view=upgrade" class="btn btn-block btn-flat btn-danger">Upgrade</a>
+        <a href="/athletes/<%= @athlete.id %>/get-pro" class="btn btn-block btn-flat btn-danger">Upgrade</a>
       <% end %>
 
       <%= form_tag({controller: 'athletes', action: 'save_profile'}, class: 'form-save-profile') do %>
@@ -200,7 +200,8 @@
         <h4 class="modal-title" id="confirm-delete-profile-label">Are you sure?</h4>
       </div>
       <div class="modal-body">
-        By clicking 'Confirm' below, Strafforts will revoke access to your Strava account and delete all activities from our server.
+        <p>By clicking 'Confirm' below, Strafforts will revoke access to your Strava account and delete all your date from our server.</p>
+        <p><strong>Note</strong>: If you currently have a PRO subscription, it will be deleted together with your account!</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline" data-dismiss="modal">Cancel</button>

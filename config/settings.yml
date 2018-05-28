@@ -1,5 +1,7 @@
 app:
   name: 'Strafforts'
+  currency: 'gbp'
+  currency_symbol: '£'
   demo_path: '/athletes/9123806'
   description: 'An Analytics App for Your Strava Running Best Efforts, PBs/PRs and Races'
   emailer:

@@ -21,10 +21,15 @@ export namespace AppHelpers {
         return getBaseUrl(true);
     }
 
+    export function goToProPlansPage() {
+        const athleteId = $('#athlete-id').text().trim();
+        window.location.href = `${Helpers.getBaseUrl()}/athletes/${athleteId}/get-pro`;
+    }
+
     export function enableTooltips() {
         // Enable Bootstrap tooltip.
         ($('[data-toggle="tooltip"]') as any).tooltip({
-            trigger : 'hover',
+            trigger: 'hover',
         });
         $('[data-toggle="tooltip"]').on('click', (event) => {
             ($(event.currentTarget) as any).tooltip('hide');

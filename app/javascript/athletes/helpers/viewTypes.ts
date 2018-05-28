@@ -4,5 +4,4 @@ export enum ViewType {
     Races = 'races',
     Timeline = 'timeline',
     Faq = 'faq',
-    Upgrade = 'upgrade',
 }

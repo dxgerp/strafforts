@@ -12,7 +12,6 @@ import PersonalBestsByDistanceView from './views/personalBestsByDistance';
 import RacesByDistanceView from './views/racesByDistance';
 import RacesByYearView from './views/racesByYear';
 import RacesTimelineView from './views/racesTimeline';
-import UpgradeView from './views/upgrade';
 
 const loadView = () => {
     const view = Helpers.getUrlParameter('view');
@@ -20,10 +19,10 @@ const loadView = () => {
     const distanceText = distance ? distance.replace('-', ' ').replace('|', '/') : '';
     const year = Helpers.getUrlParameter('year');
 
-    if (view === ViewType.Faq) {
+    if (window.location.href.indexOf('/get-pro') > -1) {
+        // Let athletes/pro_plans.html.erb load without creating JS views.
+    } else if (view === ViewType.Faq) {
         new FaqView().load();
-    } else if (view === ViewType.Upgrade) {
-        new UpgradeView().load();
     } else if (view === ViewType.Timeline) {
         new RacesTimelineView().load();
     } else if (view === ViewType.BestEfforts) {
