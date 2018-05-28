@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   STRAVA_API_AUTH_TOKEN_URL = Settings.strava.api_auth_token_url
   STRAVA_API_AUTH_DEAUTHORIZE_URL = Settings.strava.api_auth_deauthorize_url
   STRAVA_API_CLIENT_ID = Settings.strava.api_client_id
-  STRAVA_ATHLETES_URL = Settings.strava.athletes_base_url
+  STRAVA_ATHLETES_BASE_URL = "#{Settings.strava.url}/athletes".freeze
 
   RECENT_ITEMS_LIMIT = 20
   BEST_EFFORTS_LIMIT = 100

@@ -1,7 +1,7 @@
 class AthleteDecorator < Draper::Decorator
   delegate_all
 
-  STRAVA_URL = 'https://www.strava.com'.freeze
+  STRAVA_URL = Settings.strava.url
   MAX_INFO_TEXT_LENGTH = 25
 
   def profile_url

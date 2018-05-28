@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   def index
     @auth_url = ApplicationController.get_auth_url(request)
-    @demo_path = Settings.app.demo_path
+    @demo_path = "/athletes/#{Settings.app.demo_athlete}"
 
     return if cookies.signed[:access_token].nil?
 
