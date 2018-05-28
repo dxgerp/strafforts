@@ -274,6 +274,8 @@
     }
 
     .pricingTable-signup {
+        @include transition(all .2s ease-in-out);
+
         font-weight: 700;
 
         position: relative;
@@ -287,12 +289,13 @@
         transition: all .3s ease 0s;
         text-transform: uppercase;
 
-        color: $color-strava;
-        border: 2px solid $color-strava;
+        color: #FFFFFF;
+        background: $color-strava;
 
         &:hover {
-            color: #FFFFFF;
-            background: $color-strava;
+            color: $color-strava;
+            border: 2px solid $color-strava;
+            background: none;
         }
     }
 }
@@ -334,12 +337,13 @@
     }
 
     .pricingTable-signup {
-        color: $color-light-green;
-        border-color: $color-light-green;
+        color: #FFFFFF;
+        background: $color-light-green;
 
         &:hover {
-            color: #FFFFFF;
-            background: $color-light-green;
+            color: $color-light-green;
+            border: 2px solid $color-light-green;
+            background: none;
         }
     }
 }
@@ -379,12 +383,13 @@
     }
 
     .pricingTable-signup {
-        color: $color-yellow;
-        border-color: $color-yellow;
+        color: #FFFFFF;
+        background: $color-yellow;
 
         &:hover {
-            color: #FFFFFF;
-            background: $color-yellow;
+            color: $color-yellow;
+            border: 2px solid $color-yellow;
+            background: none;
         }
     }
 }

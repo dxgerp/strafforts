@@ -83,7 +83,7 @@
               </ul>
             </div>
             <% if @is_current_user %>
-              <button class="pricingTable-signup" disabled>Free</button>
+              <button class="pricingTable-signup btn btn-block" disabled>Free</button>
             <% end %>
           </div>
         </div>
@@ -128,7 +128,7 @@
               </ul>
             </div>
             <% if @is_current_user %>
-              <button id="purchase-90-day-pro" data-id="<%= @ninety_day_pro_plan.id %>" class="pricingTable-signup">
+              <button id="purchase-90-day-pro" data-id="<%= @ninety_day_pro_plan.id %>" class="pricingTable-signup btn btn-block">
                 <%= @athlete.pro_subscription? ? 'Renew' : 'Upgrade' %>
               </button>
             <% end %>
@@ -176,12 +176,14 @@
             </div>
 
             <% if @is_current_user %>
-              <button id="purchase-annual-pro" data-id="<%= @annual_pro_plan.id %>" class="pricingTable-signup">
+              <button id="purchase-annual-pro" data-id="<%= @annual_pro_plan.id %>" class="pricingTable-signup btn btn-block">
                 <%= @athlete.pro_subscription? ? 'Renew' : 'Upgrade' %> 
               </button>
             <% end %>
           </div>
         </div>
+
+        <%= render 'payment' %>
       </div>
     </section>
   </div><!-- /.content-wrapper -->
