@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
     athlete = Athlete.find_by(id: athlete_id)
     return {} if athlete.nil?
 
-    athlete = AthleteDecorator.decorate(athlete)
+    athlete = athlete.decorate
     athlete_info = {
       has_pro_subscription: athlete.pro_subscription?,
       pro_subscription_expires_at: athlete.pro_subscription_expires_at

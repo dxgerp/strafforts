@@ -114,7 +114,7 @@
           <label class="last-activity-na <%= @athlete.last_activity_retrieved.blank? ? '' : 'hidden' %>">N/A</label>
           <label>
             <a class="last-activity-retrieved <%= @athlete.last_activity_retrieved.blank? ? 'hidden' : '' %>"
-              href="<%= Settings.strava.activities_base_url %>/<%= @athlete.last_activity_retrieved %>" target="_blank"
+              href="<%= Settings.strava.url %>/activities/<%= @athlete.last_activity_retrieved %>" target="_blank"
               title="Open Last Retrieved Activity">
               <%= @athlete.last_activity_retrieved %>
             </a>

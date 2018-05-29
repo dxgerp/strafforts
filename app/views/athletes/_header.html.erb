@@ -38,7 +38,7 @@
 
           <ul class="dropdown-menu">
             <li class="user-header">
-              <a class="athlete-link" href="<%= @athlete_profile_url %>" target="_blank">
+              <a class="athlete-link" href="<%= @athlete.profile_url %>" target="_blank">
                 <% if @athlete.profile_image_url.nil? %>
                     <img alt="User Image" class="athlete-image img-circle" src="<%= asset_path('strava-profile.png') %>">
                 <% else %>

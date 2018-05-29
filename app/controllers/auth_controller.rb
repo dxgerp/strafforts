@@ -67,7 +67,7 @@ class AuthController < ApplicationController
 
       if ENV['ENABLE_EARLY_BIRDS_PRO_ON_LOGIN'] == 'true'
         # Automatically apply 'Early Birds PRO' Plan on login for everyone for now.
-        athlete = AthleteDecorator.decorate(athlete)
+        athlete = athlete.decorate
         begin
           unless athlete.pro_subscription?
             ::Creators::SubscriptionCreator.create('Early Birds PRO', athlete.id)

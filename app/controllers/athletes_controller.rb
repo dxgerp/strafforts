@@ -8,7 +8,6 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
     is_accessible = athlete.is_public || @is_current_user
     ApplicationController.raise_athlete_not_accessible_error(params[:id]) unless is_accessible
 
-    @athlete_profile_url = "#{STRAVA_ATHLETES_BASE_URL}/#{athlete.id}"
     @athlete = athlete.decorate
 
     raw_personal_bests = BestEffort.find_all_pbs_by_athlete_id(athlete.id)
@@ -34,7 +33,6 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
     is_accessible = athlete.is_public || @is_current_user
     ApplicationController.raise_athlete_not_accessible_error(params[:id]) unless is_accessible
 
-    @athlete_profile_url = "#{STRAVA_ATHLETES_BASE_URL}/#{athlete.id}"
     @athlete = athlete.decorate
 
     ninety_day_pro_plan = SubscriptionPlan.find_by(name: '90-day PRO')
@@ -77,7 +75,7 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
       return
     end
 
-    athlete = AthleteDecorator.decorate(athlete)
+    athlete = athlete.decorate
     unless athlete.pro_subscription?
       render json: { error: ApplicationHelper::Message::PRO_ACCOUNTS_ONLY }.to_json, status: 403
       return
@@ -103,7 +101,7 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
       return
     end
 
-    athlete = AthleteDecorator.decorate(athlete)
+    athlete = athlete.decorate
     unless athlete.pro_subscription?
       render json: { error: ApplicationHelper::Message::PRO_ACCOUNTS_ONLY }.to_json, status: 403
       return

@@ -1,10 +1,10 @@
 module Api
   class PersonalBestsController < ApplicationController
-    def index # rubocop:disable MethodLength
+    def index # rubocop:disable MethodLength, CyclomaticComplexity, AbcSize, PerceivedComplexity
       athlete = Athlete.find_by(id: params[:id])
       ApplicationController.raise_athlete_not_found_error(params[:id]) if athlete.nil?
 
-      athlete = AthleteDecorator.decorate(athlete) # Decorate athlete.
+      athlete = athlete.decorate
       heart_rate_zones = ApplicationHelper::Helper.get_heart_rate_zones(athlete.id)
 
       results = []
@@ -35,7 +35,9 @@ module Api
           end
 
           # Return 403 Forbidden if free-account athlete tries to access non-major distances.
-          major_distance = ApplicationHelper::Helper.major_best_effort_types.select { |item| item[:name] == best_effort_type.name }
+          major_distance = ApplicationHelper::Helper.major_best_effort_types.select do |item|
+            item[:name] == best_effort_type.name
+          end
           if major_distance.blank? && !athlete.pro_subscription?
             render json: { error: ApplicationHelper::Message::PRO_ACCOUNTS_ONLY }.to_json, status: 403
             return
