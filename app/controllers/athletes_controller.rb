@@ -1,4 +1,4 @@
-class AthletesController < ApplicationController
+class AthletesController < ApplicationController # rubocop:disable ClassLength
   def index
     @auth_url = ApplicationController.get_auth_url(request)
     athlete = Athlete.find_by(id: params[:id])
@@ -8,7 +8,7 @@ class AthletesController < ApplicationController
     is_accessible = athlete.is_public || @is_current_user
     ApplicationController.raise_athlete_not_accessible_error(params[:id]) unless is_accessible
 
-    @athlete_profile_url = "#{STRAVA_ATHLETES_URL}/#{athlete.id}"
+    @athlete_profile_url = "#{STRAVA_ATHLETES_BASE_URL}/#{athlete.id}"
     @athlete = athlete.decorate
 
     raw_personal_bests = BestEffort.find_all_pbs_by_athlete_id(athlete.id)
@@ -23,6 +23,24 @@ class AthletesController < ApplicationController
       raw_races, heart_rate_zones, athlete.athlete_info.measurement_preference
     )
     @races = RacesDecorator.new(shaped_races)
+  end
+
+  def pro_plans
+    @auth_url = ApplicationController.get_auth_url(request)
+    athlete = Athlete.find_by(id: params[:id])
+    ApplicationController.raise_athlete_not_found_error(params[:id]) if athlete.nil?
+
+    @is_current_user = athlete.access_token == cookies.signed[:access_token]
+    is_accessible = athlete.is_public || @is_current_user
+    ApplicationController.raise_athlete_not_accessible_error(params[:id]) unless is_accessible
+
+    @athlete_profile_url = "#{STRAVA_ATHLETES_BASE_URL}/#{athlete.id}"
+    @athlete = athlete.decorate
+
+    ninety_day_pro_plan = SubscriptionPlan.find_by(name: '90-day PRO')
+    @ninety_day_pro_plan = SubscriptionPlanDecorator.decorate(ninety_day_pro_plan)
+    annual_pro_plan = SubscriptionPlan.find_by(name: 'Annual PRO')
+    @annual_pro_plan = SubscriptionPlanDecorator.decorate(annual_pro_plan)
   end
 
   def save_profile

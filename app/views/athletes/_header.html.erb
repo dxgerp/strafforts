@@ -20,7 +20,7 @@
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
         <% unless ENV['HIDE_FACEBOOK_LIKE'] == 'true' %>
-        <li>
+        <li class="hidden-xs-down">
           <div class="fb-like" data-href="<%= Settings.app.facebook_page_url %>" data-layout="button_count"
             data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
         </li>

@@ -4,7 +4,6 @@ import { HtmlHelpers } from '../helpers/htmlHelpers';
 import NotFoundView from './404NotFound';
 import BaseView from './baseView';
 import NavigationSidebar from './navigationSidebar';
-import UpgradeView from './upgrade';
 
 export default class RacesByYearView extends BaseView {
 
@@ -137,7 +136,7 @@ export default class RacesByYearView extends BaseView {
             },
             error: (xhr, ajaxOptions, thrownError) => {
                 if (xhr.status === 403) {
-                    new UpgradeView().load();
+                    AppHelpers.goToProPlansPage();
                 } else if (xhr.status === 404) {
                     new NotFoundView().load();
                 }

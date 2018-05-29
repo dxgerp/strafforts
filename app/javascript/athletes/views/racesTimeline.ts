@@ -1,7 +1,6 @@
 import { AppHelpers } from '../helpers/appHelpers';
 import { HtmlHelpers } from '../helpers/htmlHelpers';
 import BaseView from './baseView';
-import UpgradeView from './upgrade';
 
 export default class RacesTimelineView extends BaseView {
 
@@ -86,7 +85,7 @@ export default class RacesTimelineView extends BaseView {
                     mainContent.empty();
                     mainContent.append(content);
                 } else {
-                    new UpgradeView().load();
+                    AppHelpers.goToProPlansPage();
                 }
             },
         });

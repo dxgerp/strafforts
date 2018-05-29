@@ -1,5 +1,5 @@
 class SubscriptionPlan < ApplicationRecord
-  validates :amount, :name, :description, presence: true
+  validates :name, :description, :amount, :amount_per_month, presence: true
 
   has_many :subscriptions
 end

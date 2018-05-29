@@ -36,7 +36,7 @@
   <div id="fb-root"></div>
   <div class="wrapper">
 
-    <header class="main-header">
+  <header class="main-header">
   <a class="logo" title="Strafforts" href="/">
     <!-- Logo -->
     <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -165,7 +165,7 @@
   </div>
 </div>
 
-    <!-- Left side column. contains the logo and sidebar -->
+  <!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar">
   <section class="sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
@@ -267,37 +267,177 @@
   <!-- /.sidebar -->
 </aside>
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
 
 
-      <div class="global-message bg-yellow hidden-md-up">
-        <span>For better Strafforts user experience with more data displayed, please consider using devices with larger screens.</span>
-      </div>
+    <div class="global-message bg-yellow hidden-md-up">
+      <span>For better Strafforts user experience with more data displayed, please consider using devices with larger screens.</span>
+    </div>
 
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <ol class="breadcrumb">
-          <li>
-            <a class="show-overview" href="#">
-              <i class="fa fa-home"></i>
-              Strafforts
-            </a>
-          </li>
-        </ol>
-      </section>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>Get PRO Subscription</h1>
+      <ol class="breadcrumb">
+        <li>
+          <a class="show-overview" href="#">
+            <i class="fa fa-home"></i>
+            Strafforts
+          </a>
+        </li>
+        <li class="active">Get PRO Subscription</li>
+      </ol>
+    </section>
 
-      <!-- Main content -->
-      <section class="content" id="main-content">
-        <div class='loading-icon-panel text-center overlay'>
-          <span title='Loading Data...'>
-            <i class='fa fa-spin fa-refresh'></i>
-          </span>
+    <!-- Main content -->
+    <section class="content" id="main-content">
+      <div class="row">
+        <div class="col-md-4 col-sm-12">
+          <div class="pricingTable green">
+            <div class="pricingTable-header">
+              <h3 class="title">FREE</h3>
+              <span class="sub-title">Lifetime</span>
+              <span class="year">Free <br>Lifetime</span>
+            </div>
+            <div class="price-value">
+              <div class="value">
+                <span class="currency">£</span>
+                <span class="amount">0</span>
+                <span class="month">/forever</span>
+              </div>
+            </div>
+            <div class="pricing-content-container">
+              <h3 class="pricing-content-header">Views</h3>
+              <ul class="pricing-content">
+                <li>Overview</li>
+                <li>Best Efforts</li>
+                <li class="partial-disable">
+                  <span class="has-tooltip" data-toggle="tooltip"
+                    title="Only for Marathon, Half Marathon, 10k and 5k.">
+                    PBs by Distances<i class="fa fa-question-circle" aria-hidden="true"></i>
+                  </span>
+                </li>
+                <li class="partial-disable">
+                  <span class="has-tooltip" data-toggle="tooltip"
+                    title="Only for Marathon, Half Marathon, 10k and 5k.">
+                    Races by Distances<i class="fa fa-question-circle" aria-hidden="true"></i>
+                  </span>
+                </li>
+                <li class="disable">Races Timeline</li>
+                <li class="disable">Races by Year</li>
+              </ul>
+
+              <h3 class="pricing-content-header">Processor</h3>
+              <ul class="pricing-content">
+                <li class="partial-disable">Every 12 Hours</li>
+                <li class="disable">On Demand</li>
+              </ul>
+
+              <h3 class="pricing-content-header">Misc.</h3>
+              <ul class="pricing-content">
+                <li class="disable">Reset Profile</li>
+                <li class="disable">Prompt Support</li>
+              </ul>
+            </div>
+              <button class="pricingTable-signup btn btn-block" disabled>Free</button>
+          </div>
         </div>
-      </section>
-    </div><!-- /.content-wrapper -->
 
-    <footer class="main-footer">
+        <div class="col-md-4 col-sm-12">
+          <div class="pricingTable yellow">
+            <div class="pricingTable-header">
+              <h3 class="title">PRO</h3>
+              <span class="sub-title">90-day</span>
+              <span class="year">Pay Now<br>£2.99</span>
+            </div>
+            <div class="price-value">
+              <div class="value">
+                <span class="currency">£</span>
+                <span class="amount">
+                  0.<span>99</span>
+                </span>
+                <span class="month">/month</span>
+              </div>
+            </div>
+            <div class="pricing-content-container">
+              <h3 class="pricing-content-header">Views</h3>
+              <ul class="pricing-content">
+                <li>Overview</li>
+                <li>Best Efforts</li>
+                <li>PBs by Distances</li>
+                <li>Races by Distances</li>
+                <li>Races Timeline</li>
+                <li>Races by Year</li>
+              </ul>
+
+              <h3 class="pricing-content-header">Processor</h3>
+              <ul class="pricing-content">
+                <li>Every 4 Hours</li>
+                <li>On Demand</li>
+              </ul>
+
+              <h3 class="pricing-content-header">Misc.</h3>
+              <ul class="pricing-content">
+                <li>Reset Profile</li>
+                <li class="disable">50% Discount</li>
+              </ul>
+            </div>
+              <button id="purchase-90-day-pro" data-id="aa311242-6ce4-49a2-87d8-6ddf651d0547" class="pricingTable-signup btn btn-block">
+                Upgrade
+              </button>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+          <div class="pricingTable">
+            <div class="pricingTable-header">
+              <h3 class="title">PRO </h3>
+              <span class="sub-title">Annual</span>
+              <span class="year">Only <br>£5.99/year</span>
+            </div>
+            <div class="price-value">
+              <div class="value">
+                <span class="currency">£</span>
+                <span class="amount">
+                  0.<span>49</span>
+                </span>
+                <span class="month">/month</span>
+              </div>
+            </div>
+            <div class="pricing-content-container">
+              <h3 class="pricing-content-header">Views</h3>
+              <ul class="pricing-content">
+                <li>Overview</li>
+                <li>Best Efforts</li>
+                <li>PBs by Distances</li>
+                <li>Races by Distances</li>
+                <li>Races Timeline</li>
+                <li>Races by Year</li>
+              </ul>
+
+              <h3 class="pricing-content-header">Processor</h3>
+              <ul class="pricing-content">
+                <li>Every 4 Hours</li>
+                <li>On Demand</li>
+              </ul>
+
+              <h3 class="pricing-content-header">Misc.</h3>
+              <ul class="pricing-content">
+                <li>Reset Profile</li>
+                <li>50% Discount</li>
+              </ul>
+            </div>
+
+              <button id="purchase-annual-pro" data-id="8871a74d-a840-44be-bd4a-adf9cae5eea9" class="pricingTable-signup btn btn-block">
+                Upgrade 
+              </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div><!-- /.content-wrapper -->
+
+  <footer class="main-footer">
   <span class="hidden-xs-down">
     <small>
       Created by <a class="external" href="http://yizeng.me" target="_blank">Yi Zeng</a> and GitHub'ed at
@@ -317,7 +457,7 @@
 </footer>
 
 
-      <!-- Control Sidebar -->
+    <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-light">
   <!-- Create the tabs -->
   <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
@@ -587,7 +727,7 @@
 
   <script src="/assets/application.js"></script>
   <script src="/assets/athletes.js"></script>
-  <script src="/packs-test/athletes.bundle.js"></script>
+  <script src="/packs-test/athletes.js"></script>
 
 </body>
 

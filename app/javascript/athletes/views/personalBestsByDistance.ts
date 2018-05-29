@@ -4,7 +4,6 @@ import { HtmlHelpers } from '../helpers/htmlHelpers';
 import NotFoundView from './404NotFound';
 import BaseView from './baseView';
 import NavigationSidebar from './navigationSidebar';
-import UpgradeView from './upgrade';
 
 export default class PersonalBestsByDistanceView extends BaseView {
 
@@ -121,7 +120,7 @@ export default class PersonalBestsByDistanceView extends BaseView {
                 ($('.dataTable') as any).DataTable({
                     columnDefs: [
                         // Disable searching for WorkoutType, Time, Pace and HRs.
-                        { targets: [1, 3, 4, 6, 7], searchable: false},
+                        { targets: [1, 3, 4, 6, 7], searchable: false },
                         { orderData: [[0, 'desc'], [4, 'asc']] },
                     ],
                     iDisplayLength: 10,
@@ -136,7 +135,7 @@ export default class PersonalBestsByDistanceView extends BaseView {
             },
             error: (xhr, ajaxOptions, thrownError) => {
                 if (xhr.status === 403) {
-                    new UpgradeView().load();
+                    AppHelpers.goToProPlansPage();
                 } else if (xhr.status === 404) {
                     new NotFoundView().load();
                 }
