@@ -34,6 +34,7 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
     ApplicationController.raise_athlete_not_accessible_error(params[:id]) unless is_accessible
 
     @athlete = athlete.decorate
+    @page_title = "Get #{Settings.app.name} PRO"
 
     ninety_day_pro_plan = SubscriptionPlan.find_by(name: '90-day PRO')
     @ninety_day_pro_plan = SubscriptionPlanDecorator.decorate(ninety_day_pro_plan)

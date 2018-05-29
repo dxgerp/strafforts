@@ -11,7 +11,7 @@ module ApplicationHelper
     ATHLETE_NOT_FOUND = 'The requested athlete could not be found.'
     ATHLETE_NOT_ACCESSIBLE = 'The requested athlete could not be accessed without logged in.'
     DISTANCE_NOT_FOUND = 'The requested distance could not be found.'
-    PRO_ACCOUNTS_ONLY = 'This feature is only available for accounts with PRO subscriptions.'  
+    PRO_ACCOUNTS_ONLY = 'This feature is only available for accounts with PRO plans.'
     YEAR_NOT_FOUND = 'The requested year could not be found.'
   end
 
