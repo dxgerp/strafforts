@@ -9,7 +9,6 @@ RSpec.describe Athlete, type: :model do
   it { should have_many(:best_efforts) }
   it { should have_many(:gears) }
   it { should have_many(:heart_rate_zones) }
-  it { should have_many(:payments) }
   it { should have_many(:races) }
   it { should have_many(:subscriptions) }
 

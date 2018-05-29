@@ -6,7 +6,6 @@ RSpec.describe Subscription, type: :model do
   it { should validate_presence_of(:starts_at) }
 
   it { should belong_to(:athlete) }
-  it { should belong_to(:promo_code) }
   it { should belong_to(:subscription_plan) }
 
   it 'should get subscriptions by athlete ID' do

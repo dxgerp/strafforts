@@ -177,24 +177,6 @@ ActiveRecord::Schema.define(version: 20180507095014) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "payments", force: :cascade do |t|
-    t.integer "athlete_id"
-    t.integer "subscription_id"
-    t.float "amount"
-    t.boolean "is_successful"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "promo_codes", force: :cascade do |t|
-    t.integer "discount"
-    t.string "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "starts_at"
-    t.datetime "expires_at"
-  end
-
   create_table "race_distances", id: :serial, force: :cascade do |t|
     t.float "distance"
     t.string "name"
@@ -236,7 +218,6 @@ ActiveRecord::Schema.define(version: 20180507095014) do
   create_table "subscriptions", force: :cascade do |t|
     t.integer "athlete_id"
     t.uuid "subscription_plan_id"
-    t.integer "promo_code_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "starts_at"
