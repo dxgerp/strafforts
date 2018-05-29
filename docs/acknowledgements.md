@@ -43,6 +43,10 @@
 - [poltergeist](https://github.com/teampoltergeist/poltergeist) - A PhantomJS driver for Capybara
 - [Selenium WebDriver](https://github.com/SeleniumHQ/selenium) - A browser automation framework and ecosystem.
 
+## Payment
+
+- [Stripe](https://stripe.com) - Online payment processing for internet businesses.
+
 [Ruby on Rails]: http://rubyonrails.org/
 [PostgreSQL]: https://www.postgresql.org/
 [AdminLTE]: https://github.com/almasaeed2010/AdminLTE
