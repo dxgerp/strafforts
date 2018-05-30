@@ -9,8 +9,8 @@ Strava's <a href='https://strava.github.io/api/v3/oauth/' target='_blank'>authen
 <p>It means all you need to do is to login to your Strava account then connect Strafforts with Strava and
 no sensitive information will be stored on Strafforts server at all.</p>")
       add('account', 'Does Strafforts store my credit card information?', "
-<p>No. Strafforts utilizes online payment provider <a href='https://stripe.com' target='_blank'>Stripe</a> to charge PRO subscriptions
-fees with PCI compliance being taken care of.</p>
+<p>No. Strafforts utilizes online payment provider <a href='https://stripe.com' target='_blank'>Stripe</a>
+to charge PRO subscriptions fees with PCI compliance being taken care of.</p>
 <p>All transactions are done through the client browser and payment provider Stripe.
 No sensitive information shall be passed to or stored on Strafforts servers.</p>")
       add('account', 'Is it possible to remove all my data on Strafforts?', "
