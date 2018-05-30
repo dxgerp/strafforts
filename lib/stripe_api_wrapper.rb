@@ -40,9 +40,9 @@ class StripeApiWrapper
       )
 
       # Create a new record in stripe_customers table.
-      stripe_customer = StripeCustomer.where(id: customer.id).first_or_create
+      stripe_customer = StripeCustomer.where(athlete_id: athlete.id).first_or_create
+      stripe_customer.id = customer.id
       stripe_customer.email = customer.email
-      stripe_customer.athlete_id = athlete.id
       stripe_customer.save
     end
 
