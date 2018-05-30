@@ -6,6 +6,7 @@ require 'creators/heart_rate_zones_creator'
 require 'activity_fetcher'
 require 'mailchimp_api_wrapper'
 require 'strava_api_wrapper'
+require 'stripe_api_wrapper'
 
 class ApplicationController < ActionController::Base
   STRAVA_API_AUTH_AUTHORIZE_URL = Settings.strava.api_auth_authorize_url

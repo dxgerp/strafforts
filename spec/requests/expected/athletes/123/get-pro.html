@@ -437,6 +437,88 @@
     </section>
   </div><!-- /.content-wrapper -->
 
+  <form id="form-purchase-pro" action="/athletes/123/purchase_pro" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+  <input type="hidden" name="subscriptionPlanId" />
+  <input type="hidden" name="stripeToken" />
+  <input type="hidden" name="stripeEmail" />
+</form>
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<script>
+    function submitPayment() {
+      toastr.options.timeOut = 15000; // Keep Toastr popup longer.
+      data = {
+            stripeToken: $("#form-purchase-pro input[name='stripeToken']")[0].value,
+            stripeEmail: $("#form-purchase-pro input[name='stripeEmail']")[0].value,
+            id: "123",
+            subscriptionPlanId: $("#form-purchase-pro input[name='subscriptionPlanId']")[0].value,
+      };
+      $.ajax({
+          url: $('#form-purchase-pro').attr('action'),
+          data: data,
+          cache: false,
+          type: 'post',
+          success: () => {
+            $("#main-content").LoadingOverlay("hide", true);
+            toastr.success(`Payment successful!`);
+            setTimeout(function() {
+              window.location.href = '/';
+            }, 1000);
+          },
+          error: (xhr, ajaxOptions, thrownError) => {
+            $("#main-content").LoadingOverlay("hide", true);
+            toastr.error(`${xhr.status} - ${xhr.statusText}<br /><br />${$.parseJSON(xhr.responseText)['error']}`);
+          },
+      });
+    }
+
+  var handler = StripeCheckout.configure({
+    key: '',
+    image: '/apple-touch-icon.png',
+    locale: 'auto',
+    token: function(token) {
+      $("#form-purchase-pro input[name='stripeToken']").val(token.id);
+      $("#form-purchase-pro input[name='stripeEmail']").val(token.email);
+      $("#main-content").LoadingOverlay("show", {
+        image : "",
+        fontawesome : "fa fa-spin fa-refresh"
+      });
+      submitPayment();
+    }
+  });
+
+  var createStripeEventListener = function(checkoutButton, description, amount) {
+    var checkoutButton = document.getElementById(checkoutButton);
+    checkoutButton.addEventListener('click', function(e) {
+      // Get the selected subscription plan ID to be sent to server.
+      var dataId = checkoutButton.getAttribute("data-id");
+      $("#form-purchase-pro input[name='subscriptionPlanId']").val(dataId);
+
+      // Close existing Toastr popups.
+      toastr.remove();
+
+      handler.open({
+        name: 'Strafforts',
+        email: "tony.stark@avengers.com",
+        description: description,
+        zipCode: true,
+        currency: 'gbp',
+        amount: amount
+      });
+
+      e.preventDefault();
+    });
+  };
+
+  createStripeEventListener('purchase-90-day-pro', '90-day PRO Subscription', '299.0');
+  createStripeEventListener('purchase-annual-pro', 'Annual PRO Subscription', '599.0');
+
+  // Close Checkout on page navigation:
+  window.addEventListener('popstate', function() {
+    handler.close();
+  });
+  document.title = "Strafforts | Tony Stark | Get Strafforts PRO";
+</script>
+
   <footer class="main-footer">
   <span class="hidden-xs-down">
     <small>

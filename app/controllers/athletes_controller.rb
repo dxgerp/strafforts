@@ -42,6 +42,50 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
     @annual_pro_plan = SubscriptionPlanDecorator.decorate(annual_pro_plan)
   end
 
+  def purchase_pro # rubocop:disable MethodLength, AbcSize
+    plan_id = params[:subscriptionPlanId]
+    subscription_plan = SubscriptionPlan.find_by(id: plan_id)
+    if subscription_plan.nil?
+      Rails.logger.warn("Could not find the requested subscription plan '#{plan_id}'.")
+      render json: { error: ApplicationHelper::Message::PRO_PLAN_NOT_FOUND }.to_json, status: 404
+      return
+    end
+
+    athlete_id = params[:id]
+    athlete = Athlete.find_by(id: athlete_id)
+    if athlete.nil?
+      Rails.logger.warn("Could not find the requested athlete '#{athlete_id}'.")
+      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_FOUND }.to_json, status: 404
+      return
+    end
+
+    athlete = athlete.decorate
+
+    @is_current_user = athlete.access_token == cookies.signed[:access_token]
+    is_accessible = athlete.is_public || @is_current_user
+    unless is_accessible
+      Rails.logger.warn("Could not purchase PRO subscription for athlete '#{athlete_id}' not currently logged in.")
+      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_ACCESSIBLE }.to_json, status: 403
+      return
+    end
+
+    begin
+      ::StripeApiWrapper.charge(athlete, subscription_plan, params[:stripeToken], params[:stripeEmail])
+      ::Creators::SubscriptionCreator.create(subscription_plan.name, athlete.id)
+    rescue Stripe::StripeError => e
+      Rails.logger.error("StripeError while purchasing PRO plan for athlete '#{athlete.id}'. "\
+        "Status: #{e.http_status}. Message: #{e.json_body[:error][:message]}\n"\
+        "Backtrace:\n\t#{e.backtrace.join("\n\t")}")
+      render json: { error: ApplicationHelper::Message::STRIPE_ERROR }.to_json, status: 402
+      return
+    rescue StandardError => e
+      Rails.logger.error("Purchasing PRO plan '#{subscription_plan.name}' failed for athlete '#{athlete.id}'. "\
+        "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
+      render json: { error: ApplicationHelper::Message::PAYMENT_FAILED }.to_json, status: 500
+      return
+    end
+  end
+
   def save_profile
     athlete = Athlete.find_by(id: params[:id])
     if athlete.nil?

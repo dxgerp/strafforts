@@ -3,6 +3,7 @@ class Athlete < ApplicationRecord
   validates :is_active, :is_public, inclusion: { in: [true, false] }
 
   has_one :athlete_info
+  has_one :stripe_customer
 
   has_many :activities
   has_many :best_efforts

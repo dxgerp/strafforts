@@ -93,3 +93,4 @@ gem 'delayed_job_active_record' # ActiveRecord backend integration for DelayedJo
 gem 'font-awesome-rails' # Rails Font Awesome.
 gem "gibbon" # MailChimp API wrapper.
 gem 'strava-api-v3' # Strava Ruby API Client.
+gem 'stripe' # Ruby library for the Stripe API.
