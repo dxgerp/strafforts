@@ -1,4 +1,6 @@
-<body id="page-top" class="homepage" data-ga-tracking-id="<%= ENV['GOOGLE_ANALYTICS_TRACKING_CODE'] %>" data-hotjar-id="<%= ENV['HOTJAR_ID'] %>" data-spy="scroll" data-target=".navbar-fixed-top">
+<body id="page-top" class="homepage" data-spy="scroll" data-target=".navbar-fixed-top">
+
+  <%= render :partial => 'shared/gtm_body' %>
 
   <!-- Navigation -->
   <nav class="navbar navbar-custom navbar-fixed-top">

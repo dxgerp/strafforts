@@ -1,7 +1,6 @@
 import { Helpers } from './../common/helpers';
 import { AppHelpers } from './helpers/appHelpers';
 import { EventBinders } from './helpers/eventBinders';
-import { GoogleAnalytics } from './helpers/googleAnalytics';
 import { Toastr } from './helpers/toastr';
 import { ViewType } from './helpers/viewTypes';
 import BestEffortsByDistanceView from './views/bestEffortsByDistance';
@@ -50,7 +49,6 @@ $(document).ready(() => {
 
     toastr.options = Toastr.getOptions();
 
-    GoogleAnalytics.bindEvents().apply(null);
     EventBinders.bindAll().apply(null);
 
     // Bind page loading handlers.

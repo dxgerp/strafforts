@@ -103,19 +103,6 @@ export namespace Helpers {
             || navigator.maxTouchPoints;       // works on IE10/11 and Surface.
     }
 
-    export function sendGoogleAnalyticsEvent(category: string, action: string, element: Element, value?: number) {
-        const title = element.getAttribute('title');
-        const textConent = element.textContent ? element.textContent.trim() : undefined;
-        const label = (title && title.length !== 0) ? title : textConent;
-        ga('send', {
-            hitType: 'event',
-            eventCategory: category,
-            eventAction: action.trim(),
-            eventLabel: label,
-            eventValue: value,
-        });
-    }
-
     export function toTitleCase(str: string) {
         return str.replace(/\w\S*/g, (txt) => {
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
