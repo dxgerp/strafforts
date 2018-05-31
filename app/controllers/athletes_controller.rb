@@ -62,8 +62,7 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
     athlete = athlete.decorate
 
     @is_current_user = athlete.access_token == cookies.signed[:access_token]
-    is_accessible = athlete.is_public || @is_current_user
-    unless is_accessible
+    unless @is_current_user
       Rails.logger.warn("Could not purchase PRO subscription for athlete '#{athlete_id}' not currently logged in.")
       render json: { error: ApplicationHelper::Message::ATHLETE_NOT_ACCESSIBLE }.to_json, status: 403
       return
@@ -74,7 +73,7 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
       ::Creators::SubscriptionCreator.create(subscription_plan.name, athlete.id)
     rescue Stripe::StripeError => e
       Rails.logger.error("StripeError while purchasing PRO plan for athlete '#{athlete.id}'. "\
-        "Status: #{e.http_status}. Message: #{e.json_body[:error][:message]}\n"\
+        "Status: #{e.http_status}. Message: #{e.json_body.blank? ? '' : e.json_body[:error][:message]}\n"\
         "Backtrace:\n\t#{e.backtrace.join("\n\t")}")
       render json: { error: ApplicationHelper::Message::STRIPE_ERROR }.to_json, status: 402
       return

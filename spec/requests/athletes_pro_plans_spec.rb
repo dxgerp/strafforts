@@ -40,17 +40,12 @@ RSpec.describe AthletesController, type: :request do
         # arrange.
         setup_cookie('3f2a45886980ebec9f4a689371e95860')
         url = '/athletes/123/get-pro'
-        expected = "#{expected_folder}#{url}.html"
 
         # act.
         get url
 
         # assert.
         expect(response).to have_http_status(:success)
-
-        FileHelpers.write_expected_file(expected, response.body)
-        # skip 'CSS and JS contain hash again after upgrading webpacker.'
-        # expect(response.body).to eq(File.read(expected))
       end
     end
   end

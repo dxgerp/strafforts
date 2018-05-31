@@ -27,7 +27,8 @@ RSpec.describe AuthController, type: :request do
 
     it 'should get valid cookie when Strava returns HTTP success' do
       # arrange.
-      response_body = { 'access_token' => ACCESS_TOKEN, 'athlete' => '' }.to_json
+      ENV['ENABLE_EARLY_BIRDS_PRO_ON_LOGIN'] = 'true'
+      response_body = { 'access_token' => ACCESS_TOKEN, 'athlete' => Athlete.find_by(id: 789).to_json }.to_json
       stub_strava_post_request(Settings.strava.api_auth_token_url, TOKEN_EXCHANGE_REQUEST_BODY, 200, response_body)
 
       # act.
