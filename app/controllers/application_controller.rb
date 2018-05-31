@@ -6,6 +6,7 @@ require 'creators/heart_rate_zones_creator'
 require 'activity_fetcher'
 require 'mailchimp_api_wrapper'
 require 'strava_api_wrapper'
+require 'stripe_api_wrapper'
 
 class ApplicationController < ActionController::Base
   STRAVA_API_AUTH_AUTHORIZE_URL = Settings.strava.api_auth_authorize_url
@@ -31,7 +32,7 @@ class ApplicationController < ActionController::Base
     athlete = Athlete.find_by(id: athlete_id)
     return {} if athlete.nil?
 
-    athlete = AthleteDecorator.decorate(athlete)
+    athlete = athlete.decorate
     athlete_info = {
       has_pro_subscription: athlete.pro_subscription?,
       pro_subscription_expires_at: athlete.pro_subscription_expires_at

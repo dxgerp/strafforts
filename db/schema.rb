@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180507095014) do
+ActiveRecord::Schema.define(version: 20180529083611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -177,24 +177,6 @@ ActiveRecord::Schema.define(version: 20180507095014) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "payments", force: :cascade do |t|
-    t.integer "athlete_id"
-    t.integer "subscription_id"
-    t.float "amount"
-    t.boolean "is_successful"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "promo_codes", force: :cascade do |t|
-    t.integer "discount"
-    t.string "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "starts_at"
-    t.datetime "expires_at"
-  end
-
   create_table "race_distances", id: :serial, force: :cascade do |t|
     t.float "distance"
     t.string "name"
@@ -223,6 +205,13 @@ ActiveRecord::Schema.define(version: 20180507095014) do
     t.index ["name"], name: "index_states_on_name"
   end
 
+  create_table "stripe_customers", id: :string, force: :cascade do |t|
+    t.integer "athlete_id"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "subscription_plans", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -236,7 +225,6 @@ ActiveRecord::Schema.define(version: 20180507095014) do
   create_table "subscriptions", force: :cascade do |t|
     t.integer "athlete_id"
     t.uuid "subscription_plan_id"
-    t.integer "promo_code_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "starts_at"

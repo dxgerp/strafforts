@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe AthleteDecorator, type: :decorator do
-  STRAVA_URL = 'https://www.strava.com'.freeze
   DEFAULT_NAME = 'Strava User'.freeze
 
   let(:athlete) { Athlete.find_by(id: 123) }
@@ -23,7 +22,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
       expect(decorator.profile_url).to eq('https://www.strava.com/athletes/123')
     end
 
-    it "should be '#{STRAVA_URL}' when athlete.id is blank" do
+    it 'should be nil when athlete.id is blank' do
       # arrange.
       athlete.id = nil
 
@@ -31,7 +30,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
       decorator = AthleteDecorator.decorate(athlete)
 
       # assert.
-      expect(decorator.profile_url).to eq(STRAVA_URL)
+      expect(decorator.profile_url).to eq(nil)
     end
   end
 
@@ -132,7 +131,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
   end
 
   describe '.following_url' do
-    it "should be '#{STRAVA_URL}' when athlete.id is blank" do
+    it 'should be nil when athlete.id is blank' do
       # arrange.
       athlete.id = nil
 
@@ -140,7 +139,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
       decorator = AthleteDecorator.decorate(athlete)
 
       # assert.
-      expect(decorator.following_url).to eq(STRAVA_URL)
+      expect(decorator.following_url).to eq(nil)
     end
 
     it 'should be the correct following_url when athlete.id is not blank' do
@@ -153,7 +152,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
   end
 
   describe '.follower_url' do
-    it "should be '#{STRAVA_URL}' when athlete.id is blank" do
+    it 'should be nil when athlete.id is blank' do
       # arrange.
       athlete.id = nil
 
@@ -161,7 +160,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
       decorator = AthleteDecorator.decorate(athlete)
 
       # assert.
-      expect(decorator.follower_url).to eq(STRAVA_URL)
+      expect(decorator.follower_url).to eq(nil)
     end
 
     it 'should be the correct follower_url when athlete.id is not blank' do

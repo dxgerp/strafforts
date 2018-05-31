@@ -20,7 +20,7 @@
 
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>Get PRO Subscription</h1>
+      <h1><%= @page_title %></h1>
       <ol class="breadcrumb">
         <li>
           <a class="show-overview" href="#">
@@ -28,7 +28,7 @@
             <%= Settings.app.name %>
           </a>
         </li>
-        <li class="active">Get PRO Subscription</li>
+        <li class="active"><%= @page_title %></li>
       </ol>
     </section>
 
@@ -185,6 +185,8 @@
       </div>
     </section>
   </div><!-- /.content-wrapper -->
+
+  <%= render 'payment' %>
 
   <%= render 'footer' %>
 

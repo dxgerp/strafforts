@@ -46,7 +46,8 @@ class ActivityFetcher
               activity = @api_wrapper.retrieve_an_activity(activity_id)
               Creators::ActivityCreator.create_or_update(activity)
             rescue StandardError => e
-              Rails.logger.error("ActivityCreator - Error creating or updating activity '#{activity_id}'. #{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}") # rubocop:disable LineLength
+              Rails.logger.error("ActivityCreator - Error creating or updating activity '#{activity_id}'. "\
+                "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
               next
             end
             athlete.last_activity_retrieved = activity_id
@@ -62,7 +63,8 @@ class ActivityFetcher
         Rails.logger.info(get_no_new_runs_message(athlete.id, current_total_run_count))
       end
     rescue StandardError => e
-      Rails.logger.error("ActivityFetcher - Error fetching athlete (access_token=#{@access_token}). #{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}") # rubocop:disable LineLength
+      Rails.logger.error("ActivityFetcher - Error fetching athlete (access_token=#{@access_token}). "\
+        "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
       if e.message.include?('Authorization Error')
         athlete = Athlete.find_by_access_token(@access_token)
         unless athlete.nil?

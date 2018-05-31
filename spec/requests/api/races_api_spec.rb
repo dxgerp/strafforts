@@ -32,6 +32,30 @@ RSpec.describe Api::RacesController, type: :request do
       expect(response.body).to eq('[]')
     end
 
+    context 'for an athlete without PRO subscription' do
+      it "should get 403 when getting race distance '20k' for an athlete without a PRO plan" do
+        # arrange.
+        url = '/api/athletes/456/races/20k'
+
+        # act.
+        get URI.encode(url)
+
+        # assert.
+        expect(response).to have_http_status(403)
+      end
+
+      it "should get 403 when getting race year '2014' for an athlete without a PRO plan" do
+        # arrange.
+        url = '/api/athletes/456/races/2014'
+
+        # act.
+        get URI.encode(url)
+
+        # assert.
+        expect(response).to have_http_status(403)
+      end
+    end
+
     context 'for an athlete with PRO subscription' do
       it 'should be successful getting items for overview' do
         # arrange.

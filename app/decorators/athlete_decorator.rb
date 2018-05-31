@@ -5,11 +5,8 @@ class AthleteDecorator < Draper::Decorator
   MAX_INFO_TEXT_LENGTH = 25
 
   def profile_url
-    if object.id.blank?
-      STRAVA_URL
-    else
-      "#{STRAVA_URL}/athletes/#{object.id}"
-    end
+    return "#{STRAVA_URL}/athletes/#{object.id}" unless object.id.blank?
+    nil
   end
 
   def profile_image_url
@@ -43,19 +40,13 @@ class AthleteDecorator < Draper::Decorator
   end
 
   def following_url
-    if object.id.blank?
-      STRAVA_URL
-    else
-      "#{profile_url}/follows?type=following"
-    end
+    return "#{profile_url}/follows?type=following" unless object.id.blank?
+    nil
   end
 
   def follower_url
-    if object.id.blank?
-      STRAVA_URL
-    else
-      "#{profile_url}/follows?type=followers"
-    end
+    return "#{profile_url}/follows?type=followers" unless object.id.blank?
+    nil
   end
 
   def fullname

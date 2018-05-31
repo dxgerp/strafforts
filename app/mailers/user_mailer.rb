@@ -5,8 +5,8 @@ class UserMailer < ApplicationMailer
 
     @app_name = Settings.app.name
     @app_description = Settings.app.description
-    @app_url = Settings.app.production_url
-    @demo_url = "#{@app_url}#{Settings.app.production_url}/athletes/#{Settings.app.demo_athlete}"
+    @app_url = Settings.app.url
+    @demo_url = "#{@app_url}#{Settings.app.url}/athletes/#{Settings.app.demo_athlete}"
     @sender_name = Settings.app.emailer.default_sender_name
     @sender_email = Settings.app.emailer.default_sender_email
 
