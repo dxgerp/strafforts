@@ -22,6 +22,7 @@ export default class BestEffortsByDistanceView extends BaseView {
         this.createFilterButtons();
 
         if (this.distance) {
+            $('.best-efforts-filter-buttons .btn').removeClass('active'); // Reset all currently active filter buttons.
             $(`.best-efforts-filter-buttons .btn[data-race-distance='${this.distance}']`).addClass('active');
             this.createViewTemplate();
             this.createView();
