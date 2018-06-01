@@ -259,7 +259,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </li>
 
       <li>
-        <a class="show-races-timeline treeview-header" href="?view=timeline&type=races">
+        <a class="show-races-timeline treeview-header "
+          href="?view=timeline&type=races">
           <i class="fa fa-calendar"></i>
           <span>Races Timeline</span>
           <span class='subscription-badge'><span class="label">PRO</span></span>
@@ -496,25 +497,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   var createStripeEventListener = function(checkoutButton, description, amount) {
     var checkoutButton = document.getElementById(checkoutButton);
-    checkoutButton.addEventListener('click', function(e) {
-      // Get the selected subscription plan ID to be sent to server.
-      var dataId = checkoutButton.getAttribute("data-id");
-      $("#form-purchase-pro input[name='subscriptionPlanId']").val(dataId);
+    if (checkoutButton !== null) {
+      checkoutButton.addEventListener('click', function(e) {
+        // Get the selected subscription plan ID to be sent to server.
+        var dataId = checkoutButton.getAttribute("data-id");
+        $("#form-purchase-pro input[name='subscriptionPlanId']").val(dataId);
 
-      // Close existing Toastr popups.
-      toastr.remove();
+        // Close existing Toastr popups.
+        toastr.remove();
 
-      handler.open({
-        name: 'Strafforts',
-        email: "",
-        description: description,
-        zipCode: true,
-        currency: 'gbp',
-        amount: amount
+        handler.open({
+          name: 'Strafforts',
+          email: "",
+          description: description,
+          zipCode: true,
+          currency: 'gbp',
+          amount: amount
+        });
+
+        e.preventDefault();
       });
-
-      e.preventDefault();
-    });
+    }
   };
 
   createStripeEventListener('purchase-90-day-pro', '90-day PRO Subscription', '299.0');
