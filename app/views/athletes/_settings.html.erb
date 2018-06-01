@@ -39,10 +39,10 @@
           </label>
         </div>
           <% unless @athlete.pro_subscription_expires_at.blank? || 'Indefinite'.casecmp(@athlete.pro_subscription_expires_at).zero? %>
-            <a href="/athletes/<%= @athlete.id %>/get-pro" class="btn btn-block btn-flat btn-danger">Renew</a>
+            <a href="/athletes/<%= @athlete.id %>/get-pro" class="btn btn-block btn-flat btn-danger get-pro">Renew</a>
           <% end %>
       <% else %>
-        <a href="/athletes/<%= @athlete.id %>/get-pro" class="btn btn-block btn-flat btn-danger">Upgrade</a>
+        <a href="/athletes/<%= @athlete.id %>/get-pro" class="btn btn-block btn-flat btn-danger get-pro">Upgrade</a>
       <% end %>
 
       <%= form_tag({controller: 'athletes', action: 'save_profile'}, class: 'form-save-profile') do %>

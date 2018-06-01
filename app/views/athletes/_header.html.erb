@@ -27,7 +27,7 @@
         <% end %>
 
         <li class="dropdown user user-menu">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Toggle User Dropdown Menu">
             <% if @athlete.profile_image_url.nil? %>
                 <img alt="User Image" class="athlete-image user-image" src="<%= asset_path('strava-profile.png') %>">
             <% else %>
@@ -102,7 +102,7 @@
 
         <% if @is_current_user %>
           <li>
-            <a href="#" class="control-sidebar-toggle" data-toggle="control-sidebar" title="Show Settings">
+            <a href="#" class="control-sidebar-toggle" data-toggle="control-sidebar" title="Toggle Settings">
               <i class="fa fa-gears"></i>
             </a>
           </li>

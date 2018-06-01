@@ -50,25 +50,27 @@
 
   var createStripeEventListener = function(checkoutButton, description, amount) {
     var checkoutButton = document.getElementById(checkoutButton);
-    checkoutButton.addEventListener('click', function(e) {
-      // Get the selected subscription plan ID to be sent to server.
-      var dataId = checkoutButton.getAttribute("data-id");
-      $("#form-purchase-pro input[name='subscriptionPlanId']").val(dataId);
+    if (checkoutButton !== null) {
+      checkoutButton.addEventListener('click', function(e) {
+        // Get the selected subscription plan ID to be sent to server.
+        var dataId = checkoutButton.getAttribute("data-id");
+        $("#form-purchase-pro input[name='subscriptionPlanId']").val(dataId);
 
-      // Close existing Toastr popups.
-      toastr.remove();
+        // Close existing Toastr popups.
+        toastr.remove();
 
-      handler.open({
-        name: '<%= Settings.app.name %>',
-        email: "<%= @athlete.athlete_info.blank? ? '' : @athlete.athlete_info.email %>",
-        description: description,
-        zipCode: true,
-        currency: '<%= Settings.app.currency %>',
-        amount: amount
+        handler.open({
+          name: '<%= Settings.app.name %>',
+          email: "<%= @athlete.athlete_info.blank? ? '' : @athlete.athlete_info.email %>",
+          description: description,
+          zipCode: true,
+          currency: '<%= Settings.app.currency %>',
+          amount: amount
+        });
+
+        e.preventDefault();
       });
-
-      e.preventDefault();
-    });
+    }
   };
 
   createStripeEventListener('purchase-90-day-pro', '90-day PRO Subscription', '<%= @ninety_day_pro_plan.amount * 100 %>');

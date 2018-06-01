@@ -38,7 +38,7 @@ export default class Overview extends BaseView {
         mainContent.empty(); // Empty main content.
 
         const content = `
-        <div class="row">
+        <div class="row pane-overview">
             <div class="col-xs-12">
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">

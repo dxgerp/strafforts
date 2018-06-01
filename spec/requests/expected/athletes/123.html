@@ -5,6 +5,15 @@
 
     <meta charset="utf-8">
 
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','');</script>
+<!-- End Google Tag Manager -->
+
+
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
@@ -32,7 +41,14 @@
     <link rel="dns-prefetch" href="//fonts.googleapis.com/">
   </head>
 
-  <body class="hold-transition skin-black-light sidebar-mini page-loading" data-ga-tracking-id="" data-hotjar-id="">
+  <body class="hold-transition skin-black-light sidebar-mini page-loading">
+
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id="
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
   <div id="fb-root"></div>
   <div class="wrapper">
 
@@ -63,7 +79,7 @@
         </li>
 
         <li class="dropdown user user-menu">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Toggle User Dropdown Menu">
                 <img alt="User Image" class="athlete-image user-image" src="https://www.tonystark.com/large.jpg">
             <span class="hidden-xs athlete-name">Tony Stark</span>
           </a>
@@ -127,7 +143,7 @@
         </li>
 
           <li>
-            <a href="#" class="control-sidebar-toggle" data-toggle="control-sidebar" title="Show Settings">
+            <a href="#" class="control-sidebar-toggle" data-toggle="control-sidebar" title="Toggle Settings">
               <i class="fa fa-gears"></i>
             </a>
           </li>
@@ -244,9 +260,10 @@
       </li>
 
       <li>
-        <a class="show-races-timeline treeview-header" href="?view=timeline&type=races">
+        <a class="show-races-timeline treeview-header disabled pro-only"
+          href="?view=timeline&type=races">
           <i class="fa fa-calendar"></i>
-          <span>Races Timeline</span>
+          <span class="item-text">Races Timeline</span>
           <span class='subscription-badge'><span class="label">PRO</span></span>
         </a>
       </li>
@@ -352,7 +369,7 @@
           </span>
         </label>
       </div>
-        <a href="/athletes/123/get-pro" class="btn btn-block btn-flat btn-danger">Upgrade</a>
+        <a href="/athletes/123/get-pro" class="btn btn-block btn-flat btn-danger get-pro">Upgrade</a>
 
       <form class="form-save-profile" action="/athletes/123/save_profile" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
       <h3 class="control-sidebar-heading">Profile Settings</h3>
