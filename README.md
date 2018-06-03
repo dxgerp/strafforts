@@ -85,5 +85,5 @@ your app must use the same license and open source.
 [strava-best-efforts]: https://github.com/yizeng/strava-best-efforts
 [Ruby on Rails]: http://rubyonrails.org/
 [Strafforts Issues]: https://github.com/yizeng/strafforts/issues
-[yizeng.me]: http://yizeng.me
+[yizeng.me]: https://yizeng.me
 [Use Run Type Tags]: https://support.strava.com/hc/en-us/articles/216919557-Using-Strava-Run-Type-Tags-to-analyze-your-Runs

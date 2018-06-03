@@ -174,7 +174,7 @@ but configurations in `config/database.yml` and `Gemfile` need to be updated acc
 [estimated best efforts]: https://support.strava.com/hc/en-us/articles/216917127-Estimated-Best-Efforts-for-Running
 [Strafforts]: https:/www.strafforts.com
 [strava-best-efforts]: https://github.com/yizeng/strava-best-efforts
-[yizeng.me]: http://yizeng.me
+[yizeng.me]: https://yizeng.me
 [License]: https://raw.github.com/yizeng/strafforts/master/LICENSE
 [Ruby on Rails]: http://rubyonrails.org/
 [PostgreSQL]: https://www.postgresql.org/
