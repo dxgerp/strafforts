@@ -18,7 +18,7 @@ const loadView = () => {
         const distance = Helpers.getUrlParameter('distance');
         const distanceText = distance ? distance.replace('-', ' ').replace('|', '/') : '';
         const year = Helpers.getUrlParameter('year');
-    
+
         if (view === ViewType.Faq) {
             new FaqView().load();
         } else if (view === ViewType.Timeline) {
