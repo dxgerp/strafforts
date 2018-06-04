@@ -24,16 +24,11 @@ class FaqTest < AppTestBase
   def assert_faq_panel_load_successfully
     faq_panel = find(:css, '.pane-faq')
     within(faq_panel) do
-      assert_has_selector('h3.box-title')
-      headers = all(:css, 'h3.box-title')
+      assert_has_selector('.nav-tabs li')
+      headers = all(:css, '.nav-tabs li')
       assert_equal(FAQ_CATEGORIES.count, headers.count)
       headers.each do |header|
         assert_includes_text(FAQ_CATEGORIES, header.text)
-      end
-
-      links = all(:css, '.accordion .box-body a')
-      links.each do |link|
-        assert_equal('_blank', link[:target], "Link's href: '#{link[:href]}'")
       end
     end
   end

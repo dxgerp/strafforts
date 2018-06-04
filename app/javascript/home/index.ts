@@ -34,24 +34,4 @@ $(document).ready(() => {
     $('a').mouseup(() => {
         $(this).blur();
     });
-
-    // Google Analytics event tracking.
-    $('.homepage').on('click', '.btn', (event) => {
-        const actionName = event.currentTarget.textContent ? event.currentTarget.textContent : 'Click Button';
-        Helpers.sendGoogleAnalyticsEvent('Home', actionName, event.currentTarget);
-    });
-    $('.homepage').on('click', '.btn-connect-with-strava', (event) => {
-        Helpers.sendGoogleAnalyticsEvent('Home', 'Connect with Strava', event.currentTarget);
-    });
-    $('.navbar').on('click', '.navbar-toggle', (event) => {
-        Helpers.sendGoogleAnalyticsEvent('Home', 'Toggle Navigation Menu', event.currentTarget);
-    });
-    $('.navbar').on('click', '.navbar-brand, .navbar-nav a', (event) => {
-        Helpers.sendGoogleAnalyticsEvent('Home', 'Navigate', event.currentTarget);
-    });
-    $('.error-page').on('click', '.btn', (event) => {
-        const actionName = event.currentTarget.textContent ? event.currentTarget.textContent : 'Click Button';
-        const errorCode = parseInt($('body').attr('data-error-code'), 10);
-        Helpers.sendGoogleAnalyticsEvent('Error', actionName, event.currentTarget, errorCode);
-    });
 });

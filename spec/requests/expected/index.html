@@ -1,21 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Strafforts - An Analytics App for Strava Best Efforts, PBs/PRs and Races</title>
+    <title>Strafforts - An Analytics App for Your Strava Running Best Efforts, PBs/PRs and Races</title>
 
     <meta charset="utf-8">
+
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','');</script>
+<!-- End Google Tag Manager -->
+
+
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
     <!-- SEO meta tags -->
     <meta name="author" content="Yi Zeng">
-    <meta property="og:title" content="Strafforts - An Analytics App for Strava Best Efforts, PBs/PRs and Races" />
+    <meta property="og:title" content="Strafforts - An Analytics App for Your Strava Running Best Efforts, PBs/PRs and Races" />
     <meta property="og:locale" content="en" />
-    <meta name="description" content="An analytics app that allow athletes to analyze their visualized Strava best efforts, personal bests and races data in tables and charts." />
-    <meta property="og:description" content="An analytics app that allow athletes to analyze their visualized Strava best efforts, personal bests and races data in tables and charts." />
+    <meta name="description" content="An analytics app that allow athletes to analyze their visualized Strava running best efforts, personal bests and races data in tables and charts." />
+    <meta property="og:description" content="An analytics app that allow athletes to analyze their visualized Strava running best efforts, personal bests and races data in tables and charts." />
     <meta property="og:url" content="https://www.strafforts.com" />
     <meta name="keywords" content="strava,strafforts,bestefforts,pb,races,running,data,visualizer,analytics"/>
-    <script type="application/ld+json">{"@context": "http://schema.org","@type": "WebSite","name": "Straffrots","author":"Yi Zeng","description":"An analytics app that allow athletes to analyze their visualized Strava best efforts, personal bests and races data in tables and charts.","url": "https://www.strafforts.com"}</script>
+    <script type="application/ld+json">{"@context": "http://schema.org","@type": "WebSite","name": "Straffrots","author":"Yi Zeng","description":"An analytics app that allow athletes to analyze their visualized Strava running best efforts, personal bests and races data in tables and charts.","url": "https://www.strafforts.com"}</script>
 
     
 
@@ -29,7 +39,13 @@
     <link rel="stylesheet" media="all" href="/packs-test/home.css" />
   </head>
 
-  <body id="page-top" class="homepage" data-ga-tracking-id="" data-hotjar-id="" data-spy="scroll" data-target=".navbar-fixed-top">
+  <body id="page-top" class="homepage" data-spy="scroll" data-target=".navbar-fixed-top">
+
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id="
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
 
   <!-- Navigation -->
   <nav class="navbar navbar-custom navbar-fixed-top">
@@ -73,7 +89,7 @@
               Strafforts
             </h1>
             <p class="intro-text">
-              An Analytics App for Strava Best Efforts, PBs/PRs and Races
+              An Analytics App for Your Strava Running Best Efforts, PBs/PRs and Races
             </p>
             <ul class="list-inline banner-social-buttons">
               <li>
@@ -100,15 +116,14 @@
         <p>
           Strafforts is a web app that calls
           <a target="_blank" href="https://strava.github.io/api/">Strava API</a>
-          to fetch athlete's best efforts,
+          to fetch athlete's running best efforts,
           <a target="_blank" href="https://support.strava.com/hc/en-us/articles/216917127-Estimated-Best-Efforts-for-Running">personal bests</a>
           and <a target="_blank" href="https://support.strava.com/hc/en-us/articles/216919557-Using-Strava-Run-Type-Tags-to-analyze-your-Runs">races</a> data,
-          then visualize them in forms of data tables, line charts and pie charts, in such way athletes can perform some analysis, like half marathon PB
+          then visualize them in forms of data tables, line charts, pie charts etc., in such way athletes can perform some analysis, like half marathon PB
           progression, fastest shoes used for a 10K race, how often 5K PB gets set, etc.
         </p>
         <p>
-          This app is absolutely free and <a target="_blank" href="https://github.com/yizeng/strafforts">open source</a>.
-          It doesn't modify any of your data on <a target="_blank" href="https://www.strava.com/">Strava</a> or store your Strava password.
+          This app doesn't modify any of your data on <a target="_blank" href="https://www.strava.com/">Strava</a> or store your Strava password or credit cards.
           All you need to do is to connect this app with your Strava account by clicking "<a href="#connect">Connect with Strava</a>" button
           and wait for our background worker to fetch and visualize your data.
         </p>
@@ -127,7 +142,7 @@
         <div class="col-lg-8 col-lg-offset-2">
           <div class="heading-text">
             <h2>Demo</h2>
-            <p>See how my Strava best efforts, PBs/PRs and races are visualized.</p>
+            <p>See how my Strava running best efforts, PBs/PRs and races are visualized.</p>
             <ul class="list-inline banner-social-buttons">
               <li>
                 <a href="/athletes/9123806" class="btn btn-default btn-lg btn-view-demo">
@@ -145,7 +160,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2">
         <h2>Connect</h2>
-        <p>Connect now to let Strafforts fetch and visualize your Strava best efforts and races!</p>
+        <p>Connect now to let Strafforts fetch and visualize your Strava running best efforts, PBs/PRs and races!</p>
         </p>
         <ul class="list-inline banner-social-buttons">
           <li>
@@ -161,7 +176,7 @@
   <footer>
     <div class="container text-center">
       <p>App designed and developed by
-        <a target="_blank" href="http://yizeng.me">Yi Zeng</a>.</p>
+        <a target="_blank" href="https://yizeng.me">Yi Zeng</a>.</p>
       <p>
         <a href="https://www.strava.com" class="btn-powered-by-strava" title="Powered by Strava" target="_blank">
           <img alt="Powered by Strava" src="/assets/api_logo_pwrdBy_strava_stack_light.png" />

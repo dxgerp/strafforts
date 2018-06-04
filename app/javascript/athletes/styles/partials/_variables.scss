@@ -1,0 +1,25 @@
+$color-strava: #FC4C02;
+$color-strava-hover: #E34402;
+$color-light-green: #00BD65;
+$color-green: #00A65A;
+$color-red: #F56954;
+$color-yellow: #F39C12;
+$color-grey: rgba(128, 128, 128, 1);
+$color-light-grey: rgba(128, 128, 128, .5);
+
+@font-face {
+    font-family: 'Source Sans Pro Fallback';
+    font-weight: normal;
+    font-style: normal;
+
+    src: font-url('sourcesanspro-regular-webfont.eot');
+    src: font-url('sourcesanspro-regular-webfont.eot?#iefix') format('embedded-opentype'), font-url('sourcesanspro-regular-webfont.woff2') format('woff2'), font-url('sourcesanspro-regular-webfont.woff') format('woff'), font-url('sourcesanspro-regular-webfont.ttf') format('truetype'), font-url('sourcesanspro-regular-webfont.svg#source_sans_proregular') format('svg');
+}
+
+@mixin transition($args...) {
+    -webkit-transition: $args;
+       -moz-transition: $args;
+        -ms-transition: $args;
+         -o-transition: $args;
+            transition: $args;
+}

@@ -5,6 +5,15 @@
 
     <meta charset="utf-8">
 
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','');</script>
+<!-- End Google Tag Manager -->
+
+
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
@@ -12,11 +21,11 @@
     <meta name="author" content="Yi Zeng">
         <meta property="og:title" content="Strafforts | Yi Zeng | Overview" />
     <meta property="og:locale" content="en" />
-    <meta name="description" content="Visualized Strava best efforts, PBs/PRs and races data for Yi Zeng." />
-    <meta property="og:description" content="Visualized Strava best efforts, PBs/PRs and races data for Yi Zeng." />
+    <meta name="description" content="Visualized Strava running best efforts, PBs/PRs and races data for Yi Zeng." />
+    <meta property="og:description" content="Visualized Strava running best efforts, PBs/PRs and races data for Yi Zeng." />
     <meta property="og:url" content="https://www.strafforts.com" />
     <meta name="keywords" content="strava,strafforts,bestefforts,pb,races,running,data,visualizer,analyticsYi Zeng"/>
-    <script type="application/ld+json">{"@context": "http://schema.org","@type": "WebSite","name": "Straffrots","author":"Yi Zeng","description":"Visualized Strava best efforts, PBs/PRs and races data for Yi Zeng.","url": "https://www.strafforts.com/athletes/9123806"}</script>
+    <script type="application/ld+json">{"@context": "http://schema.org","@type": "WebSite","name": "Straffrots","author":"Yi Zeng","description":"Visualized Strava running best efforts, PBs/PRs and races data for Yi Zeng.","url": "https://www.strafforts.com/athletes/9123806"}</script>
 
     
 
@@ -32,7 +41,14 @@
     <link rel="dns-prefetch" href="//fonts.googleapis.com/">
   </head>
 
-  <body class="hold-transition skin-black-light sidebar-mini page-loading" data-ga-tracking-id="" data-hotjar-id="">
+  <body class="hold-transition skin-black-light sidebar-mini page-loading">
+
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id="
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
   <div id="fb-root"></div>
   <div class="wrapper">
 
@@ -57,12 +73,13 @@
 
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
-        <li>
-          <div class="fb-like hidden-xs-down" data-href="https://www.facebook.com/strafforts" data-layout="button_count"
+        <li class="hidden-xs-down">
+          <div class="fb-like" data-href="https://www.facebook.com/strafforts" data-layout="button_count"
             data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
         </li>
+
         <li class="dropdown user user-menu">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Toggle User Dropdown Menu">
                 <img alt="User Image" class="athlete-image user-image" src="https://dgalywyr863hv.cloudfront.net/pictures/athletes/9123806/2937558/10/large.jpg">
             <span class="hidden-xs athlete-name">Yi Zeng</span>
           </a>
@@ -104,28 +121,38 @@
             </li>
           </ul>
         </li>
+
+        <li class="hidden-xs-down">
+          <a class='subscription-badge'>
+            <span class="pro-account">
+              PRO
+            </span>
+          </a>
+        </li>
+
         <li>
           <a class="social-sharing-toggle hidden-xs-down" href="#" data-toggle="modal" data-target="#modal-social-sharing" title="Share This Profile">
             <i class="fa fa-share-alt"></i>
           </a>
         </li>
+
         <li>
           <a class="show-faq" href="?view=faq" title="Show FAQ">
             <i class="fa fa-question-circle"></i>
           </a>
         </li>
+
           <li>
             <a href="https://www.strava.com/oauth/authorize?client_id=&amp;response_type=code&amp;redirect_uri=http://www.example.com:80/auth/exchange_token&amp;approval_prompt=auto&amp;scope=view_private" class="btn-connect-with-strava" title="Connect With Strava">
               <img alt="Connect With Strava" src="/assets/btn_strava_connectwith_orange.png" />
             </a>
           </li> 
       </ul>
-  </ul>
-</div>
-</nav>
+    </div>
+  </nav>
 </header>
 
-<!-- Modal - Heart Rate Zones -->
+<!-- Modal - Social Sharing -->
 <div class="modal" id="modal-social-sharing" tabindex="-1" role="dialog" aria-labelledby="modal-social-sharing-label">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -138,10 +165,10 @@
         </h4>
       </div>
       <div class="modal-body">
-        <div class='loading-icon-panel text-center'>
-            <button type='button' class='btn btn-default btn-lrg' title='Loading Sharing Plugin...'>
+        <div class='loading-icon-panel text-center overlay'>
+            <span title='Loading Sharing Plugin...'>
                 <i class='fa fa-spin fa-refresh'></i>
-            </button>
+            </span>
         </div>
         <!-- Go to www.addthis.com/dashboard to customize your tools -->
         <div class="addthis_inline_share_toolbox text-center"></div>
@@ -168,6 +195,13 @@
       <div class="info">
         <span id="athlete-id" class="hidden">9123806</span>
         <span class="athlete-name">Yi Zeng</span>
+
+        <p class='subscription-badge'>
+          <span class="label pro-account">
+            PRO
+          </span>
+        </p>
+
           <p><small class="athlete-location">Christchurch, New Zealand</small></p>
       </div>
     </div>
@@ -177,13 +211,6 @@
         <a class="show-overview treeview-header" href="?view=overview">
           <i class="fa fa-home"></i>
           <span>Overview</span>
-        </a>
-      </li>
-
-      <li>
-        <a class="show-races-timeline treeview-header" href="?view=timeline&type=races">
-          <i class="fa fa-calendar"></i>
-          <span>Races Timeline</span>
         </a>
       </li>
 
@@ -203,13 +230,11 @@
         <ul class="treeview-menu">
           <li id="treeview-menu-personal-bests-for-distance" class="treeview-expander treeview">
             <a href="#" class="show-more-distance">
-              <i class="fa fa-circle-o"></i>More Distances
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+              <i class="fa fa-circle-o"> </i>More Distances
+              <span class='subscription-badge'><span class="label">PRO</span></span>
             </a>
 
-            <ul class="treeview-menu"></ul>
+            <ul class="treeview-menu "></ul>
           </li>
         </ul>
       </li>
@@ -224,24 +249,32 @@
 
           <li id="treeview-menu-races-for-distance" class="treeview-expander treeview">
             <a href="#" class="show-more-distance">
-              <i class="fa fa-circle-o"></i>More Distances
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+              <i class="fa fa-circle-o"> </i>More Distances
+              <span class='subscription-badge'><span class="label">PRO</span></span>
             </a>
 
-            <ul class="treeview-menu"></ul>
+            <ul class="treeview-menu "></ul>
           </li>
         </ul>
+      </li>
+
+      <li>
+        <a class="show-races-timeline treeview-header "
+          href="?view=timeline&type=races">
+          <i class="fa fa-calendar"></i>
+          <span class="item-text">Races Timeline</span>
+          <span class='subscription-badge'><span class="label">PRO</span></span>
+        </a>
       </li>
 
       <li class="active treeview">
         <a class="treeview-header disabled" href="#">
           <i class="fa fa-line-chart"></i>
           <span>Races by Year</span>
+          <span class='subscription-badge'><span class="label">PRO</span></span>
         </a>
 
-        <ul class="treeview-menu">
+        <ul class="treeview-menu ">
           <li id="treeview-menu-races-for-year" class="treeview-expander treeview hidden"></li>
         </ul>
       </li>
@@ -272,27 +305,33 @@
 
       <!-- Main content -->
       <section class="content" id="main-content">
-        <div class='loading-icon-panel text-center'>
-          <span title='Loading Data...'><i class='fa fa-spin fa-refresh'></i></span>
+        <div class='loading-icon-panel text-center overlay'>
+          <span title='Loading Data...'>
+            <i class='fa fa-spin fa-refresh'></i>
+          </span>
         </div>
       </section>
     </div><!-- /.content-wrapper -->
 
     <footer class="main-footer">
-  <span class="hidden-xs-down">
+  <span class="hidden-sm-down">
     <small>
-      Enjoyed Strafforts?
-      <a class="custom-dbox-popup" href="https://donorbox.org/help-push-strafforts-forward?amount=25" 
-        title="Donate to Strafforts">Help push us forward</a>!
+      Created by <a class="external" href="https://yizeng.me" target="_blank">Yi Zeng</a> and GitHub'ed at
+      <a class="external" href="https://github.com/yizeng/strafforts" target="_blank">yizeng/strafforts</a>.
     </small>
   </span>
+    <div class="fb-like hidden-sm-up" data-href="https://www.facebook.com/strafforts" data-layout="button_count"
+      data-action="like" data-size="small" data-show-faces="false" data-share="false">
+    </div>
+
   <span class="pull-right">
-      <a class="bg-strava btn label" href="https://www.strava.com/athletes/9123806" target="_blank">Follow me on Strava</a>
+      <a class="bg-strava btn label hidden-xs-down" href="https://www.strava.com/athletes/9123806" target="_blank">
+        Follow me on Strava
+      </a>
       <a class="bg-strava btn label" href="mailto:support@strafforts.com" target="_blank">Contact Us</a>
-          <small>v1.3.1</small>
+          <small>v1.5.0</small>
   </span>
 </footer>
-<script> window.DonorBox = { widgetLinkClassName: 'custom-dbox-popup' } </script>
 
 
 

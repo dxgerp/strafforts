@@ -4,6 +4,9 @@
     <title><%= Settings.app.title %></title>
 
     <meta charset="utf-8">
+
+    <%= render :partial => 'shared/gtm_head' %>
+
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
@@ -13,9 +16,9 @@
     <meta property="og:locale" content="en" />
     <meta name="description" content="<%= Settings.app.html_meta_description %>" />
     <meta property="og:description" content="<%= Settings.app.html_meta_description %>" />
-    <meta property="og:url" content="<%= Settings.app.production_url %>" />
+    <meta property="og:url" content="<%= Settings.app.url %>" />
     <meta name="keywords" content="<%= Settings.app.html_meta_keywords %>"/>
-    <script type="application/ld+json">{"@context": "http://schema.org","@type": "WebSite","name": "Straffrots","author":"Yi Zeng","description":"<%= Settings.app.html_meta_description %>","url": "<%= Settings.app.production_url %>"}</script>
+    <script type="application/ld+json">{"@context": "http://schema.org","@type": "WebSite","name": "Straffrots","author":"Yi Zeng","description":"<%= Settings.app.html_meta_description %>","url": "<%= Settings.app.url %>"}</script>
 
     <%= csrf_meta_tags %>
 

@@ -1,0 +1,34 @@
+---
+subscription_plan_001:
+  id: 29402173-0b5c-47de-a000-93dcc01c819f
+  amount: 0
+  name: Early Birds PRO
+  description: Early Birds PRO Plan
+  duration: 90
+  created_at: '2018-02-15 17:19:43.545464'
+  updated_at: '2018-02-15 18:29:56.125433'
+subscription_plan_002:
+  id: 43ab44e0-49c2-46cc-9cfd-66591f9f708c
+  amount: 0
+  name: Lifetime PRO
+  description: Lifetime PRO Plan
+  created_at: '2018-02-15 17:20:32.843423'
+  updated_at: '2018-02-20 12:32:53.954322'
+subscription_plan_003:
+  id: 8871a74d-a840-44be-bd4a-adf9cae5eea9
+  amount: 5.99
+  amount_per_month: 0.49
+  name: Annual PRO
+  description: Annual PRO Plan
+  duration: 365
+  created_at: '2018-03-15 19:30:42.535434'
+  updated_at: '2018-03-20 19:52:56.547893'
+subscription_plan_004:
+  id: aa311242-6ce4-49a2-87d8-6ddf651d0547
+  amount: 2.99
+  amount_per_month: 0.99
+  name: 90-day PRO
+  description: 90-day PRO Plan
+  duration: 90
+  created_at: '2018-04-02 23:16:23.123235'
+  updated_at: '2018-04-10 23:16:23.353453'

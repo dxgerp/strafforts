@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe AthleteDecorator, type: :decorator do
-  STRAVA_URL = 'https://www.strava.com'.freeze
   DEFAULT_NAME = 'Strava User'.freeze
 
   let(:athlete) { Athlete.find_by(id: 123) }
@@ -23,7 +22,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
       expect(decorator.profile_url).to eq('https://www.strava.com/athletes/123')
     end
 
-    it "should be '#{STRAVA_URL}' when athlete.id is blank" do
+    it 'should be nil when athlete.id is blank' do
       # arrange.
       athlete.id = nil
 
@@ -31,7 +30,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
       decorator = AthleteDecorator.decorate(athlete)
 
       # assert.
-      expect(decorator.profile_url).to eq(STRAVA_URL)
+      expect(decorator.profile_url).to eq(nil)
     end
   end
 
@@ -56,8 +55,83 @@ RSpec.describe AthleteDecorator, type: :decorator do
     end
   end
 
+  describe '.pro_subscription?' do
+    it 'should be true for athlete with PRO subscriptions' do
+      # arrange.
+      athlete = Athlete.find_by(id: 9123806)
+
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.pro_subscription?).to be true
+    end
+
+    it 'should be false for athlete with already deleted PRO subscriptions' do
+      # arrange.
+      athlete = Athlete.find_by(id: 456)
+
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.pro_subscription?).to be false
+    end
+
+    it 'should be false for athlete without PRO subscriptions' do
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.pro_subscription?).to be false
+    end
+  end
+
+  describe '.pro_subscription_expires_at' do
+    it 'should be indefinite for athlete with Lifetime PRO subscriptions' do
+      # arrange.
+      athlete = Athlete.find_by(id: 789)
+
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.pro_subscription_expires_at).to eq('Indefinite')
+    end
+
+    it 'should be the correct date for athlete with ordinary PRO subscriptions' do
+      # arrange.
+      athlete = Athlete.find_by(id: 9123806)
+
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.pro_subscription_expires_at).to eq('2028/03/15')
+    end
+
+    it 'should be nil for athlete with already deleted PRO subscriptions' do
+      # arrange.
+      athlete = Athlete.find_by(id: 456)
+
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.pro_subscription_expires_at).to be nil
+    end
+
+    it 'should be nil for athlete without PRO subscriptions' do
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.pro_subscription_expires_at).to be nil
+    end
+  end
+
   describe '.following_url' do
-    it "should be '#{STRAVA_URL}' when athlete.id is blank" do
+    it 'should be nil when athlete.id is blank' do
       # arrange.
       athlete.id = nil
 
@@ -65,7 +139,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
       decorator = AthleteDecorator.decorate(athlete)
 
       # assert.
-      expect(decorator.following_url).to eq(STRAVA_URL)
+      expect(decorator.following_url).to eq(nil)
     end
 
     it 'should be the correct following_url when athlete.id is not blank' do
@@ -78,7 +152,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
   end
 
   describe '.follower_url' do
-    it "should be '#{STRAVA_URL}' when athlete.id is blank" do
+    it 'should be nil when athlete.id is blank' do
       # arrange.
       athlete.id = nil
 
@@ -86,7 +160,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
       decorator = AthleteDecorator.decorate(athlete)
 
       # assert.
-      expect(decorator.follower_url).to eq(STRAVA_URL)
+      expect(decorator.follower_url).to eq(nil)
     end
 
     it 'should be the correct follower_url when athlete.id is not blank' do

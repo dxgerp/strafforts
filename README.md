@@ -7,11 +7,11 @@
 [![Codecov](https://img.shields.io/codecov/c/github/yizeng/strafforts/master.svg?style=flat-square)][Strafforts Codecov]
 [![Code Climate](https://img.shields.io/codeclimate/maintainability/yizeng/strafforts.svg?style=flat-square)][Strafforts Code Climate]
 
-## An Analytics App for Strava Best Efforts, PBs/PRs and Races
+## An Analytics App for Your Strava Running Best Efforts, PBs/PRs and Races
 
 Strafforts is a web app that calls [Strava API][Strava API]
-to fetch athletes' best efforts, [personal bests][Strava Support Best Efforts] and [races][Use Run Type Tags]
-and visualize them in forms of data tables, line charts and pie charts,
+to fetch athletes' running best efforts, [personal bests][Strava Support Best Efforts] and [races][Use Run Type Tags]
+and visualize them in forms of data tables, line charts, pie charts etc.,
 in such way athletes can perform some analysis like half marathon PB progression,
 fastest shoes used for a 10K race, how often 5K PB gets set, etc.
 
@@ -70,7 +70,9 @@ Development guide can be found [here](docs/development-guide.md) if needed.
 ## License
 
 Strafforts is a project developed and maintained by [Yi Zeng][yizeng.me],
-licensed under [GNU Affero General Public License v3.0](LICENSE).
+licensed under [GNU Affero General Public License v3.0](LICENSE),
+which means if you ever want to spin up your own fork or re-use any of the Strafforts components,
+your app must use the same license and open source.
 
 [GitHub Tags]: https://github.com/yizeng/strafforts/tags
 [Strafforts Travis]: https://travis-ci.org/yizeng/strafforts
@@ -83,5 +85,5 @@ licensed under [GNU Affero General Public License v3.0](LICENSE).
 [strava-best-efforts]: https://github.com/yizeng/strava-best-efforts
 [Ruby on Rails]: http://rubyonrails.org/
 [Strafforts Issues]: https://github.com/yizeng/strafforts/issues
-[yizeng.me]: http://yizeng.me
+[yizeng.me]: https://yizeng.me
 [Use Run Type Tags]: https://support.strava.com/hc/en-us/articles/216919557-Using-Strava-Run-Type-Tags-to-analyze-your-Runs

@@ -1,9 +1,6 @@
-import './../vendor/donorbox.js';
-
 import { Helpers } from './../common/helpers';
 import { AppHelpers } from './helpers/appHelpers';
 import { EventBinders } from './helpers/eventBinders';
-import { GoogleAnalytics } from './helpers/googleAnalytics';
 import { Toastr } from './helpers/toastr';
 import { ViewType } from './helpers/viewTypes';
 import BestEffortsByDistanceView from './views/bestEffortsByDistance';
@@ -16,37 +13,42 @@ import RacesByYearView from './views/racesByYear';
 import RacesTimelineView from './views/racesTimeline';
 
 const loadView = () => {
-    const view = Helpers.getUrlParameter('view');
-    const distance = Helpers.getUrlParameter('distance');
-    const distanceText = distance ? distance.replace('-', ' ').replace('|', '/') : '';
-    const year = Helpers.getUrlParameter('year');
+    if (window.location.href.indexOf('/get-pro') === -1) {
+        const view = Helpers.getUrlParameter('view');
+        const distance = Helpers.getUrlParameter('distance');
+        const distanceText = distance ? distance.replace('-', ' ').replace('|', '/') : '';
+        const year = Helpers.getUrlParameter('year');
 
-    if (view === 'faq') {
-        new FaqView().load();
-    } else if (view === ViewType.Timeline) {
-        new RacesTimelineView().load();
-    } else if (view === ViewType.BestEfforts) {
-        new BestEffortsByDistanceView(distanceText).load();
-    } else if (view === ViewType.PersonalBests && distance) {
-        new PersonalBestsByDistanceView(distanceText).load();
-    } else if (view === ViewType.Races && year && /^20\d\d$/g.test(year)) {
-        new RacesByYearView(year).load();
-    } else if (view === ViewType.Races && distance) {
-        new RacesByDistanceView(distanceText).load();
-    } else {
-        new Overview().load();
+        if (view === ViewType.Faq) {
+            new FaqView().load();
+        } else if (view === ViewType.Timeline) {
+            new RacesTimelineView().load();
+        } else if (view === ViewType.BestEfforts) {
+            new BestEffortsByDistanceView(distanceText).load();
+        } else if (view === ViewType.PersonalBests && distance) {
+            new PersonalBestsByDistanceView(distanceText).load();
+        } else if (view === ViewType.Races && year && /^20\d\d$/g.test(year)) {
+            new RacesByYearView(year).load();
+        } else if (view === ViewType.Races && distance) {
+            new RacesByDistanceView(distanceText).load();
+        } else {
+            new Overview().load();
+        }
     }
 };
 
 $(document).ready(() => {
     // Handle browser back event.
     window.onpopstate = (event) => {
-        loadView();
+        if (window.location.href.indexOf('/get-pro') > -1) {
+            AppHelpers.goToProPlansPage();
+        } else {
+            loadView();
+        }
     };
 
     toastr.options = Toastr.getOptions();
 
-    GoogleAnalytics.bindEvents().apply(null);
     EventBinders.bindAll().apply(null);
 
     // Bind page loading handlers.

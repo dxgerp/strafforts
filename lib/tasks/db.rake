@@ -2,6 +2,7 @@ require 'yaml'
 
 namespace :db do
   desc 'Restore DB dump file to local'
+  # Usage: bundle exec bin/rails db:restore
   task :restore, [:file] => :environment do |_t, args|
     dump_file = args[:file] || 'latest.dump'
 
@@ -24,11 +25,12 @@ namespace :db do
     puts "Executing: #{command}"
     system command
 
-    # Run db:migrate.
-    system 'bundle exec rails db:migrate'
+    # Run db:migrate and db:seed.
+    system 'bundle exec rails db:migrate && bundle exec rails db:seed'
   end
 
   desc 'Convert development DB to Rails test fixtures'
+  # Usage: bundle exec bin/rails db:to_fixtures
   task to_fixtures: :environment do
     TABLES_TO_SKIP = %w[ar_internal_metadata delayed_jobs schema_info schema_migrations].freeze
 
@@ -54,13 +56,21 @@ namespace :db do
     end
   end
 
-  desc 'Purge all queued delayed_jobs. Usage: bundle exec bin/rails db:truncate_delayed_jobs'
+  desc 'Purge all queued delayed_jobs.'
+  # Usage: bundle exec bin/rails db:truncate_delayed_jobs
   task truncate_delayed_jobs: :environment do
-    begin
-      ActiveRecord::Base.establish_connection
-      ActiveRecord::Base.connection.execute('TRUNCATE delayed_jobs RESTART IDENTITY')
-    ensure
-      ActiveRecord::Base.connection.close if ActiveRecord::Base.connection
-    end
+    truncate_table('delayed_jobs')
+  end
+
+  desc 'Purge all existing FAQs.'
+  # Usage: bundle exec bin/rails db:truncate_faqs
+  task truncate_faqs: :environment do
+    truncate_table('faqs')
+  end
+
+  def truncate_table(table_name)
+    ActiveRecord::Base.establish_connection
+    ActiveRecord::Base.connection.execute("TRUNCATE #{table_name} RESTART IDENTITY")
+    ActiveRecord::Base.connection.close if ActiveRecord::Base.connection
   end
 end

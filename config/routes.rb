@@ -7,10 +7,12 @@ Rails.application.routes.draw do
   match '/500', to: 'errors#internal_server_error', via: :all
 
   get 'athletes/:id' => 'athletes#index'
+  get 'athletes/:id/get-pro' => 'athletes#pro_plans'
 
   post 'athletes/:id/fetch_latest' => 'athletes#fetch_latest'
   post 'athletes/:id/save_profile' => 'athletes#save_profile'
   post 'athletes/:id/reset_profile' => 'athletes#reset_profile'
+  post 'athletes/:id/purchase_pro' => 'athletes#purchase_pro'
 
   namespace :api do
     get 'athletes/:id/meta' => 'meta#index'

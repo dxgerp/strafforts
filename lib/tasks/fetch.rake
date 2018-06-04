@@ -1,32 +1,42 @@
 namespace :fetch do
   desc 'Fetch the latest data for all athletes'
+  # Usage: bundle exec bin/rails fetch:latest PRO_ONLY=[true/false]
   task latest: :environment do
-    fetch('latest')
+    fetch('latest', ENV['PRO_ONLY'])
   end
 
   desc 'Fetch all data for all athletes'
+  # Usage: bundle exec bin/rails fetch:all PRO_ONLY=[true/false]
   task all: :environment do
-    fetch('all')
+    fetch('all', ENV['PRO_ONLY'])
   end
 
-  desc 'Fetch best efforts for all athletes. Usage: bin/rails fetch:best_efforts MODE=[all/latest]'
+  desc 'Fetch best efforts for all athletes.'
+  # Usage: bundle exec bin/rails fetch:best_efforts MODE=[all/latest] PRO_ONLY=[true/false]
   task best_efforts: :environment do
-    fetch(ENV['MODE'], %w[best-efforts])
+    fetch(ENV['MODE'], ENV['PRO_ONLY'], %w[best-efforts])
   end
 
-  desc 'Fetch personal bests for all athletes. Usage: bin/rails fetch:personal_bests MODE=[all/latest]'
+  desc 'Fetch personal bests for all athletes.'
+  # Usage: bundle exec bin/rails fetch:personal_bests MODE=[all/latest] PRO_ONLY=[true/false]
   task personal_bests: :environment do
-    fetch(ENV['MODE'], %w[personal-bests])
+    fetch(ENV['MODE'], ENV['PRO_ONLY'], %w[personal-bests])
   end
 
-  desc 'Fetch races for all athletes. Usage: bin/rails fetch:races MODE=[all/latest]'
+  desc 'Fetch races for all athletes.'
+  # Usage: bundle exec bin/rails fetch:races MODE=[all/latest] PRO_ONLY=[true/false]
   task races: :environment do
-    fetch(ENV['MODE'], %w[races])
+    fetch(ENV['MODE'], ENV['PRO_ONLY'], %w[races])
   end
 
-  def fetch(mode = nil, type = nil)
+  def fetch(mode, pro_only = false, type = nil)
     athletes = Athlete.find_all_by_is_active(true)
     athletes.each_with_index do |athlete, index|
+      if pro_only == 'true'
+        athlete = AthleteDecorator.decorate(athlete)
+        next unless athlete.pro_subscription?
+      end
+
       fetcher = ActivityFetcher.new(athlete.access_token)
       fetcher.delay(run_at: (index * 5).seconds.from_now, priority: 5).fetch_all(mode: mode, type: type)
     end

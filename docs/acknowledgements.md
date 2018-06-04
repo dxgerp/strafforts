@@ -3,8 +3,8 @@
 ## App
 
 - [Ruby on Rails 5][Ruby on Rails] - A model–view–controller (MVC) framework,providing default structures for a database, a web service, and web pages.
-- [PostgreSQL][PostgreSQL] - The world's most advanced open source database
-- [AdminLTE][AdminLTE] - Free Premium Admin control Panel Theme Based On Bootstrap 3.x
+- [PostgreSQL][PostgreSQL] - The world's most advanced open source database.
+- [AdminLTE][AdminLTE] - Free Premium Admin control Panel Theme Based On Bootstrap 3.x.
 
 ### Additional Gems
 
@@ -24,6 +24,7 @@
 - [HTML5 Shiv](https://github.com/aFarkas/html5shiv) - This script is the defacto way to enable use of HTML5 sectioning elements in legacy Internet Explorer.
 - [jQuery Easing](http://gsgd.co.uk/sandbox/jquery/easing/) -  Uses the built in easing capabilities added In jQuery 1.1 to offer multiple easing options
 - [moment.js](http://momentjs.com/) - Parse, validate, manipulate, and display dates in JavaScript.
+- [PACE](http://github.hubspot.com/pace/) - Automatic page load progress bars
 - [Respond.js](https://github.com/scottjehl/Respond) - A fast & lightweight polyfill for min/max-width CSS3 Media Queries (for IE 6-8, and more)
 - [toastr.js](https://github.com/CodeSeven/toastr) - Simple javascript toast notifications
 
@@ -41,6 +42,10 @@
 - [Travis CI](https://travis-ci.org/) - A hosted, distributed continuous integration service used to build and test software projects hosted at GitHub.
 - [poltergeist](https://github.com/teampoltergeist/poltergeist) - A PhantomJS driver for Capybara
 - [Selenium WebDriver](https://github.com/SeleniumHQ/selenium) - A browser automation framework and ecosystem.
+
+## Payment
+
+- [Stripe](https://stripe.com) - Online payment processing for internet businesses.
 
 [Ruby on Rails]: http://rubyonrails.org/
 [PostgreSQL]: https://www.postgresql.org/

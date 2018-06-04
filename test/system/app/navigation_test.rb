@@ -126,7 +126,7 @@ class NavigationTest < AppTestBase
   end
 
   def assert_navigate_to_distance_successfully(type, header, distance, chart_titles)
-    distance_formatted_for_html = distance.downcase.tr('/', '-').tr(' ', '-')
+    distance_formatted_for_html = distance.downcase.tr('/', '_').tr(' ', '-')
     distance_formatted_for_url = format_text_for_url(distance)
 
     navigation_item = find(:id, "#{type}-for-distance-#{distance_formatted_for_html}-navigation")

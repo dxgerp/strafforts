@@ -1,7 +1,7 @@
 import { AppHelpers } from '../helpers/appHelpers';
 import { ChartCreator } from '../helpers/chartCreators';
-import { ChartType } from '../helpers/chartHelper';
 import { HtmlHelpers } from '../helpers/htmlHelpers';
+import NotFoundView from './404NotFound';
 import BaseView from './baseView';
 import NavigationSidebar from './navigationSidebar';
 
@@ -120,7 +120,7 @@ export default class PersonalBestsByDistanceView extends BaseView {
                 ($('.dataTable') as any).DataTable({
                     columnDefs: [
                         // Disable searching for WorkoutType, Time, Pace and HRs.
-                        { targets: [1, 3, 4, 6, 7], searchable: false},
+                        { targets: [1, 3, 4, 6, 7], searchable: false },
                         { orderData: [[0, 'desc'], [4, 'asc']] },
                     ],
                     iDisplayLength: 10,
@@ -132,6 +132,13 @@ export default class PersonalBestsByDistanceView extends BaseView {
                 chartCreator.createWorkoutTypeChart('workout-type-chart');
                 chartCreator.createHeartRatesChart('heart-rates-chart');
                 chartCreator.createAverageHrZonesChart('average-hr-zones-chart');
+            },
+            error: (xhr, ajaxOptions, thrownError) => {
+                if (xhr.status === 403) {
+                    AppHelpers.goToProPlansPage();
+                } else if (xhr.status === 404) {
+                    new NotFoundView().load();
+                }
             },
         });
     }

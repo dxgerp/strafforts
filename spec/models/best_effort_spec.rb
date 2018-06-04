@@ -13,12 +13,12 @@ RSpec.describe BestEffort, type: :model do
   it { should belong_to(:best_effort_type) }
 
   describe '.find_all_pbs_by_athlete_id' do
-    it 'should get nil when the provided athlete_id matches nothing' do
+    it 'should get empty array when the provided athlete_id matches nothing' do
       # act.
       items = BestEffort.find_all_pbs_by_athlete_id(12345678)
 
       # assert.
-      expect(items).to be_nil
+      expect(items).to eq([])
     end
 
     it 'should get personal bests matching the provided athlete_id' do
@@ -35,12 +35,12 @@ RSpec.describe BestEffort, type: :model do
   end
 
   describe '.find_all_pbs_by_athlete_id_and_best_effort_type_id' do
-    it 'should get nil when the provided athlete_id and best_effort_type_id together match nothing' do
+    it 'should get empty array when the provided athlete_id and best_effort_type_id together match nothing' do
       # act.
       items = BestEffort.find_all_pbs_by_athlete_id_and_best_effort_type_id(9123806, 1)
 
       # assert.
-      expect(items).to be_nil
+      expect(items).to eq([])
     end
 
     it 'should get personal best matching the provided athlete_id and best_effort_type_id' do

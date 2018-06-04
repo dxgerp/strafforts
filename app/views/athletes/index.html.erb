@@ -1,4 +1,7 @@
-<body class="hold-transition skin-black-light sidebar-mini page-loading" data-ga-tracking-id="<%= ENV['GOOGLE_ANALYTICS_TRACKING_CODE']%>" data-hotjar-id="<%= ENV['HOTJAR_ID'] %>">
+<body class="hold-transition skin-black-light sidebar-mini page-loading">
+
+  <%= render :partial => 'shared/gtm_body' %>
+
   <div id="fb-root"></div>
   <div class="wrapper">
 
@@ -32,8 +35,10 @@
 
       <!-- Main content -->
       <section class="content" id="main-content">
-        <div class='loading-icon-panel text-center'>
-          <span title='Loading Data...'><i class='fa fa-spin fa-refresh'></i></span>
+        <div class='loading-icon-panel text-center overlay'>
+          <span title='Loading Data...'>
+            <i class='fa fa-spin fa-refresh'></i>
+          </span>
         </div>
       </section>
     </div><!-- /.content-wrapper -->

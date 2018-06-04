@@ -30,59 +30,63 @@ export default class RacesTimelineView extends BaseView {
             url: `${AppHelpers.getApiBaseUrl()}/meta`,
             dataType: 'json',
             success: (data) => {
-                const years: number[] = [];
-                $.each(data['races_by_year'], (key, value) => {
-                    const year = value['name'];
-                    if ($.inArray(year, years) === -1) {
-                        years.push(year);
-                    }
-                });
-
-                let content = HtmlHelpers.getNoDataInfoBox();
-                if (years.length > 0) {
-                    let yearsFilterButtons = '';
-                    let items = '';
-                    years.forEach((year) => {
-                        yearsFilterButtons += `
-                            <button class="btn btn-md btn-race-year" data-race-year="${year}">${year}</button>
-                        `;
-                        items += `
-                            <li class="time-label" data-race-year="${year}">
-                                <span class="bg-strava">${year}</span>
-                            </li>
-                            ${this.createRacesTimelineForYear(year)}
-                        `;
+                if (data['athlete_info'] != null && data['athlete_info']['has_pro_subscription']) {
+                    const years: number[] = [];
+                    $.each(data['races_by_year'], (key, value) => {
+                        const year = value['name'];
+                        if ($.inArray(year, years) === -1) {
+                            years.push(year);
+                        }
                     });
 
-                    let distancesFilterButtons = '';
-                    RacesTimelineView.distances.forEach((distanceText) => {
-                        distancesFilterButtons += `
-                            <button class="btn btn-md btn-race-distance"
-                                data-race-distance="${distanceText}">${distanceText}</button>
-                        `;
-                    });
+                    let content = HtmlHelpers.getNoDataInfoBox();
+                    if (years.length > 0) {
+                        let yearsFilterButtons = '';
+                        let items = '';
+                        years.forEach((year) => {
+                            yearsFilterButtons += `
+                                <button class="btn btn-md btn-race-year" data-race-year="${year}">${year}</button>
+                            `;
+                            items += `
+                                <li class="time-label" data-race-year="${year}">
+                                    <span class="bg-strava">${year}</span>
+                                </li>
+                                ${this.createRacesTimelineForYear(year)}
+                            `;
+                        });
 
-                    content = `
-                        <div class="timeline-wrapper">
-                            <div class="col-xs-12 text-center filter-buttons">
-                                <button class="btn btn-md hidden show-races-timeline show-all">Show All</button>
-                                ${yearsFilterButtons}
-                                ${distancesFilterButtons}
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <ul class="timeline">
-                                        ${items}
-                                    </ul>
+                        let distancesFilterButtons = '';
+                        RacesTimelineView.distances.forEach((distanceText) => {
+                            distancesFilterButtons += `
+                                <button class="btn btn-md btn-race-distance"
+                                    data-race-distance="${distanceText}">${distanceText}</button>
+                            `;
+                        });
+
+                        content = `
+                            <div class="timeline-wrapper">
+                                <div class="col-xs-12 text-center filter-buttons">
+                                    <button class="btn btn-md hidden show-races-timeline show-all">Show All</button>
+                                    ${yearsFilterButtons}
+                                    ${distancesFilterButtons}
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <ul class="timeline">
+                                            ${items}
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    `;
-                }
+                        `;
+                    }
 
-                const mainContent = $('#main-content');
-                mainContent.empty();
-                mainContent.append(content);
+                    const mainContent = $('#main-content');
+                    mainContent.empty();
+                    mainContent.append(content);
+                } else {
+                    AppHelpers.goToProPlansPage();
+                }
             },
         });
     }

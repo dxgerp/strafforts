@@ -6,13 +6,14 @@ require 'creators/heart_rate_zones_creator'
 require 'activity_fetcher'
 require 'mailchimp_api_wrapper'
 require 'strava_api_wrapper'
+require 'stripe_api_wrapper'
 
 class ApplicationController < ActionController::Base
   STRAVA_API_AUTH_AUTHORIZE_URL = Settings.strava.api_auth_authorize_url
   STRAVA_API_AUTH_TOKEN_URL = Settings.strava.api_auth_token_url
   STRAVA_API_AUTH_DEAUTHORIZE_URL = Settings.strava.api_auth_deauthorize_url
   STRAVA_API_CLIENT_ID = Settings.strava.api_client_id
-  STRAVA_ATHLETES_URL = Settings.strava.athletes_base_url
+  STRAVA_ATHLETES_BASE_URL = "#{Settings.strava.url}/athletes".freeze
 
   RECENT_ITEMS_LIMIT = 20
   BEST_EFFORTS_LIMIT = 100
@@ -27,7 +28,16 @@ class ApplicationController < ActionController::Base
     '&approval_prompt=auto&scope=view_private'
   end
 
-  def self.get_meta(athlete_id) # rubocop:disable CyclomaticComplexity, MethodLength
+  def self.get_meta(athlete_id) # rubocop:disable MethodLength
+    athlete = Athlete.find_by(id: athlete_id)
+    return {} if athlete.nil?
+
+    athlete = athlete.decorate
+    athlete_info = {
+      has_pro_subscription: athlete.pro_subscription?,
+      pro_subscription_expires_at: athlete.pro_subscription_expires_at
+    }
+
     best_efforts_meta = []
     ApplicationHelper::Helper.all_best_effort_types.each do |item|
       model = BestEffortType.find_by_name(item[:name])
@@ -51,7 +61,7 @@ class ApplicationController < ActionController::Base
       personal_bests = BestEffort.find_all_pbs_by_athlete_id_and_best_effort_type_id(athlete_id, model.id)
       result = {
         name: item[:name],
-        count: personal_bests.nil? ? 0 : personal_bests.size,
+        count: personal_bests.size,
         is_major: item[:is_major]
       }
       personal_bests_meta << result
@@ -65,7 +75,7 @@ class ApplicationController < ActionController::Base
       races = Race.find_all_by_athlete_id_and_race_distance_id(athlete_id, model.id)
       result = {
         name: item[:name],
-        count: races.nil? ? 0 : races.size,
+        count: races.size,
         is_major: item[:is_major]
       }
       races_by_distance_meta << result
@@ -83,6 +93,7 @@ class ApplicationController < ActionController::Base
     end
 
     {
+      athlete_info: athlete_info,
       best_efforts: best_efforts_meta,
       personal_bests: personal_bests_meta,
       races_by_distance: races_by_distance_meta,
@@ -103,15 +114,5 @@ class ApplicationController < ActionController::Base
   def self.raise_athlete_not_accessible_error(id)
     error_message = "Could not access athlete '#{id}'."
     raise ActionController::RoutingError, error_message
-  end
-
-  def self.raise_item_not_found_error(item_type, item_name)
-    error_message = "Could not find requested #{item_type} '#{item_name}'."
-    raise ActionController::BadRequest, error_message
-  end
-
-  def self.raise_user_not_current_error
-    error_message = 'Could not update a user that is not the current user.'
-    raise ActionController::BadRequest, error_message
   end
 end

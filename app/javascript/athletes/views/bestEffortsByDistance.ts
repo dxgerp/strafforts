@@ -1,9 +1,8 @@
 import { AppHelpers } from '../helpers/appHelpers';
 import { ChartCreator } from '../helpers/chartCreators';
-import { ChartType } from '../helpers/chartHelper';
 import { HtmlHelpers } from '../helpers/htmlHelpers';
+import NotFoundView from './404NotFound';
 import BaseView from './baseView';
-import NavigationSidebar from './navigationSidebar';
 
 export default class BestEffortsByDistanceView extends BaseView {
     private distance: string;
@@ -23,6 +22,7 @@ export default class BestEffortsByDistanceView extends BaseView {
         this.createFilterButtons();
 
         if (this.distance) {
+            $('.best-efforts-filter-buttons .btn').removeClass('active'); // Reset all currently active filter buttons.
             $(`.best-efforts-filter-buttons .btn[data-race-distance='${this.distance}']`).addClass('active');
             this.createViewTemplate();
             this.createView();
@@ -108,6 +108,11 @@ export default class BestEffortsByDistanceView extends BaseView {
                 });
                 chartCreator.createWorkoutTypeChart('workout-type-chart');
                 chartCreator.createGearCountChart('gear-count-chart');
+            },
+            error: (xhr, ajaxOptions, thrownError) => {
+                if (xhr.status === 404) {
+                    new NotFoundView().load();
+                }
             },
         });
     }

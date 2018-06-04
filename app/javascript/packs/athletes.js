@@ -14,7 +14,7 @@ import 'admin-lte/plugins/pace/pace.min';
 import 'admin-lte/dist/css/AdminLTE.min';
 import 'admin-lte/dist/css/skins/skin-black-light.min';
 import 'datatables.net-bs/css/dataTables.bootstrap';
-import 'toastr/build/toastr.min';
+import 'toastr/build/toastr';
 import '../athletes/styles/main'
 
 // Extension method to convert a number into time format.
@@ -67,21 +67,6 @@ $('#modal-social-sharing').on('shown.bs.modal', function (e) {
     };
     script.src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5945b04103f9ff79&domready=1";
     document.head.appendChild(script);
-});
-
-// Hotjar plugin.
-$(document).ajaxStop(function () {
-    var id = document.getElementsByTagName('body')[0].getAttribute('data-hotjar-id');
-    if (id) {
-        (function (h, o, t, j, a, r) {
-            h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
-            h._hjSettings = { hjid: id == null ? '' : id, hjsv: 6 };
-            a = o.getElementsByTagName('head')[0];
-            r = o.createElement('script'); r.async = 1;
-            r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-            a.appendChild(r);
-        })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
-    }
 });
 
 // Facebook like button.

@@ -8,7 +8,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   VERBOSE_LOGGING = false
 
   APP_NAME = 'Strafforts'.freeze
-  APP_DESCRIPTION = 'An Analytics App for Strava Best Efforts, PBs/PRs and Races'.freeze
+  APP_DESCRIPTION = 'An Analytics App for Your Strava Running Best Efforts, PBs/PRs and Races'.freeze
   HOME_URL = '/'.freeze
   DEMO_ATHLETE_ID = '9123806'.freeze
   DEMO_ATHLETE_FRIENDS = '82'.freeze
@@ -23,7 +23,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   SOCIAL_SHARING_BUTTONS = %w[Facebook Vkontakte Twitter LinkedIn Email WhatsApp Telegram More].freeze
 
-  FAQ_CATEGORIES = ['Account', 'Support', 'Personal Bests', 'Races', 'Miscellaneous'].freeze
+  FAQ_CATEGORIES = ['Account', 'Best Efforts', 'Personal Bests', 'Races', 'Miscellaneous', 'Support'].freeze
 
   MAJOR_DISTANCES = [
     'Marathon', 'Half Marathon', '10k', '5k'

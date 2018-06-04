@@ -1,0 +1,70 @@
+
+/* Responsive */
+@media (max-width: 544px) {
+    .hidden-xs-down {
+        display: none !important;
+    }
+}
+
+@media (min-width: 544px) {
+    .hidden-xs-up {
+        display: none !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .hidden-sm-down {
+        display: none !important;
+    }
+    #main-conent {
+        div.dataTables_wrapper > div.row > div,
+        div.dataTables_length,
+        div.dataTables_filter,
+        div.dataTables_info,
+        div.dataTables_paginate {
+            text-align: left;
+        }
+    }
+}
+@media (min-width: 768px) {
+    .hidden-sm-up {
+        display: none !important;
+    }
+}
+@media (max-width: 992px) {
+    .hidden-md-down {
+        display: none !important;
+    }
+}
+@media (min-width: 992px) {
+    .hidden-md-up {
+        display: none !important;
+    }
+}
+@media (max-width: 1200px) {
+    .hidden-lg-down {
+        display: none !important;
+    }
+}
+@media (min-width: 1200px) {
+    .hidden-lg-up {
+        display: none !important;
+    }
+}
+@media (max-width: 1600px) {
+    .hidden-xl-down {
+        display: none !important;
+    }
+}
+@media (max-width: 1440px) {
+    #main-conent {
+        .dataTable td {
+            font-size: .9em !important;
+        }
+        .strava-logo-link span {
+            margin-right: 0 !important;
+
+            content: none !important;
+        }
+    }
+}

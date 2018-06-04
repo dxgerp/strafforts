@@ -7,6 +7,17 @@ module ApplicationHelper
     RACES = 'races'.freeze
   end
 
+  class Message
+    ATHLETE_NOT_FOUND = 'The requested athlete could not be found.'
+    ATHLETE_NOT_ACCESSIBLE = 'The requested athlete could not be accessed without logged in.'
+    DISTANCE_NOT_FOUND = 'The requested distance could not be found.'
+    PAYMENT_FAILED = 'Your payment could not be processed at the moment. Please contact us to get your PRO plan.'
+    PRO_ACCOUNTS_ONLY = 'This feature is only available for accounts with PRO plans.'
+    PRO_PLAN_NOT_FOUND = 'The requested PRO plan could not be found.'
+    STRIPE_ERROR = 'Your payment could not be processed by our payment provider. Please double check your card details.'
+    YEAR_NOT_FOUND = 'The requested year could not be found.'
+  end
+
   class Helper
     MAX_DISTANCES_TO_SHOW = 4
     MAX_ITEM_ALLOWED_PER_DISTANCE = 5
@@ -186,7 +197,7 @@ module ApplicationHelper
     def self.shape_entities(entities, heart_rate_zones, measurement_unit, is_type_of_best_efforts) # rubocop:disable AbcSize, CyclomaticComplexity, PerceivedComplexity, LineLength
       shaped_items = []
 
-      return shaped_items if entities.nil?
+      return shaped_items if entities.blank?
 
       entities.each do |entity|
         item = {}
