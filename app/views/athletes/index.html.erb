@@ -11,9 +11,9 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
-      <% unless Settings.app.global_message.blank? %>
-      <div class="global-message bg-aqua">
-        <span><%= Settings.app.global_message %></span>
+      <% unless ENV['GLOBAL_MESSAGE'].blank? %>
+      <div class="global-message bg-gray-light text-center">
+        <%= ENV['GLOBAL_MESSAGE'].html_safe %>
       </div>
       <% end %>
 
