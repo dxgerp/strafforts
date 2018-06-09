@@ -200,7 +200,7 @@ export namespace HtmlHelpers {
                         ${item['activity_name']}
                     </a>
                 </td>
-                <td class="no-wrap">
+                <td class="no-wrap" data-sort="${item['elapsed_time']}">
                     ${item['elapsed_time_formatted']}
                 </td>
                 <td class="hidden-xs-down" data-sort="${paceOrder}">
