@@ -53,9 +53,15 @@ export namespace ChartHelpers {
         chartData: Chart.ChartData,
         chartOptions: Chart.ChartOptions) {
 
-        let chart;
+        const chartContainer = $(`#${id}`);
+        chartContainer.empty();
+        const canvas = `<canvas id="${id}-canvas" height="300"></canvas>`;
+        chartContainer.append(canvas);
+
         const canvasElement = document.getElementById(id + '-canvas') as HTMLCanvasElement;
         const context = canvasElement.getContext('2d');
+
+        let chart;
         if (context) {
             chart = new Chart(context, {
                 type: chartType,

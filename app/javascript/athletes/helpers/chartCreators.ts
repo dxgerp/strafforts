@@ -10,7 +10,7 @@ export class ChartCreator {
         this.items = items;
     }
 
-    public createProgressionChart(id: string, sortByPace: boolean) {
+    public createProgressionChart(id: string, sortByPace: boolean, yearOnly: boolean = false) {
         if (this.items.length <= 1) {
             ChartHelpers.createChartWithNotEnoughDataMessage(id);
             return;
@@ -27,14 +27,13 @@ export class ChartCreator {
         this.items.forEach((item) => {
             const activityId = item['activity_id'];
             const activityName = item['activity_name'];
-            const date = item['start_date'];
             const runTime = item['elapsed_time'];
             const runTimeFormatted = item['elapsed_time_formatted'];
             const pace = item['pace_in_seconds'];
             paceUnit = item['pace_unit']; // User based, should be the same for all activities.
             activityIds.push(activityId);
             activityNames.push(activityName);
-            dates.push(date);
+            dates.push(yearOnly ? item['start_date'].split('-')[0] : item['start_date']);
             runTimes.push(runTime);
             runTimesFormatted.push(runTimeFormatted);
             paces.push(pace);
@@ -69,20 +68,25 @@ export class ChartCreator {
                 spanGaps: false,
             }],
         };
+        const xAxesOptions: object = yearOnly ? {
+            gridLines: {
+                display: true,
+            },
+        } : {
+                gridLines: {
+                    display: false,
+                },
+                type: 'time',
+                ticks: {
+                    autoSkip: true,
+                },
+                time: {
+                    unit: 'month',
+                },
+            };
         const customChartOptions: Chart.ChartOptions = {
             scales: {
-                xAxes: [{
-                    gridLines: {
-                        display: false,
-                    },
-                    type: 'time',
-                    ticks: {
-                        autoSkip: true,
-                    },
-                    time: {
-                        unit: 'month',
-                    },
-                }],
+                xAxes: [xAxesOptions],
                 yAxes: [{
                     gridLines: {
                         display: true,

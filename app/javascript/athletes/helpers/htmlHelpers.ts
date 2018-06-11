@@ -2,9 +2,7 @@ import { Helpers } from '../../common/helpers';
 
 export namespace HtmlHelpers {
 
-    export function constructChartHtml(id: string, title: string, width: number, withLoadingIcon: boolean = false) {
-        const canvas = `<canvas id="${id}-canvas" height="300"></canvas>`;
-        const content = withLoadingIcon ? HtmlHelpers.getLoadingIcon() : canvas;
+    export function constructChartHtml(id: string, title: string, width: number) {
         const chart = `
             <div class="col-md-${width}">
                 <div class="box">
@@ -13,7 +11,7 @@ export namespace HtmlHelpers {
                     </div>
                     <div class="box-body">
                         <div id=${id} class="chart">
-                            ${content}
+                            ${HtmlHelpers.getLoadingIcon()}
                         </div>
                     </div>
                 </div>
