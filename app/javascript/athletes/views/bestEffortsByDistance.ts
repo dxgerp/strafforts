@@ -163,7 +163,6 @@ export default class BestEffortsByDistanceView extends BaseView {
             mainContent.empty();
 
             let fileterButtons = '';
-            const bestEffortTypes: string[] = [];
             $.ajax({
                 url: `${AppHelpers.getApiBaseUrl()}/meta`,
                 dataType: 'json',
@@ -174,7 +173,7 @@ export default class BestEffortsByDistanceView extends BaseView {
                         if (bestEffortType && item['count'] > 0) {
                             fileterButtons += `
                                 <button class="btn btn-md btn-race-distance"
-                                    data-race-distance="${bestEffortType}">${bestEffortType}</button>
+                                    data-race-distance="${bestEffortType.toLowerCase()}">${bestEffortType}</button>
                             `;
                         }
                     });
