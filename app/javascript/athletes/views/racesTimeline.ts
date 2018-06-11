@@ -98,10 +98,7 @@ export default class RacesTimelineView extends BaseView {
             dataType: 'json',
             async: false,
             success: (data) => {
-                const races: any[] = [];
-                $.each(data, (key, value) => {
-                    races.push(value);
-                });
+                const races = Object.keys(data).map((key) => data[key]);
                 races.forEach((item) => {
                     const stravaLink = `https://www.strava.com/activities/${item['activity_id']}`;
                     const distance = item['race_distance'];

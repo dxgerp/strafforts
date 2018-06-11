@@ -72,10 +72,7 @@ export default class PersonalBestsByDistanceView extends BaseView {
             url: `${AppHelpers.getApiBaseUrl()}/personal-bests/${this.distanceFormattedForUrl}`,
             dataType: 'json',
             success: (data) => {
-                const items: any[] = [];
-                $.each(data, (key, value) => {
-                    items.push(value);
-                });
+                const items = Object.keys(data).map((key) => data[key]);
 
                 if (this.count < items.length) {
                     new NavigationSidebar().load();

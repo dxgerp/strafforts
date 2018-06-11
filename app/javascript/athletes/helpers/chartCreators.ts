@@ -2,8 +2,6 @@ import { Helpers } from '../../common/helpers';
 import { RgbColor } from '../../common/rgbColor';
 import { ChartHelpers, ChartType } from './chartHelper';
 
-declare const Chart: any;
-
 export class ChartCreator {
 
     private items: object[];
@@ -185,29 +183,29 @@ export class ChartCreator {
         const datasets = [{
             type: 'bar',
             label: 'Run',
-            data:  Object.keys(workoutTypeRun).map((key)  => workoutTypeRun[key]),
+            data: Object.keys(workoutTypeRun).map((key) => workoutTypeRun[key]),
             backgroundColor: new RgbColor(189, 214, 186).toString(0.6),
             hoverBackgroundColor: new RgbColor(189, 214, 186).toString(1),
         }, {
             type: 'bar',
             label: 'Long Run',
-            data:  Object.keys(workoutTypeLongRun).map((key)  => workoutTypeLongRun[key]),
+            data: Object.keys(workoutTypeLongRun).map((key) => workoutTypeLongRun[key]),
             backgroundColor: new RgbColor(0, 166, 90).toString(0.6),
             hoverBackgroundColor: new RgbColor(0, 166, 90).toString(1),
         }, {
             type: 'bar',
             label: 'Race',
-            data:  Object.keys(workoutTypeRace).map((key)  => workoutTypeRace[key]),
+            data: Object.keys(workoutTypeRace).map((key) => workoutTypeRace[key]),
             backgroundColor: new RgbColor(245, 105, 84).toString(0.6),
             hoverBackgroundColor: new RgbColor(245, 105, 84).toString(1),
         }, {
             type: 'bar',
             label: 'Workout',
-            data:  Object.keys(workoutTypeWorkout).map((key)  => workoutTypeWorkout[key]),
+            data: Object.keys(workoutTypeWorkout).map((key) => workoutTypeWorkout[key]),
             backgroundColor: new RgbColor(243, 156, 18).toString(0.6),
             hoverBackgroundColor: new RgbColor(243, 156, 18).toString(1),
         }];
-        const legendLabels = Object.keys(years).map((key)  => `${key}: (${years[key]})`);
+        const legendLabels = Object.keys(years).map((key) => `${key}: (${years[key]})`);
 
         ChartHelpers.createStackedBarChart(id, Object.keys(years), datasets, legendLabels);
     }
@@ -234,11 +232,11 @@ export class ChartCreator {
             }
         });
 
-        const workoutTypeLabels = Object.keys(workoutTypes).map((key)  => Helpers.convertToTitleCase(key));
-        const counts = Object.keys(workoutTypes).map((key)  => workoutTypes[key]);
+        const workoutTypeLabels = Object.keys(workoutTypes).map((key) => Helpers.convertToTitleCase(key));
+        const counts = Object.keys(workoutTypes).map((key) => workoutTypes[key]);
         const legendLabels = Object.keys(workoutTypes).map((key) =>
             `${Helpers.convertToTitleCase(key)}: (${workoutTypes[key]})`);
-        const colors = Object.keys(workoutTypes).map((key)  => {
+        const colors = Object.keys(workoutTypes).map((key) => {
             switch (Helpers.convertToTitleCase(key)) {
                 case 'Race':
                     return new RgbColor(245, 105, 84);
@@ -276,8 +274,8 @@ export class ChartCreator {
         });
 
         const monthLabels = Object.keys(months);
-        const counts = Object.keys(months).map((key)  => months[key]);
-        const legendLabels = Object.keys(months).map((key)  => `${key}: (${months[key]})`);
+        const counts = Object.keys(months).map((key) => months[key]);
+        const legendLabels = Object.keys(months).map((key) => `${key}: (${months[key]})`);
         ChartHelpers.createBarChart(id, counts.reverse(), monthLabels.reverse(), legendLabels.reverse());
     }
 
@@ -298,7 +296,7 @@ export class ChartCreator {
         });
 
         const raceDistanceNames = Object.keys(raceDistances);
-        const counts = Object.keys(raceDistances).map((key)  => raceDistances[key]);
+        const counts = Object.keys(raceDistances).map((key) => raceDistances[key]);
         const legendLabels = Object.keys(raceDistances).map((key) => {
             if (key.toLowerCase() === 'other distances') {
                 // Hack to use 'Other' instead 'Other Distances' in distance bar charts.
@@ -329,7 +327,7 @@ export class ChartCreator {
         });
 
         const gearNames = Object.keys(gears);
-        const counts = Object.keys(gears).map((key)  => gears[key]);
+        const counts = Object.keys(gears).map((key) => gears[key]);
         const colors = Helpers.getRgbColors();
         const chartData = {
             labels: gearNames,
@@ -365,19 +363,19 @@ export class ChartCreator {
             }
         });
 
-        const counts = Object.keys(gearNamesCollection).map((key)  => gearNamesCollection[key]);
-        const gearMileages = Object.keys(gearMileagesCollection).map((key)  => gearMileagesCollection[key]);
+        const counts = Object.keys(gearNamesCollection).map((key) => gearNamesCollection[key]);
+        const gearMileages = Object.keys(gearMileagesCollection).map((key) => gearMileagesCollection[key]);
         const colors = Helpers.getRgbColors();
         const gearNames = Object.keys(gearNamesCollection);
         const chartData = {
             labels: gearNames,
             datasets: [
-            {
-                counts,
-                data: gearMileages,
-                backgroundColor: Helpers.convertToRgbaColors(colors, 0.6),
-                hoverBackgroundColor: Helpers.convertToRgbaColors(colors, 1),
-            }],
+                {
+                    counts,
+                    data: gearMileages,
+                    backgroundColor: Helpers.convertToRgbaColors(colors, 0.6),
+                    hoverBackgroundColor: Helpers.convertToRgbaColors(colors, 1),
+                }],
         };
 
         const customChartOptions: Chart.ChartOptions = {
@@ -568,8 +566,8 @@ export class ChartCreator {
             }
         });
 
-        const counts = Object.keys(averageHrZones).map((key)  => averageHrZones[key]);
-        const legendLabels = Object.keys(averageHrZones).map((key)  => `${key}: (${averageHrZones[key]})`);
+        const counts = Object.keys(averageHrZones).map((key) => averageHrZones[key]);
+        const legendLabels = Object.keys(averageHrZones).map((key) => `${key}: (${averageHrZones[key]})`);
         const totalCount = counts.reduce((a, b) => a + b);
 
         // Not enough items with HR data to generate chart.
