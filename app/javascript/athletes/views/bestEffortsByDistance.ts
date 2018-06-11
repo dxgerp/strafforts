@@ -103,7 +103,7 @@ export default class BestEffortsByDistanceView extends BaseView {
                     ],
                     iDisplayLength: 10,
                     order: [
-                        [4, 'asc'],
+                        [3, 'asc'],
                     ],
                 });
                 chartCreator.createWorkoutTypeChart('workout-type-chart');
