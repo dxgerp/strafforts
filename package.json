@@ -46,6 +46,22 @@
     "typescript": "^2.6.1",
     "webpack-merge": "^4.1.1"
   },
+  "devDependencies": {
+    "@types/chart.js": "2.4.0",
+    "@types/hubspot-pace": "^0.7.27",
+    "@types/jquery": "2.0.48",
+    "@types/toastr": "^2.1.34",
+    "prettier": "1.13.5",
+    "tslint": "^5.5.0",
+    "webpack-dev-server": "2.11.2"
+  },
+  "prettier": {
+    "arrowParens": "always",
+    "printWidth": 100,
+    "singleQuote": true,
+    "tabWidth": 4,
+    "trailingComma": "all"
+  },
   "scripts": {
     "mdlint": "bundle exec mdl README.md -c config/.mdlrc && bundle exec mdl docs/ -c config/.mdlrc",
     "start": "bundle exec rails foreman:start",
@@ -54,13 +70,5 @@
     "test:ui": "bundle exec rails test:system",
     "tslint": "node_modules/.bin/tslint -c config/tslint.json app/javascript/*.ts",
     "rubocop": "bundle exec rubocop -c config/rubocop.yml"
-  },
-  "devDependencies": {
-    "@types/chart.js": "2.4.0",
-    "@types/hubspot-pace": "^0.7.27",
-    "@types/jquery": "2.0.48",
-    "@types/toastr": "^2.1.34",
-    "tslint": "^5.5.0",
-    "webpack-dev-server": "2.11.2"
   }
 }
