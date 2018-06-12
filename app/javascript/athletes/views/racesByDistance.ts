@@ -7,7 +7,6 @@ import BaseView from './baseView';
 import NavigationSidebar from './navigationSidebar';
 
 export default class RacesByDistanceView extends BaseView {
-
     private count: number;
 
     private distance: string;
@@ -55,11 +54,7 @@ export default class RacesByDistanceView extends BaseView {
                 ${this.constructDataTableHtml()}
             </div>
             <div class="row">
-                ${HtmlHelpers.constructChartHtml(
-                    'heart-rates-chart',
-                    'Heart Rates Chart',
-                    6,
-                )}
+                ${HtmlHelpers.constructChartHtml('heart-rates-chart', 'Heart Rates Chart', 6)}
                 ${HtmlHelpers.constructChartHtml(
                     'average-hr-zones-chart',
                     'Average HR Zones Distribution Chart',
@@ -67,11 +62,7 @@ export default class RacesByDistanceView extends BaseView {
                 )}
             </div>
             <div class="row">
-                ${HtmlHelpers.constructChartHtml(
-                    'gear-mileage-chart',
-                    'Gear Mileage Chart',
-                    12,
-                )}
+                ${HtmlHelpers.constructChartHtml('gear-mileage-chart', 'Gear Mileage Chart', 12)}
             </div>
         `;
         mainContent.append(content);
@@ -156,9 +147,7 @@ export default class RacesByDistanceView extends BaseView {
                 { orderData: [[0, 'desc'], [3, 'asc']] },
             ],
             iDisplayLength: 10,
-            order: [
-                [0, 'desc'],
-            ],
+            order: [[0, 'desc']],
         });
     }
 }

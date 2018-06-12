@@ -6,8 +6,6 @@
 //
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
-
-import '../athletes';
 import 'bootstrap/dist/css/bootstrap';
 import 'font-awesome/css/font-awesome';
 import 'admin-lte/plugins/pace/pace.min';
@@ -15,28 +13,29 @@ import 'admin-lte/dist/css/AdminLTE.min';
 import 'admin-lte/dist/css/skins/skin-black-light.min';
 import 'datatables.net-bs/css/dataTables.bootstrap';
 import 'toastr/build/toastr';
-import '../athletes/styles/main'
+import '../athletes';
+import '../athletes/styles/main';
 
 // Extension method to convert a number into time format.
-String.prototype.toHHMMSS = function () {
+String.prototype.toHHMMSS = function() {
     var sec_num = parseInt(this, 10); // Don't forget the second param.
     var hours = Math.floor(sec_num / 3600);
-    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+    var minutes = Math.floor((sec_num - hours * 3600) / 60);
+    var seconds = sec_num - hours * 3600 - minutes * 60;
 
     if (hours < 10) {
-        hours = "0" + hours;
+        hours = '0' + hours;
     }
     if (minutes < 10) {
-        minutes = "0" + minutes;
+        minutes = '0' + minutes;
     }
     if (seconds < 10) {
-        seconds = "0" + seconds;
+        seconds = '0' + seconds;
     }
 
     var time = hours + ':' + minutes + ':' + seconds;
     return time;
-}
+};
 
 // Initialize AdminLTE.
 var AdminLTEOptions = {
@@ -50,30 +49,32 @@ var AdminLTEOptions = {
         // Which button should trigger the open/close event.
         toggleBtnSelector: "[data-toggle='control-sidebar']",
         // The sidebar selector.
-        selector: ".control-sidebar",
+        selector: '.control-sidebar',
         // Enable slide over content.
-        slide: false
-    }
+        slide: false,
+    },
 };
 
 Pace.options.ajax.trackWebSockets = false;
 
 // Lazy Loading AddThis plugin.
-$('#modal-social-sharing').on('shown.bs.modal', function (e) {
+$('#modal-social-sharing').on('shown.bs.modal', function(e) {
     var script = document.createElement('script');
-    script.onload = function () {
+    script.onload = function() {
         addthis.init();
         $('#modal-social-sharing .loading-icon-panel').remove();
     };
-    script.src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5945b04103f9ff79&domready=1";
+    script.src = '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5945b04103f9ff79&domready=1';
     document.head.appendChild(script);
 });
 
 // Facebook like button.
 (function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.12';
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
+    var js,
+        fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.12';
+    fjs.parentNode.insertBefore(js, fjs);
+})(document, 'script', 'facebook-jssdk');

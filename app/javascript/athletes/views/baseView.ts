@@ -2,7 +2,6 @@ import { AppHelpers } from '../helpers/appHelpers';
 import { Helpers } from './../../common/helpers';
 
 abstract class BaseView {
-
     protected prepareView(viewType: string, itemName?: string) {
         let viewName = viewType;
         if (itemName) {

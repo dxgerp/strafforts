@@ -1,7 +1,6 @@
 import { Helpers } from '../../common/helpers';
 
 export namespace HtmlHelpers {
-
     export function constructChartHtml(id: string, title: string, width: number) {
         const chart = `
             <div class="col-md-${width}">
@@ -47,8 +46,9 @@ export namespace HtmlHelpers {
 
     export function getNoDataInfoBox() {
         const title = 'Nothing Yet!';
-        const link = 'https://support.strava.com/hc/en-us/articles/'
-            + '216919557-Using-Strava-Run-Type-Tags-to-analyze-your-Runs';
+        const link =
+            'https://support.strava.com/hc/en-us/articles/' +
+            '216919557-Using-Strava-Run-Type-Tags-to-analyze-your-Runs';
         const supportEmail = 'support@strafforts.com';
         const messageBody = `
         <h4>If Just Connected...</h4>
@@ -120,8 +120,9 @@ export namespace HtmlHelpers {
     export function getDatatableRowForRaces(item: any[], showDistanceColumn?: boolean) {
         const stravaLink = `https://www.strava.com/activities/${item['activity_id']}`;
         const distance = item['distance'].toFixed(1);
-        const distanceColumn = showDistanceColumn ?
-            `<td data-sort="${distance}">${distance} ${item['distance_unit']}</td>` : '';
+        const distanceColumn = showDistanceColumn
+            ? `<td data-sort="${distance}">${distance} ${item['distance_unit']}</td>`
+            : '';
         const paceOrder = Helpers.formatPaceStringForOrdering(item['pace']);
         const row = `
             <tr>
@@ -185,7 +186,10 @@ export namespace HtmlHelpers {
 
     export function createDatatableRowForBestEffortsOrPbs(item: any[]) {
         const stravaLink = `https://www.strava.com/activities/${item['activity_id']}`;
-        const workoutTypeNameClass = `workout-type-${item['workout_type_name'].replace(/\s/g, '-')}`;
+        const workoutTypeNameClass = `workout-type-${item['workout_type_name'].replace(
+            /\s/g,
+            '-',
+        )}`;
         const paceOrder = Helpers.formatPaceStringForOrdering(item['pace']);
         const row = `
             <tr>

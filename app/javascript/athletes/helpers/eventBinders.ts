@@ -6,13 +6,13 @@ import { AppHelpers } from './appHelpers';
 import { ViewType } from './viewTypes';
 
 export namespace EventBinders {
-
     export function bindAll() {
         const eventBinders = () => {
             AppHelpers.enableTooltips();
 
             // Disable double clicking for logo and navigation items.
-            const selectors = '.main-header .logo, a[id^="personal-bests-for-"], a[id^="races-for-"]';
+            const selectors =
+                '.main-header .logo, a[id^="personal-bests-for-"], a[id^="races-for-"]';
             $(document).on('dblclick', selectors, (event) => {
                 event.preventDefault();
             });
@@ -38,48 +38,61 @@ export namespace EventBinders {
                 new NavigationSidebar().load();
             });
 
-            $(document).on('click',
-                '.best-efforts-filter-buttons .btn-race-distance',
-                (event) => {
+            $(document).on('click', '.best-efforts-filter-buttons .btn-race-distance', (event) => {
                 $('.best-efforts-filter-buttons .btn-race-distance').removeClass('active');
                 $(event.currentTarget).addClass('active');
 
                 const distance = $(event.currentTarget).attr('data-race-distance');
                 const distanceFormattedForUrl = AppHelpers.formatDistanceForUrl(distance);
 
-                AppHelpers.pushStateToWindow(`?view=${ViewType.BestEfforts}&distance=${distanceFormattedForUrl}`);
+                AppHelpers.pushStateToWindow(
+                    `?view=${ViewType.BestEfforts}&distance=${distanceFormattedForUrl}`,
+                );
                 new BestEffortsByDistanceView(distance).load();
                 new NavigationSidebar().load();
             });
 
             // Bind race filter buttons in Races Timeline view.
-            $(document).on('click', '.timeline-wrapper .filter-buttons .btn:not(.show-all)',
+            $(document).on(
+                'click',
+                '.timeline-wrapper .filter-buttons .btn:not(.show-all)',
                 (event) => {
-                // Set the filter button to active upon clicking.
-                $('.filter-buttons .btn').removeClass('active');
-                $('.filter-buttons .show-all').removeClass('hidden').fadeIn();
-                $(event.currentTarget).addClass('active');
-            });
+                    // Set the filter button to active upon clicking.
+                    $('.filter-buttons .btn').removeClass('active');
+                    $('.filter-buttons .show-all')
+                        .removeClass('hidden')
+                        .fadeIn();
+                    $(event.currentTarget).addClass('active');
+                },
+            );
 
-            $(document).on('click',
+            $(document).on(
+                'click',
                 '.timeline-wrapper .filter-buttons .btn-race-distance, .timeline-wrapper .timeline-header .btn',
                 (event) => {
-                const distance = $(event.currentTarget).attr('data-race-distance');
+                    const distance = $(event.currentTarget).attr('data-race-distance');
 
-                // Show all year labels.
-                $('.time-label').fadeIn();
+                    // Show all year labels.
+                    $('.time-label').fadeIn();
 
-                // Show only timeline items of this distance.
-                $('.timeline-item').parent().hide();
-                $(`.timeline-item[data-race-distance='${distance}']`).parent().fadeIn();
-            });
+                    // Show only timeline items of this distance.
+                    $('.timeline-item')
+                        .parent()
+                        .hide();
+                    $(`.timeline-item[data-race-distance='${distance}']`)
+                        .parent()
+                        .fadeIn();
+                },
+            );
 
             $(document).on('click', '.timeline-header .btn', (event) => {
                 const distance = $(event.currentTarget).attr('data-race-distance');
 
                 // Update the state of filter buttons.
                 $('.filter-buttons .btn').removeClass('active');
-                $('.filter-buttons .show-all').removeClass('hidden').fadeIn();
+                $('.filter-buttons .show-all')
+                    .removeClass('hidden')
+                    .fadeIn();
                 $(`.filter-buttons [data-race-distance='${distance}']`).addClass('active');
             });
 
@@ -89,8 +102,12 @@ export namespace EventBinders {
                 // Show only time labels, items of this year.
                 $('.time-label').hide();
                 $(`.time-label[data-race-year='${year}']`).fadeIn();
-                $('.timeline-item').parent().hide();
-                $(`.timeline-item[data-race-year='${year}']`).parent().fadeIn();
+                $('.timeline-item')
+                    .parent()
+                    .hide();
+                $(`.timeline-item[data-race-year='${year}']`)
+                    .parent()
+                    .fadeIn();
             });
 
             // Append PR/Contributions welcome badges upon clicking settings toggle button.
@@ -148,7 +165,11 @@ export namespace EventBinders {
                 $('#publicize-profile-warning').addClass('hidden');
             },
             error: (xhr, ajaxOptions, thrownError) => {
-                toastr.error(`${xhr.status} - ${xhr.statusText}<br /><br />${$.parseJSON(xhr.responseText)['error']}`);
+                toastr.error(
+                    `${xhr.status} - ${xhr.statusText}<br /><br />${
+                        $.parseJSON(xhr.responseText)['error']
+                    }`,
+                );
             },
         });
     }
@@ -166,7 +187,11 @@ export namespace EventBinders {
                 toastr.success(`Your latest activities have been queued for fetching!`);
             },
             error: (xhr, ajaxOptions, thrownError) => {
-                toastr.error(`${xhr.status} - ${xhr.statusText}<br /><br />${$.parseJSON(xhr.responseText)['error']}`);
+                toastr.error(
+                    `${xhr.status} - ${xhr.statusText}<br /><br />${
+                        $.parseJSON(xhr.responseText)['error']
+                    }`,
+                );
             },
         });
     }
@@ -196,7 +221,11 @@ export namespace EventBinders {
             },
             error: (xhr, ajaxOptions, thrownError) => {
                 ($('#confirm-reset-profile') as any).modal('toggle');
-                toastr.error(`${xhr.status} - ${xhr.statusText}<br /><br />${$.parseJSON(xhr.responseText)['error']}`);
+                toastr.error(
+                    `${xhr.status} - ${xhr.statusText}<br /><br />${
+                        $.parseJSON(xhr.responseText)['error']
+                    }`,
+                );
             },
         });
     }

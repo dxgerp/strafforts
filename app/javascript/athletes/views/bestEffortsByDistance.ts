@@ -23,7 +23,9 @@ export default class BestEffortsByDistanceView extends BaseView {
 
         if (this.distance) {
             $('.best-efforts-filter-buttons .btn').removeClass('active'); // Reset all currently active filter buttons.
-            $(`.best-efforts-filter-buttons .btn[data-race-distance='${this.distance}']`).addClass('active');
+            $(`.best-efforts-filter-buttons .btn[data-race-distance='${this.distance}']`).addClass(
+                'active',
+            );
             this.createViewTemplate();
             this.createView();
         } else {
@@ -54,21 +56,13 @@ export default class BestEffortsByDistanceView extends BaseView {
                         'Year Distribution Chart',
                         4,
                     )}
-                    ${HtmlHelpers.constructChartHtml(
-                        'workout-type-chart',
-                        'Workout Type Chart',
-                        4,
-                    )}
+                    ${HtmlHelpers.constructChartHtml('workout-type-chart', 'Workout Type Chart', 4)}
                 </div>
                 <div class="row">
                     ${this.constructDataTableHtml()}
                 </div>
                 <div class="row">
-                    ${HtmlHelpers.constructChartHtml(
-                        'gear-count-chart',
-                        'Gear Count Chart',
-                        12,
-                    )}
+                    ${HtmlHelpers.constructChartHtml('gear-count-chart', 'Gear Count Chart', 12)}
                 </div>
             </div>
         `;
@@ -78,21 +72,29 @@ export default class BestEffortsByDistanceView extends BaseView {
 
     protected createView(): void {
         $.ajax({
-            url: `${AppHelpers.getApiBaseUrl()}/best-efforts/${this.distanceFormattedForUrl}/top-one-by-year`,
+            url: `${AppHelpers.getApiBaseUrl()}/best-efforts/${
+                this.distanceFormattedForUrl
+            }/top-one-by-year`,
             dataType: 'json',
             success: (data) => {
                 const items = Object.keys(data).map((key) => data[key]);
                 const result = {};
                 items.forEach((item: any) => {
                     const year = item['start_date'].split('-')[0];
-                    if (!result[year] || (result[year] && item['elapsed_time'] < result[year]['elapsed_time'])) {
+                    if (
+                        !result[year] ||
+                        (result[year] && item['elapsed_time'] < result[year]['elapsed_time'])
+                    ) {
                         result[year] = item;
                     }
                 });
                 const progressionByYearItems = Object.keys(result).map((key) => result[key]);
                 const progressionChartCreator = new ChartCreator(progressionByYearItems);
-                progressionChartCreator.createProgressionChart('progression-by-year-chart', false, true);
-
+                progressionChartCreator.createProgressionChart(
+                    'progression-by-year-chart',
+                    false,
+                    true,
+                );
             },
             error: (xhr) => {
                 if (xhr.status === 404) {
@@ -166,15 +168,12 @@ export default class BestEffortsByDistanceView extends BaseView {
                 { orderData: [[4, 'asc'], [3, 'asc'], [0, 'desc']] },
             ],
             iDisplayLength: 10,
-            order: [
-                [3, 'asc'],
-            ],
+            order: [[3, 'asc']],
         });
     }
 
     private createFilterButtons() {
         if ($('#main-content .best-efforts-filter-buttons .btn').length === 0) {
-
             // Empty everything first (i.e. Loading Icon).
             const mainContent = $('#main-content');
             mainContent.empty();

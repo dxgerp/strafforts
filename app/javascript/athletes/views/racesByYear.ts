@@ -6,7 +6,6 @@ import BaseView from './baseView';
 import NavigationSidebar from './navigationSidebar';
 
 export default class RacesByYearView extends BaseView {
-
     private count: number;
 
     private year: string;
@@ -48,11 +47,7 @@ export default class RacesByYearView extends BaseView {
                 ${this.constructDataTableHtml()}
             </div>
             <div class="row">
-                ${HtmlHelpers.constructChartHtml(
-                    'heart-rates-chart',
-                    'Heart Rates Chart',
-                    6,
-                )}
+                ${HtmlHelpers.constructChartHtml('heart-rates-chart', 'Heart Rates Chart', 6)}
                 ${HtmlHelpers.constructChartHtml(
                     'average-hr-zones-chart',
                     'Average HR Zones Distribution Chart',
@@ -60,16 +55,8 @@ export default class RacesByYearView extends BaseView {
                 )}
             </div>
             <div class="row">
-                ${HtmlHelpers.constructChartHtml(
-                    'gear-count-chart',
-                    'Gear Count Chart',
-                    6,
-                )}
-                ${HtmlHelpers.constructChartHtml(
-                    'gear-mileage-chart',
-                    'Gear Mileage Chart',
-                    6,
-                )}
+                ${HtmlHelpers.constructChartHtml('gear-count-chart', 'Gear Count Chart', 6)}
+                ${HtmlHelpers.constructChartHtml('gear-mileage-chart', 'Gear Mileage Chart', 6)}
             </div>
         `;
         mainContent.append(content);
@@ -80,7 +67,6 @@ export default class RacesByYearView extends BaseView {
             url: `${AppHelpers.getApiBaseUrl()}/races/${this.year}`,
             dataType: 'json',
             success: (data) => {
-
                 const items: any[] = [];
                 $.each(data, (key, value) => {
                     items.push(value);
@@ -135,8 +121,19 @@ export default class RacesByYearView extends BaseView {
 
         const distancesToDisplay: string[] = [];
         const allDistances = [
-            '100 miles', '100k', '50 miles', '50k', 'Marathon', 'Half Marathon',
-            '20k', '15k', '10k', '5k', '3000m', '1 mile', 'Other Distances',
+            '100 miles',
+            '100k',
+            '50 miles',
+            '50k',
+            'Marathon',
+            'Half Marathon',
+            '20k',
+            '15k',
+            '10k',
+            '5k',
+            '3000m',
+            '1 mile',
+            'Other Distances',
         ]; // Just hard code race distances here. No need to get from server side for now.
         allDistances.forEach((distance) => {
             items.forEach((item, index) => {
@@ -173,15 +170,10 @@ export default class RacesByYearView extends BaseView {
         ($('.dataTable') as any).DataTable({
             bFilter: false,
             bPaginate: false,
-            columnDefs: [
-                { type: 'time', targets: 3 },
-                { orderData: [[0, 'desc'], [3, 'asc']] },
-            ],
+            columnDefs: [{ type: 'time', targets: 3 }, { orderData: [[0, 'desc'], [3, 'asc']] }],
             iDisplayLength: 10,
             info: false,
-            order: [
-                [0, 'desc'],
-            ],
+            order: [[0, 'desc']],
         });
     }
 }

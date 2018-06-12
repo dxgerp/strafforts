@@ -3,7 +3,6 @@ import { Helpers } from './../../common/helpers';
 import BaseView from './baseView';
 
 export default class FaqView extends BaseView {
-
     public load(): void {
         super.prepareView('Frequently Asked Questions');
 
@@ -16,7 +15,10 @@ export default class FaqView extends BaseView {
         mainContent.empty(); // Empty main content.
 
         const content = `<div class="pane-faq">${HtmlHelpers.getLoadingIcon()}</div>`;
-        mainContent.append(content).hide().fadeIn();
+        mainContent
+            .append(content)
+            .hide()
+            .fadeIn();
     }
 
     protected createView(): void {
@@ -90,7 +92,9 @@ export default class FaqView extends BaseView {
                         </div>
                     </div>
                 `;
-                pane.append(content).hide().fadeIn();
+                pane.append(content)
+                    .hide()
+                    .fadeIn();
             },
         });
     }

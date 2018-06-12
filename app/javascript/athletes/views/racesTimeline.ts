@@ -3,7 +3,6 @@ import { HtmlHelpers } from '../helpers/htmlHelpers';
 import BaseView from './baseView';
 
 export default class RacesTimelineView extends BaseView {
-
     private static distances: string[] = [];
 
     public load(): void {
@@ -108,7 +107,11 @@ export default class RacesTimelineView extends BaseView {
                     }
 
                     let distanceBlock = '';
-                    if (distance.toLowerCase() === 'other distances' && item['distance'] && item['distance_unit']) {
+                    if (
+                        distance.toLowerCase() === 'other distances' &&
+                        item['distance'] &&
+                        item['distance_unit']
+                    ) {
                         distanceBlock = `
                         <div class="activity-data">
                             <strong>Distance: </strong>${item['distance'].toFixed(2)}
@@ -130,7 +133,9 @@ export default class RacesTimelineView extends BaseView {
                         <li>
                             <i class="fa fa-trophy"></i>
                             <div class="timeline-item" data-race-distance="${distance}" data-race-year="${year}">
-                                <span class="time"><i class="fa fa-clock-o"></i> ${item['start_date']}</span>
+                                <span class="time"><i class="fa fa-clock-o"></i> ${
+                                    item['start_date']
+                                }</span>
                                 <h3 class="timeline-header">
                                     <a class="strava-activity-link" href="${stravaLink}" target="_blank">
                                         ${item['activity_name']}

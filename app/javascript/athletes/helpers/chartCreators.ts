@@ -3,7 +3,6 @@ import { RgbColor } from '../../common/rgbColor';
 import { ChartHelpers, ChartType } from './chartHelper';
 
 export class ChartCreator {
-
     private items: object[];
 
     constructor(items: object[]) {
@@ -41,64 +40,71 @@ export class ChartCreator {
 
         const chartData: Chart.ChartData = {
             labels: dates,
-            datasets: [{
-                label: activityNames,
-                activityIds,
-                runTimes,
-                runTimesFormatted,
-                paces,
-                fill: false,
-                lineTension: 0,
-                backgroundColor: 'rgba(75,192,192,0.4)',
-                borderColor: '#FC4C02',
-                borderCapStyle: 'butt',
-                borderDashOffset: 0.0,
-                borderJoinStyle: 'miter',
-                pointBorderColor: '#FC4C02',
-                pointBackgroundColor: '#fff',
-                pointBorderWidth: 1,
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: '#FC4C02',
-                pointHoverBorderColor: '#E34402',
-                pointHoverBorderWidth: 2,
-                pointRadius: 4,
-                pointHitRadius: 10,
-                pointStyle: 'circle',
-                data: sortByPace ? paces : runTimes,
-                spanGaps: false,
-            }],
+            datasets: [
+                {
+                    label: activityNames,
+                    activityIds,
+                    runTimes,
+                    runTimesFormatted,
+                    paces,
+                    fill: false,
+                    lineTension: 0,
+                    backgroundColor: 'rgba(75,192,192,0.4)',
+                    borderColor: '#FC4C02',
+                    borderCapStyle: 'butt',
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: '#FC4C02',
+                    pointBackgroundColor: '#fff',
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: '#FC4C02',
+                    pointHoverBorderColor: '#E34402',
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHitRadius: 10,
+                    pointStyle: 'circle',
+                    data: sortByPace ? paces : runTimes,
+                    spanGaps: false,
+                },
+            ],
         };
-        const xAxesOptions: object = yearOnly ? {
-            gridLines: {
-                display: true,
-            },
-        } : {
-                gridLines: {
-                    display: false,
-                },
-                type: 'time',
-                ticks: {
-                    autoSkip: true,
-                },
-                time: {
-                    unit: 'month',
-                },
-            };
+        const xAxesOptions: object = yearOnly
+            ? {
+                  gridLines: {
+                      display: true,
+                  },
+              }
+            : {
+                  gridLines: {
+                      display: false,
+                  },
+                  type: 'time',
+                  ticks: {
+                      autoSkip: true,
+                  },
+                  time: {
+                      unit: 'month',
+                  },
+              };
         const customChartOptions: Chart.ChartOptions = {
             scales: {
                 xAxes: [xAxesOptions],
-                yAxes: [{
-                    gridLines: {
-                        display: true,
-                        offsetGridLines: true,
-                    },
-                    ticks: {
-                        callback: (value: any, index: any, values: any) => {
-                            return sortByPace ?
-                                Helpers.formatPace(value.toString(), paceUnit) : value.toString().toHHMMSS();
+                yAxes: [
+                    {
+                        gridLines: {
+                            display: true,
+                            offsetGridLines: true,
+                        },
+                        ticks: {
+                            callback: (value: any, index: any, values: any) => {
+                                return sortByPace
+                                    ? Helpers.formatPace(value.toString(), paceUnit)
+                                    : value.toString().toHHMMSS();
+                            },
                         },
                     },
-                }],
+                ],
             },
             tooltips: {
                 enabled: true,
@@ -106,7 +112,8 @@ export class ChartCreator {
                 callbacks: {
                     title: (tooltipItem: Chart.ChartTooltipItem[], data?: any) => {
                         const index = tooltipItem[0].index;
-                        const result = typeof index !== 'undefined' ? data.datasets[0].label[index] : '';
+                        const result =
+                            typeof index !== 'undefined' ? data.datasets[0].label[index] : '';
                         return result;
                     },
                     label: (tooltipItem: Chart.ChartTooltipItem, data?: any) => {
@@ -114,7 +121,10 @@ export class ChartCreator {
                         if (typeof index !== 'undefined') {
                             const time = data.datasets[0].runTimesFormatted[index];
                             if (tooltipItem.yLabel) {
-                                const pace = Helpers.formatPace(data.datasets[0].paces[index], paceUnit);
+                                const pace = Helpers.formatPace(
+                                    data.datasets[0].paces[index],
+                                    paceUnit,
+                                );
                                 const date = tooltipItem.xLabel;
                                 return `Ran ${time} on ${date} at ${pace}`;
                             }
@@ -184,31 +194,36 @@ export class ChartCreator {
             }
         });
 
-        const datasets = [{
-            type: 'bar',
-            label: 'Run',
-            data: Object.keys(workoutTypeRun).map((key) => workoutTypeRun[key]),
-            backgroundColor: new RgbColor(189, 214, 186).toString(0.6),
-            hoverBackgroundColor: new RgbColor(189, 214, 186).toString(1),
-        }, {
-            type: 'bar',
-            label: 'Long Run',
-            data: Object.keys(workoutTypeLongRun).map((key) => workoutTypeLongRun[key]),
-            backgroundColor: new RgbColor(0, 166, 90).toString(0.6),
-            hoverBackgroundColor: new RgbColor(0, 166, 90).toString(1),
-        }, {
-            type: 'bar',
-            label: 'Race',
-            data: Object.keys(workoutTypeRace).map((key) => workoutTypeRace[key]),
-            backgroundColor: new RgbColor(245, 105, 84).toString(0.6),
-            hoverBackgroundColor: new RgbColor(245, 105, 84).toString(1),
-        }, {
-            type: 'bar',
-            label: 'Workout',
-            data: Object.keys(workoutTypeWorkout).map((key) => workoutTypeWorkout[key]),
-            backgroundColor: new RgbColor(243, 156, 18).toString(0.6),
-            hoverBackgroundColor: new RgbColor(243, 156, 18).toString(1),
-        }];
+        const datasets = [
+            {
+                type: 'bar',
+                label: 'Run',
+                data: Object.keys(workoutTypeRun).map((key) => workoutTypeRun[key]),
+                backgroundColor: new RgbColor(189, 214, 186).toString(0.6),
+                hoverBackgroundColor: new RgbColor(189, 214, 186).toString(1),
+            },
+            {
+                type: 'bar',
+                label: 'Long Run',
+                data: Object.keys(workoutTypeLongRun).map((key) => workoutTypeLongRun[key]),
+                backgroundColor: new RgbColor(0, 166, 90).toString(0.6),
+                hoverBackgroundColor: new RgbColor(0, 166, 90).toString(1),
+            },
+            {
+                type: 'bar',
+                label: 'Race',
+                data: Object.keys(workoutTypeRace).map((key) => workoutTypeRace[key]),
+                backgroundColor: new RgbColor(245, 105, 84).toString(0.6),
+                hoverBackgroundColor: new RgbColor(245, 105, 84).toString(1),
+            },
+            {
+                type: 'bar',
+                label: 'Workout',
+                data: Object.keys(workoutTypeWorkout).map((key) => workoutTypeWorkout[key]),
+                backgroundColor: new RgbColor(243, 156, 18).toString(0.6),
+                hoverBackgroundColor: new RgbColor(243, 156, 18).toString(1),
+            },
+        ];
         const legendLabels = Object.keys(years).map((key) => `${key}: (${years[key]})`);
 
         ChartHelpers.createStackedBarChart(id, Object.keys(years), datasets, legendLabels);
@@ -236,10 +251,13 @@ export class ChartCreator {
             }
         });
 
-        const workoutTypeLabels = Object.keys(workoutTypes).map((key) => Helpers.convertToTitleCase(key));
+        const workoutTypeLabels = Object.keys(workoutTypes).map((key) =>
+            Helpers.convertToTitleCase(key),
+        );
         const counts = Object.keys(workoutTypes).map((key) => workoutTypes[key]);
-        const legendLabels = Object.keys(workoutTypes).map((key) =>
-            `${Helpers.convertToTitleCase(key)}: (${workoutTypes[key]})`);
+        const legendLabels = Object.keys(workoutTypes).map(
+            (key) => `${Helpers.convertToTitleCase(key)}: (${workoutTypes[key]})`,
+        );
         const colors = Object.keys(workoutTypes).map((key) => {
             switch (Helpers.convertToTitleCase(key)) {
                 case 'Race':
@@ -252,7 +270,14 @@ export class ChartCreator {
                     return new RgbColor(189, 214, 186);
             }
         });
-        ChartHelpers.createPieChart(id, counts, workoutTypeLabels, legendLabels, ChartType.Doughnut, colors);
+        ChartHelpers.createPieChart(
+            id,
+            counts,
+            workoutTypeLabels,
+            legendLabels,
+            ChartType.Doughnut,
+            colors,
+        );
     }
 
     public createMonthDistributionChart(id: string) {
@@ -265,8 +290,19 @@ export class ChartCreator {
         this.items.forEach((item) => {
             const startDate = item['start_date'];
             const dateParts = startDate.split('-');
-            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+            const monthNames = [
+                'Jan',
+                'Feb',
+                'Mar',
+                'Apr',
+                'May',
+                'Jun',
+                'Jul',
+                'Aug',
+                'Sep',
+                'Oct',
+                'Nov',
+                'Dec',
             ];
             const month = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]).getMonth();
             const monthName = monthNames[month];
@@ -280,7 +316,12 @@ export class ChartCreator {
         const monthLabels = Object.keys(months);
         const counts = Object.keys(months).map((key) => months[key]);
         const legendLabels = Object.keys(months).map((key) => `${key}: (${months[key]})`);
-        ChartHelpers.createBarChart(id, counts.reverse(), monthLabels.reverse(), legendLabels.reverse());
+        ChartHelpers.createBarChart(
+            id,
+            counts.reverse(),
+            monthLabels.reverse(),
+            legendLabels.reverse(),
+        );
     }
 
     public createRaceDistancesChart(id: string) {
@@ -335,11 +376,13 @@ export class ChartCreator {
         const colors = Helpers.getRgbColors();
         const chartData = {
             labels: gearNames,
-            datasets: [{
-                data: counts,
-                backgroundColor: Helpers.convertToRgbaColors(colors, 0.6),
-                hoverBackgroundColor: Helpers.convertToRgbaColors(colors, 1),
-            }],
+            datasets: [
+                {
+                    data: counts,
+                    backgroundColor: Helpers.convertToRgbaColors(colors, 0.6),
+                    hoverBackgroundColor: Helpers.convertToRgbaColors(colors, 1),
+                },
+            ],
         };
 
         ChartHelpers.createHorizontalBarChart(id, chartData);
@@ -368,7 +411,9 @@ export class ChartCreator {
         });
 
         const counts = Object.keys(gearNamesCollection).map((key) => gearNamesCollection[key]);
-        const gearMileages = Object.keys(gearMileagesCollection).map((key) => gearMileagesCollection[key]);
+        const gearMileages = Object.keys(gearMileagesCollection).map(
+            (key) => gearMileagesCollection[key],
+        );
         const colors = Helpers.getRgbColors();
         const gearNames = Object.keys(gearNamesCollection);
         const chartData = {
@@ -379,7 +424,8 @@ export class ChartCreator {
                     data: gearMileages,
                     backgroundColor: Helpers.convertToRgbaColors(colors, 0.6),
                     hoverBackgroundColor: Helpers.convertToRgbaColors(colors, 1),
-                }],
+                },
+            ],
         };
 
         const customChartOptions: Chart.ChartOptions = {
@@ -390,7 +436,11 @@ export class ChartCreator {
                     label: (tooltipItem: Chart.ChartTooltipItem, data?: any) => {
                         const datasetIndex = tooltipItem.datasetIndex;
                         const index = tooltipItem.index;
-                        if (tooltipItem.xLabel && typeof datasetIndex !== 'undefined' && typeof index !== 'undefined') {
+                        if (
+                            tooltipItem.xLabel &&
+                            typeof datasetIndex !== 'undefined' &&
+                            typeof index !== 'undefined'
+                        ) {
                             const mileage = parseFloat(tooltipItem.xLabel).toFixed(1);
                             const count = data.datasets[datasetIndex].counts[index];
                             return `Count: ${count} - Total Mileage: ${mileage} ${distanceUnit}`;
@@ -454,13 +504,15 @@ export class ChartCreator {
         }
 
         const chartData = {
-            datasets: [{
-                data: points,
-                label: activityNames,
-                activityIds,
-                backgroundColor: Helpers.convertToRgbaColors(bubbleColors, 0.6),
-                hoverBackgroundColor: Helpers.convertToRgbaColors(bubbleColors, 1),
-            }],
+            datasets: [
+                {
+                    data: points,
+                    label: activityNames,
+                    activityIds,
+                    backgroundColor: Helpers.convertToRgbaColors(bubbleColors, 0.6),
+                    hoverBackgroundColor: Helpers.convertToRgbaColors(bubbleColors, 1),
+                },
+            ],
         };
 
         const xAxesLinearTickOptions: Chart.LinearTickOptions = {
@@ -474,20 +526,24 @@ export class ChartCreator {
         const customChartOptions: Chart.ChartOptions = {
             scales: {
                 type: 'linear',
-                xAxes: [{
-                    ticks: xAxesLinearTickOptions,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Average Heart Rate',
+                xAxes: [
+                    {
+                        ticks: xAxesLinearTickOptions,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Average Heart Rate',
+                        },
                     },
-                }],
-                yAxes: [{
-                    ticks: yAxesLinearTickOptions,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Max Heart Rate',
+                ],
+                yAxes: [
+                    {
+                        ticks: yAxesLinearTickOptions,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Max Heart Rate',
+                        },
                     },
-                }],
+                ],
             },
             tooltips: {
                 enabled: true,
@@ -495,7 +551,8 @@ export class ChartCreator {
                 callbacks: {
                     title: (tooltipItem: Chart.ChartTooltipItem[], data?: any) => {
                         const index = tooltipItem[0].index;
-                        const result = typeof index !== 'undefined' ? data.datasets[0].label[index] : '';
+                        const result =
+                            typeof index !== 'undefined' ? data.datasets[0].label[index] : '';
                         return result;
                     },
                     label: (tooltipItem: Chart.ChartTooltipItem, data?: any) => {
@@ -571,7 +628,9 @@ export class ChartCreator {
         });
 
         const counts = Object.keys(averageHrZones).map((key) => averageHrZones[key]);
-        const legendLabels = Object.keys(averageHrZones).map((key) => `${key}: (${averageHrZones[key]})`);
+        const legendLabels = Object.keys(averageHrZones).map(
+            (key) => `${key}: (${averageHrZones[key]})`,
+        );
         const totalCount = counts.reduce((a, b) => a + b);
 
         // Not enough items with HR data to generate chart.
@@ -582,19 +641,22 @@ export class ChartCreator {
 
         const chartData = {
             labels: legendLabels,
-            datasets: [{
-                data: counts,
-                label: averageHrZoneNames,
-                backgroundColor: Helpers.convertToRgbaColors(barColors, 0.6),
-                hoverBackgroundColor: Helpers.convertToRgbaColors(barColors, 1),
-            }],
+            datasets: [
+                {
+                    data: counts,
+                    label: averageHrZoneNames,
+                    backgroundColor: Helpers.convertToRgbaColors(barColors, 0.6),
+                    hoverBackgroundColor: Helpers.convertToRgbaColors(barColors, 1),
+                },
+            ],
         };
         const customChartOptions: Chart.ChartOptions = {
             tooltips: {
                 callbacks: {
                     title: (tooltipItem: Chart.ChartTooltipItem[], data?: any) => {
                         const index = tooltipItem[0].index;
-                        const result = typeof index !== 'undefined' ? data.datasets[0].label[index] : '';
+                        const result =
+                            typeof index !== 'undefined' ? data.datasets[0].label[index] : '';
                         return result;
                     },
                     label: (tooltipItem: Chart.ChartTooltipItem, data?: any) => {

@@ -5,8 +5,8 @@ export namespace Helpers {
         const totalSeconds = parseFloat(duration);
 
         const hours = Math.floor(totalSeconds / 3600);
-        const minutes = Math.floor((totalSeconds - (hours * 3600)) / 60);
-        const seconds = Math.ceil(totalSeconds - (hours * 3600) - (minutes * 60));
+        const minutes = Math.floor((totalSeconds - hours * 3600) / 60);
+        const seconds = Math.ceil(totalSeconds - hours * 3600 - minutes * 60);
 
         const hoursText = hours === 0 ? '' : hours.toString();
         let minutesText = `${minutes.toString()}:`;
@@ -21,10 +21,9 @@ export namespace Helpers {
     }
 
     export function convertToTitleCase(sourceText: string) {
-        return sourceText.replace(/\w\S*/g,
-            (text) => {
-                return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
-            });
+        return sourceText.replace(/\w\S*/g, (text) => {
+            return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
+        });
     }
 
     export function getBaseUrl() {
@@ -99,8 +98,9 @@ export namespace Helpers {
 
     export function isTouchDevice() {
         // https://stackoverflow.com/a/4819886/1177636.
-        return 'ontouchstart' in window        // works on most browsers.
-            || navigator.maxTouchPoints;       // works on IE10/11 and Surface.
+        return (
+            'ontouchstart' in window || navigator.maxTouchPoints // works on most browsers.
+        ); // works on IE10/11 and Surface.
     }
 
     export function toTitleCase(str: string) {

@@ -6,7 +6,6 @@ import BaseView from './baseView';
 import NavigationSidebar from './navigationSidebar';
 
 export default class PersonalBestsByDistanceView extends BaseView {
-
     private count: number;
 
     private distance: string;
@@ -51,23 +50,11 @@ export default class PersonalBestsByDistanceView extends BaseView {
                 ${this.constructDataTableHtml()}
             </div>
             <div class="row">
-                ${HtmlHelpers.constructChartHtml(
-                    'gear-count-chart',
-                    'Gear Count Chart',
-                    6,
-                )}
-                ${HtmlHelpers.constructChartHtml(
-                    'workout-type-chart',
-                    'Workout Type Chart',
-                    6,
-                )}
+                ${HtmlHelpers.constructChartHtml('gear-count-chart', 'Gear Count Chart', 6)}
+                ${HtmlHelpers.constructChartHtml('workout-type-chart', 'Workout Type Chart', 6)}
             </div>
             <div class="row">
-                ${HtmlHelpers.constructChartHtml(
-                    'heart-rates-chart',
-                    'Heart Rates Chart',
-                    6,
-                )}
+                ${HtmlHelpers.constructChartHtml('heart-rates-chart', 'Heart Rates Chart', 6)}
                 ${HtmlHelpers.constructChartHtml(
                     'average-hr-zones-chart',
                     'Average HR Zones Distribution Chart',
@@ -153,9 +140,7 @@ export default class PersonalBestsByDistanceView extends BaseView {
                 { orderData: [[0, 'desc'], [4, 'asc']] },
             ],
             iDisplayLength: 10,
-            order: [
-                [0, 'desc'],
-            ],
+            order: [[0, 'desc']],
         });
     }
 }
