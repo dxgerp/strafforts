@@ -10,7 +10,7 @@ class BestEffort < ApplicationRecord
     results = where(athlete_id: athlete_id, best_effort_type_id: best_effort_type_id)
               .order('elapsed_time')
               .limit(limit)
-    results.empty? ? nil : results
+    results.empty? ? [] : results
   end
 
   def self.find_top_one_of_each_year(athlete_id, best_effort_type_id)
