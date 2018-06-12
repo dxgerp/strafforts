@@ -178,7 +178,7 @@ export class ChartCreator {
             }
 
             // Set counters.
-            switch (Helpers.convertToTitleCase(workoutType)) {
+            switch (Helpers.toTitleCase(workoutType)) {
                 case 'Race':
                     workoutTypeRace[year] += 1;
                     break;
@@ -252,14 +252,14 @@ export class ChartCreator {
         });
 
         const workoutTypeLabels = Object.keys(workoutTypes).map((key) =>
-            Helpers.convertToTitleCase(key),
+            Helpers.toTitleCase(key),
         );
         const counts = Object.keys(workoutTypes).map((key) => workoutTypes[key]);
         const legendLabels = Object.keys(workoutTypes).map(
-            (key) => `${Helpers.convertToTitleCase(key)}: (${workoutTypes[key]})`,
+            (key) => `${Helpers.toTitleCase(key)}: (${workoutTypes[key]})`,
         );
         const colors = Object.keys(workoutTypes).map((key) => {
-            switch (Helpers.convertToTitleCase(key)) {
+            switch (Helpers.toTitleCase(key)) {
                 case 'Race':
                     return new RgbColor(245, 105, 84);
                 case 'Workout':

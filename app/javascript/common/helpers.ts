@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import { RgbColor } from './rgbColor';
 
 export namespace Helpers {
@@ -18,12 +20,6 @@ export namespace Helpers {
         }
         const time = `${hoursText}${minutesText}${secondsText}${unit}`;
         return time;
-    }
-
-    export function convertToTitleCase(sourceText: string) {
-        return sourceText.replace(/\w\S*/g, (text) => {
-            return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
-        });
     }
 
     export function getBaseUrl() {
@@ -103,9 +99,7 @@ export namespace Helpers {
         ); // works on IE10/11 and Surface.
     }
 
-    export function toTitleCase(str: string) {
-        return str.replace(/\w\S*/g, (txt) => {
-            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-        });
+    export function toTitleCase(source: string) {
+        return _.startCase(_.toLower(source));
     }
 }
