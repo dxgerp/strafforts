@@ -123,7 +123,7 @@ export namespace HtmlHelpers {
         const distanceColumn = showDistanceColumn
             ? `<td data-sort="${distance}">${distance} ${item['distance_unit']}</td>`
             : '';
-        const paceOrder = Helpers.formatPaceStringForOrdering(item['pace']);
+        const paceOrder = Helpers.toPaceStringForOrdering(item['pace']);
         const row = `
             <tr>
                 <td class="no-wrap">${item['start_date']}</td>
@@ -145,18 +145,18 @@ export namespace HtmlHelpers {
                 <td class="hidden-lg-down">
                     ${item['gear_name']}
                 </td>
-                <td class="hidden-md-down">
+                <td class="hidden-md-down" data-sort="${item['elevation']}">
                     ${item['elevation']}<small> ${item['elevation_unit']}</small>
                 </td>
-                <td class="hidden-md-down">
+                <td class="hidden-md-down" data-sort="${item['cadence']}">
                     ${item['cadence']}
                 </td>
-                <td class="text-center badge-cell hidden-md-down">
+                <td class="text-center badge-cell hidden-md-down" data-sort="${item['average_heartrate']}">
                     <span class="badge hr-zone-${item['average_hr_zone']}">
                         ${item['average_heartrate'] === -1 ? 'n/a' : item['average_heartrate']}
                     </span>
                 </td>
-                <td class="text-center badge-cell hidden-md-down">
+                <td class="text-center badge-cell hidden-md-down" data-sort="${item['max_heartrate']}">
                     <span class="badge hr-zone-${item['max_hr_zone']}">
                         ${item['max_heartrate'] === -1 ? 'n/a' : item['max_heartrate']}
                     </span>
@@ -186,11 +186,8 @@ export namespace HtmlHelpers {
 
     export function createDatatableRowForBestEffortsOrPbs(item: any[]) {
         const stravaLink = `https://www.strava.com/activities/${item['activity_id']}`;
-        const workoutTypeNameClass = `workout-type-${item['workout_type_name'].replace(
-            /\s/g,
-            '-',
-        )}`;
-        const paceOrder = Helpers.formatPaceStringForOrdering(item['pace']);
+        const workoutTypeNameClass = `workout-type-${item['workout_type_name'].replace(/\s/g, '-')}`;
+        const paceOrder = Helpers.toPaceStringForOrdering(item['pace']);
         const row = `
             <tr>
                 <td class="no-wrap">${item['start_date']}</td>

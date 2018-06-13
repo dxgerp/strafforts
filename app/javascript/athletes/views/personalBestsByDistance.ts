@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import { AppHelpers } from '../helpers/appHelpers';
 import { ChartCreator } from '../helpers/chartCreators';
 import { HtmlHelpers } from '../helpers/htmlHelpers';
@@ -15,7 +17,7 @@ export default class PersonalBestsByDistanceView extends BaseView {
     constructor(distance: string, count?: string | undefined) {
         super();
 
-        this.count = count ? parseInt(count, 10) : 0;
+        this.count = count ? _.parseInt(count) : 0;
         this.distance = distance.trim().replace(/_/g, '/');
         this.distanceFormattedForUrl = AppHelpers.formatDistanceForUrl(distance);
     }
@@ -35,16 +37,8 @@ export default class PersonalBestsByDistanceView extends BaseView {
         const showLoadingIcon = true;
         const content = `
             <div class="row">
-                ${HtmlHelpers.constructChartHtml(
-                    'progression-chart',
-                    'Progression Chart (Duration)',
-                    8,
-                )}
-                ${HtmlHelpers.constructChartHtml(
-                    'year-distribution-pie-chart',
-                    'Year Distribution Chart',
-                    4,
-                )}
+                ${HtmlHelpers.constructChartHtml('progression-chart', 'Progression Chart (Duration)', 8)}
+                ${HtmlHelpers.constructChartHtml('year-distribution-pie-chart', 'Year Distribution Chart', 4)}
             </div>
             <div class="row">
                 ${this.constructDataTableHtml()}
@@ -55,11 +49,7 @@ export default class PersonalBestsByDistanceView extends BaseView {
             </div>
             <div class="row">
                 ${HtmlHelpers.constructChartHtml('heart-rates-chart', 'Heart Rates Chart', 6)}
-                ${HtmlHelpers.constructChartHtml(
-                    'average-hr-zones-chart',
-                    'Average HR Zones Distribution Chart',
-                    6,
-                )}
+                ${HtmlHelpers.constructChartHtml('average-hr-zones-chart', 'Average HR Zones Distribution Chart', 6)}
             </div>
         `;
         mainContent.append(content);
@@ -70,7 +60,7 @@ export default class PersonalBestsByDistanceView extends BaseView {
             url: `${AppHelpers.getApiBaseUrl()}/personal-bests/${this.distanceFormattedForUrl}`,
             dataType: 'json',
             success: (data) => {
-                const items = Object.keys(data).map((key) => data[key]);
+                const items = _.keys(data).map((key) => data[key]);
 
                 if (this.count < items.length) {
                     new NavigationSidebar().load();

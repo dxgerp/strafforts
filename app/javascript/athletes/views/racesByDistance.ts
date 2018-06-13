@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import { AppHelpers } from '../helpers/appHelpers';
 import { ChartCreator } from '../helpers/chartCreators';
 import { ChartHelpers } from '../helpers/chartHelper';
@@ -18,7 +20,7 @@ export default class RacesByDistanceView extends BaseView {
     constructor(distance: string, count?: string | undefined) {
         super();
 
-        this.count = count ? parseInt(count, 10) : 0;
+        this.count = count ? _.parseInt(count) : 0;
         this.distance = distance;
         this.isOtherDistance = distance.toLocaleLowerCase() === 'other distances';
         this.distanceFormattedForUrl = AppHelpers.formatDistanceForUrl(distance);
@@ -39,27 +41,15 @@ export default class RacesByDistanceView extends BaseView {
         const showLoadingIcon = true;
         const content = `
             <div class="row">
-                ${HtmlHelpers.constructChartHtml(
-                    'progression-chart',
-                    'Progression Chart (Pace)',
-                    8,
-                )}
-                ${HtmlHelpers.constructChartHtml(
-                    'year-distribution-pie-chart',
-                    'Year Distribution Chart',
-                    4,
-                )}
+                ${HtmlHelpers.constructChartHtml('progression-chart', 'Progression Chart (Pace)', 8)}
+                ${HtmlHelpers.constructChartHtml('year-distribution-pie-chart', 'Year Distribution Chart', 4)}
             </div>
             <div class="row">
                 ${this.constructDataTableHtml()}
             </div>
             <div class="row">
                 ${HtmlHelpers.constructChartHtml('heart-rates-chart', 'Heart Rates Chart', 6)}
-                ${HtmlHelpers.constructChartHtml(
-                    'average-hr-zones-chart',
-                    'Average HR Zones Distribution Chart',
-                    6,
-                )}
+                ${HtmlHelpers.constructChartHtml('average-hr-zones-chart', 'Average HR Zones Distribution Chart', 6)}
             </div>
             <div class="row">
                 ${HtmlHelpers.constructChartHtml('gear-mileage-chart', 'Gear Mileage Chart', 12)}
@@ -73,7 +63,7 @@ export default class RacesByDistanceView extends BaseView {
             url: `${AppHelpers.getApiBaseUrl()}/races/${this.distanceFormattedForUrl}`,
             dataType: 'json',
             success: (data) => {
-                const items = Object.keys(data).map((key) => data[key]);
+                const items = _.keys(data).map((key) => data[key]);
 
                 if (this.count < items.length) {
                     new NavigationSidebar().load();
@@ -142,10 +132,7 @@ export default class RacesByDistanceView extends BaseView {
 
         ($('.dataTable') as any).DataTable({
             // Disable searching for Time, Pace, Elevation, Cadence and HRs.
-            columnDefs: [
-                { targets: [2, 3, 5, 6, 7, 8], searchable: false },
-                { orderData: [[0, 'desc'], [3, 'asc']] },
-            ],
+            columnDefs: [{ targets: [2, 3, 5, 6, 7, 8], searchable: false }, { orderData: [[0, 'desc'], [3, 'asc']] }],
             iDisplayLength: 10,
             order: [[0, 'desc']],
         });

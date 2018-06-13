@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import { HtmlHelpers } from '../helpers/htmlHelpers';
 import { Helpers } from './../../common/helpers';
 import BaseView from './baseView';
@@ -22,22 +24,23 @@ export default class FaqView extends BaseView {
     }
 
     protected createView(): void {
-        const fullUrl = `${Helpers.getBaseUrl()}/api/faqs/index`;
         $.ajax({
-            url: fullUrl,
+            url: `${Helpers.getBaseUrl()}/api/faqs/index`,
             dataType: 'json',
             success: (data) => {
                 const categories: string[] = [];
                 const faqs: object[] = [];
-                $.each(data, (key, value) => {
+                const items = _.keys(data).map((key) => data[key]);
+                items.forEach((item) => {
                     const faq: object = {
-                        title: value['title'],
-                        content: value['content'],
-                        category: value['category'],
+                        title: item['title'],
+                        content: item['content'],
+                        category: item['category'],
                     };
                     faqs.push(faq);
-                    if ($.inArray(value['category'], categories) === -1) {
-                        categories.push(value['category']);
+
+                    if (_.indexOf(categories, item['category']) === -1) {
+                        categories.push(item['category']);
                     }
                 });
 
@@ -54,11 +57,10 @@ export default class FaqView extends BaseView {
                             </a>
                         </li>
                     `;
-                });
-                categories.forEach((category: string, index: number) => {
+
                     let tabItems = '';
                     faqs.forEach((faq: object) => {
-                        if (faq['category'] === category) {
+                        if (_.isEqual(faq['category'], category)) {
                             tabItems += `
                                 <div class="box box-default">
                                     <div class="box-header with-border">

@@ -1,29 +1,13 @@
+import * as _ from 'lodash';
+
 import { RgbColor } from './rgbColor';
 
 export namespace Helpers {
-    export function formatPace(duration: string, unit: string) {
-        const totalSeconds = parseFloat(duration);
-
-        const hours = Math.floor(totalSeconds / 3600);
-        const minutes = Math.floor((totalSeconds - hours * 3600) / 60);
-        const seconds = Math.ceil(totalSeconds - hours * 3600 - minutes * 60);
-
-        const hoursText = hours === 0 ? '' : hours.toString();
-        let minutesText = `${minutes.toString()}:`;
-        let secondsText = seconds < 10 ? `0${seconds}` : seconds.toString();
-
-        if (seconds === 60) {
-            minutesText = `${(minutes + 1).toString()}:`;
-            secondsText = '00';
-        }
-        const time = `${hoursText}${minutesText}${secondsText}${unit}`;
-        return time;
-    }
-
-    export function convertToTitleCase(sourceText: string) {
-        return sourceText.replace(/\w\S*/g, (text) => {
-            return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
+    export function convertToRgbaColors(rgbColors: RgbColor[], alpha: number) {
+        const colors: string[] = _.map(rgbColors, (item) => {
+            return item.toString(alpha);
         });
+        return colors;
     }
 
     export function getBaseUrl() {
@@ -47,40 +31,25 @@ export namespace Helpers {
             new RgbColor(212, 154, 106),
             new RgbColor(78, 156, 104),
         ];
-        return limit ? colors.slice(0, limit) : colors;
+        return limit ? _.take(colors, limit) : colors;
     }
 
     export function getRgbColorBasedOnHrZone(heartRateZone: string) {
-        // Defined in app/assets/stylesheets/athletes.scss.
-        const colorHrZone1 = new RgbColor(189, 214, 186);
-        const colorHrZone2 = new RgbColor(0, 166, 90);
-        const colorHrZone3 = new RgbColor(243, 156, 18);
-        const colorHrZone4 = new RgbColor(200, 35, 0);
-        const colorHrZone5 = new RgbColor(17, 17, 17);
-        const colorHrZoneNa = new RgbColor(210, 214, 222);
-
+        // Colors defined in app/assets/stylesheets/athletes.scss.
         switch (heartRateZone) {
             case '1':
-                return colorHrZone1;
+                return new RgbColor(189, 214, 186);
             case '2':
-                return colorHrZone2;
+                return new RgbColor(0, 166, 90);
             case '3':
-                return colorHrZone3;
+                return new RgbColor(243, 156, 18);
             case '4':
-                return colorHrZone4;
+                return new RgbColor(200, 35, 0);
             case '5':
-                return colorHrZone5;
+                return new RgbColor(17, 17, 17);
             default:
-                return colorHrZoneNa;
+                return new RgbColor(210, 214, 222);
         }
-    }
-
-    export function convertToRgbaColors(rgbColors: RgbColor[], alpha: number) {
-        const colors: string[] = [];
-        rgbColors.forEach((item, index) => {
-            colors.push(item.toString(alpha));
-        });
-        return colors;
     }
 
     export function getUrlParameter(name: string) {
@@ -88,12 +57,7 @@ export namespace Helpers {
         name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
         const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
         const results = regex.exec(location.search);
-        return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, ' '));
-    }
-
-    export function formatPaceStringForOrdering(pace: string) {
-        const result = pace.indexOf(':') > 0 && pace.split(':')[0].length === 1 ? `0${pace}` : pace;
-        return result;
+        return _.isNull(results) ? null : decodeURIComponent(results[1].replace(/\+/g, ' '));
     }
 
     export function isTouchDevice() {
@@ -103,9 +67,44 @@ export namespace Helpers {
         ); // works on IE10/11 and Surface.
     }
 
-    export function toTitleCase(str: string) {
-        return str.replace(/\w\S*/g, (txt) => {
-            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    export function toHHMMSS(duration: number) {
+        const hours = Math.floor(duration / 3600);
+        const minutes = Math.floor((duration - hours * 3600) / 60);
+        const seconds = duration - hours * 3600 - minutes * 60;
+
+        const hoursText = hours < 10 ? `0${hours}` : hours;
+        const minutesText = minutes < 10 ? `0${minutes}` : minutes;
+        const secondsText = seconds < 10 ? `0${seconds}` : seconds;
+
+        const result = `${hoursText}:${minutesText}:${secondsText}`;
+        return result;
+    }
+
+    export function toPaceString(duration: number, unit: string) {
+        const hours = Math.floor(duration / 3600);
+        const minutes = Math.floor((duration - hours * 3600) / 60);
+        const seconds = Math.ceil(duration - hours * 3600 - minutes * 60);
+
+        const hoursText = hours === 0 ? '' : hours.toString();
+        let minutesText = `${minutes.toString()}:`;
+        let secondsText = seconds < 10 ? `0${seconds}` : seconds.toString();
+
+        if (seconds === 60) {
+            minutesText = `${(minutes + 1).toString()}:`;
+            secondsText = '00';
+        }
+        const time = `${hoursText}${minutesText}${secondsText}${unit}`;
+        return time;
+    }
+
+    export function toPaceStringForOrdering(pace: string) {
+        const result = pace.indexOf(':') > 0 && pace.split(':')[0].length === 1 ? `0${pace}` : pace;
+        return result;
+    }
+
+    export function toTitleCase(source: string) {
+        return source.replace(/\w\S*/g, (text) => {
+            return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
         });
     }
 }

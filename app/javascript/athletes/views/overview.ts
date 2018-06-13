@@ -107,9 +107,7 @@ export default class Overview extends BaseView {
 
                         let rows = '';
                         model['items'].forEach((item: any[]) => {
-                            const stravaLink = `https://www.strava.com/activities/${
-                                item['activity_id']
-                            }`;
+                            const stravaLink = `https://www.strava.com/activities/${item['activity_id']}`;
                             const distanceColumn = showDistanceColumn
                                 ? `<td class="hidden-xs-down">
                                     ${item['distance'].toFixed(1)} ${item['distance_unit']}
@@ -118,10 +116,7 @@ export default class Overview extends BaseView {
                             const workoutTypeColumn = isTypeOfRaces
                                 ? ''
                                 : `<td class="text-center badge-cell hidden-md-down">
-                                <span class="label workout-type-${item['workout_type_name'].replace(
-                                    /\s/g,
-                                    '-',
-                                )}">
+                                <span class="label workout-type-${item['workout_type_name'].replace(/\s/g, '-')}">
                                     ${item['workout_type_name']}
                                 </span>
                             </td>`;
@@ -130,7 +125,7 @@ export default class Overview extends BaseView {
                                 <span></span>
                             </a>`
                                 : '';
-                            const paceOrder = Helpers.formatPaceStringForOrdering(item['pace']);
+                            const paceOrder = Helpers.toPaceStringForOrdering(item['pace']);
 
                             rows += `
                             <tr>
@@ -150,20 +145,12 @@ export default class Overview extends BaseView {
                                 <td class="hidden-lg-down">${item['gear_name']}</td>
                                 <td class='text-center badge-cell hidden-md-down'>
                                     <span class="badge hr-zone-${item['average_hr_zone']}">
-                                        ${
-                                            item['average_heartrate'] === -1
-                                                ? 'n/a'
-                                                : item['average_heartrate']
-                                        }
+                                        ${item['average_heartrate'] === -1 ? 'n/a' : item['average_heartrate']}
                                     </span>
                                 </td>
                                 <td class='text-center badge-cell hidden-md-down'>
                                     <span class="badge hr-zone-${item['max_hr_zone']}">
-                                        ${
-                                            item['max_heartrate'] === -1
-                                                ? 'n/a'
-                                                : item['max_heartrate']
-                                        }
+                                        ${item['max_heartrate'] === -1 ? 'n/a' : item['max_heartrate']}
                                     </span>
                                 </td>
                             </tr>`;
@@ -228,16 +215,14 @@ export default class Overview extends BaseView {
                 } else {
                     let rows = '';
                     data.forEach((item: any[]) => {
-                        const stravaLink = `https://www.strava.com/activities/${
-                            item['activity_id']
-                        }`;
+                        const stravaLink = `https://www.strava.com/activities/${item['activity_id']}`;
                         const distance = isTypeOfRaces
                             ? `${item['distance'].toFixed(1)} ${item['distance_unit']}`
                             : `${item['best_effort_type']}`;
                         const distanceSortOrder = isTypeOfRaces
                             ? item['distance'].toFixed(1)
                             : item['best_effort_type_id'];
-                        const paceOrder = Helpers.formatPaceStringForOrdering(item['pace']);
+                        const paceOrder = Helpers.toPaceStringForOrdering(item['pace']);
 
                         rows += `
                             <tr>
@@ -260,20 +245,12 @@ export default class Overview extends BaseView {
                                 <td class="hidden-lg-down">${item['gear_name']}</td>
                                 <td class='text-center badge-cell hidden-md-down'>
                                     <span class="badge hr-zone-${item['average_hr_zone']}">
-                                        ${
-                                            item['average_heartrate'] === -1
-                                                ? 'n/a'
-                                                : item['average_heartrate']
-                                        }
+                                        ${item['average_heartrate'] === -1 ? 'n/a' : item['average_heartrate']}
                                     </span>
                                 </td>
                                 <td class='text-center badge-cell hidden-md-down'>
                                     <span class="badge hr-zone-${item['max_hr_zone']}">
-                                        ${
-                                            item['max_heartrate'] === -1
-                                                ? 'n/a'
-                                                : item['max_heartrate']
-                                        }
+                                        ${item['max_heartrate'] === -1 ? 'n/a' : item['max_heartrate']}
                                     </span>
                                 </td>
                             </tr>

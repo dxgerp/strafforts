@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import { AppHelpers } from '../helpers/appHelpers';
 import { ChartCreator } from '../helpers/chartCreators';
 import { HtmlHelpers } from '../helpers/htmlHelpers';
@@ -23,9 +25,7 @@ export default class BestEffortsByDistanceView extends BaseView {
 
         if (this.distance) {
             $('.best-efforts-filter-buttons .btn').removeClass('active'); // Reset all currently active filter buttons.
-            $(`.best-efforts-filter-buttons .btn[data-race-distance='${this.distance}']`).addClass(
-                'active',
-            );
+            $(`.best-efforts-filter-buttons .btn[data-race-distance='${this.distance}']`).addClass('active');
             this.createViewTemplate();
             this.createView();
         } else {
@@ -46,16 +46,8 @@ export default class BestEffortsByDistanceView extends BaseView {
         const content = `
             <div class="best-efforts-wrapper">
                 <div class="row">
-                    ${HtmlHelpers.constructChartHtml(
-                        'progression-by-year-chart',
-                        'Progression Chart (By Year)',
-                        4,
-                    )}
-                    ${HtmlHelpers.constructChartHtml(
-                        'year-distribution-pie-chart',
-                        'Year Distribution Chart',
-                        4,
-                    )}
+                    ${HtmlHelpers.constructChartHtml('progression-by-year-chart', 'Progression Chart (By Year)', 4)}
+                    ${HtmlHelpers.constructChartHtml('year-distribution-pie-chart', 'Year Distribution Chart', 4)}
                     ${HtmlHelpers.constructChartHtml('workout-type-chart', 'Workout Type Chart', 4)}
                 </div>
                 <div class="row">
@@ -72,29 +64,20 @@ export default class BestEffortsByDistanceView extends BaseView {
 
     protected createView(): void {
         $.ajax({
-            url: `${AppHelpers.getApiBaseUrl()}/best-efforts/${
-                this.distanceFormattedForUrl
-            }/top-one-by-year`,
+            url: `${AppHelpers.getApiBaseUrl()}/best-efforts/${this.distanceFormattedForUrl}/top-one-by-year`,
             dataType: 'json',
             success: (data) => {
-                const items = Object.keys(data).map((key) => data[key]);
+                const items = _.keys(data).map((key) => data[key]);
                 const result = {};
                 items.forEach((item: any) => {
                     const year = item['start_date'].split('-')[0];
-                    if (
-                        !result[year] ||
-                        (result[year] && item['elapsed_time'] < result[year]['elapsed_time'])
-                    ) {
+                    if (!result[year] || (result[year] && item['elapsed_time'] < result[year]['elapsed_time'])) {
                         result[year] = item;
                     }
                 });
-                const progressionByYearItems = Object.keys(result).map((key) => result[key]);
+                const progressionByYearItems = _.keys(result).map((key) => result[key]);
                 const progressionChartCreator = new ChartCreator(progressionByYearItems);
-                progressionChartCreator.createProgressionChart(
-                    'progression-by-year-chart',
-                    false,
-                    true,
-                );
+                progressionChartCreator.createProgressionChart('progression-by-year-chart', false, true);
             },
             error: (xhr) => {
                 if (xhr.status === 404) {
@@ -107,7 +90,7 @@ export default class BestEffortsByDistanceView extends BaseView {
             url: `${AppHelpers.getApiBaseUrl()}/best-efforts/${this.distanceFormattedForUrl}`,
             dataType: 'json',
             success: (data) => {
-                const items = Object.keys(data).map((key) => data[key]);
+                const items = _.keys(data).map((key) => data[key]);
 
                 // Create table table.
                 this.createDataTable(items);
