@@ -1,4 +1,5 @@
 import * as Chart from 'chart.js';
+import * as _ from 'lodash';
 
 import { Helpers } from '../../common/helpers';
 import { RgbColor } from '../../common/rgbColor';
@@ -51,8 +52,8 @@ export namespace ChartHelpers {
         id: string,
         chartType: string,
         chartData: Chart.ChartData,
-        chartOptions: Chart.ChartOptions) {
-
+        chartOptions: Chart.ChartOptions,
+    ) {
         const chartContainer = $(`#${id}`);
         chartContainer.empty();
         const canvas = `<canvas id="${id}-canvas" height="300"></canvas>`;
@@ -84,8 +85,9 @@ export namespace ChartHelpers {
             },
         };
 
-        const chartOptions = customChartOptions ?
-            { ...defaultChartOptions, ...customChartOptions } : defaultChartOptions;
+        const chartOptions = customChartOptions
+            ? { ...defaultChartOptions, ...customChartOptions }
+            : defaultChartOptions;
         return ChartHelpers.createChart(id, 'line', chartData, chartOptions);
     }
 
@@ -96,17 +98,19 @@ export namespace ChartHelpers {
         legendLabels?: string[],
         chartType?: ChartType,
         colors?: RgbColor[],
-        customChartOptions?: Chart.ChartOptions) {
-
+        customChartOptions?: Chart.ChartOptions,
+    ) {
         colors = colors ? colors : Helpers.getRgbColors();
         const chartData = {
-            labels: (legendLabels) ? legendLabels : dataLabels,
-            datasets: [{
-                data: counts,
-                label: dataLabels,
-                backgroundColor: Helpers.convertToRgbaColors(colors, 0.6),
-                hoverBackgroundColor: Helpers.convertToRgbaColors(colors, 1),
-            }],
+            labels: legendLabels ? legendLabels : dataLabels,
+            datasets: [
+                {
+                    data: counts,
+                    label: dataLabels,
+                    backgroundColor: Helpers.convertToRgbaColors(colors, 0.6),
+                    hoverBackgroundColor: Helpers.convertToRgbaColors(colors, 1),
+                },
+            ],
         };
         const defaultChartOptions = {
             legend: {
@@ -123,22 +127,27 @@ export namespace ChartHelpers {
                 callbacks: {
                     title: (tooltipItem: Chart.ChartTooltipItem[], data?: any) => {
                         const index = tooltipItem[0].index;
-                        const result = typeof index !== 'undefined' ? data.datasets[0].label[index] : '';
+                        const result = _.isUndefined(index) ? '' : data.datasets[0].label[index];
                         return result;
                     },
                     label: (tooltipItem: Chart.ChartTooltipItem, data?: any) => {
                         const index = tooltipItem.index;
-                        const result = typeof index !== 'undefined' ? `Count: ${data.datasets[0].data[index]}` : '';
+                        const result = _.isUndefined(index) ? '' : `Count: ${data.datasets[0].data[index]}`;
                         return result;
                     },
                 },
             },
         };
 
-        const chartOptions = customChartOptions ?
-            { ...defaultChartOptions, ...customChartOptions } : defaultChartOptions;
+        const chartOptions = customChartOptions
+            ? { ...defaultChartOptions, ...customChartOptions }
+            : defaultChartOptions;
         return ChartHelpers.createChart(
-            id, chartType === ChartType.Doughnut ? 'doughnut' : 'pie', chartData, chartOptions);
+            id,
+            chartType === ChartType.Doughnut ? 'doughnut' : 'pie',
+            chartData,
+            chartOptions,
+        );
     }
 
     export function createBarChart(
@@ -146,18 +155,20 @@ export namespace ChartHelpers {
         counts: number[],
         dataLabels: string[],
         legendLabels: string[],
-        customChartOptions?: Chart.ChartOptions) {
-
+        customChartOptions?: Chart.ChartOptions,
+    ) {
         const colors = Helpers.getRgbColors();
         const chartData = {
             yLabels: counts,
             labels: legendLabels,
-            datasets: [{
-                data: counts,
-                label: dataLabels,
-                backgroundColor: Helpers.convertToRgbaColors(colors, 0.6),
-                hoverBackgroundColor: Helpers.convertToRgbaColors(colors, 1),
-            }],
+            datasets: [
+                {
+                    data: counts,
+                    label: dataLabels,
+                    backgroundColor: Helpers.convertToRgbaColors(colors, 0.6),
+                    hoverBackgroundColor: Helpers.convertToRgbaColors(colors, 1),
+                },
+            ],
         };
         const defaultChartOptions = {
             legend: {
@@ -167,20 +178,24 @@ export namespace ChartHelpers {
             responsive: true,
             scales: {
                 type: 'linear',
-                xAxes: [{
-                    ticks: {
-                        autoSkip: false,
-                    },
-                }],
-                yAxes: [{
-                    ticks: {
-                        autoSkip: false,
-                        beginAtZero: true,
-                        callback: (value: any, index: any, values: any) => {
-                            return value % 1 === 0 ? value : '';
+                xAxes: [
+                    {
+                        ticks: {
+                            autoSkip: false,
                         },
                     },
-                }],
+                ],
+                yAxes: [
+                    {
+                        ticks: {
+                            autoSkip: false,
+                            beginAtZero: true,
+                            callback: (value: any, index: any, values: any) => {
+                                return value % 1 === 0 ? value : '';
+                            },
+                        },
+                    },
+                ],
             },
             tooltips: {
                 enabled: true,
@@ -188,7 +203,7 @@ export namespace ChartHelpers {
                 callbacks: {
                     title: (tooltipItem: Chart.ChartTooltipItem[], data?: any) => {
                         const index = tooltipItem[0].index;
-                        const result = typeof index !== 'undefined' ? data.datasets[0].label[index] : '';
+                        const result = _.isUndefined(index) ? '' : data.datasets[0].label[index];
                         return result;
                     },
                     label: (tooltipItem: Chart.ChartTooltipItem, data?: any) => {
@@ -199,8 +214,9 @@ export namespace ChartHelpers {
             },
         };
 
-        const chartOptions = customChartOptions ?
-            { ...defaultChartOptions, ...customChartOptions } : defaultChartOptions;
+        const chartOptions = customChartOptions
+            ? { ...defaultChartOptions, ...customChartOptions }
+            : defaultChartOptions;
         return ChartHelpers.createChart(id, 'bar', chartData, chartOptions);
     }
 
@@ -209,8 +225,8 @@ export namespace ChartHelpers {
         counts: string[],
         datasets: object,
         legendLabels: string[],
-        customChartOptions?: Chart.ChartOptions) {
-
+        customChartOptions?: Chart.ChartOptions,
+    ) {
         const chartData = {
             yLabels: counts,
             labels: legendLabels,
@@ -224,24 +240,28 @@ export namespace ChartHelpers {
             responsive: true,
             scales: {
                 type: 'linear',
-                xAxes: [{
-                    stacked: true,
-                    ticks: {
-                        autoSkip: false,
-                    },
-                }],
-                yAxes: [{
-                    stacked: true,
-                    ticks: {
-                        autoSkip: false,
-                        beginAtZero: true,
-                        callback: (value: any) => {
-                            if (value % 1 === 0) {
-                                return value;
-                            }
+                xAxes: [
+                    {
+                        stacked: true,
+                        ticks: {
+                            autoSkip: false,
                         },
                     },
-                }],
+                ],
+                yAxes: [
+                    {
+                        stacked: true,
+                        ticks: {
+                            autoSkip: false,
+                            beginAtZero: true,
+                            callback: (value: any) => {
+                                if (value % 1 === 0) {
+                                    return value;
+                                }
+                            },
+                        },
+                    },
+                ],
             },
             tooltips: {
                 enabled: true,
@@ -249,30 +269,28 @@ export namespace ChartHelpers {
                 callbacks: {
                     title: (tooltipItem: Chart.ChartTooltipItem[], data?: any) => {
                         const index = tooltipItem[0].index;
-                        const result = typeof index !== 'undefined' ? `${data.yLabels[index]}` : '';
+                        const result = _.isUndefined(index) ? '' : `${data.yLabels[index]}`;
                         return result;
                     },
                     label: (tooltipItem: Chart.ChartTooltipItem, data?: any) => {
                         const datasetIndex = tooltipItem.datasetIndex;
-                        const result = (tooltipItem.yLabel && typeof datasetIndex !== 'undefined')
-                            ? `${data.datasets[datasetIndex].label}: ${tooltipItem.yLabel}`
-                            : '';
+                        const result =
+                            tooltipItem.yLabel && !_.isUndefined(datasetIndex)
+                                ? `${data.datasets[datasetIndex].label}: ${tooltipItem.yLabel}`
+                                : '';
                         return result;
                     },
                 },
             },
         };
 
-        const chartOptions = customChartOptions ?
-            { ...defaultChartOptions, ...customChartOptions } : defaultChartOptions;
+        const chartOptions = customChartOptions
+            ? { ...defaultChartOptions, ...customChartOptions }
+            : defaultChartOptions;
         return ChartHelpers.createChart(id, 'bar', chartData, chartOptions);
     }
 
-    export function createBubbleChart(
-        id: string,
-        chartData: Chart.ChartData,
-        customChartOptions?: Chart.ChartOptions) {
-
+    export function createBubbleChart(id: string, chartData: Chart.ChartData, customChartOptions?: Chart.ChartOptions) {
         const defaultChartOptions = {
             legend: {
                 display: false,
@@ -281,16 +299,17 @@ export namespace ChartHelpers {
             maintainAspectRatio: false,
         };
 
-        const chartOptions = customChartOptions ?
-            { ...defaultChartOptions, ...customChartOptions } : defaultChartOptions;
+        const chartOptions = customChartOptions
+            ? { ...defaultChartOptions, ...customChartOptions }
+            : defaultChartOptions;
         return ChartHelpers.createChart(id, 'bubble', chartData, chartOptions);
     }
 
     export function createHorizontalBarChart(
         id: string,
         chartData: Chart.ChartData,
-        customChartOptions?: Chart.ChartOptions) {
-
+        customChartOptions?: Chart.ChartOptions,
+    ) {
         const defaultChartOptions = {
             legend: {
                 display: false,
@@ -298,17 +317,19 @@ export namespace ChartHelpers {
             maintainAspectRatio: false,
             responsive: true,
             scales: {
-                xAxes: [{
-                    ticks: {
-                        autoSkip: false,
-                        beginAtZero: true,
-                        callback: (value: any) => {
-                            if (value % 1 === 0) {
-                                return value;
-                            }
+                xAxes: [
+                    {
+                        ticks: {
+                            autoSkip: false,
+                            beginAtZero: true,
+                            callback: (value: any) => {
+                                if (value % 1 === 0) {
+                                    return value;
+                                }
+                            },
                         },
                     },
-                }],
+                ],
             },
             tooltips: {
                 enabled: true,
@@ -322,8 +343,9 @@ export namespace ChartHelpers {
             },
         };
 
-        const chartOptions = customChartOptions ?
-            { ...defaultChartOptions, ...customChartOptions } : defaultChartOptions;
+        const chartOptions = customChartOptions
+            ? { ...defaultChartOptions, ...customChartOptions }
+            : defaultChartOptions;
         return ChartHelpers.createChart(id, 'horizontalBar', chartData, chartOptions);
     }
 }

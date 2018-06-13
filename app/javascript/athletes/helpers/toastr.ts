@@ -1,5 +1,4 @@
 export namespace Toastr {
-
     export function getOptions(): ToastrOptions {
         const options = {
             debug: false,

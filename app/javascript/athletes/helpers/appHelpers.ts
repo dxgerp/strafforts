@@ -2,7 +2,6 @@ import { Helpers } from './../../common/helpers';
 import { ViewType } from './viewTypes';
 
 export namespace AppHelpers {
-
     export function appendToPageTitle(content: string) {
         const pageTitle = document.title;
         const newTitle = pageTitle.substr(0, pageTitle.lastIndexOf(' | ')) + content;
@@ -12,7 +11,9 @@ export namespace AppHelpers {
     }
 
     export function getBaseUrl(isApiCall?: boolean) {
-        const athleteId = $('#athlete-id').text().trim();
+        const athleteId = $('#athlete-id')
+            .text()
+            .trim();
         const urlPrefix = `${Helpers.getBaseUrl()}${isApiCall ? '/api' : ''}/athletes/${athleteId}`;
         return urlPrefix;
     }
@@ -22,7 +23,9 @@ export namespace AppHelpers {
     }
 
     export function goToProPlansPage() {
-        const athleteId = $('#athlete-id').text().trim();
+        const athleteId = $('#athlete-id')
+            .text()
+            .trim();
         window.location.href = `${Helpers.getBaseUrl()}/athletes/${athleteId}/get-pro`;
     }
 
@@ -37,7 +40,11 @@ export namespace AppHelpers {
     }
 
     export function formatDistanceForUrl(distance: string) {
-        return distance.trim().replace(/\//g, '_').replace(/\s/g, '-').toLowerCase();
+        return distance
+            .trim()
+            .replace(/\//g, '_')
+            .replace(/\s/g, '-')
+            .toLowerCase();
     }
 
     export function pushStateToWindow(relativeUrl: string) {
@@ -47,9 +54,15 @@ export namespace AppHelpers {
 
     export function resetNavigationItems() {
         $('.treeview-menu li:not(.treeview-expander) a').each(function() {
-            $(this).parent().removeClass('active');
-            $(this).children('i').removeClass('fa-check-circle-o');
-            $(this).children('i').addClass('fa-circle-o');
+            $(this)
+                .parent()
+                .removeClass('active');
+            $(this)
+                .children('i')
+                .removeClass('fa-check-circle-o');
+            $(this)
+                .children('i')
+                .addClass('fa-circle-o');
         });
         $('.treeview-menu .treeview-expander').each(function() {
             $(this).removeClass('active');
@@ -79,7 +92,10 @@ export namespace AppHelpers {
             const navigationAnchor = determineNavigationAnchor(viewName);
 
             if (navigationAnchor && navigationAnchor.length === 1) {
-                navigationAnchor.parent().closest('.treeview-expander').addClass('active');
+                navigationAnchor
+                    .parent()
+                    .closest('.treeview-expander')
+                    .addClass('active');
                 navigationAnchor.parent().addClass('active');
                 navigationAnchor.children('i').removeClass('fa-circle-o');
                 navigationAnchor.children('i').addClass('fa-check-circle-o');

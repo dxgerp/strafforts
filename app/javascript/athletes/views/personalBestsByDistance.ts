@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import { AppHelpers } from '../helpers/appHelpers';
 import { ChartCreator } from '../helpers/chartCreators';
 import { HtmlHelpers } from '../helpers/htmlHelpers';
@@ -6,7 +8,6 @@ import BaseView from './baseView';
 import NavigationSidebar from './navigationSidebar';
 
 export default class PersonalBestsByDistanceView extends BaseView {
-
     private count: number;
 
     private distance: string;
@@ -16,7 +17,7 @@ export default class PersonalBestsByDistanceView extends BaseView {
     constructor(distance: string, count?: string | undefined) {
         super();
 
-        this.count = count ? parseInt(count, 10) : 0;
+        this.count = count ? _.parseInt(count) : 0;
         this.distance = distance.trim().replace(/_/g, '/');
         this.distanceFormattedForUrl = AppHelpers.formatDistanceForUrl(distance);
     }
@@ -36,43 +37,19 @@ export default class PersonalBestsByDistanceView extends BaseView {
         const showLoadingIcon = true;
         const content = `
             <div class="row">
-                ${HtmlHelpers.constructChartHtml(
-                    'progression-chart',
-                    'Progression Chart (Duration)',
-                    8,
-                )}
-                ${HtmlHelpers.constructChartHtml(
-                    'year-distribution-pie-chart',
-                    'Year Distribution Chart',
-                    4,
-                )}
+                ${HtmlHelpers.constructChartHtml('progression-chart', 'Progression Chart (Duration)', 8)}
+                ${HtmlHelpers.constructChartHtml('year-distribution-pie-chart', 'Year Distribution Chart', 4)}
             </div>
             <div class="row">
                 ${this.constructDataTableHtml()}
             </div>
             <div class="row">
-                ${HtmlHelpers.constructChartHtml(
-                    'gear-count-chart',
-                    'Gear Count Chart',
-                    6,
-                )}
-                ${HtmlHelpers.constructChartHtml(
-                    'workout-type-chart',
-                    'Workout Type Chart',
-                    6,
-                )}
+                ${HtmlHelpers.constructChartHtml('gear-count-chart', 'Gear Count Chart', 6)}
+                ${HtmlHelpers.constructChartHtml('workout-type-chart', 'Workout Type Chart', 6)}
             </div>
             <div class="row">
-                ${HtmlHelpers.constructChartHtml(
-                    'heart-rates-chart',
-                    'Heart Rates Chart',
-                    6,
-                )}
-                ${HtmlHelpers.constructChartHtml(
-                    'average-hr-zones-chart',
-                    'Average HR Zones Distribution Chart',
-                    6,
-                )}
+                ${HtmlHelpers.constructChartHtml('heart-rates-chart', 'Heart Rates Chart', 6)}
+                ${HtmlHelpers.constructChartHtml('average-hr-zones-chart', 'Average HR Zones Distribution Chart', 6)}
             </div>
         `;
         mainContent.append(content);
@@ -83,7 +60,7 @@ export default class PersonalBestsByDistanceView extends BaseView {
             url: `${AppHelpers.getApiBaseUrl()}/personal-bests/${this.distanceFormattedForUrl}`,
             dataType: 'json',
             success: (data) => {
-                const items = Object.keys(data).map((key) => data[key]);
+                const items = _.keys(data).map((key) => data[key]);
 
                 if (this.count < items.length) {
                     new NavigationSidebar().load();
@@ -153,9 +130,7 @@ export default class PersonalBestsByDistanceView extends BaseView {
                 { orderData: [[0, 'desc'], [4, 'asc']] },
             ],
             iDisplayLength: 10,
-            order: [
-                [0, 'desc'],
-            ],
+            order: [[0, 'desc']],
         });
     }
 }

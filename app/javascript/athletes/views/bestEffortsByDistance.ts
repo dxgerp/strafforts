@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import { AppHelpers } from '../helpers/appHelpers';
 import { ChartCreator } from '../helpers/chartCreators';
 import { HtmlHelpers } from '../helpers/htmlHelpers';
@@ -44,31 +46,15 @@ export default class BestEffortsByDistanceView extends BaseView {
         const content = `
             <div class="best-efforts-wrapper">
                 <div class="row">
-                    ${HtmlHelpers.constructChartHtml(
-                        'progression-by-year-chart',
-                        'Progression Chart (By Year)',
-                        4,
-                    )}
-                    ${HtmlHelpers.constructChartHtml(
-                        'year-distribution-pie-chart',
-                        'Year Distribution Chart',
-                        4,
-                    )}
-                    ${HtmlHelpers.constructChartHtml(
-                        'workout-type-chart',
-                        'Workout Type Chart',
-                        4,
-                    )}
+                    ${HtmlHelpers.constructChartHtml('progression-by-year-chart', 'Progression Chart (By Year)', 4)}
+                    ${HtmlHelpers.constructChartHtml('year-distribution-pie-chart', 'Year Distribution Chart', 4)}
+                    ${HtmlHelpers.constructChartHtml('workout-type-chart', 'Workout Type Chart', 4)}
                 </div>
                 <div class="row">
                     ${this.constructDataTableHtml()}
                 </div>
                 <div class="row">
-                    ${HtmlHelpers.constructChartHtml(
-                        'gear-count-chart',
-                        'Gear Count Chart',
-                        12,
-                    )}
+                    ${HtmlHelpers.constructChartHtml('gear-count-chart', 'Gear Count Chart', 12)}
                 </div>
             </div>
         `;
@@ -81,7 +67,7 @@ export default class BestEffortsByDistanceView extends BaseView {
             url: `${AppHelpers.getApiBaseUrl()}/best-efforts/${this.distanceFormattedForUrl}/top-one-by-year`,
             dataType: 'json',
             success: (data) => {
-                const items = Object.keys(data).map((key) => data[key]);
+                const items = _.keys(data).map((key) => data[key]);
                 const result = {};
                 items.forEach((item: any) => {
                     const year = item['start_date'].split('-')[0];
@@ -89,10 +75,9 @@ export default class BestEffortsByDistanceView extends BaseView {
                         result[year] = item;
                     }
                 });
-                const progressionByYearItems = Object.keys(result).map((key) => result[key]);
+                const progressionByYearItems = _.keys(result).map((key) => result[key]);
                 const progressionChartCreator = new ChartCreator(progressionByYearItems);
                 progressionChartCreator.createProgressionChart('progression-by-year-chart', false, true);
-
             },
             error: (xhr) => {
                 if (xhr.status === 404) {
@@ -105,7 +90,7 @@ export default class BestEffortsByDistanceView extends BaseView {
             url: `${AppHelpers.getApiBaseUrl()}/best-efforts/${this.distanceFormattedForUrl}`,
             dataType: 'json',
             success: (data) => {
-                const items = Object.keys(data).map((key) => data[key]);
+                const items = _.keys(data).map((key) => data[key]);
 
                 // Create table table.
                 this.createDataTable(items);
@@ -166,15 +151,12 @@ export default class BestEffortsByDistanceView extends BaseView {
                 { orderData: [[4, 'asc'], [3, 'asc'], [0, 'desc']] },
             ],
             iDisplayLength: 10,
-            order: [
-                [3, 'asc'],
-            ],
+            order: [[3, 'asc']],
         });
     }
 
     private createFilterButtons() {
         if ($('#main-content .best-efforts-filter-buttons .btn').length === 0) {
-
             // Empty everything first (i.e. Loading Icon).
             const mainContent = $('#main-content');
             mainContent.empty();
