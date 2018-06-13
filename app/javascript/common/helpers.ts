@@ -103,6 +103,8 @@ export namespace Helpers {
     }
 
     export function toTitleCase(source: string) {
-        return _.startCase(_.toLower(source));
+        return source.replace(/\w\S*/g, (text) => {
+            return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
+        });
     }
 }
