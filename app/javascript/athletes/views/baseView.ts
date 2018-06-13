@@ -3,10 +3,7 @@ import { Helpers } from './../../common/helpers';
 
 abstract class BaseView {
     protected prepareView(viewType: string, itemName?: string) {
-        let viewName = viewType;
-        if (itemName) {
-            viewName = `${viewType} - ${itemName}`;
-        }
+        let viewName = itemName ? `${viewType} - ${itemName}` : viewType;
         viewName = Helpers.toTitleCase(viewName);
 
         AppHelpers.setContentHeader(viewName);

@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import { AppHelpers } from '../helpers/appHelpers';
 import { HtmlHelpers } from '../helpers/htmlHelpers';
 import BaseView from './baseView';
@@ -33,7 +35,7 @@ export default class RacesTimelineView extends BaseView {
                     const years: number[] = [];
                     $.each(data['races_by_year'], (key, value) => {
                         const year = value['name'];
-                        if ($.inArray(year, years) === -1) {
+                        if (_.indexOf(years, year) === -1) {
                             years.push(year);
                         }
                     });
@@ -97,8 +99,8 @@ export default class RacesTimelineView extends BaseView {
             dataType: 'json',
             async: false,
             success: (data) => {
-                const races = Object.keys(data).map((key) => data[key]);
-                races.forEach((item) => {
+                const items = _.keys(data).map((key) => data[key]);
+                items.forEach((item) => {
                     const stravaLink = `https://www.strava.com/activities/${item['activity_id']}`;
                     const distance = item['race_distance'];
 

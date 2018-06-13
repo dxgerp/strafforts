@@ -125,7 +125,7 @@ export default class Overview extends BaseView {
                                 <span></span>
                             </a>`
                                 : '';
-                            const paceOrder = Helpers.formatPaceStringForOrdering(item['pace']);
+                            const paceOrder = Helpers.toPaceStringForOrdering(item['pace']);
 
                             rows += `
                             <tr>
@@ -222,7 +222,7 @@ export default class Overview extends BaseView {
                         const distanceSortOrder = isTypeOfRaces
                             ? item['distance'].toFixed(1)
                             : item['best_effort_type_id'];
-                        const paceOrder = Helpers.formatPaceStringForOrdering(item['pace']);
+                        const paceOrder = Helpers.toPaceStringForOrdering(item['pace']);
 
                         rows += `
                             <tr>

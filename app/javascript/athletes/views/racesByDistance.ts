@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import { AppHelpers } from '../helpers/appHelpers';
 import { ChartCreator } from '../helpers/chartCreators';
 import { ChartHelpers } from '../helpers/chartHelper';
@@ -18,7 +20,7 @@ export default class RacesByDistanceView extends BaseView {
     constructor(distance: string, count?: string | undefined) {
         super();
 
-        this.count = count ? parseInt(count, 10) : 0;
+        this.count = count ? _.parseInt(count) : 0;
         this.distance = distance;
         this.isOtherDistance = distance.toLocaleLowerCase() === 'other distances';
         this.distanceFormattedForUrl = AppHelpers.formatDistanceForUrl(distance);
@@ -61,7 +63,7 @@ export default class RacesByDistanceView extends BaseView {
             url: `${AppHelpers.getApiBaseUrl()}/races/${this.distanceFormattedForUrl}`,
             dataType: 'json',
             success: (data) => {
-                const items = Object.keys(data).map((key) => data[key]);
+                const items = _.keys(data).map((key) => data[key]);
 
                 if (this.count < items.length) {
                     new NavigationSidebar().load();

@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import { AppHelpers } from '../helpers/appHelpers';
 import { ChartCreator } from '../helpers/chartCreators';
 import { HtmlHelpers } from '../helpers/htmlHelpers';
@@ -13,7 +15,7 @@ export default class RacesByYearView extends BaseView {
     constructor(year: string, count?: string | undefined) {
         super();
 
-        this.count = count ? parseInt(count, 10) : 0;
+        this.count = count ? _.parseInt(count) : 0;
         this.year = year;
     }
 
@@ -55,10 +57,7 @@ export default class RacesByYearView extends BaseView {
             url: `${AppHelpers.getApiBaseUrl()}/races/${this.year}`,
             dataType: 'json',
             success: (data) => {
-                const items: any[] = [];
-                $.each(data, (key, value) => {
-                    items.push(value);
-                });
+                const items = _.keys(data).map((key) => data[key]);
 
                 if (this.count < items.length) {
                     new NavigationSidebar().load();

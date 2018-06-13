@@ -1,4 +1,5 @@
 import * as Chart from 'chart.js';
+import * as _ from 'lodash';
 
 import { Helpers } from '../../common/helpers';
 import { RgbColor } from '../../common/rgbColor';
@@ -126,16 +127,12 @@ export namespace ChartHelpers {
                 callbacks: {
                     title: (tooltipItem: Chart.ChartTooltipItem[], data?: any) => {
                         const index = tooltipItem[0].index;
-                        const result =
-                            typeof index !== 'undefined' ? data.datasets[0].label[index] : '';
+                        const result = _.isUndefined(index) ? '' : data.datasets[0].label[index];
                         return result;
                     },
                     label: (tooltipItem: Chart.ChartTooltipItem, data?: any) => {
                         const index = tooltipItem.index;
-                        const result =
-                            typeof index !== 'undefined'
-                                ? `Count: ${data.datasets[0].data[index]}`
-                                : '';
+                        const result = _.isUndefined(index) ? '' : `Count: ${data.datasets[0].data[index]}`;
                         return result;
                     },
                 },
@@ -206,8 +203,7 @@ export namespace ChartHelpers {
                 callbacks: {
                     title: (tooltipItem: Chart.ChartTooltipItem[], data?: any) => {
                         const index = tooltipItem[0].index;
-                        const result =
-                            typeof index !== 'undefined' ? data.datasets[0].label[index] : '';
+                        const result = _.isUndefined(index) ? '' : data.datasets[0].label[index];
                         return result;
                     },
                     label: (tooltipItem: Chart.ChartTooltipItem, data?: any) => {
@@ -273,13 +269,13 @@ export namespace ChartHelpers {
                 callbacks: {
                     title: (tooltipItem: Chart.ChartTooltipItem[], data?: any) => {
                         const index = tooltipItem[0].index;
-                        const result = typeof index !== 'undefined' ? `${data.yLabels[index]}` : '';
+                        const result = _.isUndefined(index) ? '' : `${data.yLabels[index]}`;
                         return result;
                     },
                     label: (tooltipItem: Chart.ChartTooltipItem, data?: any) => {
                         const datasetIndex = tooltipItem.datasetIndex;
                         const result =
-                            tooltipItem.yLabel && typeof datasetIndex !== 'undefined'
+                            tooltipItem.yLabel && !_.isUndefined(datasetIndex)
                                 ? `${data.datasets[datasetIndex].label}: ${tooltipItem.yLabel}`
                                 : '';
                         return result;

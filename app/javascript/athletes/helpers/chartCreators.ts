@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import { Helpers } from '../../common/helpers';
 import { RgbColor } from '../../common/rgbColor';
 import { ChartHelpers, ChartType } from './chartHelper';
@@ -98,9 +100,7 @@ export class ChartCreator {
                         },
                         ticks: {
                             callback: (value: any, index: any, values: any) => {
-                                return sortByPace
-                                    ? Helpers.formatPace(value.toString(), paceUnit)
-                                    : value.toString().toHHMMSS();
+                                return sortByPace ? Helpers.toPaceString(value, paceUnit) : Helpers.toHHMMSS(value);
                             },
                         },
                     },
@@ -112,19 +112,15 @@ export class ChartCreator {
                 callbacks: {
                     title: (tooltipItem: Chart.ChartTooltipItem[], data?: any) => {
                         const index = tooltipItem[0].index;
-                        const result =
-                            typeof index !== 'undefined' ? data.datasets[0].label[index] : '';
+                        const result = _.isUndefined(index) ? '' : data.datasets[0].label[index];
                         return result;
                     },
                     label: (tooltipItem: Chart.ChartTooltipItem, data?: any) => {
                         const index = tooltipItem.index;
-                        if (typeof index !== 'undefined') {
+                        if (!_.isUndefined(index)) {
                             const time = data.datasets[0].runTimesFormatted[index];
                             if (tooltipItem.yLabel) {
-                                const pace = Helpers.formatPace(
-                                    data.datasets[0].paces[index],
-                                    paceUnit,
-                                );
+                                const pace = Helpers.toPaceString(data.datasets[0].paces[index], paceUnit);
                                 const date = tooltipItem.xLabel;
                                 return `Ran ${time} on ${date} at ${pace}`;
                             }
@@ -153,10 +149,7 @@ export class ChartCreator {
 
         this.items.forEach((item) => {
             // Calculate how many years need to be included.
-            const startDate = item['start_date'];
-            const dateParts = startDate.split('-');
-            const year = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]).getFullYear();
-            const workoutType = item['workout_type_name'];
+            const year = item['start_date'].split('-')[0];
             if (year in years) {
                 years[year] += 1;
             } else {
@@ -178,14 +171,15 @@ export class ChartCreator {
             }
 
             // Set counters.
-            switch (Helpers.toTitleCase(workoutType)) {
-                case 'Race':
+            const workoutType = item['workout_type_name'];
+            switch (workoutType.toLowerCase()) {
+                case 'race':
                     workoutTypeRace[year] += 1;
                     break;
-                case 'Workout':
+                case 'workout':
                     workoutTypeWorkout[year] += 1;
                     break;
-                case 'Long Run':
+                case 'long run':
                     workoutTypeLongRun[year] += 1;
                     break;
                 default:
@@ -198,35 +192,35 @@ export class ChartCreator {
             {
                 type: 'bar',
                 label: 'Run',
-                data: Object.keys(workoutTypeRun).map((key) => workoutTypeRun[key]),
+                data: _.values(workoutTypeRun),
                 backgroundColor: new RgbColor(189, 214, 186).toString(0.6),
                 hoverBackgroundColor: new RgbColor(189, 214, 186).toString(1),
             },
             {
                 type: 'bar',
                 label: 'Long Run',
-                data: Object.keys(workoutTypeLongRun).map((key) => workoutTypeLongRun[key]),
+                data: _.values(workoutTypeLongRun),
                 backgroundColor: new RgbColor(0, 166, 90).toString(0.6),
                 hoverBackgroundColor: new RgbColor(0, 166, 90).toString(1),
             },
             {
                 type: 'bar',
                 label: 'Race',
-                data: Object.keys(workoutTypeRace).map((key) => workoutTypeRace[key]),
+                data: _.values(workoutTypeRace),
                 backgroundColor: new RgbColor(245, 105, 84).toString(0.6),
                 hoverBackgroundColor: new RgbColor(245, 105, 84).toString(1),
             },
             {
                 type: 'bar',
                 label: 'Workout',
-                data: Object.keys(workoutTypeWorkout).map((key) => workoutTypeWorkout[key]),
+                data: _.values(workoutTypeWorkout),
                 backgroundColor: new RgbColor(243, 156, 18).toString(0.6),
                 hoverBackgroundColor: new RgbColor(243, 156, 18).toString(1),
             },
         ];
-        const legendLabels = Object.keys(years).map((key) => `${key}: (${years[key]})`);
+        const legendLabels = _.keys(years).map((key) => `${key}: (${years[key]})`);
 
-        ChartHelpers.createStackedBarChart(id, Object.keys(years), datasets, legendLabels);
+        ChartHelpers.createStackedBarChart(id, _.keys(years), datasets, legendLabels);
     }
 
     public createWorkoutTypeChart(id: string) {
@@ -251,20 +245,16 @@ export class ChartCreator {
             }
         });
 
-        const workoutTypeLabels = Object.keys(workoutTypes).map((key) =>
-            Helpers.toTitleCase(key),
-        );
-        const counts = Object.keys(workoutTypes).map((key) => workoutTypes[key]);
-        const legendLabels = Object.keys(workoutTypes).map(
-            (key) => `${Helpers.toTitleCase(key)}: (${workoutTypes[key]})`,
-        );
-        const colors = Object.keys(workoutTypes).map((key) => {
-            switch (Helpers.toTitleCase(key)) {
-                case 'Race':
+        const workoutTypeLabels = _.keys(workoutTypes).map((key) => Helpers.toTitleCase(key));
+        const counts = _.keys(workoutTypes).map((key) => workoutTypes[key]);
+        const legendLabels = _.keys(workoutTypes).map((key) => `${Helpers.toTitleCase(key)}: (${workoutTypes[key]})`);
+        const colors = _.keys(workoutTypes).map((key) => {
+            switch (key.toLowerCase()) {
+                case 'race':
                     return new RgbColor(245, 105, 84);
-                case 'Workout':
+                case 'workout':
                     return new RgbColor(243, 156, 18);
-                case 'Long Run':
+                case 'long run':
                     return new RgbColor(0, 166, 90);
                 default:
                     return new RgbColor(189, 214, 186);
@@ -293,15 +283,10 @@ export class ChartCreator {
             }
         });
 
-        const monthLabels = Object.keys(months);
-        const counts = Object.keys(months).map((key) => months[key]);
-        const legendLabels = Object.keys(months).map((key) => `${key}: (${months[key]})`);
-        ChartHelpers.createBarChart(
-            id,
-            counts.reverse(),
-            monthLabels.reverse(),
-            legendLabels.reverse(),
-        );
+        const monthLabels = _.keys(months);
+        const counts = _.keys(months).map((key) => months[key]);
+        const legendLabels = _.keys(months).map((key) => `${key}: (${months[key]})`);
+        ChartHelpers.createBarChart(id, counts.reverse(), monthLabels.reverse(), legendLabels.reverse());
     }
 
     public createRaceDistancesChart(id: string) {
@@ -320,9 +305,9 @@ export class ChartCreator {
             }
         });
 
-        const raceDistanceNames = Object.keys(raceDistances);
-        const counts = Object.keys(raceDistances).map((key) => raceDistances[key]);
-        const legendLabels = Object.keys(raceDistances).map((key) => {
+        const raceDistanceNames = _.keys(raceDistances);
+        const counts = _.keys(raceDistances).map((key) => raceDistances[key]);
+        const legendLabels = _.keys(raceDistances).map((key) => {
             if (key.toLowerCase() === 'other distances') {
                 // Hack to use 'Other' instead 'Other Distances' in distance bar charts.
                 return `Other: (${raceDistances[key]})`;
@@ -351,8 +336,8 @@ export class ChartCreator {
             }
         });
 
-        const gearNames = Object.keys(gears);
-        const counts = Object.keys(gears).map((key) => gears[key]);
+        const gearNames = _.keys(gears);
+        const counts = _.keys(gears).map((key) => gears[key]);
         const colors = Helpers.getRgbColors();
         const chartData = {
             labels: gearNames,
@@ -390,12 +375,10 @@ export class ChartCreator {
             }
         });
 
-        const counts = Object.keys(gearNamesCollection).map((key) => gearNamesCollection[key]);
-        const gearMileages = Object.keys(gearMileagesCollection).map(
-            (key) => gearMileagesCollection[key],
-        );
+        const counts = _.keys(gearNamesCollection).map((key) => gearNamesCollection[key]);
+        const gearMileages = _.keys(gearMileagesCollection).map((key) => gearMileagesCollection[key]);
         const colors = Helpers.getRgbColors();
-        const gearNames = Object.keys(gearNamesCollection);
+        const gearNames = _.keys(gearNamesCollection);
         const chartData = {
             labels: gearNames,
             datasets: [
@@ -416,11 +399,7 @@ export class ChartCreator {
                     label: (tooltipItem: Chart.ChartTooltipItem, data?: any) => {
                         const datasetIndex = tooltipItem.datasetIndex;
                         const index = tooltipItem.index;
-                        if (
-                            tooltipItem.xLabel &&
-                            typeof datasetIndex !== 'undefined' &&
-                            typeof index !== 'undefined'
-                        ) {
+                        if (tooltipItem.xLabel && !_.isUndefined(datasetIndex) && !_.isUndefined(index)) {
                             const mileage = parseFloat(tooltipItem.xLabel).toFixed(1);
                             const count = data.datasets[datasetIndex].counts[index];
                             return `Count: ${count} - Total Mileage: ${mileage} ${distanceUnit}`;
@@ -531,8 +510,7 @@ export class ChartCreator {
                 callbacks: {
                     title: (tooltipItem: Chart.ChartTooltipItem[], data?: any) => {
                         const index = tooltipItem[0].index;
-                        const result =
-                            typeof index !== 'undefined' ? data.datasets[0].label[index] : '';
+                        const result = _.isUndefined(index) ? '' : data.datasets[0].label[index];
                         return result;
                     },
                     label: (tooltipItem: Chart.ChartTooltipItem, data?: any) => {
@@ -600,14 +578,12 @@ export class ChartCreator {
             }
         });
 
-        const counts = Object.keys(averageHrZones).map((key) => averageHrZones[key]);
-        const legendLabels = Object.keys(averageHrZones).map(
-            (key) => `${key}: (${averageHrZones[key]})`,
-        );
+        const counts = _.keys(averageHrZones).map((key) => averageHrZones[key]);
+        const legendLabels = _.keys(averageHrZones).map((key) => `${key}: (${averageHrZones[key]})`);
         const totalCount = counts.reduce((a, b) => a + b);
 
         // Not enough items with HR data to generate chart.
-        if (parseInt(totalCount, 10) === totalNaCount) {
+        if (_.parseInt(totalCount) === totalNaCount) {
             ChartHelpers.createChartWithNotEnoughDataMessage(id);
             return;
         }
@@ -628,8 +604,7 @@ export class ChartCreator {
                 callbacks: {
                     title: (tooltipItem: Chart.ChartTooltipItem[], data?: any) => {
                         const index = tooltipItem[0].index;
-                        const result =
-                            typeof index !== 'undefined' ? data.datasets[0].label[index] : '';
+                        const result = _.isUndefined(index) ? '' : data.datasets[0].label[index];
                         return result;
                     },
                     label: (tooltipItem: Chart.ChartTooltipItem, data?: any) => {
