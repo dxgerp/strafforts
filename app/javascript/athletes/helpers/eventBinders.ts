@@ -11,8 +11,7 @@ export namespace EventBinders {
             AppHelpers.enableTooltips();
 
             // Disable double clicking for logo and navigation items.
-            const selectors =
-                '.main-header .logo, a[id^="personal-bests-for-"], a[id^="races-for-"]';
+            const selectors = '.main-header .logo, a[id^="personal-bests-for-"], a[id^="races-for-"]';
             $(document).on('dblclick', selectors, (event) => {
                 event.preventDefault();
             });
@@ -45,26 +44,20 @@ export namespace EventBinders {
                 const distance = $(event.currentTarget).attr('data-race-distance');
                 const distanceFormattedForUrl = AppHelpers.formatDistanceForUrl(distance);
 
-                AppHelpers.pushStateToWindow(
-                    `?view=${ViewType.BestEfforts}&distance=${distanceFormattedForUrl}`,
-                );
+                AppHelpers.pushStateToWindow(`?view=${ViewType.BestEfforts}&distance=${distanceFormattedForUrl}`);
                 new BestEffortsByDistanceView(distance).load();
                 new NavigationSidebar().load();
             });
 
             // Bind race filter buttons in Races Timeline view.
-            $(document).on(
-                'click',
-                '.timeline-wrapper .filter-buttons .btn:not(.show-all)',
-                (event) => {
-                    // Set the filter button to active upon clicking.
-                    $('.filter-buttons .btn').removeClass('active');
-                    $('.filter-buttons .show-all')
-                        .removeClass('hidden')
-                        .fadeIn();
-                    $(event.currentTarget).addClass('active');
-                },
-            );
+            $(document).on('click', '.timeline-wrapper .filter-buttons .btn:not(.show-all)', (event) => {
+                // Set the filter button to active upon clicking.
+                $('.filter-buttons .btn').removeClass('active');
+                $('.filter-buttons .show-all')
+                    .removeClass('hidden')
+                    .fadeIn();
+                $(event.currentTarget).addClass('active');
+            });
 
             $(document).on(
                 'click',
@@ -165,11 +158,7 @@ export namespace EventBinders {
                 $('#publicize-profile-warning').addClass('hidden');
             },
             error: (xhr, ajaxOptions, thrownError) => {
-                toastr.error(
-                    `${xhr.status} - ${xhr.statusText}<br /><br />${
-                        $.parseJSON(xhr.responseText)['error']
-                    }`,
-                );
+                toastr.error(`${xhr.status} - ${xhr.statusText}<br /><br />${$.parseJSON(xhr.responseText)['error']}`);
             },
         });
     }
@@ -187,11 +176,7 @@ export namespace EventBinders {
                 toastr.success(`Your latest activities have been queued for fetching!`);
             },
             error: (xhr, ajaxOptions, thrownError) => {
-                toastr.error(
-                    `${xhr.status} - ${xhr.statusText}<br /><br />${
-                        $.parseJSON(xhr.responseText)['error']
-                    }`,
-                );
+                toastr.error(`${xhr.status} - ${xhr.statusText}<br /><br />${$.parseJSON(xhr.responseText)['error']}`);
             },
         });
     }
@@ -221,11 +206,7 @@ export namespace EventBinders {
             },
             error: (xhr, ajaxOptions, thrownError) => {
                 ($('#confirm-reset-profile') as any).modal('toggle');
-                toastr.error(
-                    `${xhr.status} - ${xhr.statusText}<br /><br />${
-                        $.parseJSON(xhr.responseText)['error']
-                    }`,
-                );
+                toastr.error(`${xhr.status} - ${xhr.statusText}<br /><br />${$.parseJSON(xhr.responseText)['error']}`);
             },
         });
     }

@@ -41,9 +41,7 @@ export namespace ChartHelpers {
             const activePoints = chart.getElementAtEvent(event);
             if (activePoints.length === 1) {
                 const index = activePoints[0]._index;
-                const activityLink = `https://www.strava.com/activities/${
-                    chart.data.datasets[0].activityIds[index]
-                }`;
+                const activityLink = `https://www.strava.com/activities/${chart.data.datasets[0].activityIds[index]}`;
                 window.open(activityLink, '_blank');
             }
         };
@@ -74,11 +72,7 @@ export namespace ChartHelpers {
         return chart;
     }
 
-    export function createLineChart(
-        id: string,
-        chartData: Chart.ChartData,
-        customChartOptions?: Chart.ChartOptions,
-    ) {
+    export function createLineChart(id: string, chartData: Chart.ChartData, customChartOptions?: Chart.ChartOptions) {
         const defaultChartOptions = {
             legend: {
                 display: false,
@@ -300,11 +294,7 @@ export namespace ChartHelpers {
         return ChartHelpers.createChart(id, 'bar', chartData, chartOptions);
     }
 
-    export function createBubbleChart(
-        id: string,
-        chartData: Chart.ChartData,
-        customChartOptions?: Chart.ChartOptions,
-    ) {
+    export function createBubbleChart(id: string, chartData: Chart.ChartData, customChartOptions?: Chart.ChartOptions) {
         const defaultChartOptions = {
             legend: {
                 display: false,

@@ -32,27 +32,15 @@ export default class RacesByYearView extends BaseView {
         const showLoadingIcon = true;
         const content = `
             <div class="row">
-                ${HtmlHelpers.constructChartHtml(
-                    'distances-distribution-chart',
-                    'Distance Distribution Chart',
-                    6,
-                )}
-                ${HtmlHelpers.constructChartHtml(
-                    'monthly-distribution-chart',
-                    'Monthly Distribution Chart',
-                    6,
-                )}
+                ${HtmlHelpers.constructChartHtml('distances-distribution-chart', 'Distance Distribution Chart', 6)}
+                ${HtmlHelpers.constructChartHtml('monthly-distribution-chart', 'Monthly Distribution Chart', 6)}
             </div>
             <div class="row">
                 ${this.constructDataTableHtml()}
             </div>
             <div class="row">
                 ${HtmlHelpers.constructChartHtml('heart-rates-chart', 'Heart Rates Chart', 6)}
-                ${HtmlHelpers.constructChartHtml(
-                    'average-hr-zones-chart',
-                    'Average HR Zones Distribution Chart',
-                    6,
-                )}
+                ${HtmlHelpers.constructChartHtml('average-hr-zones-chart', 'Average HR Zones Distribution Chart', 6)}
             </div>
             <div class="row">
                 ${HtmlHelpers.constructChartHtml('gear-count-chart', 'Gear Count Chart', 6)}

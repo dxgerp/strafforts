@@ -89,9 +89,7 @@ $(document).ready(() => {
             .text()
             .trim();
 
-        AppHelpers.pushStateToWindow(
-            `?view=${ViewType.PersonalBests}&distance=${distanceFormattedForUrl}`,
-        );
+        AppHelpers.pushStateToWindow(`?view=${ViewType.PersonalBests}&distance=${distanceFormattedForUrl}`);
         new PersonalBestsByDistanceView(distance, count).load();
     });
     $(document).on('click', "a[id^='races-for-distance']", (event) => {

@@ -270,14 +270,7 @@ export class ChartCreator {
                     return new RgbColor(189, 214, 186);
             }
         });
-        ChartHelpers.createPieChart(
-            id,
-            counts,
-            workoutTypeLabels,
-            legendLabels,
-            ChartType.Doughnut,
-            colors,
-        );
+        ChartHelpers.createPieChart(id, counts, workoutTypeLabels, legendLabels, ChartType.Doughnut, colors);
     }
 
     public createMonthDistributionChart(id: string) {
@@ -290,20 +283,7 @@ export class ChartCreator {
         this.items.forEach((item) => {
             const startDate = item['start_date'];
             const dateParts = startDate.split('-');
-            const monthNames = [
-                'Jan',
-                'Feb',
-                'Mar',
-                'Apr',
-                'May',
-                'Jun',
-                'Jul',
-                'Aug',
-                'Sep',
-                'Oct',
-                'Nov',
-                'Dec',
-            ];
+            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             const month = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]).getMonth();
             const monthName = monthNames[month];
             if (monthName in months) {
@@ -576,14 +556,7 @@ export class ChartCreator {
             return;
         }
 
-        const averageHrZoneNames: string[] = [
-            'Zone 1',
-            'Zone 2',
-            'Zone 3',
-            'Zone 4',
-            'Zone 5',
-            'Zone N/A',
-        ];
+        const averageHrZoneNames: string[] = ['Zone 1', 'Zone 2', 'Zone 3', 'Zone 4', 'Zone 5', 'Zone N/A'];
         const averageHrZones: object = {
             'Zone 1': 0,
             'Zone 2': 0,

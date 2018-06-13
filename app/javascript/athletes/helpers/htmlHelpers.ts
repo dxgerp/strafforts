@@ -186,11 +186,8 @@ export namespace HtmlHelpers {
 
     export function createDatatableRowForBestEffortsOrPbs(item: any[]) {
         const stravaLink = `https://www.strava.com/activities/${item['activity_id']}`;
-        const workoutTypeNameClass = `workout-type-${item['workout_type_name'].replace(
-            /\s/g,
-            '-',
-        )}`;
         const paceOrder = Helpers.formatPaceStringForOrdering(item['pace']);
+        const workoutTypeNameClass = `workout-type-${item['workout_type_name'].replace(/\s/g, '-')}`;
         const row = `
             <tr>
                 <td class="no-wrap">${item['start_date']}</td>

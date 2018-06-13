@@ -11,16 +11,8 @@ export default class NavigationSidebar {
                     '?view=personal-bests&distance',
                     'personal-bests-for-distance',
                 );
-                this.createNavigationItem(
-                    data['races_by_distance'],
-                    '?view=races&distance',
-                    'races-for-distance',
-                );
-                this.createNavigationItem(
-                    data['races_by_year'],
-                    '?view=races&year',
-                    'races-for-year',
-                );
+                this.createNavigationItem(data['races_by_distance'], '?view=races&distance', 'races-for-distance');
+                this.createNavigationItem(data['races_by_year'], '?view=races&year', 'races-for-year');
                 AppHelpers.setActiveNavigationItem();
             },
         });

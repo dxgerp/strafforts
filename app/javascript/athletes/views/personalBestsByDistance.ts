@@ -35,16 +35,8 @@ export default class PersonalBestsByDistanceView extends BaseView {
         const showLoadingIcon = true;
         const content = `
             <div class="row">
-                ${HtmlHelpers.constructChartHtml(
-                    'progression-chart',
-                    'Progression Chart (Duration)',
-                    8,
-                )}
-                ${HtmlHelpers.constructChartHtml(
-                    'year-distribution-pie-chart',
-                    'Year Distribution Chart',
-                    4,
-                )}
+                ${HtmlHelpers.constructChartHtml('progression-chart', 'Progression Chart (Duration)', 8)}
+                ${HtmlHelpers.constructChartHtml('year-distribution-pie-chart', 'Year Distribution Chart', 4)}
             </div>
             <div class="row">
                 ${this.constructDataTableHtml()}
@@ -55,11 +47,7 @@ export default class PersonalBestsByDistanceView extends BaseView {
             </div>
             <div class="row">
                 ${HtmlHelpers.constructChartHtml('heart-rates-chart', 'Heart Rates Chart', 6)}
-                ${HtmlHelpers.constructChartHtml(
-                    'average-hr-zones-chart',
-                    'Average HR Zones Distribution Chart',
-                    6,
-                )}
+                ${HtmlHelpers.constructChartHtml('average-hr-zones-chart', 'Average HR Zones Distribution Chart', 6)}
             </div>
         `;
         mainContent.append(content);
