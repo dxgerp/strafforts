@@ -3,8 +3,7 @@ import { Helpers } from './../../common/helpers';
 
 abstract class BaseView {
     protected prepareView(viewType: string, itemName?: string) {
-        let viewName = itemName ? `${viewType} - ${itemName}` : viewType;
-        viewName = Helpers.toTitleCase(viewName);
+        const viewName = itemName ? `${viewType} - ${Helpers.toTitleCase(itemName)}` : viewType;
 
         AppHelpers.setContentHeader(viewName);
         AppHelpers.appendToPageTitle(` |  ${viewName}`);
