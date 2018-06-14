@@ -79,9 +79,15 @@ $(document).ready(() => {
     $(document).on('click', "a[id^='personal-bests-for-']", (event) => {
         event.preventDefault();
 
-        const distance = $(event.currentTarget).find('.item-text').text().trim();
+        const distance = $(event.currentTarget)
+            .find('.item-text')
+            .text()
+            .trim();
         const distanceFormattedForUrl = AppHelpers.formatDistanceForUrl(distance);
-        const count = $(event.currentTarget).find('small').text().trim();
+        const count = $(event.currentTarget)
+            .find('small')
+            .text()
+            .trim();
 
         AppHelpers.pushStateToWindow(`?view=${ViewType.PersonalBests}&distance=${distanceFormattedForUrl}`);
         new PersonalBestsByDistanceView(distance, count).load();
@@ -89,9 +95,15 @@ $(document).ready(() => {
     $(document).on('click', "a[id^='races-for-distance']", (event) => {
         event.preventDefault();
 
-        const distance = $(event.currentTarget).find('.item-text').text().trim();
+        const distance = $(event.currentTarget)
+            .find('.item-text')
+            .text()
+            .trim();
         const distanceFormattedForUrl = AppHelpers.formatDistanceForUrl(distance);
-        const count = $(event.currentTarget).find('small').text().trim();
+        const count = $(event.currentTarget)
+            .find('small')
+            .text()
+            .trim();
 
         AppHelpers.pushStateToWindow(`?view=${ViewType.Races}&distance=${distanceFormattedForUrl}`);
         new RacesByDistanceView(distance, count).load();
@@ -99,8 +111,14 @@ $(document).ready(() => {
     $(document).on('click', "a[id^='races-for-year']", (event) => {
         event.preventDefault();
 
-        const year = $(event.currentTarget).find('.item-text').text().trim();
-        const count = $(event.currentTarget).find('small').text().trim();
+        const year = $(event.currentTarget)
+            .find('.item-text')
+            .text()
+            .trim();
+        const count = $(event.currentTarget)
+            .find('small')
+            .text()
+            .trim();
 
         AppHelpers.pushStateToWindow(`?view=${ViewType.Races}&year=${year}`);
         new RacesByYearView(year, count).load();

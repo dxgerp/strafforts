@@ -94,7 +94,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   ].freeze
   RACE_YEARS_CHART_SECTION_SELECTORS = [
     '#distances-distribution-chart',
-    '#month-distribution-chart',
+    '#monthly-distribution-chart',
     '#heart-rates-chart',
     '#average-hr-zones-chart',
     '#gear-count-chart',

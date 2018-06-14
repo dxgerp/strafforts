@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     get 'athletes/:id/meta' => 'meta#index'
     get 'athletes/:id/best-efforts' => 'best_efforts#index'
     get 'athletes/:id/best-efforts/:distance' => 'best_efforts#index'
+    get 'athletes/:id/best-efforts/:distance/top-one-by-year' => 'best_efforts#top_one_by_year'
     get 'athletes/:id/personal-bests' => 'personal_bests#index'
     get 'athletes/:id/personal-bests/:distance' => 'personal_bests#index'
     get 'athletes/:id/races' => 'races#index'

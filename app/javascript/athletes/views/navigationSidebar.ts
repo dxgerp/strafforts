@@ -1,29 +1,34 @@
-import { Helpers } from '../../common/helpers';
 import { AppHelpers } from '../helpers/appHelpers';
 
 export default class NavigationSidebar {
-
     public load(): void {
         $.ajax({
             url: `${AppHelpers.getApiBaseUrl()}/meta`,
             dataType: 'json',
             success: (data) => {
                 this.createNavigationItem(
-                    data['personal_bests'], '?view=personal-bests&distance', 'personal-bests-for-distance');
-                this.createNavigationItem(
-                    data['races_by_distance'], '?view=races&distance', 'races-for-distance');
-                this.createNavigationItem(
-                    data['races_by_year'], '?view=races&year', 'races-for-year');
+                    data['personal_bests'],
+                    '?view=personal-bests&distance',
+                    'personal-bests-for-distance',
+                );
+                this.createNavigationItem(data['races_by_distance'], '?view=races&distance', 'races-for-distance');
+                this.createNavigationItem(data['races_by_year'], '?view=races&year', 'races-for-year');
                 AppHelpers.setActiveNavigationItem();
             },
         });
     }
 
     private createNavigationItem(data: any, urlQuery: string, elementIdPrefix: string) {
-        $(`#treeview-menu-${elementIdPrefix}`).parent().find('li:not(.treeview-expander)').remove();
+        $(`#treeview-menu-${elementIdPrefix}`)
+            .parent()
+            .find('li:not(.treeview-expander)')
+            .remove();
         $.each(data, (key, value) => {
             const itemText = value['name'];
-            const itemId = value['name'].replace(/\s/g, '-').replace(/\//g, '_').toLowerCase();
+            const itemId = value['name']
+                .replace(/\s/g, '-')
+                .replace(/\//g, '_')
+                .toLowerCase();
             const elementId = `${elementIdPrefix}-${itemId}-navigation`;
             const count = value['count'];
 

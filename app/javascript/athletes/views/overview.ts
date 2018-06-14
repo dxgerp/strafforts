@@ -5,7 +5,6 @@ import { ViewType } from '../helpers/viewTypes';
 import BaseView from './baseView';
 
 export default class Overview extends BaseView {
-
     public load(): void {
         super.prepareView('Overview');
 
@@ -92,33 +91,41 @@ export default class Overview extends BaseView {
                     distances.forEach((model: any[]) => {
                         const isTypeOfRaces = type === ViewType.Races;
 
-                        const distanceId = model['distance'].toLowerCase().replace(/\s/g, '-').replace(/\//g, '-');
+                        const distanceId = model['distance']
+                            .toLowerCase()
+                            .replace(/\s/g, '-')
+                            .replace(/\//g, '-');
                         const linkId = `${type}-for-distance-${distanceId}`;
-                        const workoutTypeColumnHeader = isTypeOfRaces ?
-                            '' : `<th class="col-md-1 text-center badge-cell hidden-md-down">Type</th>`;
+                        const workoutTypeColumnHeader = isTypeOfRaces
+                            ? ''
+                            : `<th class="col-md-1 text-center badge-cell hidden-md-down">Type</th>`;
                         const showDistanceColumn = model['distance'] === 'Recent';
                         const activityColumnWidth = showDistanceColumn ? '2' : '3';
-                        const distanceColumnHeader = showDistanceColumn ?
-                            `<th class="col-md-1 hidden-xs-down">Distance</th>` : '';
+                        const distanceColumnHeader = showDistanceColumn
+                            ? `<th class="col-md-1 hidden-xs-down">Distance</th>`
+                            : '';
 
                         let rows = '';
                         model['items'].forEach((item: any[]) => {
                             const stravaLink = `https://www.strava.com/activities/${item['activity_id']}`;
-                            const distanceColumn = showDistanceColumn ?
-                                `<td class="hidden-xs-down">
-                                    ${(item['distance']).toFixed(1)} ${item['distance_unit']}
-                                </td>` : '';
-                            const workoutTypeColumn = isTypeOfRaces ? '' :
-                            `<td class="text-center badge-cell hidden-md-down">
+                            const distanceColumn = showDistanceColumn
+                                ? `<td class="hidden-xs-down">
+                                    ${item['distance'].toFixed(1)} ${item['distance_unit']}
+                                </td>`
+                                : '';
+                            const workoutTypeColumn = isTypeOfRaces
+                                ? ''
+                                : `<td class="text-center badge-cell hidden-md-down">
                                 <span class="label workout-type-${item['workout_type_name'].replace(/\s/g, '-')}">
                                     ${item['workout_type_name']}
                                 </span>
                             </td>`;
-                            const stravaLogoLink = isTypeOfRaces ?
-                            `<a class="strava-logo-link hidden-lg-down" href="${stravaLink}" target="_blank">
+                            const stravaLogoLink = isTypeOfRaces
+                                ? `<a class="strava-logo-link hidden-lg-down" href="${stravaLink}" target="_blank">
                                 <span></span>
-                            </a>` : '';
-                            const paceOrder = Helpers.formatPaceStringForOrdering(item['pace']);
+                            </a>`
+                                : '';
+                            const paceOrder = Helpers.toPaceStringForOrdering(item['pace']);
 
                             rows += `
                             <tr>
@@ -213,8 +220,9 @@ export default class Overview extends BaseView {
                             ? `${item['distance'].toFixed(1)} ${item['distance_unit']}`
                             : `${item['best_effort_type']}`;
                         const distanceSortOrder = isTypeOfRaces
-                            ? item['distance'].toFixed(1) : item['best_effort_type_id'];
-                        const paceOrder = Helpers.formatPaceStringForOrdering(item['pace']);
+                            ? item['distance'].toFixed(1)
+                            : item['best_effort_type_id'];
+                        const paceOrder = Helpers.toPaceStringForOrdering(item['pace']);
 
                         rows += `
                             <tr>
@@ -286,9 +294,7 @@ export default class Overview extends BaseView {
                             { orderData: [[0, 'desc'], [1, 'asc']] },
                         ],
                         iDisplayLength: 10,
-                        order: [
-                            [0, 'desc'],
-                        ],
+                        order: [[0, 'desc']],
                     });
                 }
             },

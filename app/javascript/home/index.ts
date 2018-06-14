@@ -1,5 +1,3 @@
-import { Helpers } from './../common/helpers';
-
 /*!
  * Start Bootstrap - Grayscale Bootstrap Theme (http://startbootstrap.com)
  * Code licensed under the Apache License v2.0.
@@ -19,9 +17,15 @@ $(document).ready(() => {
     // jQuery for page scrolling feature - requires jQuery Easing plugin.
     $('a.page-scroll').bind('click', (event) => {
         const anchor = $(event.currentTarget).attr('href');
-        $('html, body').stop().animate({
-            scrollTop: $(anchor).offset().top,
-        }, 500, 'easeInOutExpo');
+        $('html, body')
+            .stop()
+            .animate(
+                {
+                    scrollTop: $(anchor).offset().top,
+                },
+                500,
+                'easeInOutExpo',
+            );
         event.preventDefault();
     });
 

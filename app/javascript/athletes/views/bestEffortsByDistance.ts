@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import { AppHelpers } from '../helpers/appHelpers';
 import { ChartCreator } from '../helpers/chartCreators';
 import { HtmlHelpers } from '../helpers/htmlHelpers';
@@ -44,17 +46,15 @@ export default class BestEffortsByDistanceView extends BaseView {
         const content = `
             <div class="best-efforts-wrapper">
                 <div class="row">
-                    ${HtmlHelpers.constructChartHtml(
-                        'year-distribution-pie-chart',
-                        'Year Distribution Chart',
-                        6,
-                        showLoadingIcon,
-                    )}
-                    ${HtmlHelpers.constructChartHtml('workout-type-chart', 'Workout Type Chart', 6, showLoadingIcon)}
+                    ${HtmlHelpers.constructChartHtml('progression-by-year-chart', 'Progression Chart (By Year)', 4)}
+                    ${HtmlHelpers.constructChartHtml('year-distribution-pie-chart', 'Year Distribution Chart', 4)}
+                    ${HtmlHelpers.constructChartHtml('workout-type-chart', 'Workout Type Chart', 4)}
                 </div>
-                ${this.constructDataTableHtml()}
                 <div class="row">
-                    ${HtmlHelpers.constructChartHtml('gear-count-chart', 'Gear Count Chart', 12, showLoadingIcon)}
+                    ${this.constructDataTableHtml()}
+                </div>
+                <div class="row">
+                    ${HtmlHelpers.constructChartHtml('gear-count-chart', 'Gear Count Chart', 12)}
                 </div>
             </div>
         `;
@@ -64,52 +64,40 @@ export default class BestEffortsByDistanceView extends BaseView {
 
     protected createView(): void {
         $.ajax({
+            url: `${AppHelpers.getApiBaseUrl()}/best-efforts/${this.distanceFormattedForUrl}/top-one-by-year`,
+            dataType: 'json',
+            success: (data) => {
+                const items = _.keys(data).map((key) => data[key]);
+                const fastestRunsOfEachYear = _(items)
+                    .groupBy((run: object) => _.parseInt(run['start_date'].split('-')[0]))
+                    .map((runsForYear) => _.minBy(runsForYear, 'elapsed_time'))
+                    .value();
+                const progressionChartCreator = new ChartCreator(fastestRunsOfEachYear);
+                progressionChartCreator.createProgressionChart('progression-by-year-chart', false, true);
+            },
+            error: (xhr) => {
+                if (xhr.status === 404) {
+                    new NotFoundView().load();
+                }
+            },
+        });
+
+        $.ajax({
             url: `${AppHelpers.getApiBaseUrl()}/best-efforts/${this.distanceFormattedForUrl}`,
             dataType: 'json',
             success: (data) => {
-                const items: any[] = [];
-                $.each(data, (key, value) => {
-                    items.push(value);
-                });
+                const items = _.keys(data).map((key) => data[key]);
 
-                // Create all tables and charts.
-                const wrapper = $('#main-content .best-efforts-wrapper');
-                wrapper.empty();
+                // Create table table.
+                this.createDataTable(items);
 
-                const content = `
-                    <div class="row">
-                        ${HtmlHelpers.constructChartHtml(
-                            'year-distribution-pie-chart',
-                            'Year Distribution Chart',
-                            6,
-                        )}
-                        ${HtmlHelpers.constructChartHtml('workout-type-chart', 'Workout Type Chart', 6)}
-                    </div>
-                    ${this.constructDataTableHtml(items)}
-                    <div class="row">
-                        ${HtmlHelpers.constructChartHtml('gear-count-chart', 'Gear Count Chart', 12)}
-                    </div>
-                `;
-                wrapper.append(content);
-
-                // Setup all tables and charts.
+                // Create all charts.
                 const chartCreator = new ChartCreator(items);
                 chartCreator.createYearDistributionChart('year-distribution-pie-chart');
-                ($('.dataTable') as any).DataTable({
-                    columnDefs: [
-                        // Disable searching for WorkoutType, Time, Pace and HRs.
-                        { targets: [1, 3, 4], searchable: false},
-                        { orderData: [[4, 'asc'], [3, 'asc'], [0, 'desc']] },
-                    ],
-                    iDisplayLength: 10,
-                    order: [
-                        [3, 'asc'],
-                    ],
-                });
                 chartCreator.createWorkoutTypeChart('workout-type-chart');
                 chartCreator.createGearCountChart('gear-count-chart');
             },
-            error: (xhr, ajaxOptions, thrownError) => {
+            error: (xhr) => {
                 if (xhr.status === 404) {
                     new NotFoundView().load();
                 }
@@ -117,37 +105,15 @@ export default class BestEffortsByDistanceView extends BaseView {
         });
     }
 
-    protected constructDataTableHtml(items?: any[]): string {
-        let table = HtmlHelpers.getLoadingIcon();
-
-        if (items) {
-            let rows = '';
-            items.forEach((item) => {
-                rows += HtmlHelpers.createDatatableRowForBestEffortsOrPbs(item);
-            });
-
-            table = `
-                <div class="dataTable-wrapper">
-                    <table class="dataTable table table-bordered table-striped">
-                        ${HtmlHelpers.createDatatableHeaderForBestEffortsOrPbs()}
-                        <tbody>
-                            ${rows}
-                        </tbody>
-                    </table>
-                </div>
-            `;
-        }
-
+    protected constructDataTableHtml(): string {
         const dataTable = `
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="box">
-                        <div class="box-header with-border>
-                            <i class="fa fa-bar-chart-o"></i><h3 class="box-title">Data Table</h3>
-                        </div>
-                        <div class="box-body">
-                            ${table}
-                        </div>
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header with-border>
+                        <i class="fa fa-bar-chart-o"></i><h3 class="box-title">Data Table</h3>
+                    </div>
+                    <div class="box-body dataTable-wrapper">
+                        ${HtmlHelpers.getLoadingIcon()}
                     </div>
                 </div>
             </div>
@@ -155,15 +121,43 @@ export default class BestEffortsByDistanceView extends BaseView {
         return dataTable;
     }
 
+    protected createDataTable(items: any[]) {
+        const dataTableContainer = $('.dataTable-wrapper');
+        dataTableContainer.empty();
+
+        let rows = '';
+        items.forEach((item) => {
+            rows += HtmlHelpers.createDatatableRowForBestEffortsOrPbs(item);
+        });
+
+        const table = `
+            <table class="dataTable table table-bordered table-striped">
+                ${HtmlHelpers.createDatatableHeaderForBestEffortsOrPbs()}
+                <tbody>
+                    ${rows}
+                </tbody>
+            </table>
+        `;
+        dataTableContainer.append(table);
+
+        ($('.dataTable') as any).DataTable({
+            columnDefs: [
+                // Disable searching for WorkoutType, Time, Pace and HRs.
+                { targets: [1, 3, 4], searchable: false },
+                { orderData: [[4, 'asc'], [3, 'asc'], [0, 'desc']] },
+            ],
+            iDisplayLength: 10,
+            order: [[3, 'asc']],
+        });
+    }
+
     private createFilterButtons() {
         if ($('#main-content .best-efforts-filter-buttons .btn').length === 0) {
-
             // Empty everything first (i.e. Loading Icon).
             const mainContent = $('#main-content');
             mainContent.empty();
 
             let fileterButtons = '';
-            const bestEffortTypes: string[] = [];
             $.ajax({
                 url: `${AppHelpers.getApiBaseUrl()}/meta`,
                 dataType: 'json',
@@ -174,7 +168,7 @@ export default class BestEffortsByDistanceView extends BaseView {
                         if (bestEffortType && item['count'] > 0) {
                             fileterButtons += `
                                 <button class="btn btn-md btn-race-distance"
-                                    data-race-distance="${bestEffortType}">${bestEffortType}</button>
+                                    data-race-distance="${bestEffortType.toLowerCase()}">${bestEffortType}</button>
                             `;
                         }
                     });

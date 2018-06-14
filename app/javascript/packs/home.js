@@ -6,8 +6,6 @@
 //
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
-
-import '../home';
 import 'bootstrap/dist/css/bootstrap';
+import '../home';
 import '../home/styles/main';
-
