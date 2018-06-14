@@ -68,15 +68,11 @@ export default class BestEffortsByDistanceView extends BaseView {
             dataType: 'json',
             success: (data) => {
                 const items = _.keys(data).map((key) => data[key]);
-                const result = {};
-                items.forEach((item: any) => {
-                    const year = item['start_date'].split('-')[0];
-                    if (!result[year] || (result[year] && item['elapsed_time'] < result[year]['elapsed_time'])) {
-                        result[year] = item;
-                    }
-                });
-                const progressionByYearItems = _.keys(result).map((key) => result[key]);
-                const progressionChartCreator = new ChartCreator(progressionByYearItems);
+                const fastestRunsOfEachYear = _(items)
+                    .groupBy((run: object) => _.parseInt(run['start_date'].split('-')[0]))
+                    .map((runsForYear) => _.minBy(runsForYear, 'elapsed_time'))
+                    .value();
+                const progressionChartCreator = new ChartCreator(fastestRunsOfEachYear);
                 progressionChartCreator.createProgressionChart('progression-by-year-chart', false, true);
             },
             error: (xhr) => {

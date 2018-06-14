@@ -69,7 +69,7 @@ export default class RacesByYearView extends BaseView {
                 // Create all charts.
                 const chartCreator = new ChartCreator(items);
                 chartCreator.createRaceDistancesChart('distances-distribution-chart');
-                chartCreator.createMonthDistributionChart('monthly-distribution-chart');
+                chartCreator.createMonthlyDistributionChart('monthly-distribution-chart');
                 chartCreator.createHeartRatesChart('heart-rates-chart');
                 chartCreator.createAverageHrZonesChart('average-hr-zones-chart');
                 chartCreator.createGearCountChart('gear-count-chart');

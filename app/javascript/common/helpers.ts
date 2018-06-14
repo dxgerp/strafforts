@@ -68,9 +68,9 @@ export namespace Helpers {
     }
 
     export function toHHMMSS(duration: number) {
-        const hours = Math.floor(duration / 3600);
-        const minutes = Math.floor((duration - hours * 3600) / 60);
-        const seconds = duration - hours * 3600 - minutes * 60;
+        const hours = _.floor(duration / 3600);
+        const minutes = _.floor((duration - hours * 3600) / 60);
+        const seconds = _.toInteger(duration - hours * 3600 - minutes * 60);
 
         const hoursText = hours < 10 ? `0${hours}` : hours;
         const minutesText = minutes < 10 ? `0${minutes}` : minutes;
@@ -81,9 +81,9 @@ export namespace Helpers {
     }
 
     export function toPaceString(duration: number, unit: string) {
-        const hours = Math.floor(duration / 3600);
-        const minutes = Math.floor((duration - hours * 3600) / 60);
-        const seconds = Math.ceil(duration - hours * 3600 - minutes * 60);
+        const hours = _.floor(duration / 3600);
+        const minutes = _.floor((duration - hours * 3600) / 60);
+        const seconds = _.ceil(duration - hours * 3600 - minutes * 60);
 
         const hoursText = hours === 0 ? '' : hours.toString();
         let minutesText = `${minutes.toString()}:`;

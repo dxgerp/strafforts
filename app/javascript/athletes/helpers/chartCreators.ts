@@ -229,63 +229,64 @@ export class ChartCreator {
             return;
         }
 
-        const workoutTypes: object = {}; // Holds Workout Type and its count.
-        this.items.forEach((item) => {
-            let workoutType = item['workout_type_name'];
-
-            // No workout type is a normal run.
-            if (workoutType === null) {
-                workoutType = 0;
-            }
-
-            if (workoutType in workoutTypes) {
-                workoutTypes[workoutType] += 1;
-            } else {
-                workoutTypes[workoutType] = 1;
-            }
+        const colors: RgbColor[] = [];
+        const counts: number[] = [];
+        const workoutTypeLabels: string[] = [];
+        const legendLabels: string[] = [];
+        const workoutTypes = _.countBy(this.items, (item) => {
+            const workoutType = item['workout_type_name'];
+            return _.isUndefined(workoutType) ? 'run' : workoutType;
         });
 
-        const workoutTypeLabels = _.keys(workoutTypes).map((key) => Helpers.toTitleCase(key));
-        const counts = _.keys(workoutTypes).map((key) => workoutTypes[key]);
-        const legendLabels = _.keys(workoutTypes).map((key) => `${Helpers.toTitleCase(key)}: (${workoutTypes[key]})`);
-        const colors = _.keys(workoutTypes).map((key) => {
+        // Use forEach() to maintain relative order.
+        _.forEach(workoutTypes, (value, key) => {
+            let color = new RgbColor(189, 214, 186);
             switch (key.toLowerCase()) {
                 case 'race':
-                    return new RgbColor(245, 105, 84);
+                    color = new RgbColor(245, 105, 84);
+                    break;
                 case 'workout':
-                    return new RgbColor(243, 156, 18);
+                    color = new RgbColor(243, 156, 18);
+                    break;
                 case 'long run':
-                    return new RgbColor(0, 166, 90);
-                default:
-                    return new RgbColor(189, 214, 186);
+                    color = new RgbColor(0, 166, 90);
+                    break;
             }
+
+            colors.push(color);
+            counts.push(value);
+            workoutTypeLabels.push(Helpers.toTitleCase(key));
+            legendLabels.push(`${Helpers.toTitleCase(key)}: (${workoutTypes[key]})`);
         });
+
         ChartHelpers.createPieChart(id, counts, workoutTypeLabels, legendLabels, ChartType.Doughnut, colors);
     }
 
-    public createMonthDistributionChart(id: string) {
+    public createMonthlyDistributionChart(id: string) {
         if (this.items.length <= 1) {
             ChartHelpers.createChartWithNotEnoughDataMessage(id);
             return;
         }
 
-        const months: object = {}; // Holds month and its count.
-        this.items.forEach((item) => {
+        const counts: number[] = [];
+        const monthLabels: string[] = [];
+        const legendLabels: string[] = [];
+        const months = _.countBy(this.items, (item) => {
             const startDate = item['start_date'];
             const dateParts = startDate.split('-');
             const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             const month = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]).getMonth();
             const monthName = monthNames[month];
-            if (monthName in months) {
-                months[monthName] += 1;
-            } else {
-                months[monthName] = 1;
-            }
+            return monthName;
         });
 
-        const monthLabels = _.keys(months);
-        const counts = _.keys(months).map((key) => months[key]);
-        const legendLabels = _.keys(months).map((key) => `${key}: (${months[key]})`);
+        // Use forEach() to maintain relative order.
+        _.forEach(months, (value, key) => {
+            counts.push(value);
+            monthLabels.push(key);
+            legendLabels.push(`${key}: (${value})`);
+        });
+
         ChartHelpers.createBarChart(id, counts.reverse(), monthLabels.reverse(), legendLabels.reverse());
     }
 
@@ -295,28 +296,29 @@ export class ChartCreator {
             return;
         }
 
-        const raceDistances: object = {}; // Holds race distance and its count.
-        this.items.forEach((item) => {
+        const counts: number[] = [];
+        const raceDistanceNames: string[] = [];
+        const legendLabels: string[] = [];
+        const raceDistances = _.countBy(this.items, (item) => {
             const raceDistance = item['race_distance'];
-            if (raceDistance in raceDistances) {
-                raceDistances[raceDistance] += 1;
-            } else {
-                raceDistances[raceDistance] = 1;
-            }
+            return raceDistance;
         });
 
-        const raceDistanceNames = _.keys(raceDistances);
-        const counts = _.keys(raceDistances).map((key) => raceDistances[key]);
-        const legendLabels = _.keys(raceDistances).map((key) => {
+        // Use forEach() to maintain relative order.
+        _.forEach(raceDistances, (value, key) => {
+            let legendLabel = `${key}: (${value})`;
             if (key.toLowerCase() === 'other distances') {
                 // Hack to use 'Other' instead 'Other Distances' in distance bar charts.
-                return `Other: (${raceDistances[key]})`;
+                legendLabel = `Other: (${value})`;
             } else if (key.toLowerCase() === 'half marathon') {
-                return `HM: (${raceDistances[key]})`;
-            } else {
-                return `${key}: (${raceDistances[key]})`;
+                legendLabel = `HM: (${value})`;
             }
+
+            counts.push(value);
+            raceDistanceNames.push(key);
+            legendLabels.push(legendLabel);
         });
+
         ChartHelpers.createBarChart(id, counts, raceDistanceNames, legendLabels);
     }
 
@@ -326,19 +328,20 @@ export class ChartCreator {
             return;
         }
 
-        const gears: object = {}; // Holds a gear name and its count.
-        this.items.forEach((item) => {
-            const gearName = item['gear_name'];
-            if (gearName in gears) {
-                gears[gearName] += 1;
-            } else {
-                gears[gearName] = 1;
-            }
+        const colors = Helpers.getRgbColors();
+        const counts: number[] = [];
+        const gearNames: string[] = [];
+        const gears = _.countBy(this.items, (item) => {
+            const gear = item['gear_name'];
+            return gear;
         });
 
-        const gearNames = _.keys(gears);
-        const counts = _.keys(gears).map((key) => gears[key]);
-        const colors = Helpers.getRgbColors();
+        // Use forEach() to maintain relative order.
+        _.forEach(gears, (value, key) => {
+            counts.push(value);
+            gearNames.push(key);
+        });
+
         const chartData = {
             labels: gearNames,
             datasets: [
@@ -363,7 +366,11 @@ export class ChartCreator {
         const gearNamesCollection: object = {}; // Holds Gear and its name.
         const gearMileagesCollection: object = {}; // Holds Gear and its mileage.
         this.items.forEach((item) => {
-            distanceUnit = item['distance_unit'];
+            // Get distance unit only once, which should be the same on all items.
+            if (_.isEmpty(distanceUnit)) {
+                distanceUnit = item['distance_unit'];
+            }
+
             const distance = item['distance'];
             const gearName = item['gear_name'];
             if (gearName in gearNamesCollection) {
@@ -379,6 +386,7 @@ export class ChartCreator {
         const gearMileages = _.keys(gearMileagesCollection).map((key) => gearMileagesCollection[key]);
         const colors = Helpers.getRgbColors();
         const gearNames = _.keys(gearNamesCollection);
+
         const chartData = {
             labels: gearNames,
             datasets: [
