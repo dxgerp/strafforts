@@ -138,17 +138,21 @@ export default class Overview extends BaseView {
                                     </a>
                                 </td>
                                 ${distanceColumn}
-                                <td class="no-wrap">${item['elapsed_time_formatted']}</td>
+                                <td class="no-wrap" data-sort="${item['elapsed_time']}">
+                                    ${item['elapsed_time_formatted']}
+                                </td>
                                 <td class="hidden-xs-down" data-sort="${paceOrder}">
                                     ${item['pace']}<small>${item['pace_unit']}</small>
                                 </td>
                                 <td class="hidden-lg-down">${item['gear_name']}</td>
-                                <td class='text-center badge-cell hidden-md-down'>
+                                <td class='text-center badge-cell hidden-md-down'
+                                    data-sort="${item['average_heartrate']}"
+                                >
                                     <span class="badge hr-zone-${item['average_hr_zone']}">
                                         ${item['average_heartrate'] === -1 ? 'n/a' : item['average_heartrate']}
                                     </span>
                                 </td>
-                                <td class='text-center badge-cell hidden-md-down'>
+                                <td class='text-center badge-cell hidden-md-down' data-sort="${item['max_heartrate']}">
                                     <span class="badge hr-zone-${item['max_hr_zone']}">
                                         ${item['max_heartrate'] === -1 ? 'n/a' : item['max_heartrate']}
                                     </span>
