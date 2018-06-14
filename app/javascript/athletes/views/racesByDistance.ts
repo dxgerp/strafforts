@@ -22,7 +22,7 @@ export default class RacesByDistanceView extends BaseView {
 
         this.count = count ? _.parseInt(count) : 0;
         this.distance = distance;
-        this.isOtherDistance = distance.toLocaleLowerCase() === 'other distances';
+        this.isOtherDistance = distance.toLowerCase() === 'other distances';
         this.distanceFormattedForUrl = AppHelpers.formatDistanceForUrl(distance);
     }
 
@@ -117,12 +117,12 @@ export default class RacesByDistanceView extends BaseView {
 
         let rows = '';
         items.forEach((item) => {
-            rows += HtmlHelpers.getDatatableRowForRaces(item);
+            rows += HtmlHelpers.getDatatableRowForRaces(item, this.isOtherDistance);
         });
 
         const table = `
             <table class="dataTable table table-bordered table-striped">
-                ${HtmlHelpers.getDatatableHeaderForRaces()}
+                ${HtmlHelpers.getDatatableHeaderForRaces(this.isOtherDistance)}
                 <tbody>
                     ${rows}
                 </tbody>
