@@ -31,6 +31,15 @@ export namespace ChartHelpers {
         this.createChartWithMessage(id, 'Not Enough Data to Generate Chart');
     }
 
+    export function createChartWithNotGearMessage(id: string) {
+        const url = 'https://support.strava.com/hc/en-us/articles/216918727-Adding-Gear-to-your-activities-on-Strava';
+        this.createChartWithMessage(id, `No Gears Specified. <a href="${url}" target="_blank">How to Add Gear?</a>`);
+    }
+
+    export function createChartWithNotHrMessage(id: string) {
+        this.createChartWithMessage(id, `Not Enough HR Data to Generate Chart`);
+    }
+
     export function createStravaActivityLink(chart: any, chartId: string) {
         // Only do this when it's not a touch device.
         if (Helpers.isTouchDevice()) {

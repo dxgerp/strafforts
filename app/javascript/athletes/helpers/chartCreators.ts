@@ -342,6 +342,11 @@ export class ChartCreator {
             gearNames.push(key);
         });
 
+        if (gearNames.length === 1 && gearNames[0].toLowerCase() === 'unspecified') {
+            ChartHelpers.createChartWithNotGearMessage(id);
+            return;
+        }
+
         const chartData = {
             labels: gearNames,
             datasets: [
@@ -382,10 +387,15 @@ export class ChartCreator {
             }
         });
 
+        const gearNames = _.keys(gearNamesCollection);
         const counts = _.keys(gearNamesCollection).map((key) => gearNamesCollection[key]);
         const gearMileages = _.keys(gearMileagesCollection).map((key) => gearMileagesCollection[key]);
         const colors = Helpers.getRgbColors();
-        const gearNames = _.keys(gearNamesCollection);
+
+        if (gearNames.length === 1 && gearNames[0].toLowerCase() === 'unspecified') {
+            ChartHelpers.createChartWithNotGearMessage(id);
+            return;
+        }
 
         const chartData = {
             labels: gearNames,
@@ -466,7 +476,7 @@ export class ChartCreator {
 
         // Not enough items with HR data to generate chart.
         if (points.length < 1) {
-            ChartHelpers.createChartWithNotEnoughDataMessage(id);
+            ChartHelpers.createChartWithNotHrMessage(id);
             return;
         }
 
@@ -592,7 +602,7 @@ export class ChartCreator {
 
         // Not enough items with HR data to generate chart.
         if (_.parseInt(totalCount) === totalNaCount) {
-            ChartHelpers.createChartWithNotEnoughDataMessage(id);
+            ChartHelpers.createChartWithNotHrMessage(id);
             return;
         }
 
