@@ -7,6 +7,10 @@
   },
   "env": {
     "APP_VERSION": "v0.0.0-preview",
+    "GOOGLE_TAG_MANAGER_TRACKER": {
+      "required": false,
+      "value": ""
+    },
     "LANG": {
       "required": true
     },
@@ -37,6 +41,14 @@
       "value": ""
     },
     "STRAVA_API_CLIENT_SECRET": {
+      "required": false,
+      "value": ""
+    },
+    "STRIPE_PUBLISHABLE_KEY": {
+      "required": false,
+      "value": ""
+    },
+    "STRIPE_SECRET_KEY": {
       "required": false,
       "value": ""
     }
