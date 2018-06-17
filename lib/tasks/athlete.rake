@@ -36,7 +36,8 @@ namespace :athlete do
     emails.each do |email|
       next if email.blank?
 
-      athlete = Athlete.find_by_email(email)
+      athlete_info = AthleteInfo.find_by_email(email)
+      athlete = Athlete.find_by(id: athlete_info.athlete_id)
       next if athlete.nil?
 
       athlete_id = athlete.id
@@ -56,7 +57,7 @@ namespace :athlete do
       athlete = Athlete.where(id: athlete_id).take
       next if athlete.nil?
 
-      athlete_email = athlete.email
+      athlete_email = athlete.athlete_info.email
       if is_dry_run
         puts "[DRY_RUN] Destroying all data for athlete #{athlete_id} (#{athlete_email})."
       else
