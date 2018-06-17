@@ -1,7 +1,6 @@
 import BaseView from './baseView';
 
 export default class NotFoundView extends BaseView {
-
     public load(): void {
         super.prepareView('404 Not Found');
 
@@ -31,6 +30,9 @@ export default class NotFoundView extends BaseView {
 
         const mainContent = $('#main-content');
         mainContent.empty();
-        mainContent.append(content).hide().fadeIn();
+        mainContent
+            .append(content)
+            .hide()
+            .fadeIn();
     }
 }

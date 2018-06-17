@@ -10,7 +10,22 @@ class BestEffort < ApplicationRecord
     results = where(athlete_id: athlete_id, best_effort_type_id: best_effort_type_id)
               .order('elapsed_time')
               .limit(limit)
-    results.empty? ? nil : results
+    results.empty? ? [] : results
+  end
+
+  def self.find_top_one_of_each_year(athlete_id, best_effort_type_id)
+    items = where(athlete_id: athlete_id, best_effort_type_id: best_effort_type_id)
+
+    return [] if items.empty?
+
+    results = {}
+    items.each do |item|
+      year = item.start_date_local.year
+      if !results[year] || (results[year] && item.elapsed_time < results[year].elapsed_time)
+        results[year] = item
+      end
+    end
+    results.values
   end
 
   def self.find_all_pbs_by_athlete_id(athlete_id)

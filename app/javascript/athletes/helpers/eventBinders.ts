@@ -6,7 +6,6 @@ import { AppHelpers } from './appHelpers';
 import { ViewType } from './viewTypes';
 
 export namespace EventBinders {
-
     export function bindAll() {
         const eventBinders = () => {
             AppHelpers.enableTooltips();
@@ -38,9 +37,7 @@ export namespace EventBinders {
                 new NavigationSidebar().load();
             });
 
-            $(document).on('click',
-                '.best-efforts-filter-buttons .btn-race-distance',
-                (event) => {
+            $(document).on('click', '.best-efforts-filter-buttons .btn-race-distance', (event) => {
                 $('.best-efforts-filter-buttons .btn-race-distance').removeClass('active');
                 $(event.currentTarget).addClass('active');
 
@@ -53,33 +50,42 @@ export namespace EventBinders {
             });
 
             // Bind race filter buttons in Races Timeline view.
-            $(document).on('click', '.timeline-wrapper .filter-buttons .btn:not(.show-all)',
-                (event) => {
+            $(document).on('click', '.timeline-wrapper .filter-buttons .btn:not(.show-all)', (event) => {
                 // Set the filter button to active upon clicking.
                 $('.filter-buttons .btn').removeClass('active');
-                $('.filter-buttons .show-all').removeClass('hidden').fadeIn();
+                $('.filter-buttons .show-all')
+                    .removeClass('hidden')
+                    .fadeIn();
                 $(event.currentTarget).addClass('active');
             });
 
-            $(document).on('click',
+            $(document).on(
+                'click',
                 '.timeline-wrapper .filter-buttons .btn-race-distance, .timeline-wrapper .timeline-header .btn',
                 (event) => {
-                const distance = $(event.currentTarget).attr('data-race-distance');
+                    const distance = $(event.currentTarget).attr('data-race-distance');
 
-                // Show all year labels.
-                $('.time-label').fadeIn();
+                    // Show all year labels.
+                    $('.time-label').fadeIn();
 
-                // Show only timeline items of this distance.
-                $('.timeline-item').parent().hide();
-                $(`.timeline-item[data-race-distance='${distance}']`).parent().fadeIn();
-            });
+                    // Show only timeline items of this distance.
+                    $('.timeline-item')
+                        .parent()
+                        .hide();
+                    $(`.timeline-item[data-race-distance='${distance}']`)
+                        .parent()
+                        .fadeIn();
+                },
+            );
 
             $(document).on('click', '.timeline-header .btn', (event) => {
                 const distance = $(event.currentTarget).attr('data-race-distance');
 
                 // Update the state of filter buttons.
                 $('.filter-buttons .btn').removeClass('active');
-                $('.filter-buttons .show-all').removeClass('hidden').fadeIn();
+                $('.filter-buttons .show-all')
+                    .removeClass('hidden')
+                    .fadeIn();
                 $(`.filter-buttons [data-race-distance='${distance}']`).addClass('active');
             });
 
@@ -89,8 +95,12 @@ export namespace EventBinders {
                 // Show only time labels, items of this year.
                 $('.time-label').hide();
                 $(`.time-label[data-race-year='${year}']`).fadeIn();
-                $('.timeline-item').parent().hide();
-                $(`.timeline-item[data-race-year='${year}']`).parent().fadeIn();
+                $('.timeline-item')
+                    .parent()
+                    .hide();
+                $(`.timeline-item[data-race-year='${year}']`)
+                    .parent()
+                    .fadeIn();
             });
 
             // Append PR/Contributions welcome badges upon clicking settings toggle button.

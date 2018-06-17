@@ -1,8 +1,11 @@
 {
     "recommendations": [
         "castwide.solargraph",
+        "christian-kohler.npm-intellisense",
         "christian-kohler.path-intellisense",
         "eg2.tslint",
+        "eg2.vscode-npm-script",
+        "esbenp.prettier-vscode",
         "groksrc.ruby",
         "misogi.ruby-rubocop",
         "mrmlnc.vscode-csscomb",

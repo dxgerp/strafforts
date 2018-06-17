@@ -1,10 +1,7 @@
 import { Helpers } from '../../common/helpers';
 
 export namespace HtmlHelpers {
-
-    export function constructChartHtml(id: string, title: string, width: number, withLoadingIcon: boolean = false) {
-        const canvas = `<canvas id="${id}-canvas" height="300"></canvas>`;
-        const content = withLoadingIcon ? HtmlHelpers.getLoadingIcon() : canvas;
+    export function constructChartHtml(id: string, title: string, width: number) {
         const chart = `
             <div class="col-md-${width}">
                 <div class="box">
@@ -13,7 +10,7 @@ export namespace HtmlHelpers {
                     </div>
                     <div class="box-body">
                         <div id=${id} class="chart">
-                            ${content}
+                            ${HtmlHelpers.getLoadingIcon()}
                         </div>
                     </div>
                 </div>
@@ -49,8 +46,9 @@ export namespace HtmlHelpers {
 
     export function getNoDataInfoBox() {
         const title = 'Nothing Yet!';
-        const link = 'https://support.strava.com/hc/en-us/articles/'
-            + '216919557-Using-Strava-Run-Type-Tags-to-analyze-your-Runs';
+        const link =
+            'https://support.strava.com/hc/en-us/articles/' +
+            '216919557-Using-Strava-Run-Type-Tags-to-analyze-your-Runs';
         const supportEmail = 'support@strafforts.com';
         const messageBody = `
         <h4>If Just Connected...</h4>
@@ -122,9 +120,10 @@ export namespace HtmlHelpers {
     export function getDatatableRowForRaces(item: any[], showDistanceColumn?: boolean) {
         const stravaLink = `https://www.strava.com/activities/${item['activity_id']}`;
         const distance = item['distance'].toFixed(1);
-        const distanceColumn = showDistanceColumn ?
-            `<td data-sort="${distance}">${distance} ${item['distance_unit']}</td>` : '';
-        const paceOrder = Helpers.formatPaceStringForOrdering(item['pace']);
+        const distanceColumn = showDistanceColumn
+            ? `<td data-sort="${distance}">${distance} ${item['distance_unit']}</td>`
+            : '';
+        const paceOrder = Helpers.toPaceStringForOrdering(item['pace']);
         const row = `
             <tr>
                 <td class="no-wrap">${item['start_date']}</td>
@@ -137,7 +136,7 @@ export namespace HtmlHelpers {
                     </a>
                 </td>
                 ${distanceColumn}
-                <td class="no-wrap">
+                <td class="no-wrap" data-sort="${item['elapsed_time']}">
                     ${item['elapsed_time_formatted']}
                 </td>
                 <td class="hidden-xs-down" data-sort="${paceOrder}">
@@ -146,18 +145,18 @@ export namespace HtmlHelpers {
                 <td class="hidden-lg-down">
                     ${item['gear_name']}
                 </td>
-                <td class="hidden-md-down">
+                <td class="hidden-md-down" data-sort="${item['elevation']}">
                     ${item['elevation']}<small> ${item['elevation_unit']}</small>
                 </td>
-                <td class="hidden-md-down">
+                <td class="hidden-md-down" data-sort="${item['cadence']}">
                     ${item['cadence']}
                 </td>
-                <td class="text-center badge-cell hidden-md-down">
+                <td class="text-center badge-cell hidden-md-down" data-sort="${item['average_heartrate']}">
                     <span class="badge hr-zone-${item['average_hr_zone']}">
                         ${item['average_heartrate'] === -1 ? 'n/a' : item['average_heartrate']}
                     </span>
                 </td>
-                <td class="text-center badge-cell hidden-md-down">
+                <td class="text-center badge-cell hidden-md-down" data-sort="${item['max_heartrate']}">
                     <span class="badge hr-zone-${item['max_hr_zone']}">
                         ${item['max_heartrate'] === -1 ? 'n/a' : item['max_heartrate']}
                     </span>
@@ -188,7 +187,7 @@ export namespace HtmlHelpers {
     export function createDatatableRowForBestEffortsOrPbs(item: any[]) {
         const stravaLink = `https://www.strava.com/activities/${item['activity_id']}`;
         const workoutTypeNameClass = `workout-type-${item['workout_type_name'].replace(/\s/g, '-')}`;
-        const paceOrder = Helpers.formatPaceStringForOrdering(item['pace']);
+        const paceOrder = Helpers.toPaceStringForOrdering(item['pace']);
         const row = `
             <tr>
                 <td class="no-wrap">${item['start_date']}</td>
@@ -209,12 +208,12 @@ export namespace HtmlHelpers {
                 <td class="hidden-lg-down">
                     ${item['gear_name']}
                 </td>
-                <td class="text-center badge-cell hidden-md-down">
+                <td class="text-center badge-cell hidden-md-down" data-sort="${item['average_heartrate']}">
                     <span class="badge hr-zone-${item['average_hr_zone']}">
                         ${item['average_heartrate'] === -1 ? 'n/a' : item['average_heartrate']}
                     </span>
                 </td>
-                <td class="text-center badge-cell hidden-md-down">
+                <td class="text-center badge-cell hidden-md-down" data-sort="${item['max_heartrate']}">
                     <span class="badge hr-zone-${item['max_hr_zone']}">
                         ${item['max_heartrate'] === -1 ? 'n/a' : item['max_heartrate']}
                     </span>

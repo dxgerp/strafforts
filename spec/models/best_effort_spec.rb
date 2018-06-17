@@ -12,6 +12,50 @@ RSpec.describe BestEffort, type: :model do
   it { should belong_to(:athlete) }
   it { should belong_to(:best_effort_type) }
 
+  describe '.find_top_by_athlete_id_and_best_effort_type_id' do
+    it 'should get empty array when the provided athlete_id matches nothing' do
+      # act.
+      items = BestEffort.find_top_by_athlete_id_and_best_effort_type_id(12345678, 1, 1)
+
+      # assert.
+      expect(items).to eq([])
+    end
+
+    it 'should get best efforts matching the provided athlete_id' do
+      # act.
+      items = BestEffort.find_top_by_athlete_id_and_best_effort_type_id(9123806, 12, 3)
+
+      # assert.
+      expect(items.count).to be 3
+      items.each do |item|
+        expect(item.is_a?(BestEffort)).to be true
+        expect(item.athlete_id).to eq(9123806)
+      end
+    end
+  end
+
+  describe '.find_top_one_of_each_year' do
+    it 'should get empty array when the provided athlete_id matches nothing' do
+      # act.
+      items = BestEffort.find_top_one_of_each_year(12345678, 1)
+
+      # assert.
+      expect(items).to eq([])
+    end
+
+    it 'should get best efforts matching the provided athlete_id' do
+      # act.
+      items = BestEffort.find_top_one_of_each_year(9123806, 12)
+
+      # assert.
+      expect(items.count).to be 3
+      items.each do |item|
+        expect(item.is_a?(BestEffort)).to be true
+        expect(item.athlete_id).to eq(9123806)
+      end
+    end
+  end
+
   describe '.find_all_pbs_by_athlete_id' do
     it 'should get empty array when the provided athlete_id matches nothing' do
       # act.
@@ -21,7 +65,7 @@ RSpec.describe BestEffort, type: :model do
       expect(items).to eq([])
     end
 
-    it 'should get personal bests matching the provided athlete_id' do
+    it 'should get best efforts matching the provided athlete_id' do
       # act.
       items = BestEffort.find_all_pbs_by_athlete_id(9123806)
 
@@ -43,7 +87,7 @@ RSpec.describe BestEffort, type: :model do
       expect(items).to eq([])
     end
 
-    it 'should get personal best matching the provided athlete_id and best_effort_type_id' do
+    it 'should get best efforts matching the provided athlete_id and best_effort_type_id' do
       # act.
       items = BestEffort.find_all_pbs_by_athlete_id_and_best_effort_type_id(9123806, 12)
 

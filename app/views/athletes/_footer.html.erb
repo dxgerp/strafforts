@@ -1,25 +1,17 @@
 <footer class="main-footer">
   <span class="hidden-sm-down">
     <small>
-      Created by <a class="external" href="https://yizeng.me" target="_blank">Yi Zeng</a> and GitHub'ed at
+      Created by <a class="external" href="<%= Settings.strava.url %>/athletes/<%= Settings.app.demo_athlete %>" target="_blank">Yi Zeng</a> and GitHub'ed at
       <a class="external" href="https://github.com/yizeng/strafforts" target="_blank">yizeng/strafforts</a>.
     </small>
   </span>
-  <% unless ENV['HIDE_FACEBOOK_LIKE'] == 'true' %>
-    <div class="fb-like hidden-sm-up" data-href="<%= Settings.app.facebook_page_url %>" data-layout="button_count"
-      data-action="like" data-size="small" data-show-faces="false" data-share="false">
-    </div>
-  <% end %>
 
   <span class="pull-right">
-      <a class="bg-strava btn label hidden-xs-down" href="<%= Settings.strava.url %>/athletes/<%= Settings.app.demo_athlete %>" target="_blank">
-        Follow me on Strava
-      </a>
       <a class="bg-strava btn label" href="mailto:<%= Settings.app.emailer.default_sender_email %>" target="_blank">Contact Us</a>
       <% unless Settings.app.version.blank? %>
           <small><%= Settings.app.version %></small>
       <% else %>
-          <small>v1.5.1</small>
+          <small>v1.5.2</small>
       <% end %>
   </span>
 </footer>
