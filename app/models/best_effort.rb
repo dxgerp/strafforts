@@ -20,7 +20,7 @@ class BestEffort < ApplicationRecord
 
     results = {}
     items.each do |item|
-      year = item.start_date_local.year
+      year = item.start_date_local.blank? ? item.start_date.year : item.start_date_local.year
       if !results[year] || (results[year] && item.elapsed_time < results[year].elapsed_time)
         results[year] = item
       end
