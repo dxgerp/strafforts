@@ -38,9 +38,6 @@ module Creators
       update_athlete_details(athlete_hash) if is_detailed
       update_ahtlete_location(athlete_hash)
 
-      # Don't set last_active_at when it's called from ActivityFetcher, i.e. is_detailed is true.
-      @athlete.last_active_at = Time.now.utc unless is_detailed
-
       @athlete.save!
       @athlete_info.save!
       @athlete
