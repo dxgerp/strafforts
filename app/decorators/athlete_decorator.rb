@@ -100,6 +100,10 @@ class AthleteDecorator < Draper::Decorator
     ApplicationHelper::Helper.get_heart_rate_zones(object.id)
   end
 
+  def returning_after_180_days?
+    athlete.last_active_at.blank? || athlete.last_active_at.to_date < Date.today - 180.days
+  end
+
   private
 
   def valid_url?(string)

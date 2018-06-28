@@ -81,8 +81,7 @@ class AuthController < ApplicationController
       if ENV['ENABLE_OLD_MATES_PRO_ON_LOGIN'] == 'true'
         begin
           athlete = athlete.decorate
-          is_old_mate = athlete.last_active_at.blank? || athlete.last_active_at.to_date < Date.today - 180.days
-          if !athlete.pro_subscription? && is_old_mate
+          if !athlete.pro_subscription? && athlete.returning_after_180_days?
             ::Creators::SubscriptionCreator.create('Old Mates PRO', athlete.id)
           end
         rescue StandardError => e
