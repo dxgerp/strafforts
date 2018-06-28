@@ -51,7 +51,7 @@ class AuthController < ApplicationController
 
   private
 
-  def handle_token_exchange(code) # rubocop:disable MethodLength, CyclomaticComplexity, PerceivedComplexity
+  def handle_token_exchange(code) # rubocop:disable AbcSize, MethodLength, CyclomaticComplexity, PerceivedComplexity
     response = Net::HTTP.post_form(
       URI(STRAVA_API_AUTH_TOKEN_URL),
       'code' => code,
@@ -73,7 +73,19 @@ class AuthController < ApplicationController
             ::Creators::SubscriptionCreator.create('Early Birds PRO', athlete.id)
           end
         rescue StandardError => e
-          Rails.logger.error("Automatically applying Early Birds PRO failed for athlete '#{athlete.id}'. "\
+          Rails.logger.error("Automatically applying 'Early Birds PRO' failed for athlete '#{athlete.id}'. "\
+            "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
+        end
+      end
+
+      if ENV['ENABLE_OLD_MATES_PRO_ON_LOGIN'] == 'true'
+        begin
+          athlete = athlete.decorate
+          if !athlete.pro_subscription? && athlete.returning_after_180_days?
+            ::Creators::SubscriptionCreator.create('Old Mates PRO', athlete.id)
+          end
+        rescue StandardError => e
+          Rails.logger.error("Automatically applying 'Old Mates PRO' failed for athlete '#{athlete.id}'. "\
             "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
         end
       end

@@ -468,4 +468,39 @@ RSpec.describe AthleteDecorator, type: :decorator do
       expect(decorator.heart_rate_zones.zone_3_max).to eq(160)
     end
   end
+
+  describe '.returning_after_180_days?' do
+    it 'should be true when athlete.last_active_at is nil' do
+      # arrange.
+      athlete.last_active_at = nil
+
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.returning_after_180_days?).to eq(true)
+    end
+
+    it 'should be true when athlete.last_active_at is more than 180 days ago' do
+      # arrange.
+      athlete.last_active_at = Time.now - 365.days
+
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.returning_after_180_days?).to eq(true)
+    end
+
+    it 'should be false when athlete.last_active_at is less than 180 days ago' do
+      # arrange.
+      athlete.last_active_at = Time.now - 1.day
+
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.returning_after_180_days?).to eq(false)
+    end
+  end
 end
