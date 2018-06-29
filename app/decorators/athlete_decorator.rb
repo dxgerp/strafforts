@@ -100,8 +100,9 @@ class AthleteDecorator < Draper::Decorator
     ApplicationHelper::Helper.get_heart_rate_zones(object.id)
   end
 
-  def returning_after_180_days?
-    athlete.last_active_at.blank? || athlete.last_active_at.to_date < Date.today - 180.days
+  def returning_after_inactivity?
+    inactivity_days_threshold = ENV['INACTIVITY_DAYS_THRESHOLD'].to_i || 180
+    athlete.last_active_at.blank? || athlete.last_active_at.to_date < Date.today - inactivity_days_threshold.days
   end
 
   private

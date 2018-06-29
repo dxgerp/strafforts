@@ -43,7 +43,7 @@ SubscriptionPlan.find_or_create_by(name: 'Lifetime PRO', description: 'Lifetime 
 SubscriptionPlan.find_or_create_by(name: 'Early Birds PRO', description: 'Early Birds PRO Plan', duration: 90, amount: 0, amount_per_month: 0)
 SubscriptionPlan.find_or_create_by(name: 'Annual PRO', description: 'Annual PRO Plan', duration: 365, amount: 5.99, amount_per_month: 0.49)
 SubscriptionPlan.find_or_create_by(name: '90-day PRO', description: '90-day PRO Plan', duration: 90,amount: 2.99, amount_per_month: 0.99)
-SubscriptionPlan.find_or_create_by(name: 'Old Mates PRO', description: 'Free 30-day PRO Plan for athletes who have been inactive for more than 180 days', duration: 30,amount: 0, amount_per_month: 0)
+SubscriptionPlan.find_or_create_by(name: 'Old Mates PRO', description: 'Free 30-day PRO Plan for athletes who have been inactive for some time', duration: 30,amount: 0, amount_per_month: 0)
 
 FaqCategory.find_or_create_by(name: 'account')
 FaqCategory.find_or_create_by(name: 'best-efforts')

@@ -469,7 +469,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
     end
   end
 
-  describe '.returning_after_180_days?' do
+  describe '.returning_after_inactivity?' do
     it 'should be true when athlete.last_active_at is nil' do
       # arrange.
       athlete.last_active_at = nil
@@ -478,7 +478,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
       decorator = AthleteDecorator.decorate(athlete)
 
       # assert.
-      expect(decorator.returning_after_180_days?).to eq(true)
+      expect(decorator.returning_after_inactivity?).to eq(true)
     end
 
     it 'should be true when athlete.last_active_at is more than 180 days ago' do
@@ -489,7 +489,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
       decorator = AthleteDecorator.decorate(athlete)
 
       # assert.
-      expect(decorator.returning_after_180_days?).to eq(true)
+      expect(decorator.returning_after_inactivity?).to eq(true)
     end
 
     it 'should be false when athlete.last_active_at is less than 180 days ago' do
@@ -500,7 +500,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
       decorator = AthleteDecorator.decorate(athlete)
 
       # assert.
-      expect(decorator.returning_after_180_days?).to eq(false)
+      expect(decorator.returning_after_inactivity?).to eq(false)
     end
   end
 end
