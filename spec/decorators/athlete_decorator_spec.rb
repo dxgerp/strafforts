@@ -470,17 +470,6 @@ RSpec.describe AthleteDecorator, type: :decorator do
   end
 
   describe '.returning_after_inactivity?' do
-    it 'should be true when athlete.last_active_at is nil' do
-      # arrange.
-      athlete.last_active_at = nil
-
-      # act.
-      decorator = AthleteDecorator.decorate(athlete)
-
-      # assert.
-      expect(decorator.returning_after_inactivity?).to eq(true)
-    end
-
     it 'should be true when athlete.last_active_at is more than 180 days ago' do
       # arrange.
       athlete.last_active_at = Time.now - 365.days
