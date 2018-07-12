@@ -37,6 +37,7 @@ namespace :athlete do
       next if email.blank?
 
       athlete_info = AthleteInfo.find_by_email(email)
+      next if athlete_info.nil?
       athlete = Athlete.find_by(id: athlete_info.athlete_id)
       next if athlete.nil?
 
@@ -110,8 +111,8 @@ namespace :athlete do
     Gear.where(athlete_id: id).destroy_all
     HeartRateZones.where(athlete_id: id).destroy_all
     Activity.where(athlete_id: id).destroy_all
-    AthleteInfo.where(athlete_id: athlete_id).destroy_all
-    Subscription.where(athlete_id: athlete_id).update_all(is_deleted: true)
+    AthleteInfo.where(athlete_id: id).destroy_all
+    Subscription.where(athlete_id: id).update_all(is_deleted: true)
     Athlete.where(id: id).destroy_all
   end
 end
