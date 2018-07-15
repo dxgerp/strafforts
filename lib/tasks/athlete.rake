@@ -30,11 +30,12 @@ namespace :athlete do
   task clean_up: :environment do
     destroyed_ids = []
     inactive_athletes = Athlete.where('last_active_at < ?', Time.now.utc - 180.days - 7.days)
+    count = inactive_athletes.count
     inactive_athletes.each do |athlete|
       destroyed_ids << athlete.id
       destroy_athlete(athlete.id)
     end
-    Rails.logger.warn("[athlete:clean_up] - A total of #{inactive_athletes.count} inactive athletes destroyed: #{destroyed_ids.join(',')}.") # rubocop:disable LineLength
+    Rails.logger.warn("[athlete:clean_up] - A total of #{count} inactive athletes destroyed: #{destroyed_ids.join(',')}.") # rubocop:disable LineLength
   end
 
   desc 'Delete all data assiociated with athletes in the given comma separated email/id list.'
