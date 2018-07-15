@@ -25,6 +25,18 @@ namespace :athlete do
     apply_subscription('90-day PRO', ENV['ID'])
   end
 
+  desc 'Delete all data assiociated with athletes who have been inactive for more 180 days + 7 days of grace period.'
+  # Usage: bundle exec bin/rails athlete:clean_up
+  task clean_up: :environment do
+    destroyed_ids = []
+    inactive_athletes = Athlete.where('last_active_at < ?', Time.now.utc - 180.days - 7.days)
+    inactive_athletes.each do |athlete|
+      destroyed_ids << athlete.id
+      destroy_athlete(athlete.id)
+    end
+    Rails.logger.warn("[athlete:clean_up] - A total of #{inactive_athletes.count} inactive athletes destroyed: #{destroyed_ids.join(',')}.") # rubocop:disable LineLength
+  end
+
   desc 'Delete all data assiociated with athletes in the given comma separated email/id list.'
   # Usage: bundle exec bin/rails athlete:destroy EMAIL=[Comma Separated list] ID=[Comma Separated list] DRY_RUN=[true/false] # rubocop:disable LineLength
   # Only to destroy when DRY_RUN is explicitly set to false.
