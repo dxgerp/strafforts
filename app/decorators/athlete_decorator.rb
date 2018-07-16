@@ -101,6 +101,7 @@ class AthleteDecorator < Draper::Decorator
   end
 
   def returning_after_inactivity?
+    return false if athlete.last_active_at.blank?
     inactivity_days_threshold = ENV['INACTIVITY_DAYS_THRESHOLD'].blank? ? 180 : ENV['INACTIVITY_DAYS_THRESHOLD'].to_i
     athlete.last_active_at.to_date < Date.today - inactivity_days_threshold.days
   end
