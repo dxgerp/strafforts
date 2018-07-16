@@ -70,7 +70,7 @@
     "test": "bundle exec rspec spec --format documentation --color",
     "test:all": "bundle exec rspec spec --format documentation --color && bundle exec rails test:system",
     "test:ui": "bundle exec rails test:system",
-    "tslint": "node_modules/.bin/tslint -c config/tslint.json app/javascript/*.ts",
+    "tslint": "node_modules/.bin/tslint -c config/tslint.json -p tsconfig.json",
     "rubocop": "bundle exec rubocop -c config/rubocop.yml"
   }
 }

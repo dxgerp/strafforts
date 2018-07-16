@@ -61,8 +61,9 @@ group :development do
 
   gem 'mdl', require: false # Markdown lint tool.
   gem 'os', '~> 1.0'
-  gem 'rubocop', '= 0.48.1', require: false
+  gem 'rubocop', require: false
   gem 'wdm', '>= 0.1.0' if Gem.win_platform? # Require wdm for Windows.
+  gem 'solargraph', require: false
 end
 
 group :test do
