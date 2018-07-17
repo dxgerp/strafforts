@@ -116,9 +116,9 @@ adjust-sourcemap-loader@^1.1.0:
     object-path "^0.9.2"
     regex-parser "^2.2.9"
 
-admin-lte@^2.3.11:
-  version "2.4.8"
-  resolved "https://registry.yarnpkg.com/admin-lte/-/admin-lte-2.4.8.tgz#35edb2b7857af7fcfed7355c83649d5abd09a501"
+admin-lte@2.4.4:
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/admin-lte/-/admin-lte-2.4.4.tgz#5916fcbfa18536851b51e5ef2655a7cdaf0a4b48"
   dependencies:
     bootstrap "^3.3.7"
     bootstrap-colorpicker "^2.5.1"
