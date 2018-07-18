@@ -343,10 +343,10 @@
       ]
     ]
   },
+  "emmet.includeLanguages": {
+      "erb": "html"
+  },
+  "extensions.ignoreRecommendations": false,
   "tslint.configFile": "config/tslint.json",
-  "typescriptHero.resolver.importGroups": [
-    "Plains",
-    "Modules",
-    "Workspace"
-  ]
+  "tslint.autoFixOnSave": true,
 }

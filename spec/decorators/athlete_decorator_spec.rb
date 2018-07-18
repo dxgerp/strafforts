@@ -491,5 +491,16 @@ RSpec.describe AthleteDecorator, type: :decorator do
       # assert.
       expect(decorator.returning_after_inactivity?).to eq(false)
     end
+
+    it 'should be true when athlete.last_active_at is nil' do
+      # arrange.
+      athlete.last_active_at = nil
+
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.returning_after_inactivity?).to eq(false)
+    end
   end
 end

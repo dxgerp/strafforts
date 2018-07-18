@@ -7,9 +7,9 @@
   "author": "Yi Zeng <yi.zeng.dev@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@rails/webpacker": "^3.5.3",
+    "@rails/webpacker": "3.5.3",
     "@types/lodash": "^4.14.109",
-    "admin-lte": "^2.3.11",
+    "admin-lte": "^2.4.8",
     "autoprefixer": "^7.1.1",
     "babel-core": "^6.24.1",
     "babel-loader": "7.x",
@@ -70,7 +70,7 @@
     "test": "bundle exec rspec spec --format documentation --color",
     "test:all": "bundle exec rspec spec --format documentation --color && bundle exec rails test:system",
     "test:ui": "bundle exec rails test:system",
-    "tslint": "node_modules/.bin/tslint -c config/tslint.json app/javascript/*.ts",
+    "tslint": "node_modules/.bin/tslint -c config/tslint.json -p tsconfig.json",
     "rubocop": "bundle exec rubocop -c config/rubocop.yml"
   }
 }
