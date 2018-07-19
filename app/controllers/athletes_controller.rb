@@ -42,7 +42,7 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
     @annual_pro_plan = SubscriptionPlanDecorator.decorate(annual_pro_plan)
   end
 
-  def purchase_pro # rubocop:disable MethodLength, AbcSize
+  def subscribe_to_pro # rubocop:disable MethodLength, AbcSize
     plan_id = params[:subscriptionPlanId]
     subscription_plan = SubscriptionPlan.find_by(id: plan_id)
     if subscription_plan.nil?
@@ -63,7 +63,7 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
 
     @is_current_user = athlete.access_token == cookies.signed[:access_token]
     unless @is_current_user
-      Rails.logger.warn("Could not purchase PRO subscription for athlete '#{athlete_id}' not currently logged in.")
+      Rails.logger.warn("Could not subscribe to PRO plan for athlete '#{athlete_id}' not currently logged in.")
       render json: { error: ApplicationHelper::Message::ATHLETE_NOT_ACCESSIBLE }.to_json, status: 403
       return
     end
@@ -72,13 +72,13 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
       ::StripeApiWrapper.charge(athlete, subscription_plan, params[:stripeToken], params[:stripeEmail])
       ::Creators::SubscriptionCreator.create(subscription_plan.name, athlete.id)
     rescue Stripe::StripeError => e
-      Rails.logger.error("StripeError while purchasing PRO plan for athlete '#{athlete.id}'. "\
+      Rails.logger.error("StripeError while subscribing to PRO plan for athlete '#{athlete.id}'. "\
         "Status: #{e.http_status}. Message: #{e.json_body.blank? ? '' : e.json_body[:error][:message]}\n"\
         "Backtrace:\n\t#{e.backtrace.join("\n\t")}")
       render json: { error: ApplicationHelper::Message::STRIPE_ERROR }.to_json, status: 402
       return
     rescue StandardError => e
-      Rails.logger.error("Purchasing PRO plan '#{subscription_plan.name}' failed for athlete '#{athlete.id}'. "\
+      Rails.logger.error("Subscribing to PRO plan '#{subscription_plan.name}' failed for athlete '#{athlete.id}'. "\
         "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
       render json: { error: ApplicationHelper::Message::PAYMENT_FAILED }.to_json, status: 500
       return
