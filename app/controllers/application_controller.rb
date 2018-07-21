@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     "#{STRAVA_API_AUTH_AUTHORIZE_URL}"\
     "?client_id=#{STRAVA_API_CLIENT_ID}"\
     '&response_type=code'\
-    "&redirect_uri=#{request.protocol}#{request.host}:#{request.port}/auth/exchange_token"\
+    "&redirect_uri=#{request.protocol}#{request.host}:#{request.port}/auth/exchange-token"\
     '&approval_prompt=auto&scope=view_private'
   end
 

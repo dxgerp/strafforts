@@ -29,7 +29,7 @@ Rails.application.routes.draw do
 
   get 'home/index'
 
-  get 'auth/exchange_token' => 'auth#exchange_token'
+  get 'auth/exchange-token' => 'auth#exchange_token'
   get 'auth/deauthorize' => 'auth#deauthorize'
   get 'auth/logout' => 'auth#logout'
 
