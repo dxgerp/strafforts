@@ -2,7 +2,7 @@ require 'capybara/dsl'
 require 'capybara/poltergeist'
 require 'test_helper'
 
-include Capybara::DSL
+include Capybara::DSL # rubocop:disable Style/MixinUsage
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   VERBOSE_LOGGING = false

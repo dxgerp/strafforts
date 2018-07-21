@@ -1,4 +1,4 @@
-class AthleteDecorator < Draper::Decorator
+class AthleteDecorator < Draper::Decorator # rubocop:disable ClassLength
   delegate_all
 
   STRAVA_URL = Settings.strava.url

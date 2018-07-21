@@ -1,8 +1,7 @@
 class ActivityFetcher
   def initialize(access_token)
-    if access_token.blank?
-      raise ArgumentError, 'ActivityFetcher - Blank access token was passed in.'
-    end
+    raise ArgumentError, 'ActivityFetcher - Blank access token was passed in.' if access_token.blank?
+
     @access_token = access_token
     @api_wrapper = StravaApiWrapper.new(@access_token)
   end
@@ -37,8 +36,8 @@ class ActivityFetcher
           end
         end
 
-        if activities_to_retrieve.count > 0
-          Rails.logger.info("ActivityFetcher - A total of #{activities_to_retrieve.count} activities to be retrieved for athlete #{athlete.id}.") # rubocop:disable LineLength
+        if activities_to_retrieve.count.positive?
+          Rails.logger.info("ActivityFetcher - A total of #{activities_to_retrieve.count} activities to be retrieved for athlete #{athlete.id}.")
 
           activities_to_retrieve.sort.each do |activity_id|
             begin
@@ -97,14 +96,11 @@ class ActivityFetcher
         activity_ids << activity_json['id'] if type.include?('best-efforts')
 
         # Personal Bests.
-        if type.include?('personal-bests') && activity_json['achievement_count'] > 0
-          activity_ids << activity_json['id']
-        end
+        has_pbs = type.include?('personal-bests') && activity_json['achievement_count'].positive?
+        activity_ids << activity_json['id'] if has_pbs
 
         # Races.
-        if type.include?('races') && (activity_json['workout_type'] == 1)
-          activity_ids << activity_json['id']
-        end
+        activity_ids << activity_json['id'] if type.include?('races') && (activity_json['workout_type'] == 1)
       end
     end
     activity_ids.uniq!

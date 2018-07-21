@@ -26,7 +26,7 @@ class UserMailer < ApplicationMailer
 
   def format_athlete_fullname
     return 'New Athlete' if @athlete.athlete_info.firstname.blank? && @athlete.athlete_info.lastname.blank?
-    return @athlete.athlete_info.firstname if !@athlete.athlete_info.firstname.blank? && @athlete.athlete_info.firstname.length > 1 # rubocop:disable LineLength
+    return @athlete.athlete_info.firstname if !@athlete.athlete_info.firstname.blank? && @athlete.athlete_info.firstname.length > 1
     "#{@athlete.athlete_info.firstname} #{@athlete.athlete_info.lastname}".to_s.strip
   end
 end

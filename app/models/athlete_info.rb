@@ -11,8 +11,6 @@ class AthleteInfo < ApplicationRecord
     results.empty? ? nil : results.take
   end
 
-  private
-
   def remove_from_mailing_list
     RemoveFromMailingListJob.perform_later(id, email)
   end
