@@ -51,6 +51,13 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
       return
     end
 
+    @is_current_user = athlete.access_token == cookies.signed[:access_token]
+    unless @is_current_user
+      Rails.logger.warn("Could not cancel PRO plan for athlete '#{athlete_id}' not currently logged in.")
+      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_ACCESSIBLE }.to_json, status: 403
+      return
+    end
+
     begin
       ::Creators::SubscriptionCreator.cancel(athlete)
       redirect_to root_path

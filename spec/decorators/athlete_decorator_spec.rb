@@ -87,6 +87,51 @@ RSpec.describe AthleteDecorator, type: :decorator do
     end
   end
 
+  describe '.pro_subscription' do
+    it 'should return a subscription for athlete with PRO subscriptions' do
+      # arrange.
+      athlete = Athlete.find_by(id: 9123806)
+
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.pro_subscription.is_a?(Subscription)).to be true
+      expect(decorator.pro_subscription.expires_at).not_to be_nil
+    end
+
+    it 'should return nil for athlete with only deleted PRO subscriptions' do
+      # arrange.
+      athlete = Athlete.find_by(id: 456)
+
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.pro_subscription).to be nil
+    end
+
+    it 'should return the correct subscription for athlete with indefinite PRO subscriptions' do
+      # act.
+      athlete = Athlete.find_by(id: 789)
+
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.pro_subscription.is_a?(Subscription)).to be true
+      expect(decorator.pro_subscription.expires_at).to be nil
+    end
+
+    it 'should return nil for athlete without PRO subscriptions' do
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.pro_subscription).to be nil
+    end
+  end
+
   describe '.pro_subscription_expires_at_formatted' do
     it 'should be indefinite for athlete with Lifetime PRO subscriptions' do
       # arrange.
@@ -127,6 +172,50 @@ RSpec.describe AthleteDecorator, type: :decorator do
 
       # assert.
       expect(decorator.pro_subscription_expires_at_formatted).to be nil
+    end
+  end
+
+  describe '.pro_subscription_plan' do
+    it 'should return a subscription plan for athlete with PRO subscriptions' do
+      # arrange.
+      athlete = Athlete.find_by(id: 9123806)
+
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.pro_subscription_plan.is_a?(SubscriptionPlan)).to be true
+    end
+
+    it 'should return nil for athlete with only deleted PRO subscriptions' do
+      # arrange.
+      athlete = Athlete.find_by(id: 456)
+
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.pro_subscription_plan).to be nil
+    end
+
+    it 'should return the correct subscription plan for athlete with indefinite PRO subscriptions' do
+      # act.
+      athlete = Athlete.find_by(id: 789)
+
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.pro_subscription_plan.is_a?(SubscriptionPlan)).to be true
+      expect(decorator.pro_subscription_plan.name).to eq('Lifetime PRO')
+    end
+
+    it 'should return nil for athlete without PRO subscriptions' do
+      # act.
+      decorator = AthleteDecorator.decorate(athlete)
+
+      # assert.
+      expect(decorator.pro_subscription_plan).to be nil
     end
   end
 
