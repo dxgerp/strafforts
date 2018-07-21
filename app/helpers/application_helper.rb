@@ -10,6 +10,7 @@ module ApplicationHelper
   class Message
     ATHLETE_NOT_FOUND = 'The requested athlete could not be found.'
     ATHLETE_NOT_ACCESSIBLE = 'The requested athlete could not be accessed without logged in.'
+    CANCEL_PRO_ERROR = 'Failed to cancel your PRO subscription. Please contact us if problem persists.'
     DISTANCE_NOT_FOUND = 'The requested distance could not be found.'
     PAYMENT_FAILED = 'Your payment could not be processed at the moment. Please contact us to get your PRO plan.'
     PRO_ACCOUNTS_ONLY = 'This feature is only available for accounts with PRO plans.'

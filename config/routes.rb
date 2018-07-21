@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   get 'athletes/:id' => 'athletes#index'
   get 'athletes/:id/get-pro' => 'athletes#pro_plans'
+  get 'athletes/:id/cancel-pro' => 'athletes#cancel_pro'
 
   post 'athletes/:id/fetch_latest' => 'athletes#fetch_latest'
   post 'athletes/:id/save_profile' => 'athletes#save_profile'

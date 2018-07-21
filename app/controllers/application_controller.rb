@@ -34,8 +34,7 @@ class ApplicationController < ActionController::Base
 
     athlete = athlete.decorate
     athlete_info = {
-      has_pro_subscription: athlete.pro_subscription?,
-      pro_subscription_expires_at: athlete.pro_subscription_expires_at
+      has_pro_subscription: athlete.pro_subscription?
     }
 
     best_efforts_meta = []

@@ -42,6 +42,26 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
     @annual_pro_plan = SubscriptionPlanDecorator.decorate(annual_pro_plan)
   end
 
+  def cancel_pro
+    athlete_id = params[:id]
+    athlete = Athlete.find_by(id: athlete_id)
+    if athlete.nil?
+      Rails.logger.warn("Could not find the requested athlete '#{athlete_id}'.")
+      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_FOUND }.to_json, status: 404
+      return
+    end
+
+    begin
+      ::Creators::SubscriptionCreator.cancel(athlete)
+      redirect_to root_path
+    rescue StandardError => e
+      Rails.logger.error("Cancelling PRO plan failed for athlete '#{athlete.id}'. "\
+        "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
+      render json: { error: ApplicationHelper::Message::CANCEL_PRO_ERROR }.to_json, status: 500
+      return
+    end
+  end
+
   def subscribe_to_pro # rubocop:disable MethodLength, AbcSize
     plan_id = params[:subscriptionPlanId]
     subscription_plan = SubscriptionPlan.find_by(id: plan_id)
@@ -70,7 +90,7 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
 
     begin
       ::StripeApiWrapper.charge(athlete, subscription_plan, params[:stripeToken], params[:stripeEmail])
-      ::Creators::SubscriptionCreator.create(subscription_plan.name, athlete.id)
+      ::Creators::SubscriptionCreator.create(athlete, subscription_plan.name)
     rescue Stripe::StripeError => e
       Rails.logger.error("StripeError while subscribing to PRO plan for athlete '#{athlete.id}'. "\
         "Status: #{e.http_status}. Message: #{e.json_body.blank? ? '' : e.json_body[:error][:message]}\n"\

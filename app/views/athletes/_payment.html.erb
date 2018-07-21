@@ -6,30 +6,37 @@
 
 <script src="https://checkout.stripe.com/checkout.js"></script>
 <script>
+    function showLoadingOverlay() {
+      $("#main-content").LoadingOverlay("show", {
+        image : "",
+        fontawesome : "fa fa-spin fa-refresh"
+      });
+    }
+
     function submitPayment() {
       toastr.options.timeOut = 15000; // Keep Toastr popup longer.
       data = {
-            stripeToken: $("#form-subscribe-to-pro input[name='stripeToken']")[0].value,
-            stripeEmail: $("#form-subscribe-to-pro input[name='stripeEmail']")[0].value,
-            id: "<%= @athlete.id %>",
-            subscriptionPlanId: $("#form-subscribe-to-pro input[name='subscriptionPlanId']")[0].value,
+        stripeToken: $("#form-subscribe-to-pro input[name='stripeToken']")[0].value,
+        stripeEmail: $("#form-subscribe-to-pro input[name='stripeEmail']")[0].value,
+        id: "<%= @athlete.id %>",
+        subscriptionPlanId: $("#form-subscribe-to-pro input[name='subscriptionPlanId']")[0].value,
       };
       $.ajax({
-          url: $('#form-subscribe-to-pro').attr('action'),
-          data: data,
-          cache: false,
-          type: 'post',
-          success: () => {
-            $("#main-content").LoadingOverlay("hide", true);
-            toastr.success(`Payment successful!`);
-            setTimeout(function() {
-              window.location.href = '/';
-            }, 1000);
-          },
-          error: (xhr, ajaxOptions, thrownError) => {
-            $("#main-content").LoadingOverlay("hide", true);
-            toastr.error(`${xhr.status} - ${xhr.statusText}<br /><br />${$.parseJSON(xhr.responseText)['error']}`);
-          },
+        url: $('#form-subscribe-to-pro').attr('action'),
+        data: data,
+        cache: false,
+        type: 'post',
+        success: () => {
+          $("#main-content").LoadingOverlay("hide", true);
+          toastr.success(`Payment successful!`);
+          setTimeout(function() {
+            window.location.href = '/';
+          }, 1000);
+        },
+        error: (xhr, ajaxOptions, thrownError) => {
+          $("#main-content").LoadingOverlay("hide", true);
+          toastr.error(`${xhr.status} - ${xhr.statusText}<br /><br />${$.parseJSON(xhr.responseText)['error']}`);
+        },
       });
     }
 
@@ -40,10 +47,7 @@
     token: function(token) {
       $("#form-subscribe-to-pro input[name='stripeToken']").val(token.id);
       $("#form-subscribe-to-pro input[name='stripeEmail']").val(token.email);
-      $("#main-content").LoadingOverlay("show", {
-        image : "",
-        fontawesome : "fa fa-spin fa-refresh"
-      });
+      showLoadingOverlay();
       submitPayment();
     }
   });

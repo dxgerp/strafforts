@@ -45,7 +45,7 @@ class MailChimpApiWrapper
 
   def create_merge_fields(athlete)
     athlete = athlete.decorate
-    pro_expires_at = athlete.pro_subscription_expires_at
+    pro_expires_at = athlete.pro_subscription_expires_at_formatted
     pro_expiration_date = '' # Default to empty string, can't send nil.
     unless pro_expires_at.blank?
       pro_expiration_date = 'Indefinite'.casecmp(pro_expires_at).zero? ? '2999/12/31' : pro_expires_at

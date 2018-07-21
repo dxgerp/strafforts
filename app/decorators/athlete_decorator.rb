@@ -17,14 +17,6 @@ class AthleteDecorator < Draper::Decorator
     !pro_subscription.blank?
   end
 
-  def pro_subscription_expires_at
-    if pro_subscription?
-      return 'Indefinite' if pro_subscription.expires_at.blank?
-      return pro_subscription.expires_at.strftime('%Y/%m/%d')
-    end
-    nil
-  end
-
   def pro_subscription
     currently_valid_to = Time.now.utc # Initialize to now, so it can be compared.
     result_index = nil
@@ -42,6 +34,14 @@ class AthleteDecorator < Draper::Decorator
       result_index = index
     end
     return object.subscriptions[result_index] unless result_index.nil?
+    nil
+  end
+
+  def pro_subscription_expires_at_formatted
+    if pro_subscription?
+      return 'Indefinite' if pro_subscription.expires_at.blank?
+      return pro_subscription.expires_at.strftime('%Y/%m/%d')
+    end
     nil
   end
 

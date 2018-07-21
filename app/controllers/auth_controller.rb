@@ -69,9 +69,7 @@ class AuthController < ApplicationController
         # Automatically apply 'Early Birds PRO' Plan on login for everyone for now.
         athlete = athlete.decorate
         begin
-          unless athlete.pro_subscription?
-            ::Creators::SubscriptionCreator.create('Early Birds PRO', athlete.id)
-          end
+          ::Creators::SubscriptionCreator.create(athlete, 'Early Birds PRO') unless athlete.pro_subscription?
         rescue StandardError => e
           Rails.logger.error("Automatically applying 'Early Birds PRO' failed for athlete '#{athlete.id}'. "\
             "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
@@ -82,7 +80,7 @@ class AuthController < ApplicationController
         begin
           athlete = athlete.decorate
           if !athlete.pro_subscription? && athlete.returning_after_inactivity?
-            ::Creators::SubscriptionCreator.create('Old Mates PRO', athlete.id)
+            ::Creators::SubscriptionCreator.create(athlete, 'Old Mates PRO')
           end
         rescue StandardError => e
           Rails.logger.error("Automatically applying 'Old Mates PRO' failed for athlete '#{athlete.id}'. "\

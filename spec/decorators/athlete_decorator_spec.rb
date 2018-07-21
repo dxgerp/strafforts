@@ -87,7 +87,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
     end
   end
 
-  describe '.pro_subscription_expires_at' do
+  describe '.pro_subscription_expires_at_formatted' do
     it 'should be indefinite for athlete with Lifetime PRO subscriptions' do
       # arrange.
       athlete = Athlete.find_by(id: 789)
@@ -96,7 +96,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
       decorator = AthleteDecorator.decorate(athlete)
 
       # assert.
-      expect(decorator.pro_subscription_expires_at).to eq('Indefinite')
+      expect(decorator.pro_subscription_expires_at_formatted).to eq('Indefinite')
     end
 
     it 'should be the correct date for athlete with ordinary PRO subscriptions' do
@@ -107,7 +107,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
       decorator = AthleteDecorator.decorate(athlete)
 
       # assert.
-      expect(decorator.pro_subscription_expires_at).to eq('2028/03/15')
+      expect(decorator.pro_subscription_expires_at_formatted).to eq('2028/03/15')
     end
 
     it 'should be nil for athlete with already deleted PRO subscriptions' do
@@ -118,7 +118,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
       decorator = AthleteDecorator.decorate(athlete)
 
       # assert.
-      expect(decorator.pro_subscription_expires_at).to be nil
+      expect(decorator.pro_subscription_expires_at_formatted).to be nil
     end
 
     it 'should be nil for athlete without PRO subscriptions' do
@@ -126,7 +126,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
       decorator = AthleteDecorator.decorate(athlete)
 
       # assert.
-      expect(decorator.pro_subscription_expires_at).to be nil
+      expect(decorator.pro_subscription_expires_at_formatted).to be nil
     end
   end
 

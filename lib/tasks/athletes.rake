@@ -114,7 +114,7 @@ namespace :athletes do
       if athlete.nil?
         puts "Athlete '#{athlete_id}' was not found."
       else
-        ::Creators::SubscriptionCreator.create(subscription_plan_name, athlete_id)
+        ::Creators::SubscriptionCreator.create(athlete, subscription_plan_name)
         counter += 1
       end
     end

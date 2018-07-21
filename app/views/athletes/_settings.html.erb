@@ -35,11 +35,11 @@
       <% if @athlete.pro_subscription? %>
         <div class="form-group">
           <label class="control-sidebar-subheading">Expires at:
-            <span class="pull-right"><%= @athlete.pro_subscription_expires_at %></span>
+            <span class="pull-right"><%= @athlete.pro_subscription_expires_at_formatted %></span>
           </label>
         </div>
-          <% unless @athlete.pro_subscription_expires_at.blank? || 'Indefinite'.casecmp(@athlete.pro_subscription_expires_at).zero? %>
-            <a href="/athletes/<%= @athlete.id %>/get-pro" class="btn btn-block btn-flat btn-danger get-pro">Renew</a>
+          <% unless @athlete.pro_subscription_expires_at_formatted.blank? || 'Indefinite'.casecmp(@athlete.pro_subscription_expires_at_formatted).zero? %>
+            <a href="/athletes/<%= @athlete.id %>/get-pro" class="btn btn-block btn-flat btn-default get-pro">Manage</a>
           <% end %>
       <% else %>
         <a href="/athletes/<%= @athlete.id %>/get-pro" class="btn btn-block btn-flat btn-danger get-pro">Upgrade</a>
