@@ -1,32 +1,30 @@
 module Creators
   class SubscriptionCreator
-    def self.create(subscription_plan_name, athlete_id)
+    def self.cancel(athlete)
+      athlete = AthleteDecorator.decorate(athlete)
+
+      subscription = athlete.pro_subscription
+      subscription.cancel_at_period_end = true
+      subscription.save!
+    end
+
+    def self.create(athlete, subscription_plan_name)
       subscription_plan = SubscriptionPlan.find_by(name: subscription_plan_name)
       raise "Subscription plan '#{subscription_plan_name}' cannot be found." if subscription_plan.blank?
 
-      # Find out what date it's currently valid to.
-      is_currently_indefinite = false
-      currently_valid_to = Time.now.utc # Initialize to now, so it can be compared.
-      current_subscriptions = Subscription.find_all_by_athlete_id(athlete_id)
-      current_subscriptions.each do |current_subscription|
-        expires_at = current_subscription.expires_at
-        if expires_at.nil?
-          is_currently_indefinite = true
-          break
-        elsif expires_at > currently_valid_to
-          currently_valid_to = expires_at
-        end
-      end
+      athlete = AthleteDecorator.decorate(athlete)
+      currently_valid_to = athlete.pro_subscription.expires_at
 
-      raise 'The athlete is already on Lifetime PRO plan.' if is_currently_indefinite
+      raise 'The athlete is already on Lifetime PRO plan.' if currently_valid_to.blank?
 
       # Create a new subscription.
       subscription = Subscription.new
-      subscription.athlete_id = athlete_id
+      subscription.athlete_id = athlete.id
       subscription.subscription_plan_id = subscription_plan.id
       subscription.starts_at = currently_valid_to
       subscription.expires_at = currently_valid_to + subscription_plan.duration.days
       subscription.is_deleted = false
+      subscription.cancel_at_period_end = false
       subscription.save!
     end
   end

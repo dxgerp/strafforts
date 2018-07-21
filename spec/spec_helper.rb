@@ -137,5 +137,5 @@ def stub_strava_post_request(request_url, request_body, return_status, return_bo
         'User-Agent' => 'Ruby'
       }
     )
-    .to_return(status: return_status, body: return_body ? return_body : '', headers: {})
+    .to_return(status: return_status, body: return_body || '', headers: {})
 end

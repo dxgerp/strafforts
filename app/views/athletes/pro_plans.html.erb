@@ -86,7 +86,10 @@
               </ul>
             </div>
             <% if @is_current_user %>
-              <button class="pricingTable-signup btn btn-block" disabled>Free</button>
+              <button class="pricingTable-signup btn btn-block"
+                data-toggle="modal" data-target="#confirm-cancel-subscription" <%= @athlete.pro_subscription? ? '' : 'disabled' %>>
+                Select
+              </button>
             <% end %>
           </div>
         </div>
@@ -198,6 +201,29 @@
   <% end %>
 
   </div><!-- ./wrapper -->
+
+  <!-- Modal - Confirm Subscription Cancellation -->
+  <%= form_tag({controller: 'athletes', action: 'cancel_pro'}, id: 'form-cancel-pro') do %>
+    <div class="modal modal-danger" id="confirm-cancel-subscription" tabindex="-1" role="dialog" aria-labelledby="confirm-cancel-subscription-label">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="confirm-cancel-subscription-label">Are you sure?</h4>
+          </div>
+          <div class="modal-body">
+            <p>By clicking 'Confirm' below, you will be downgraded to free plan at the end of your current subscription.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline" data-dismiss="modal">Cancel</button>
+            <a href="/athletes/<%= @athlete.id %>/cancel-pro" class="btn btn-outline">Confirm</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
   <%= javascript_include_tag 'application' %>
   <%= javascript_include_tag 'athletes' %>

@@ -36,7 +36,7 @@ class AuthController < ApplicationController
         Rails.logger.info("Revoked Strava access for athlete (access_token=#{cookies.signed[:access_token]}).")
       else
         # Fail to revoke Strava access. Log it and don't throw.
-        Rails.logger.error("Revoking Strava access failed. HTTP Status Code: #{response.code}. Response Message: #{response.message}") # rubocop:disable LineLength
+        Rails.logger.error("Revoking Strava access failed. HTTP Status Code: #{response.code}. Response Message: #{response.message}")
       end
     end
 
@@ -69,9 +69,7 @@ class AuthController < ApplicationController
         # Automatically apply 'Early Birds PRO' Plan on login for everyone for now.
         athlete = athlete.decorate
         begin
-          unless athlete.pro_subscription?
-            ::Creators::SubscriptionCreator.create('Early Birds PRO', athlete.id)
-          end
+          ::Creators::SubscriptionCreator.create(athlete, 'Early Birds PRO') unless athlete.pro_subscription?
         rescue StandardError => e
           Rails.logger.error("Automatically applying 'Early Birds PRO' failed for athlete '#{athlete.id}'. "\
             "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
@@ -82,7 +80,7 @@ class AuthController < ApplicationController
         begin
           athlete = athlete.decorate
           if !athlete.pro_subscription? && athlete.returning_after_inactivity?
-            ::Creators::SubscriptionCreator.create('Old Mates PRO', athlete.id)
+            ::Creators::SubscriptionCreator.create(athlete, 'Old Mates PRO')
           end
         rescue StandardError => e
           Rails.logger.error("Automatically applying 'Old Mates PRO' failed for athlete '#{athlete.id}'. "\
@@ -103,7 +101,7 @@ class AuthController < ApplicationController
     end
 
     response_body = response.nil? || response.body.blank? ? '' : "\nResponse Body: #{response.body}"
-    raise ActionController::BadRequest, "Bad request while exchanging token with Strava.#{response_body}" if response.code == '400' # rubocop:disable LineLength
+    raise ActionController::BadRequest, "Bad request while exchanging token with Strava.#{response_body}" if response.code == '400'
     raise "Exchanging token failed. HTTP Status Code: #{response.code}.#{response_body}"
   end
 end

@@ -21,7 +21,7 @@ namespace :db do
     database = database_yml['development']['database']
     username = database_yml['development']['username']
 
-    command = "pg_restore --verbose --clean --no-acl --no-owner -h #{host} -U #{username} -W -d #{database} #{dump_file}" # rubocop:disable LineLength
+    command = "pg_restore --verbose --clean --no-acl --no-owner -h #{host} -U #{username} -W -d #{database} #{dump_file}"
     puts "Executing: #{command}"
     system command
 
@@ -52,7 +52,7 @@ namespace :db do
         end
       end
     ensure
-      ActiveRecord::Base.connection.close if ActiveRecord::Base.connection
+      ActiveRecord::Base.connection&.close
     end
   end
 
@@ -71,6 +71,6 @@ namespace :db do
   def truncate_table(table_name)
     ActiveRecord::Base.establish_connection
     ActiveRecord::Base.connection.execute("TRUNCATE #{table_name} RESTART IDENTITY")
-    ActiveRecord::Base.connection.close if ActiveRecord::Base.connection
+    ActiveRecord::Base.connection&.close
   end
 end
