@@ -28,17 +28,8 @@ namespace :athletes do
   desc 'Delete all data assiociated with athletes who have been inactive for more 180 days + 7 days of grace period.'
   # Usage: bundle exec bin/rails athletes:clean_up
   task clean_up: :environment do
-    destroyed_ids = []
-    count = 0
-    inactive_athletes = Athlete.where('last_active_at < ?', Time.now.utc - 180.days - 7.days)
-    inactive_athletes.each do |athlete|
-      athlete = AthleteDecorator.decorate(athlete)
-      next if athlete.pro_subscription?
-      destroyed_ids << athlete.id
-      destroy_athlete(athlete.id)
-      count += 1
-    end
-    Rails.logger.warn("[athlete:clean_up] - A total of #{count} inactive athletes destroyed: #{destroyed_ids.join(',')}.")
+    task_runner = TaskRunner.new
+    task_runner.delay(priority: 5).clean_up_inactive_athletes
   end
 
   desc 'Delete all data assiociated with athletes in the given comma separated email/id list.'
