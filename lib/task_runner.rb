@@ -23,10 +23,13 @@ class TaskRunner
     athletes.each do |athlete|
       begin
         athlete = AthleteDecorator.decorate(athlete)
-        next if athlete.pro_subscription.blank?
-        next unless athlete.pro_subscription.expires_at.today? && !athlete.pro_subscription.cancel_at_period_end?
-
+        subscription = athlete.pro_subscription
         subscription_plan = athlete.pro_subscription_plan
+
+        next if subscription.nil? # Athlete has no PRO subscriptions.
+        next if subscription.cancel_at_period_end # Athlete has opted out of auto-renewal.
+        next unless subscription.expires_at.today? # Only to continue if it expires today.
+
         ::StripeApiWrapper.renew(athlete, subscription_plan)
         ::Creators::SubscriptionCreator.create(athlete, subscription_plan.name)
 
