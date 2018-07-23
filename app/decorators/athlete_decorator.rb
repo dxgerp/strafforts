@@ -1,4 +1,4 @@
-class AthleteDecorator < Draper::Decorator # rubocop:disable ClassLength
+class AthleteDecorator < Draper::Decorator
   delegate_all
 
   STRAVA_URL = Settings.strava.url
@@ -14,27 +14,15 @@ class AthleteDecorator < Draper::Decorator # rubocop:disable ClassLength
   end
 
   def pro_subscription?
-    !pro_subscription.blank?
+    !pro_subscription.nil?
   end
 
   def pro_subscription
-    currently_valid_to = Time.now.utc # Initialize to now, so it can be compared.
-    result_index = nil
-    object.subscriptions.each_with_index do |subscription, index|
-      # Ignore deleted subscriptions.
-      is_deleted = subscription.is_deleted
-      next if is_deleted
+    subscription = Subscription.find_by(athlete_id: object.id, is_deleted: false, is_active: true)
+    return nil if subscription.nil?
 
-      # Lifetime PRO has found.
-      expires_at = subscription.expires_at
-      return subscription if expires_at.blank?
-
-      # Find out the latest subscription and its index.
-      currently_valid_to = expires_at if expires_at > currently_valid_to
-      result_index = index
-    end
-    return object.subscriptions[result_index] unless result_index.nil?
-    nil
+    return subscription if subscription.expires_at.nil? # Indefinite PRO subscription.
+    subscription.expires_at < Time.now.utc ? nil : subscription # Subscription must has not expired yet.
   end
 
   def pro_subscription_expires_at_formatted

@@ -8,6 +8,7 @@ subscription_1:
   starts_at: '2018-03-15 12:45:00.000000'
   expires_at: '2028-03-15 12:45:00.000000'
   is_deleted: false
+  is_active: true
 subscription_2:
   id: 2
   athlete_id: 456
@@ -16,6 +17,7 @@ subscription_2:
   updated_at: '2016-12-11 12:34:31.895212'
   starts_at: '2018-05-20 12:45:00.000000'
   is_deleted: true
+  is_active: false
 subscription_3:
   id: 3
   athlete_id: 789
@@ -24,6 +26,7 @@ subscription_3:
   updated_at: '2018-03-11 12:34:31.895212'
   starts_at: '2018-03-15 12:45:00.000000'
   is_deleted: false
+  is_active: true
 subscription_4:
   id: 4
   athlete_id: 789
@@ -33,6 +36,7 @@ subscription_4:
   starts_at: '2018-03-15 12:45:00.000000'
   expires_at: '2028-03-15 12:45:00.000000'
   is_deleted: false
+  is_active: false
 subscription_5:
   id: 5
   athlete_id: 789
@@ -42,3 +46,4 @@ subscription_5:
   starts_at: '2018-05-20 12:45:00.000000'
   expires_at: '2028-05-20 12:45:00.000000'
   is_deleted: true
+  is_active: false
