@@ -37,6 +37,9 @@
           <label class="control-sidebar-subheading">Expires at:
             <span class="pull-right"><%= @athlete.pro_subscription_expires_at_formatted %></span>
           </label>
+          <% if @athlete.pro_subscription.cancel_at_period_end %>
+            <p>You have opted out auto-renewal after expiry.</p>
+          <% end %>
         </div>
           <% unless @athlete.pro_subscription_expires_at_formatted.blank? || 'Indefinite'.casecmp(@athlete.pro_subscription_expires_at_formatted).zero? %>
             <a href="/athletes/<%= @athlete.id %>/get-pro" class="btn btn-block btn-flat btn-default get-pro">Manage</a>
