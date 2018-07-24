@@ -2,14 +2,15 @@ class StripeApiWrapper
   class << self
     def charge(athlete, subscription_plan, stripe_token, stripe_email)
       Rails.logger.info("Creating subscription for athlete #{athlete.id}")
+
       customer = retrieve_customer(athlete, stripe_token, stripe_email)
       create_charge(customer, subscription_plan)
     end
 
-    def renew(athlete, pro_subscription_plan)
-      Rails.logger.info("Automatically renewing subscription for athlete #{athlete.id}.")
-      customer = StripeCustomer.find_by(athlete_id: athlete.id)
-      create_charge(customer, pro_subscription_plan)
+    def renew(stripe_customer, pro_subscription_plan)
+      Rails.logger.info("Automatically renewing subscription for athlete #{stripe_customer.athlete_id}.")
+
+      create_charge(stripe_customer, pro_subscription_plan)
     end
 
     private
@@ -27,7 +28,7 @@ class StripeApiWrapper
       )
     end
 
-    def retrieve_customer(athlete, stripe_token, stripe_email) # rubocop:disable CyclomaticComplexity, MethodLength
+    def retrieve_customer(athlete, stripe_token, stripe_email) # rubocop:disable CyclomaticComplexity, PerceivedComplexity, MethodLength
       stripe_customer = StripeCustomer.find_by(athlete_id: athlete.id)
 
       # Check if the saved StripeCustomer still actually exists on Stripe.
@@ -38,6 +39,7 @@ class StripeApiWrapper
         customer = nil
       end
 
+      # Create a new customer if it does not exist yet or it has been deleted.
       if customer.blank? || customer.deleted?
         customer_metadata = {
           'Athelte ID' => athlete.id,
@@ -58,6 +60,8 @@ class StripeApiWrapper
         stripe_customer.id = customer.id
         stripe_customer.email = customer.email
         stripe_customer.save!
+      else
+        Stripe::Customer.update(customer.id, source: stripe_token)
       end
 
       stripe_customer
