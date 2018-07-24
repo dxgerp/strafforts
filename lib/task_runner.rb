@@ -30,7 +30,10 @@ class TaskRunner
         next if subscription.cancel_at_period_end # Athlete has opted out of auto-renewal.
         next unless subscription.expires_at.today? # Only to continue if it expires today.
 
-        ::StripeApiWrapper.renew(athlete, subscription_plan)
+        stripe_customer = StripeCustomer.find_by(athlete_id: athlete.id)
+        next if stripe_customer.nil? # There's no StripeCustomer reference. Most likely to be a free subscription gifted, instead of previously purchased by athletes.
+
+        ::StripeApiWrapper.renew(stripe_customer, subscription_plan)
         ::Creators::SubscriptionCreator.create(athlete, subscription_plan.name)
 
         renewed_ids << athlete.id

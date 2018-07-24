@@ -7,11 +7,10 @@ class StripeApiWrapper
       create_charge(customer, subscription_plan)
     end
 
-    def renew(athlete, pro_subscription_plan)
-      Rails.logger.info("Automatically renewing subscription for athlete #{athlete.id}.")
+    def renew(stripe_customer, pro_subscription_plan)
+      Rails.logger.info("Automatically renewing subscription for athlete #{stripe_customer.athlete_id}.")
 
-      customer = StripeCustomer.find_by(athlete_id: athlete.id)
-      create_charge(customer, pro_subscription_plan)
+      create_charge(stripe_customer, pro_subscription_plan)
     end
 
     private
