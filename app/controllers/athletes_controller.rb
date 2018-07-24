@@ -102,7 +102,7 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
       Rails.logger.error("StripeError while subscribing to PRO plan for athlete '#{athlete.id}'. "\
         "Status: #{e.http_status}. Message: #{e.json_body.blank? ? '' : e.json_body[:error][:message]}\n"\
         "Backtrace:\n\t#{e.backtrace.join("\n\t")}")
-      render json: { error: ApplicationHelper::Message::STRIPE_ERROR }.to_json, status: 402
+      render json: { error: "#{ApplicationHelper::Message::STRIPE_ERROR} #{e.json_body.blank? ? '' : e.json_body[:error][:message]}" }.to_json, status: 402
       return
     rescue StandardError => e
       Rails.logger.error("Subscribing to PRO plan '#{subscription_plan.name}' failed for athlete '#{athlete.id}'. "\
