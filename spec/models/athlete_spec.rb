@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe Athlete, type: :model do
   it { should validate_presence_of(:access_token) }
 
+  it { should validate_inclusion_of(:is_public).in_array([true, false]) }
+
   it { should have_one(:athlete_info) }
 
   it { should have_many(:activities) }

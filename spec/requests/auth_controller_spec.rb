@@ -4,9 +4,9 @@ RSpec.describe AuthController, type: :request do
   ACCESS_TOKEN = '3f2a45886980ebec9f4a689371e95860'.freeze
   TOKEN_EXCHANGE_REQUEST_BODY = { 'client_id' => nil, 'client_secret' => nil, 'code' => nil }.freeze
 
-  describe 'GET exchange_token' do
+  describe 'GET exchange-token' do
     it 'should redirect to root directly there are errors in params' do
-      get '/auth/exchange_token', params: { error: 'access_denied' }
+      get '/auth/exchange-token', params: { error: 'access_denied' }
 
       expect(response).to redirect_to(root_path)
     end
@@ -14,14 +14,14 @@ RSpec.describe AuthController, type: :request do
     it 'should get a Bad Request when Strava returns 400' do
       expect {
         stub_strava_post_request(Settings.strava.api_auth_token_url, TOKEN_EXCHANGE_REQUEST_BODY, 400)
-        get '/auth/exchange_token'
+        get '/auth/exchange-token'
       }.to raise_error(ActionController::BadRequest, 'Bad request while exchanging token with Strava.')
     end
 
     it 'should get an error when Strava returns error status code other than 400)' do
       expect {
         stub_strava_post_request(Settings.strava.api_auth_token_url, TOKEN_EXCHANGE_REQUEST_BODY, 500)
-        get '/auth/exchange_token'
+        get '/auth/exchange-token'
       }.to raise_error(Exception, 'Exchanging token failed. HTTP Status Code: 500.')
     end
 
@@ -32,7 +32,7 @@ RSpec.describe AuthController, type: :request do
       stub_strava_post_request(Settings.strava.api_auth_token_url, TOKEN_EXCHANGE_REQUEST_BODY, 200, response_body)
 
       # act.
-      get '/auth/exchange_token'
+      get '/auth/exchange-token'
 
       # assert.
       expect(response).to redirect_to(root_path)

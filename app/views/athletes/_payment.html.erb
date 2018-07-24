@@ -1,4 +1,4 @@
-<%= form_tag({controller: 'athletes', action: 'purchase_pro'}, id: 'form-purchase-pro') do %>
+<%= form_tag({controller: 'athletes', action: 'subscribe_to_pro'}, id: 'form-subscribe-to-pro') do %>
   <input type="hidden" name="subscriptionPlanId" />
   <input type="hidden" name="stripeToken" />
   <input type="hidden" name="stripeEmail" />
@@ -6,30 +6,37 @@
 
 <script src="https://checkout.stripe.com/checkout.js"></script>
 <script>
+    function showLoadingOverlay() {
+      $("#main-content").LoadingOverlay("show", {
+        image : "",
+        fontawesome : "fa fa-spin fa-refresh"
+      });
+    }
+
     function submitPayment() {
       toastr.options.timeOut = 15000; // Keep Toastr popup longer.
       data = {
-            stripeToken: $("#form-purchase-pro input[name='stripeToken']")[0].value,
-            stripeEmail: $("#form-purchase-pro input[name='stripeEmail']")[0].value,
-            id: "<%= @athlete.id %>",
-            subscriptionPlanId: $("#form-purchase-pro input[name='subscriptionPlanId']")[0].value,
+        stripeToken: $("#form-subscribe-to-pro input[name='stripeToken']")[0].value,
+        stripeEmail: $("#form-subscribe-to-pro input[name='stripeEmail']")[0].value,
+        id: "<%= @athlete.id %>",
+        subscriptionPlanId: $("#form-subscribe-to-pro input[name='subscriptionPlanId']")[0].value,
       };
       $.ajax({
-          url: $('#form-purchase-pro').attr('action'),
-          data: data,
-          cache: false,
-          type: 'post',
-          success: () => {
-            $("#main-content").LoadingOverlay("hide", true);
-            toastr.success(`Payment successful!`);
-            setTimeout(function() {
-              window.location.href = '/';
-            }, 1000);
-          },
-          error: (xhr, ajaxOptions, thrownError) => {
-            $("#main-content").LoadingOverlay("hide", true);
-            toastr.error(`${xhr.status} - ${xhr.statusText}<br /><br />${$.parseJSON(xhr.responseText)['error']}`);
-          },
+        url: $('#form-subscribe-to-pro').attr('action'),
+        data: data,
+        cache: false,
+        type: 'post',
+        success: () => {
+          $("#main-content").LoadingOverlay("hide", true);
+          toastr.success(`Payment successful!`);
+          setTimeout(function() {
+            window.location.href = '/';
+          }, 1000);
+        },
+        error: (xhr, ajaxOptions, thrownError) => {
+          $("#main-content").LoadingOverlay("hide", true);
+          toastr.error(`${xhr.status} - ${xhr.statusText}<br /><br />${$.parseJSON(xhr.responseText)['error']}`);
+        },
       });
     }
 
@@ -38,12 +45,9 @@
     image: '/apple-touch-icon.png',
     locale: 'auto',
     token: function(token) {
-      $("#form-purchase-pro input[name='stripeToken']").val(token.id);
-      $("#form-purchase-pro input[name='stripeEmail']").val(token.email);
-      $("#main-content").LoadingOverlay("show", {
-        image : "",
-        fontawesome : "fa fa-spin fa-refresh"
-      });
+      $("#form-subscribe-to-pro input[name='stripeToken']").val(token.id);
+      $("#form-subscribe-to-pro input[name='stripeEmail']").val(token.email);
+      showLoadingOverlay();
       submitPayment();
     }
   });
@@ -54,7 +58,7 @@
       checkoutButton.addEventListener('click', function(e) {
         // Get the selected subscription plan ID to be sent to server.
         var dataId = checkoutButton.getAttribute("data-id");
-        $("#form-purchase-pro input[name='subscriptionPlanId']").val(dataId);
+        $("#form-subscribe-to-pro input[name='subscriptionPlanId']").val(dataId);
 
         // Close existing Toastr popups.
         toastr.remove();

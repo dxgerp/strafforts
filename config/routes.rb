@@ -8,11 +8,12 @@ Rails.application.routes.draw do
 
   get 'athletes/:id' => 'athletes#index'
   get 'athletes/:id/get-pro' => 'athletes#pro_plans'
+  get 'athletes/:id/cancel-pro' => 'athletes#cancel_pro'
 
   post 'athletes/:id/fetch_latest' => 'athletes#fetch_latest'
   post 'athletes/:id/save_profile' => 'athletes#save_profile'
   post 'athletes/:id/reset_profile' => 'athletes#reset_profile'
-  post 'athletes/:id/purchase_pro' => 'athletes#purchase_pro'
+  post 'athletes/:id/subscribe_to_pro' => 'athletes#subscribe_to_pro'
 
   namespace :api do
     get 'athletes/:id/meta' => 'meta#index'
@@ -28,7 +29,7 @@ Rails.application.routes.draw do
 
   get 'home/index'
 
-  get 'auth/exchange_token' => 'auth#exchange_token'
+  get 'auth/exchange-token' => 'auth#exchange_token'
   get 'auth/deauthorize' => 'auth#deauthorize'
   get 'auth/logout' => 'auth#logout'
 

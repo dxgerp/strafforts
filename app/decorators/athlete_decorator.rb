@@ -14,29 +14,28 @@ class AthleteDecorator < Draper::Decorator
   end
 
   def pro_subscription?
-    unless object.subscriptions.nil?
-      object.subscriptions.each do |subscription|
-        is_deleted = subscription.is_deleted
-        expires_at = subscription.expires_at
-        return true if !is_deleted && (expires_at.blank? || expires_at > Time.now.utc)
-      end
-    end
-    false
+    !pro_subscription.nil?
   end
 
-  def pro_subscription_expires_at
-    if pro_subscription?
-      currently_valid_to = Time.now.utc # Initialize to now, so it can be compared.
-      object.subscriptions.each do |subscription|
-        is_deleted = subscription.is_deleted
-        expires_at = subscription.expires_at
-        return 'Indefinite' if !is_deleted && expires_at.blank? # Lifetime PRO has no expiration date.
+  def pro_subscription
+    subscription = Subscription.find_by(athlete_id: object.id, is_deleted: false, is_active: true)
+    return nil if subscription.nil?
 
-        currently_valid_to = expires_at if !is_deleted && expires_at > currently_valid_to
-      end
-      return currently_valid_to.strftime('%Y/%m/%d')
+    return subscription if subscription.expires_at.nil? # Indefinite PRO subscription.
+    subscription.expires_at < Time.now.utc ? nil : subscription # Subscription must has not expired yet.
+  end
+
+  def pro_subscription_expires_at_formatted
+    if pro_subscription?
+      return 'Indefinite' if pro_subscription.expires_at.blank?
+      return pro_subscription.expires_at.strftime('%Y/%m/%d')
     end
     nil
+  end
+
+  def pro_subscription_plan
+    return nil unless pro_subscription?
+    pro_subscription.subscription_plan
   end
 
   def following_url
@@ -77,7 +76,7 @@ class AthleteDecorator < Draper::Decorator
   def display_location
     return location unless location.length > MAX_INFO_TEXT_LENGTH
     return object.athlete_info.city.name unless object.athlete_info.city.nil? || object.athlete_info.city.name.blank?
-    return object.athlete_info.country.name unless object.athlete_info.country.nil? || object.athlete_info.country.name.blank? # rubocop:disable LineLength
+    return object.athlete_info.country.name unless object.athlete_info.country.nil? || object.athlete_info.country.name.blank?
   end
 
   def friend_count

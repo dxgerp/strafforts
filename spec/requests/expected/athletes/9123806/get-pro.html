@@ -143,7 +143,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </li>
 
           <li>
-            <a href="https://www.strava.com/oauth/authorize?client_id=&amp;response_type=code&amp;redirect_uri=http://www.example.com:80/auth/exchange_token&amp;approval_prompt=auto&amp;scope=view_private" class="btn-connect-with-strava" title="Connect With Strava">
+            <a href="https://www.strava.com/oauth/authorize?client_id=&amp;response_type=code&amp;redirect_uri=http://www.example.com:80/auth/exchange-token&amp;approval_prompt=auto&amp;scope=view_private" class="btn-connect-with-strava" title="Connect With Strava">
               <img alt="Connect With Strava" src="/assets/btn_strava_connectwith_orange.png" />
             </a>
           </li> 
@@ -446,37 +446,44 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </section>
   </div><!-- /.content-wrapper -->
 
-  <form id="form-purchase-pro" action="/athletes/9123806/purchase_pro" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+  <form id="form-subscribe-to-pro" action="/athletes/9123806/subscribe_to_pro" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
   <input type="hidden" name="subscriptionPlanId" />
   <input type="hidden" name="stripeToken" />
   <input type="hidden" name="stripeEmail" />
 </form>
 <script src="https://checkout.stripe.com/checkout.js"></script>
 <script>
+    function showLoadingOverlay() {
+      $("#main-content").LoadingOverlay("show", {
+        image : "",
+        fontawesome : "fa fa-spin fa-refresh"
+      });
+    }
+
     function submitPayment() {
       toastr.options.timeOut = 15000; // Keep Toastr popup longer.
       data = {
-            stripeToken: $("#form-purchase-pro input[name='stripeToken']")[0].value,
-            stripeEmail: $("#form-purchase-pro input[name='stripeEmail']")[0].value,
-            id: "9123806",
-            subscriptionPlanId: $("#form-purchase-pro input[name='subscriptionPlanId']")[0].value,
+        stripeToken: $("#form-subscribe-to-pro input[name='stripeToken']")[0].value,
+        stripeEmail: $("#form-subscribe-to-pro input[name='stripeEmail']")[0].value,
+        id: "9123806",
+        subscriptionPlanId: $("#form-subscribe-to-pro input[name='subscriptionPlanId']")[0].value,
       };
       $.ajax({
-          url: $('#form-purchase-pro').attr('action'),
-          data: data,
-          cache: false,
-          type: 'post',
-          success: () => {
-            $("#main-content").LoadingOverlay("hide", true);
-            toastr.success(`Payment successful!`);
-            setTimeout(function() {
-              window.location.href = '/';
-            }, 1000);
-          },
-          error: (xhr, ajaxOptions, thrownError) => {
-            $("#main-content").LoadingOverlay("hide", true);
-            toastr.error(`${xhr.status} - ${xhr.statusText}<br /><br />${$.parseJSON(xhr.responseText)['error']}`);
-          },
+        url: $('#form-subscribe-to-pro').attr('action'),
+        data: data,
+        cache: false,
+        type: 'post',
+        success: () => {
+          $("#main-content").LoadingOverlay("hide", true);
+          toastr.success(`Payment successful!`);
+          setTimeout(function() {
+            window.location.href = '/';
+          }, 1000);
+        },
+        error: (xhr, ajaxOptions, thrownError) => {
+          $("#main-content").LoadingOverlay("hide", true);
+          toastr.error(`${xhr.status} - ${xhr.statusText}<br /><br />${$.parseJSON(xhr.responseText)['error']}`);
+        },
       });
     }
 
@@ -485,12 +492,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     image: '/apple-touch-icon.png',
     locale: 'auto',
     token: function(token) {
-      $("#form-purchase-pro input[name='stripeToken']").val(token.id);
-      $("#form-purchase-pro input[name='stripeEmail']").val(token.email);
-      $("#main-content").LoadingOverlay("show", {
-        image : "",
-        fontawesome : "fa fa-spin fa-refresh"
-      });
+      $("#form-subscribe-to-pro input[name='stripeToken']").val(token.id);
+      $("#form-subscribe-to-pro input[name='stripeEmail']").val(token.email);
+      showLoadingOverlay();
       submitPayment();
     }
   });
@@ -501,7 +505,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       checkoutButton.addEventListener('click', function(e) {
         // Get the selected subscription plan ID to be sent to server.
         var dataId = checkoutButton.getAttribute("data-id");
-        $("#form-purchase-pro input[name='subscriptionPlanId']").val(dataId);
+        $("#form-subscribe-to-pro input[name='subscriptionPlanId']").val(dataId);
 
         // Close existing Toastr popups.
         toastr.remove();
@@ -540,7 +544,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <span class="pull-right">
       <a class="bg-strava btn label" href="mailto:support@strafforts.com" target="_blank">Contact Us</a>
-          <small>v1.5.3</small>
+          <small>v1.6.0</small>
   </span>
 </footer>
 
@@ -548,6 +552,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   </div><!-- ./wrapper -->
 
+  <!-- Modal - Confirm Subscription Cancellation -->
+  <form id="form-cancel-pro" action="/athletes/9123806/cancel-pro" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+    <div class="modal modal-danger" id="confirm-cancel-subscription" tabindex="-1" role="dialog" aria-labelledby="confirm-cancel-subscription-label">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="confirm-cancel-subscription-label">Are you sure?</h4>
+          </div>
+          <div class="modal-body">
+            <p>By clicking 'Confirm' below, you will be downgraded to free plan at the end of your current subscription.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline" data-dismiss="modal">Cancel</button>
+            <a href="/athletes/9123806/cancel-pro" class="btn btn-outline">Confirm</a>
+          </div>
+        </div>
+      </div>
+    </div>
+</form>
   <script src="/assets/application.js"></script>
   <script src="/assets/athletes.js"></script>
   <script src="/packs-test/athletes.js"></script>

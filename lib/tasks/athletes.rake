@@ -1,48 +1,39 @@
 require 'yaml'
 
-namespace :athlete do
+namespace :athletes do
   desc 'Grant Lifetime PRO plan to the given athletes.'
-  # Usage: bundle exec bin/rails athlete:apply_lifetime_pro ID=[Comma Separated list]
+  # Usage: bundle exec bin/rails athletes:apply_lifetime_pro ID=[Comma Separated list]
   task apply_lifetime_pro: :environment do
     apply_subscription('Lifetime PRO', ENV['ID'])
   end
 
   desc 'Grant Early Birds PRO plan to the given athletes.'
-  # Usage: bundle exec bin/rails athlete:apply_early_birds_pro ID=[Comma Separated list]
+  # Usage: bundle exec bin/rails athletes:apply_early_birds_pro ID=[Comma Separated list]
   task apply_early_birds_pro: :environment do
     apply_subscription('Early Birds PRO', ENV['ID'])
   end
 
   desc 'Grant Annual PRO plan to the given athletes.'
-  # Usage: bundle exec bin/rails athlete:apply_annual_pro ID=[Comma Separated list]
+  # Usage: bundle exec bin/rails athletes:apply_annual_pro ID=[Comma Separated list]
   task apply_annual_pro: :environment do
     apply_subscription('Annual PRO', ENV['ID'])
   end
 
   desc 'Grant 90-day PRO plan to the given athletes.'
-  # Usage: bundle exec bin/rails athlete:apply_90_day_pro ID=[Comma Separated list]
+  # Usage: bundle exec bin/rails athletes:apply_90_day_pro ID=[Comma Separated list]
   task apply_quarter_pro: :environment do
     apply_subscription('90-day PRO', ENV['ID'])
   end
 
   desc 'Delete all data assiociated with athletes who have been inactive for more 180 days + 7 days of grace period.'
-  # Usage: bundle exec bin/rails athlete:clean_up
+  # Usage: bundle exec bin/rails athletes:clean_up
   task clean_up: :environment do
-    destroyed_ids = []
-    count = 0
-    inactive_athletes = Athlete.where('last_active_at < ?', Time.now.utc - 180.days - 7.days)
-    inactive_athletes.each do |athlete|
-      athlete = AthleteDecorator.decorate(athlete)
-      next if athlete.pro_subscription?
-      destroyed_ids << athlete.id
-      destroy_athlete(athlete.id)
-      count += 1
-    end
-    Rails.logger.warn("[athlete:clean_up] - A total of #{count} inactive athletes destroyed: #{destroyed_ids.join(',')}.") # rubocop:disable LineLength
+    task_runner = TaskRunner.new
+    task_runner.delay(priority: 5).clean_up_inactive_athletes
   end
 
   desc 'Delete all data assiociated with athletes in the given comma separated email/id list.'
-  # Usage: bundle exec bin/rails athlete:destroy EMAIL=[Comma Separated list] ID=[Comma Separated list] DRY_RUN=[true/false] # rubocop:disable LineLength
+  # Usage: bundle exec bin/rails athletes:destroy EMAIL=[Comma Separated list] ID=[Comma Separated list] DRY_RUN=[true/false]
   # Only to destroy when DRY_RUN is explicitly set to false.
   task destroy: :environment do
     counter = 0
@@ -88,7 +79,7 @@ namespace :athlete do
   end
 
   desc 'Fetch data for athletes in the given comma separated email/id list.'
-  # Usage: bundle exec bin/rails athlete:fetch MODE=[all/latest] ID=[Comma Separated list]
+  # Usage: bundle exec bin/rails athletes:fetch MODE=[all/latest] ID=[Comma Separated list]
   task fetch: :environment do
     ids = ENV['ID'].blank? ? [] : ENV['ID'].split(',')
     ids.each do |athlete_id|
@@ -114,7 +105,7 @@ namespace :athlete do
       if athlete.nil?
         puts "Athlete '#{athlete_id}' was not found."
       else
-        ::Creators::SubscriptionCreator.create(subscription_plan_name, athlete_id)
+        ::Creators::SubscriptionCreator.create(athlete, subscription_plan_name)
         counter += 1
       end
     end

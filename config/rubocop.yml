@@ -1,15 +1,19 @@
 AllCops:
   Exclude:
+    - '**/application_helper.rb'
     - 'Gemfile'
     - 'bin/**/*'
     - 'config/**/*'
     - 'db/**/*'
     - 'node_modules/**/*'
-    - 'vendor/**/*'
+    - 'spec/rails_helper.rb'
+    - 'test/test_helper.rb'
     - 'tmp/**/*'
-    - '**/application_helper.rb'
-  TargetRubyVersion: 2.0
+    - 'vendor/**/*'
+  TargetRubyVersion: 2.3
 Documentation:
+  Enabled: false
+Lint/UriEscapeUnescape:
   Enabled: false
 Metrics/AbcSize:
   Max: 50
@@ -22,7 +26,7 @@ Metrics/ClassLength:
     - 'spec/**/*.rb'
     - 'test/**/*.rb'
 Metrics/LineLength:
-  Max: 120
+  Enabled: false
 Metrics/MethodLength:
   Max: 25
 Style/BlockComments:
@@ -31,6 +35,10 @@ Style/BlockComments:
 Style/BlockDelimiters:
   Exclude:
     - 'spec/**/*.rb'
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/DateTime:
+  Enabled: false
 Style/NumericLiterals:
   Exclude:
     - 'spec/**/*.rb'

@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     "#{STRAVA_API_AUTH_AUTHORIZE_URL}"\
     "?client_id=#{STRAVA_API_CLIENT_ID}"\
     '&response_type=code'\
-    "&redirect_uri=#{request.protocol}#{request.host}:#{request.port}/auth/exchange_token"\
+    "&redirect_uri=#{request.protocol}#{request.host}:#{request.port}/auth/exchange-token"\
     '&approval_prompt=auto&scope=view_private'
   end
 
@@ -34,8 +34,7 @@ class ApplicationController < ActionController::Base
 
     athlete = athlete.decorate
     athlete_info = {
-      has_pro_subscription: athlete.pro_subscription?,
-      pro_subscription_expires_at: athlete.pro_subscription_expires_at
+      has_pro_subscription: athlete.pro_subscription?
     }
 
     best_efforts_meta = []
