@@ -45,18 +45,12 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
   def cancel_pro
     athlete_id = params[:id]
     athlete = Athlete.find_by(id: athlete_id)
-    if athlete.nil?
-      Rails.logger.warn("Could not find the requested athlete '#{athlete_id}'.")
-      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_FOUND }.to_json, status: 404
-      return
-    end
+    error_message = "Could not find the requested athlete '#{athlete_id}'."
+    raise ActionController::RoutingError, error_message if athlete.nil?
 
     @is_current_user = athlete.access_token == cookies.signed[:access_token]
-    unless @is_current_user
-      Rails.logger.warn("Could not cancel PRO plan for athlete '#{athlete_id}' not currently logged in.")
-      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_ACCESSIBLE }.to_json, status: 403
-      return
-    end
+    error_message = "Could not cancel PRO plan for athlete '#{athlete_id}' that is not currently logged in."
+    raise ActionController::BadRequest, error_message unless @is_current_user
 
     begin
       ::Creators::SubscriptionCreator.cancel(athlete)
@@ -64,8 +58,7 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
     rescue StandardError => e
       Rails.logger.error("Cancelling PRO plan failed for athlete '#{athlete.id}'. "\
         "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
-      render json: { error: ApplicationHelper::Message::CANCEL_PRO_ERROR }.to_json, status: 500
-      return
+      raise e
     end
   end
 
@@ -90,7 +83,7 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
 
     @is_current_user = athlete.access_token == cookies.signed[:access_token]
     unless @is_current_user
-      Rails.logger.warn("Could not subscribe to PRO plan for athlete '#{athlete_id}' not currently logged in.")
+      Rails.logger.warn("Could not subscribe to PRO plan for athlete '#{athlete_id}' that is not currently logged in.")
       render json: { error: ApplicationHelper::Message::ATHLETE_NOT_ACCESSIBLE }.to_json, status: 403
       return
     end
