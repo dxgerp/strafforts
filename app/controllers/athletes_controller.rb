@@ -62,7 +62,7 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
     end
   end
 
-  def subscribe_to_pro # rubocop:disable MethodLength, AbcSize
+  def subscribe_to_pro # rubocop:disable CyclomaticComplexity, MethodLength, AbcSize
     plan_id = params[:subscriptionPlanId]
     subscription_plan = SubscriptionPlan.find_by(id: plan_id)
     if subscription_plan.nil?
