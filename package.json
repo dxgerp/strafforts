@@ -1,6 +1,6 @@
 {
   "name": "strafforts",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "private": true,
   "description": "An Analytics App for Your Strava Running Best Efforts, PBs/PRs and Races",
   "repository": "https://github.com/yizeng/strafforts.git",

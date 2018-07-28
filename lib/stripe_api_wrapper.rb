@@ -28,7 +28,7 @@ class StripeApiWrapper
       )
     end
 
-    def retrieve_customer(athlete, stripe_token, stripe_email) # rubocop:disable CyclomaticComplexity, PerceivedComplexity, MethodLength
+    def retrieve_customer(athlete, stripe_token, stripe_email) # rubocop:disable AbcSize, CyclomaticComplexity, PerceivedComplexity, MethodLength
       stripe_customer = StripeCustomer.find_by(athlete_id: athlete.id)
 
       # Check if the saved StripeCustomer still actually exists on Stripe.
@@ -61,7 +61,20 @@ class StripeApiWrapper
         stripe_customer.email = customer.email
         stripe_customer.save!
       else
-        Stripe::Customer.update(customer.id, source: stripe_token)
+        new_card = Stripe::Token.retrieve(stripe_token) # Retrieve the card fingerprint using the stripe_card_token.
+        card_fingerprint = new_card.try(:card).try(:fingerprint)
+        card_exp_month = new_card.try(:card).try(:exp_month)
+        card_exp_year = new_card.try(:card).try(:exp_year)
+
+        # Check if the new card already exists.
+        default_cards = customer.sources.all(object: 'card').data
+                                .select do |card|
+                                  ((card.fingerprint == card_fingerprint) && (card.exp_month == card_exp_month) && (card.exp_year == card_exp_year))
+                                end
+        default_card = default_cards.last
+        default_card ||= customer.sources.create(source: stripe_token)
+        customer.default_card = default_card.id # Set the new card as the default card.
+        customer.save
       end
 
       stripe_customer
