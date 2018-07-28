@@ -34,7 +34,12 @@
       </div>
       <% if @athlete.pro_subscription? %>
         <div class="form-group">
-          <label class="control-sidebar-subheading">Expires at:
+          <label class="control-sidebar-subheading">
+            Name:
+            <span class="pull-right"><%= @athlete.pro_subscription_plan.name %></span>
+          </label>
+          <label class="control-sidebar-subheading">
+          <%= @athlete.pro_subscription.cancel_at_period_end ? 'Expires at:' : 'Renews at:' %>
             <span class="pull-right"><%= @athlete.pro_subscription_expires_at_formatted %></span>
           </label>
           <% if @athlete.pro_subscription.cancel_at_period_end %>

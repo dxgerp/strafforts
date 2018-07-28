@@ -2,15 +2,15 @@ require 'rails_helper'
 
 RSpec.describe AthletesController, type: :request do
   describe 'GET cancel_pro' do
-    it 'should return 404 when the requested athlete does not exist' do
-      get '/athletes/12345678/cancel-pro'
-      expect(response).to have_http_status(404)
+    it 'should raise routing error when the requested athlete does not exist' do
+      expect { get '/athletes/12345678/cancel-pro' }
+        .to raise_error(ActionController::RoutingError, "Could not find the requested athlete '12345678'.")
     end
 
-    it 'should return 403 when requested athlete is not the current user' do
+    it 'should raise bad request error when requested athlete is not the current user' do
       setup_cookie(nil)
-      get '/athletes/9123806/cancel-pro'
-      expect(response).to have_http_status(403)
+      expect { get '/athletes/9123806/cancel-pro' }
+        .to raise_error(ActionController::BadRequest, "Could not cancel PRO plan for athlete '9123806' that is not currently logged in.")
     end
 
     it 'should cancel pro subscription successfully' do

@@ -87,7 +87,9 @@
             </div>
             <% if @is_current_user %>
               <button class="pricingTable-signup btn btn-block"
-                data-toggle="modal" data-target="#confirm-cancel-subscription" <%= @athlete.pro_subscription? ? '' : 'disabled' %>>
+                data-toggle="modal" data-target="#confirm-cancel-subscription"
+                <%= !@athlete.pro_subscription? || @athlete.pro_subscription.cancel_at_period_end ? 'disabled' : '' %>
+              >
                 Select
               </button>
             <% end %>
