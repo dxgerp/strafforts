@@ -91,6 +91,7 @@ class NavigationTest < AppTestBase
   def open_navigation_bar_when_needed
     body = find(:css, 'body')
     return if body[:class].include?('sidebar-open')
+
     sidebar_toggle = find(:css, App::Selectors::MainHeader.sidebar_toggle)
     sidebar_toggle.click
     sleep 0.2
@@ -99,6 +100,7 @@ class NavigationTest < AppTestBase
   def expand_more_distances_when_needed(id)
     treeview_expander = find(:id, id)
     return if treeview_expander[:class].include?('active')
+
     within(treeview_expander) do
       show_more_distances = find(:css, '.show-more-distance')
       show_more_distances.click

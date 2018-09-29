@@ -40,6 +40,7 @@ class StravaApiWrapper
       Rails.logger.debug("StravaApiWrapper - Listing athlete activities. Page: #{index}.")
       new_page = @api_client.list_athlete_activities(per_page: 200, page: index)
       break if new_page.empty?
+
       athlete_activities << new_page
     end
     athlete_activities

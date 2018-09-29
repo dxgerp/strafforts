@@ -36,6 +36,7 @@ class StripeApiWrapper
         customer = Stripe::Customer.retrieve(stripe_customer.id) unless stripe_customer.nil? || stripe_customer.id.blank?
       rescue Stripe::StripeError => e
         raise unless e.http_status == 404
+
         customer = nil
       end
 
