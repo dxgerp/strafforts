@@ -48,6 +48,7 @@ class ActivityFetcher
               Rails.logger.error("ActivityCreator - Error creating or updating activity '#{activity_id}'. "\
                 "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
               raise if e.message.include?('Authorization Error') # rubocop:disable BlockNesting
+
               next
             end
             athlete.last_activity_retrieved = activity_id

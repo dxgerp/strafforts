@@ -102,6 +102,7 @@ class AuthController < ApplicationController
 
     response_body = response.nil? || response.body.blank? ? '' : "\nResponse Body: #{response.body}"
     raise ActionController::BadRequest, "Bad request while exchanging token with Strava.#{response_body}" if response.code == '400'
+
     raise "Exchanging token failed. HTTP Status Code: #{response.code}.#{response_body}"
   end
 end

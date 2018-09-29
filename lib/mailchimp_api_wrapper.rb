@@ -11,6 +11,7 @@ class MailChimpApiWrapper
       @api_client.lists(ENV['MAILCHIMP_LIST_ID']).members(hashed_email_address).delete
     rescue Gibbon::MailChimpError => e
       raise unless e.message.include?('404')
+
       Rails.logger.warn("MailchimpApiWrapper - Athlete #{athlete_id} could not be found in MailChimp list #{ENV['MAILCHIMP_LIST_ID']} while deleting.")
     end
   end
@@ -31,6 +32,7 @@ class MailChimpApiWrapper
       )
     rescue Gibbon::MailChimpError => e
       raise unless e.message.include?('404')
+
       @api_client.lists(ENV['MAILCHIMP_LIST_ID']).members.create(
         body: {
           email_address: email,

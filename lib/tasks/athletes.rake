@@ -1,28 +1,10 @@
 require 'yaml'
 
 namespace :athletes do
-  desc 'Grant Lifetime PRO plan to the given athletes.'
-  # Usage: bundle exec bin/rails athletes:apply_lifetime_pro ID=[Comma Separated list]
-  task apply_lifetime_pro: :environment do
-    apply_subscription('Lifetime PRO', ENV['ID'])
-  end
-
-  desc 'Grant Early Birds PRO plan to the given athletes.'
-  # Usage: bundle exec bin/rails athletes:apply_early_birds_pro ID=[Comma Separated list]
-  task apply_early_birds_pro: :environment do
-    apply_subscription('Early Birds PRO', ENV['ID'])
-  end
-
-  desc 'Grant Annual PRO plan to the given athletes.'
-  # Usage: bundle exec bin/rails athletes:apply_annual_pro ID=[Comma Separated list]
-  task apply_annual_pro: :environment do
-    apply_subscription('Annual PRO', ENV['ID'])
-  end
-
-  desc 'Grant 90-day PRO plan to the given athletes.'
-  # Usage: bundle exec bin/rails athletes:apply_90_day_pro ID=[Comma Separated list]
-  task apply_quarter_pro: :environment do
-    apply_subscription('90-day PRO', ENV['ID'])
+  desc 'Grant PRO plan to the given athletes.'
+  # Usage: bundle exec bin/rails athletes:apply_pro PLAN="Lifetime PRO" ID=[Comma Separated list]
+  task apply_pro: :environment do
+    apply_subscription(ENV['PLAN'], ENV['ID'])
   end
 
   desc 'Delete all data assiociated with athletes who have been inactive for more 180 days + 7 days of grace period.'
@@ -45,6 +27,7 @@ namespace :athletes do
 
       athlete_info = AthleteInfo.find_by_email(email)
       next if athlete_info.nil?
+
       athlete = Athlete.find_by(id: athlete_info.athlete_id)
       next if athlete.nil?
 

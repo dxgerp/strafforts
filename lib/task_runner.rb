@@ -6,6 +6,7 @@ class TaskRunner
       begin
         athlete = AthleteDecorator.decorate(athlete)
         next if athlete.pro_subscription?
+
         destroyed_ids << athlete.id
         destroy_athlete(athlete.id)
       rescue StandardError => e
