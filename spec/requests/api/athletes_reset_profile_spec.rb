@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe AthletesController, type: :request do
+RSpec.describe Api::AthletesController, type: :request do
   describe 'POST reset_profile' do
     it 'should return 404 when the requested athlete does not exist' do
-      post '/athletes/12345678/reset_profile'
+      post '/api/athletes/12345678/reset_profile'
       expect(response).to have_http_status(404)
     end
 
     it 'should return 403 when requested athlete is not the current user' do
       setup_cookie(nil)
-      post '/athletes/9123806/reset_profile'
+      post '/api/athletes/9123806/reset_profile'
       expect(response).to have_http_status(403)
     end
 
@@ -19,7 +19,7 @@ RSpec.describe AthletesController, type: :request do
         setup_cookie('58e42e6f5e496dc5aa0d5ec354da8048')
 
         # act.
-        post '/athletes/456/reset_profile'
+        post '/api/athletes/456/reset_profile'
 
         # assert.
         expect(response).to have_http_status(403)
@@ -30,7 +30,7 @@ RSpec.describe AthletesController, type: :request do
         setup_cookie('58e42e6f5e496dc5aa0d5ec354da8048')
 
         # act.
-        post '/athletes/456/reset_profile', params: { is_hard_reset: true }
+        post '/api/athletes/456/reset_profile', params: { is_hard_reset: true }
 
         # assert.
         expect(response).to have_http_status(403)
@@ -54,7 +54,7 @@ RSpec.describe AthletesController, type: :request do
         expect(activities.count).to be > 0
 
         # act.
-        post '/athletes/9123806/reset_profile'
+        post '/api/athletes/9123806/reset_profile'
 
         # assert.
         athlete.reload
@@ -84,7 +84,7 @@ RSpec.describe AthletesController, type: :request do
         expect(activities.count).to be > 0
 
         # act.
-        post '/athletes/9123806/reset_profile', params: { is_hard_reset: true }
+        post '/api/athletes/9123806/reset_profile', params: { is_hard_reset: true }
 
         # assert.
         athlete.reload

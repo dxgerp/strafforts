@@ -4,7 +4,7 @@ RSpec.describe AthletesController, type: :request do
   describe 'GET cancel_pro' do
     it 'should raise routing error when the requested athlete does not exist' do
       expect { get '/athletes/12345678/cancel-pro' }
-        .to raise_error(ActionController::RoutingError, "Could not find the requested athlete '12345678'.")
+        .to raise_error(ActionController::RoutingError, "Could not find the requested athlete '12345678' by id.")
     end
 
     it 'should raise bad request error when requested athlete is not the current user' do

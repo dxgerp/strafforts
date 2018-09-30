@@ -1,12 +1,13 @@
-class AthletesController < ApplicationController # rubocop:disable ClassLength
+class AthletesController < ApplicationController
+  include AthleteAccessible
+  include AthleteFoundable
+
   def index
     @auth_url = ApplicationController.get_auth_url(request)
-    athlete = Athlete.find_by(id: params[:id])
-    ApplicationController.raise_athlete_not_found_error(params[:id]) if athlete.nil?
+    athlete = find_athlete(params[:id])
 
     @is_current_user = athlete.access_token == cookies.signed[:access_token]
-    is_accessible = athlete.is_public || @is_current_user
-    ApplicationController.raise_athlete_not_accessible_error(params[:id]) unless is_accessible
+    check_athlete_accessibility(athlete, cookies)
 
     @athlete = athlete.decorate
 
@@ -26,12 +27,11 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
 
   def pro_plans
     @auth_url = ApplicationController.get_auth_url(request)
-    athlete = Athlete.find_by(id: params[:id])
-    ApplicationController.raise_athlete_not_found_error(params[:id]) if athlete.nil?
+    athlete_id = params[:id]
+    athlete = find_athlete(athlete_id)
 
     @is_current_user = athlete.access_token == cookies.signed[:access_token]
-    is_accessible = athlete.is_public || @is_current_user
-    ApplicationController.raise_athlete_not_accessible_error(params[:id]) unless is_accessible
+    check_athlete_accessibility(athlete, cookies)
 
     @athlete = athlete.decorate
     @page_title = "Get #{Settings.app.name} PRO"
@@ -44,9 +44,7 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
 
   def cancel_pro
     athlete_id = params[:id]
-    athlete = Athlete.find_by(id: athlete_id)
-    error_message = "Could not find the requested athlete '#{athlete_id}'."
-    raise ActionController::RoutingError, error_message if athlete.nil?
+    athlete = find_athlete(athlete_id)
 
     @is_current_user = athlete.access_token == cookies.signed[:access_token]
     error_message = "Could not cancel PRO plan for athlete '#{athlete_id}' that is not currently logged in."
@@ -60,132 +58,5 @@ class AthletesController < ApplicationController # rubocop:disable ClassLength
         "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
       raise e
     end
-  end
-
-  def subscribe_to_pro # rubocop:disable CyclomaticComplexity, MethodLength, AbcSize
-    plan_id = params[:subscriptionPlanId]
-    subscription_plan = SubscriptionPlan.find_by(id: plan_id)
-    if subscription_plan.nil?
-      Rails.logger.warn("Could not find the requested subscription plan '#{plan_id}'.")
-      render json: { error: ApplicationHelper::Message::PRO_PLAN_NOT_FOUND }.to_json, status: 404
-      return
-    end
-
-    athlete_id = params[:id]
-    athlete = Athlete.find_by(id: athlete_id)
-    if athlete.nil?
-      Rails.logger.warn("Could not find the requested athlete '#{athlete_id}'.")
-      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_FOUND }.to_json, status: 404
-      return
-    end
-
-    athlete = athlete.decorate
-
-    @is_current_user = athlete.access_token == cookies.signed[:access_token]
-    unless @is_current_user
-      Rails.logger.warn("Could not subscribe to PRO plan for athlete '#{athlete_id}' that is not currently logged in.")
-      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_ACCESSIBLE }.to_json, status: 403
-      return
-    end
-
-    begin
-      ::StripeApiWrapper.charge(athlete, subscription_plan, params[:stripeToken], params[:stripeEmail])
-      ::Creators::SubscriptionCreator.create(athlete, subscription_plan.name)
-    rescue Stripe::StripeError => e
-      Rails.logger.error("StripeError while subscribing to PRO plan for athlete '#{athlete.id}'. "\
-        "Status: #{e.http_status}. Message: #{e.json_body.blank? ? '' : e.json_body[:error][:message]}\n"\
-        "Backtrace:\n\t#{e.backtrace.join("\n\t")}")
-      render json: { error: "#{ApplicationHelper::Message::STRIPE_ERROR} #{e.json_body.blank? ? '' : e.json_body[:error][:message]}" }.to_json, status: 402
-      return
-    rescue StandardError => e
-      Rails.logger.error("Subscribing to PRO plan '#{subscription_plan.name}' failed for athlete '#{athlete.id}'. "\
-        "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
-      render json: { error: ApplicationHelper::Message::PAYMENT_FAILED }.to_json, status: 500
-      return
-    end
-  end
-
-  def save_profile
-    athlete = Athlete.find_by(id: params[:id])
-    if athlete.nil?
-      Rails.logger.warn("Could not save profile for athlete '#{params[:id]}' that could not be found.")
-      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_FOUND }.to_json, status: 404
-      return
-    end
-
-    @is_current_user = athlete.access_token == cookies.signed[:access_token]
-    unless @is_current_user
-      Rails.logger.warn("Could not save profile for an athlete #{params[:id]} that is not the currently logged in.")
-      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_ACCESSIBLE }.to_json, status: 403
-      return
-    end
-
-    is_public = params[:is_public].blank? || params[:is_public]
-    athlete.update(is_public: is_public)
-  end
-
-  def fetch_latest
-    athlete = Athlete.find_by(id: params[:id])
-    if athlete.nil?
-      Rails.logger.warn("Could not fetch latest for athlete '#{params[:id]}' that could not be found.")
-      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_FOUND }.to_json, status: 404
-      return
-    end
-
-    @is_current_user = athlete.access_token == cookies.signed[:access_token]
-    unless @is_current_user
-      Rails.logger.warn("Could not fetch latest for an athlete #{params[:id]} that is not the currently logged in.")
-      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_ACCESSIBLE }.to_json, status: 403
-      return
-    end
-
-    athlete = athlete.decorate
-    unless athlete.pro_subscription?
-      render json: { error: ApplicationHelper::Message::PRO_ACCOUNTS_ONLY }.to_json, status: 403
-      return
-    end
-
-    # Add a delayed_job to fetch the latest data for this athlete.
-    fetcher = ::ActivityFetcher.new(athlete.access_token)
-    fetcher.delay.fetch_all(mode: 'latest')
-  end
-
-  def reset_profile # rubocop:disable MethodLength
-    athlete = Athlete.find_by(id: params[:id])
-    if athlete.nil?
-      Rails.logger.warn("Could not reset profile for an athlete '#{params[:id]}' that could not be found.")
-      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_FOUND }.to_json, status: 404
-      return
-    end
-
-    @is_current_user = athlete.access_token == cookies.signed[:access_token]
-    unless @is_current_user
-      Rails.logger.warn("Could not reset profile for an athlete #{params[:id]} that is not the currently logged in.")
-      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_ACCESSIBLE }.to_json, status: 403
-      return
-    end
-
-    athlete = athlete.decorate
-    unless athlete.pro_subscription?
-      render json: { error: ApplicationHelper::Message::PRO_ACCOUNTS_ONLY }.to_json, status: 403
-      return
-    end
-
-    if params[:is_hard_reset].to_s == 'true'
-      # Delete all activity data except for the athlete itself.
-      BestEffort.where(athlete_id: athlete.id).destroy_all
-      Race.where(athlete_id: athlete.id).destroy_all
-      Activity.where(athlete_id: athlete.id).destroy_all
-      Rails.logger.warn("Hard resetting all activity data for athlete #{athlete.id}.")
-    else
-      Rails.logger.warn("Soft resetting all activity data for athlete #{athlete.id}.")
-    end
-
-    # Set last_activity_retrieved to nil for this athlete.
-    athlete.update(last_activity_retrieved: nil, total_run_count: 0)
-
-    # Add a delayed_job to fetch all data for this athlete.
-    fetcher = ::ActivityFetcher.new(athlete.access_token)
-    fetcher.delay.fetch_all(mode: 'all')
   end
 end

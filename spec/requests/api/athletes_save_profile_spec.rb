@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe AthletesController, type: :request do
+RSpec.describe Api::AthletesController, type: :request do
   describe 'POST save_profile' do
     it 'should return 404 when the requested athlete does not exist' do
-      post '/athletes/12345678/save_profile'
+      post '/api/athletes/12345678/save_profile'
       expect(response).to have_http_status(404)
     end
 
     it 'should return 403 when requested athlete is not the current user' do
       setup_cookie(nil)
-      post '/athletes/123/save_profile'
+      post '/api/athletes/123/save_profile'
       expect(response).to have_http_status(403)
     end
 
@@ -24,7 +24,7 @@ RSpec.describe AthletesController, type: :request do
         expect(athlete.is_public).to be false
 
         # act.
-        post '/athletes/123/save_profile'
+        post '/api/athletes/123/save_profile'
 
         # assert.
         athlete.reload
@@ -39,7 +39,7 @@ RSpec.describe AthletesController, type: :request do
         expect(athlete.is_public).to be false
 
         # act.
-        post '/athletes/123/save_profile', params: { is_public: true }
+        post '/api/athletes/123/save_profile', params: { is_public: true }
 
         # assert.
         athlete.reload
@@ -58,7 +58,7 @@ RSpec.describe AthletesController, type: :request do
         expect(athlete.is_public).to be true
 
         # act.
-        post '/athletes/456/save_profile', params: { is_public: false }
+        post '/api/athletes/456/save_profile', params: { is_public: false }
 
         # assert.
         athlete.reload
