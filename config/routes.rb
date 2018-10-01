@@ -20,10 +20,10 @@ Rails.application.routes.draw do
     get 'athletes/:id/races' => 'races#index'
     get 'athletes/:id/races/:distance_or_year' => 'races#index'
 
-    post 'athletes/:id/fetch_latest' => 'athletes#fetch_latest'
-    post 'athletes/:id/save_profile' => 'athletes#save_profile'
-    post 'athletes/:id/reset_profile' => 'athletes#reset_profile'
-    post 'athletes/:id/subscribe_to_pro' => 'athletes#subscribe_to_pro'
+    post 'athletes/:id/fetch-latest' => 'athletes#fetch_latest'
+    post 'athletes/:id/save-profile' => 'athletes#save_profile'
+    post 'athletes/:id/reset-profile' => 'athletes#reset_profile'
+    post 'athletes/:id/subscribe-to-pro' => 'athletes#subscribe_to_pro'
 
     get 'faqs/index' => 'faqs#index'
   end
