@@ -106,7 +106,7 @@ class ApplicationController < ActionController::Base
   end
 
   def self.raise_athlete_not_found_error(id)
-    error_message = "Could not find athlete '#{id}' by id."
+    error_message = "Could not find the requested athlete '#{id}' by id."
     raise ActionController::RoutingError, error_message
   end
 

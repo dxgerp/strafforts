@@ -6,7 +6,7 @@ RSpec.describe AthletesController, type: :request do
   describe 'GET pro_plans' do
     it 'should not find athlete when id matches nothing' do
       expect { get '/athletes/12345678/get-pro' }
-        .to raise_error(ActionController::RoutingError, "Could not find athlete '12345678' by id.")
+        .to raise_error(ActionController::RoutingError, "Could not find the requested athlete '12345678' by id.")
     end
 
     context 'when athlete has a public profile' do
