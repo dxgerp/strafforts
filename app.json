@@ -14,14 +14,6 @@
     "LANG": {
       "required": true
     },
-    "MAILCHIMP_API_KEY": {
-      "required": false,
-      "value": ""
-    },
-    "MAILCHIMP_LIST_ID": {
-      "required": false,
-      "value": ""
-    },
     "MAILER_LITE_API_KEY": {
       "required": false,
       "value": ""
