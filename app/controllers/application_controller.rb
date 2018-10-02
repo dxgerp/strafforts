@@ -5,6 +5,7 @@ require 'creators/location_creator'
 require 'creators/heart_rate_zones_creator'
 require 'activity_fetcher'
 require 'mailchimp_api_wrapper'
+require 'mailer_lite_api_wrapper'
 require 'strava_api_wrapper'
 require 'stripe_api_wrapper'
 

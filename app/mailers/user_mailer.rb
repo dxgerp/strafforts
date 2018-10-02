@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-  # DEPRECATED. This is now handled by MailChimp workflow.
+  # DEPRECATED. This is now handled by MailerLite workflow.
   def welcome_email(athlete)
     return if athlete.nil?
 

@@ -31,15 +31,7 @@ class MailChimpApiWrapper
         }
       )
     rescue Gibbon::MailChimpError => e
-      raise unless e.message.include?('404')
-
-      @api_client.lists(ENV['MAILCHIMP_LIST_ID']).members.create(
-        body: {
-          email_address: email,
-          status: 'subscribed',
-          merge_fields: create_merge_fields(athlete)
-        }
-      )
+      raise unless e.message.include?('404') # Migrating to Mailer Lite, so ignore when it's 404, i.e. don't add new.
     end
   end
 
