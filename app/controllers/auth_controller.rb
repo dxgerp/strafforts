@@ -88,7 +88,7 @@ class AuthController < ApplicationController
         end
       end
 
-      # Subsribe or update to mailing list.
+      # Subscribe or update to mailing list.
       SubscribeToMailingListJob.perform_later(athlete)
 
       # Add a delayed_job to fetch data for this athlete.

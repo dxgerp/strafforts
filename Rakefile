@@ -3,7 +3,7 @@
 
 require_relative 'config/application'
 require_relative 'lib/activity_fetcher'
-require_relative 'lib/mailchimp_api_wrapper'
+require_relative 'lib/mailer_lite_api_wrapper'
 require_relative 'lib/strava_api_wrapper'
 require_relative 'lib/creators/activity_creator'
 require_relative 'lib/creators/athlete_creator'
