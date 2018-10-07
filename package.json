@@ -1,11 +1,11 @@
 {
   "name": "strafforts",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "private": true,
   "description": "An Analytics App for Your Strava Running Best Efforts, PBs/PRs and Races",
   "repository": "https://github.com/yizeng/strafforts.git",
-  "author": "Yi Zeng <yi.zeng.dev@gmail.com>",
-  "license": "MIT",
+  "author": "Yi Zeng <iam@yizeng.me>",
+  "license": "AGPL-3.0",
   "dependencies": {
     "@rails/webpacker": "3.5.3",
     "@types/lodash": "^4.14.109",

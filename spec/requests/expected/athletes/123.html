@@ -324,7 +324,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <span class="pull-right">
       <a class="bg-strava btn label" href="mailto:support@strafforts.com" target="_blank">Contact Us</a>
-          <small>v1.6.1</small>
+          <small>v1.6.2</small>
   </span>
 </footer>
 
@@ -365,7 +365,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
         <a href="/athletes/123/get-pro" class="btn btn-block btn-flat btn-danger get-pro">Upgrade</a>
 
-      <form class="form-save-profile" action="/athletes/123/save_profile" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+      <form class="form-save-profile" action="/api/athletes/123/save-profile" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
       <h3 class="control-sidebar-heading">Profile Settings</h3>
       <div class="form-group">
         <label class="control-sidebar-subheading">
@@ -450,7 +450,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="form-group">
         <h3 class="control-sidebar-heading">Fetch Now<span class='subscription-badge pull-right'><span class="label">PRO</span></span></h3>
         <div>
-          <form class="form-fetch-latest-activities" action="/athletes/123/fetch_latest" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+          <form class="form-fetch-latest-activities" action="/api/athletes/123/fetch-latest" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
             <button type="submit" class="btn btn-block btn-default btn-flat submit-form" disabled>
               Fetch Now
             </button>
@@ -484,7 +484,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="control-sidebar-bg"></div>
 
 <!-- Modal - Confirm Profile Reset -->
-<form class="form-reset-profile" action="/athletes/123/reset_profile" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+<form class="form-reset-profile" action="/api/athletes/123/reset-profile" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
   <div class="modal modal-danger" id="confirm-reset-profile" tabindex="-1" role="dialog" aria-labelledby="confirm-reset-profile-label">
     <div class="modal-dialog" role="document">
       <div class="modal-content">

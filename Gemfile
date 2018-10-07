@@ -95,6 +95,6 @@ gem 'config' # Config.
 gem 'daemons' # Add daemons gem to show delayed_job status.
 gem 'delayed_job_active_record' # ActiveRecord backend integration for DelayedJob 3.0+.
 gem 'font-awesome-rails' # Rails Font Awesome.
-gem "gibbon" # MailChimp API wrapper.
+gem 'mailerlite' # Mailer Lite API wrapper.
 gem 'strava-api-v3' # Strava Ruby API Client.
 gem 'stripe' # Ruby library for the Stripe API.

@@ -53,7 +53,7 @@
         <a href="/athletes/<%= @athlete.id %>/get-pro" class="btn btn-block btn-flat btn-danger get-pro">Upgrade</a>
       <% end %>
 
-      <%= form_tag({controller: 'athletes', action: 'save_profile'}, class: 'form-save-profile') do %>
+      <%= form_tag({controller: 'api/athletes', action: 'save_profile'}, class: 'form-save-profile') do %>
       <h3 class="control-sidebar-heading">Profile Settings</h3>
       <div class="form-group">
         <label class="control-sidebar-subheading">
@@ -139,7 +139,7 @@
       <div class="form-group">
         <h3 class="control-sidebar-heading">Fetch Now<span class='subscription-badge pull-right'><span class="label">PRO</span></span></h3>
         <div>
-          <%= form_tag({controller: 'athletes', action: 'fetch_latest'}, class: 'form-fetch-latest-activities') do %>
+          <%= form_tag({controller: 'api/athletes', action: 'fetch_latest'}, class: 'form-fetch-latest-activities') do %>
             <button type="submit" class="btn btn-block btn-default btn-flat submit-form" <%= @athlete.pro_subscription? ? '' : 'disabled' %>>
               Fetch Now
             </button>
@@ -174,7 +174,7 @@
 <div class="control-sidebar-bg"></div>
 
 <!-- Modal - Confirm Profile Reset -->
-<%= form_tag({controller: 'athletes', action: 'reset_profile'}, class: 'form-reset-profile') do %>
+<%= form_tag({controller: 'api/athletes', action: 'reset_profile'}, class: 'form-reset-profile') do %>
   <div class="modal modal-danger" id="confirm-reset-profile" tabindex="-1" role="dialog" aria-labelledby="confirm-reset-profile-label">
     <div class="modal-dialog" role="document">
       <div class="modal-content">

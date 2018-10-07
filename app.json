@@ -14,11 +14,11 @@
     "LANG": {
       "required": true
     },
-    "MAILCHIMP_API_KEY": {
+    "MAILER_LITE_API_KEY": {
       "required": false,
       "value": ""
     },
-    "MAILCHIMP_LIST_ID": {
+    "MAILER_LITE_GROUP_ID": {
       "required": false,
       "value": ""
     },

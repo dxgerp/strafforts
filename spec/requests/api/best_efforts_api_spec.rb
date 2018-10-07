@@ -6,7 +6,7 @@ RSpec.describe Api::BestEffortsController, type: :request do
   describe 'GET index' do
     it 'should not find athlete by id who does not exist' do
       expect { get '/api/athletes/12345678/best-efforts' }
-        .to raise_error(ActionController::RoutingError, "Could not find athlete '12345678' by id.")
+        .to raise_error(ActionController::RoutingError, "Could not find the requested athlete '12345678' by id.")
     end
 
     it 'should be a 404 with an invalid distance' do
@@ -41,7 +41,7 @@ RSpec.describe Api::BestEffortsController, type: :request do
   describe 'GET top_one_by_year' do
     it 'should not find athlete by id who does not exist' do
       expect { get '/api/athletes/12345678/best-efforts/10k/top-one-by-year' }
-        .to raise_error(ActionController::RoutingError, "Could not find athlete '12345678' by id.")
+        .to raise_error(ActionController::RoutingError, "Could not find the requested athlete '12345678' by id.")
     end
 
     it 'should be a 404 with an invalid distance' do
