@@ -9,6 +9,9 @@
   "[javascript]": {
     "editor.formatOnSave": true,
   },
+  "[javascriptreact]": {
+      "editor.formatOnSave": true
+  },
   "[typescript]": {
     "editor.formatOnSave": true,
   },
@@ -349,4 +352,11 @@
   "extensions.ignoreRecommendations": false,
   "tslint.configFile": "config/tslint.json",
   "tslint.autoFixOnSave": true,
+  "typescriptHero.imports.grouping": [
+    "/^react/",
+    "Plains",
+    "Modules",
+    "Workspace"
+  ],
+  "typescriptHero.imports.organizeOnSave": true,
 }

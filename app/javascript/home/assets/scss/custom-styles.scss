@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Junge');
+
+@font-face {
+    font-family: 'Junge Regular';
+    font-weight: normal;
+    font-style: normal;
+
+    src: font-url('junge-regular-webfont.eot');
+    src: font-url('junge-regular-webfont.eot?#iefix') format('embedded-opentype'), font-url('junge-regular-webfont.woff') format('woff'), font-url('junge-regular-webfont.ttf') format('truetype'), font-url('junge-regular-webfont.svg#jungeregular') format('svg');
+}
+
+$primary-color: #FC4C02;
+$primary-color-hover: #E34402;
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+p {
+    font-family: 'Junge','Junge Regular','Courier New',Georgia,'Times New Roman',serif !important;
+}
+
+footer a {
+    -webkit-transition: all .1s ease-in-out;
+       -moz-transition: all .1s ease-in-out;
+            transition: all .1s ease-in-out;
+
+    color: $primary-color !important;
+
+    &:focus,
+    &:hover {
+        font-weight: bold !important;
+
+        text-decoration: none !important;
+
+        color: $primary-color-hover !important;
+    }
+}
+
+.btn-default {
+    color: #FFFFFF !important;
+    border: 1px solid $primary-color !important;
+    outline: 0 !important;
+    background-color: $primary-color !important;
+
+    &:focus,
+    &:hover {
+        color: $primary-color !important;
+        border: 1px solid $primary-color !important;
+        background-color: transparent !important;
+    }
+}
+
+.placeholder-header {
+    margin: 0 !important;
+}

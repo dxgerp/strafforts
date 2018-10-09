@@ -6,4 +6,6 @@
 //
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
-import './../home';
+import "./../home/assets/scss/material-kit-react";
+import "./../home/assets/scss/custom-styles";
+import "./../home";

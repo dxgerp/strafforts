@@ -1,26 +1,22 @@
-// Run this example by adding <%= javascript_pack_tag 'hello_react' %> to the head of your layout file,
-// like app/views/layouts/application.html.erb. All it does is render <div>Hello React</div> at the bottom
-// of the page.
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Route, Router, Switch } from 'react-router-dom';
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
+import './assets/scss/material-kit-react.css?v=1.3.0';
 
-const Hello = props => (
-  <div>Hello {props.name}!</div>
-)
+import { createBrowserHistory } from 'history';
 
-Hello.defaultProps = {
-  name: 'David'
-}
+import indexRoutes from './routes/index.jsx';
 
-Hello.propTypes = {
-  name: PropTypes.string
-}
+var hist = createBrowserHistory();
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <Hello name="React" />,
-    document.body.appendChild(document.createElement('div')),
-  )
-})
+ReactDOM.render(
+  <Router history={hist}>
+    <Switch>
+      {indexRoutes.map((prop, key) => {
+        return <Route path={prop.path} key={key} component={prop.component} />;
+      })}
+    </Switch>
+  </Router>,
+  document.getElementById('root'),
+);
