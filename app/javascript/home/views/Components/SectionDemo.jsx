@@ -1,4 +1,5 @@
 import React from 'react';
+import config from 'react-global-configuration';
 import Carousel from 'react-slick';
 
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -84,7 +85,7 @@ class SectionDemo extends React.Component {
           </GridContainer>
           <GridContainer className={classes.textCenter} justify="center">
             <GridItem xs={12} sm={12} md={12}>
-              <Button size="lg" href="/athletes/9123806" className="btn-default">
+              <Button size="lg" href={'/athletes/' + config.get('app.demoAthleteId')} className="btn-default">
                 View App Demo
               </Button>
             </GridItem>

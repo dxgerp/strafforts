@@ -1,4 +1,5 @@
 import React from 'react';
+import config from 'react-global-configuration';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
@@ -86,7 +87,7 @@ class SectionTeam extends React.Component {
                     justIcon
                     color="transparent"
                     className={classes.margin5}
-                    href="https://yizeng.me"
+                    href={config.get('app.founder.website')}
                     target="_blank"
                   >
                     <i className={classes.socials + ' fas fa-home'} />
@@ -95,7 +96,7 @@ class SectionTeam extends React.Component {
                     justIcon
                     color="transparent"
                     className={classes.margin5}
-                    href="https://www.strava.com/athletes/9123806"
+                    href={'https://www.strava.com/athletes/' + config.get('app.founder.stravaId')}
                     target="_blank"
                   >
                     <i className={classes.socials + ' fab fa-strava'} />

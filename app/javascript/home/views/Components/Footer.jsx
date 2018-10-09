@@ -1,5 +1,5 @@
-/*eslint-disable*/
 import React from 'react';
+import config from 'react-global-configuration';
 
 import { List, ListItem, withStyles } from '@material-ui/core';
 import Favorite from '@material-ui/icons/Favorite';
@@ -24,16 +24,12 @@ function Footer({ ...props }) {
         <div className={classes.left}>
           <List className={classes.list}>
             <ListItem className={classes.inlineBlock}>
-              <a href="https://github.com/yizeng/strafforts" className={classes.block} target="_blank">
+              <a href={config.get('app.gitHubUrl')} className={classes.block} target="_blank">
                 GitHub
               </a>
             </ListItem>
             <ListItem className={classes.inlineBlock}>
-              <a
-                href="https://github.com/yizeng/strafforts/blob/master/LICENSE"
-                className={classes.block}
-                target="_blank"
-              >
+              <a href={config.get('app.licenseUrl')} className={classes.block} target="_blank">
                 License
               </a>
             </ListItem>
@@ -41,7 +37,7 @@ function Footer({ ...props }) {
         </div>
         <div className={classes.right}>
           &copy; {1900 + new Date().getYear()} , from New Zealand with <Favorite className={classes.icon} /> by{' '}
-          <a href="https://www.yizeng.me" className={aClasses} target="_blank">
+          <a href={config.get('app.founder.website')} className={aClasses} target="_blank">
             Yi Zeng
           </a>
           .

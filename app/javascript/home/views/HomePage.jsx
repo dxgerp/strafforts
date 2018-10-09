@@ -1,4 +1,5 @@
 import React from 'react';
+import config from 'react-global-configuration';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
@@ -55,12 +56,21 @@ const homepageStyle = {
 class Homepage extends React.Component {
   render() {
     const { classes, ...rest } = this.props;
+    const redirectUri = `${location.protocol}//${location.hostname}${location.port ? ':' + location.port : ''}`;
+    const authUrl =
+      'https://www.strava.com/oauth/authorize?client_id=' +
+      config.get('app.stravaApiClientId') +
+      '&response_type=code&redirect_uri=' +
+      redirectUri +
+      config.get('app.redirectUriPath') +
+      '&approval_prompt=auto&scope=view_private';
+
     return (
       <div>
         <Header
           color="transparent"
           routes={dashboardRoutes}
-          brand="STRAFFORTS"
+          brand={config.get('app.name').toUpperCase()}
           rightLinks={<HeaderLinks />}
           fixed
           changeColorOnScroll={{
@@ -80,10 +90,7 @@ class Homepage extends React.Component {
                   better understand your performance.
                 </h4>
                 <br />
-                <a
-                  href="https://www.strava.com/oauth/authorize?client_id=6414&amp;response_type=code&amp;redirect_uri=https://www.strafforts.com:443/auth/exchange-token&amp;approval_prompt=auto&amp;scope=view_private"
-                  title="Connect With Strava"
-                >
+                <a href={authUrl} title="Connect With Strava">
                   <img alt="Connect With Strava" src={imgConnectWithStrava} />
                 </a>
               </GridItem>
