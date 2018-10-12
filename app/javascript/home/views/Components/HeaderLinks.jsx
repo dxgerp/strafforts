@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -13,16 +14,16 @@ function HeaderLinks({ ...props }) {
     <List className={classes.list + ' header-links'}>
       <ListItem className={classes.listItem}>
         <Button color="transparent" href="#the-idea" className={classes.navLink}>
-          The Idea
+          <FormattedMessage id="home.sectionIdea.title" />
         </Button>
         <Button color="transparent" href="#the-demo" className={classes.navLink}>
-          The Demo
+          <FormattedMessage id="home.sectionDemo.title" />
         </Button>
         <Button color="transparent" href="#the-gurantees" className={classes.navLink}>
-          The Gurantees
+          <FormattedMessage id="home.sectionGurantees.title" />
         </Button>
         <Button color="transparent" href="#the-team" className={classes.navLink}>
-          The Team
+          <FormattedMessage id="home.sectionTeam.title" />
         </Button>
       </ListItem>
     </List>

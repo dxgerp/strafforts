@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -39,16 +40,20 @@ class SectionIdea extends React.Component {
         <GridContainer justify="center">
           <GridItem cs={12} sm={12} md={8}>
             <h2 id="the-idea" className={classes.title + ' placeholder-header'} />
-            <h2 className={classes.title}>The Idea</h2>
-            <h4 className={classes.description}>How many times have you wondered...</h4>
+            <h2 className={classes.title}>
+              <FormattedMessage id="home.sectionIdea.title" />
+            </h2>
             <h4 className={classes.description}>
-              What's my half marathon PB progression like? What're my fastest shoes for a 10K race? How many 5K races do
-              I do every year? How often do I set a marathon PB?...
+              <FormattedMessage id="home.sectionIdea.paragraph1" />
             </h4>
-            <h4 className={classes.description}>Wish Strava had all those analysis built-in!</h4>
             <h4 className={classes.description}>
-              No worries at all. Strafforts was born to visualize those data in forms of data tables, line charts, pie
-              charts etc to help you understand how you perform!
+              <FormattedMessage id="home.sectionIdea.paragraph2" />
+            </h4>
+            <h4 className={classes.description}>
+              <FormattedMessage id="home.sectionIdea.paragraph3" />
+            </h4>
+            <h4 className={classes.description}>
+              <FormattedMessage id="home.sectionIdea.paragraph4" />
             </h4>
           </GridItem>
         </GridContainer>

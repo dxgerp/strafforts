@@ -1,5 +1,6 @@
 import React from 'react';
 import config from 'react-global-configuration';
+import { FormattedMessage } from 'react-intl';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
@@ -63,7 +64,9 @@ class SectionTeam extends React.Component {
     return (
       <div className={classes.section}>
         <h2 id="the-team" className={classes.title + ' placeholder-header'} />
-        <h2 className={classes.title}>The Team</h2>
+        <h2 className={classes.title}>
+          <FormattedMessage id="home.sectionTeam.title" />
+        </h2>
         <div>
           <GridContainer>
             <GridItem xs={12} sm={12} md={4} className={classes.itemGrid}>
@@ -74,12 +77,13 @@ class SectionTeam extends React.Component {
                 <h4 className={classes.cardTitle}>
                   Yi Zeng
                   <br />
-                  <small className={classes.smallTitle}>Founder</small>
+                  <small className={classes.smallTitle}>
+                    <FormattedMessage id="home.sectionTeam.founder" />
+                  </small>
                 </h4>
                 <CardBody>
                   <p className={classes.description}>
-                    Very amateur runner. Strava addict. Strafforts founder, creator, coder, marketer and the customer
-                    service guy.
+                    <FormattedMessage id="home.sectionTeam.founderDescription" />
                   </p>
                 </CardBody>
                 <CardFooter className={classes.justifyCenter}>

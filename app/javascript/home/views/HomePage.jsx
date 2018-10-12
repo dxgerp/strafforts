@@ -1,5 +1,6 @@
 import React from 'react';
 import config from 'react-global-configuration';
+import { FormattedMessage } from 'react-intl';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
@@ -83,11 +84,14 @@ class Homepage extends React.Component {
           <div className={classes.container}>
             <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
-                <h1 className={classes.title}>Analyse Your Strava Running Best Efforts, PBs/PRs and Races</h1>
-                <h4>Love Strava? Wanna dig deeper?</h4>
+                <h1 className={classes.title}>
+                  <FormattedMessage id="home.parallax.headline" />
+                </h1>
                 <h4>
-                  Strafforts is an analytics app to visualize your running best efforts, PBs/PRs or races and help you
-                  better understand your performance.
+                  <FormattedMessage id="home.parallax.descriptionLine1" />
+                </h4>
+                <h4>
+                  <FormattedMessage id="home.parallax.descriptionLine2" />
                 </h4>
                 <br />
                 <a href={authUrl} title="Connect With Strava">

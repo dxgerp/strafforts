@@ -1,5 +1,6 @@
 import React from 'react';
 import config from 'react-global-configuration';
+import { FormattedMessage } from 'react-intl';
 import Carousel from 'react-slick';
 
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -55,7 +56,9 @@ class SectionDemo extends React.Component {
     return (
       <div className={classes.section}>
         <h2 id="the-demo" className={classes.title + ' placeholder-header'} />
-        <h2 className={classes.title}>The Demo</h2>
+        <h2 className={classes.title}>
+          <FormattedMessage id="home.sectionDemo.title" />
+        </h2>
         <div className={classes.container}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={8} className={classes.marginAuto}>
@@ -86,7 +89,7 @@ class SectionDemo extends React.Component {
           <GridContainer className={classes.textCenter} justify="center">
             <GridItem xs={12} sm={12} md={12}>
               <Button size="lg" href={'/athletes/' + config.get('app.demoAthleteId')} className="btn-default">
-                View App Demo
+                <FormattedMessage id="home.sectionDemo.viewDemo" />
               </Button>
             </GridItem>
           </GridContainer>
