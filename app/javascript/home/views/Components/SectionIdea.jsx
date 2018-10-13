@@ -36,7 +36,7 @@ class SectionIdea extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.section}>
+      <div className={`${classes.section} content-section`}>
         <GridContainer justify="center">
           <GridItem cs={12} sm={12} md={8}>
             <h2 id="the-idea" className={classes.title + ' placeholder-header'} />

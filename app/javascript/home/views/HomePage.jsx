@@ -80,10 +80,10 @@ class Homepage extends React.Component {
           }}
           {...rest}
         />
-        <Parallax filter image={imgBackground}>
-          <div className={classes.container}>
+        <Parallax filter image={imgBackground} className="parallax">
+          <div className={`${classes.container} headline`}>
             <GridContainer>
-              <GridItem xs={12} sm={12} md={6}>
+              <GridItem className="grid-item" xs={12} sm={12} md={6}>
                 <h1 className={classes.title}>
                   <FormattedMessage id="home.parallax.headline" />
                 </h1>

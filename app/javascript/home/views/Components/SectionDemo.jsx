@@ -54,7 +54,7 @@ class SectionDemo extends React.Component {
       autoplay: true,
     };
     return (
-      <div className={classes.section}>
+      <div className={`${classes.section} content-section`}>
         <h2 id="the-demo" className={classes.title + ' placeholder-header'} />
         <h2 className={classes.title}>
           <FormattedMessage id="home.sectionDemo.title" />

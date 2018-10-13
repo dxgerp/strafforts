@@ -62,7 +62,7 @@ class SectionTeam extends React.Component {
     const { classes } = this.props;
     const imageClasses = classNames(classes.imgRaised, classes.imgRoundedCircle, classes.imgFluid);
     return (
-      <div className={classes.section}>
+      <div className={`${classes.section} content-section`}>
         <h2 id="the-team" className={classes.title + ' placeholder-header'} />
         <h2 className={classes.title}>
           <FormattedMessage id="home.sectionTeam.title" />
