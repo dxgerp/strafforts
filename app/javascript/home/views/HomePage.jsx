@@ -75,7 +75,7 @@ class Homepage extends React.Component {
           rightLinks={<HeaderLinks />}
           fixed
           changeColorOnScroll={{
-            height: 200,
+            height: 160,
             color: 'white',
           }}
           {...rest}
