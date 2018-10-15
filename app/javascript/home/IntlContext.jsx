@@ -10,6 +10,7 @@ addLocaleData([...localeData_en, ...localeData_zh]);
 
 const { Provider, Consumer } = React.createContext();
 
+// https://stackoverflow.com/a/51556636/1177636.
 class IntlProviderWrapper extends React.Component {
   constructor(...args) {
     super(...args);

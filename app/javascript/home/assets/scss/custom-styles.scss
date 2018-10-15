@@ -1,14 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Junge');
-
-@font-face {
-    font-family: 'Junge Regular';
-    font-weight: normal;
-    font-style: normal;
-
-    src: font-url('junge-regular-webfont.eot');
-    src: font-url('junge-regular-webfont.eot?#iefix') format('embedded-opentype'), font-url('junge-regular-webfont.woff') format('woff'), font-url('junge-regular-webfont.ttf') format('truetype'), font-url('junge-regular-webfont.svg#jungeregular') format('svg');
-}
-
 $primary-color: #FC4C02;
 $primary-color-hover: #E34402;
 
@@ -21,7 +11,7 @@ h5,
 h6,
 span,
 p {
-    font-family: 'Junge', 'Junge Regular', Georgia, 'Courier New', 'Times New Roman', serif !important;
+    font-family: 'Junge', Georgia, 'Courier New', 'Times New Roman', serif !important;
 }
 
 footer a {
