@@ -17,10 +17,9 @@
   },
   "csscomb.formatOnSave": true,
   "csscomb.preset": {
-    "remove-empty-rulesets": true,
     "always-semicolon": true,
     "color-case": "upper",
-    "block-indent": "    ",
+    "block-indent": "  ",
     "color-shorthand": false,
     "element-case": "lower",
     "eof-newline": true,
@@ -359,5 +358,5 @@
     "Modules",
     "Workspace"
   ],
-  "typescriptHero.imports.organizeOnSave": true,
+  "typescriptHero.imports.organizeOnSave": false,
 }
