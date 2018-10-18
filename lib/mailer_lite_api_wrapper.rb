@@ -25,7 +25,7 @@ class MailerLiteApiWrapper
     }
     @api_client.create_group_subscriber(@group_id, subscriber)
   rescue StandardError => e
-    Rails.logger.warn("MailerLiteApiWrapper - Subscribing athlete '#{athlete.id} - #{email}' from group '#{@group_id}' failed. "\
+    Rails.logger.warn("MailerLiteApiWrapper - Subscribing athlete '#{athlete.id} - #{email}' to group '#{@group_id}' failed. "\
       "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
   end
 
@@ -33,6 +33,9 @@ class MailerLiteApiWrapper
 
   def create_merge_fields(athlete)
     athlete = athlete.decorate
+
+    city = athlete.athlete_info.city.nil? ? nil : athlete.athlete_info.city.name.to_s.strip
+    country = athlete.athlete_info.country.nil? ? nil : athlete.athlete_info.country.name.to_s.strip
 
     pro_expires_at = athlete.pro_subscription_expires_at_formatted
     pro_expiration_date = nil
@@ -44,8 +47,8 @@ class MailerLiteApiWrapper
       email: athlete.athlete_info.email.downcase,
       name: athlete.athlete_info.firstname,
       last_name: athlete.athlete_info.lastname,
-      country: athlete.athlete_info.country.name,
-      city: athlete.athlete_info.city.name,
+      country: country,
+      city: city,
       athlete_id: athlete.id.to_s,
       profile_url: "#{Settings.app.url}/athletes/#{athlete.id}",
       strava_profile_url: "#{Settings.strava.url}/athletes/#{athlete.id}",
