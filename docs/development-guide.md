@@ -15,12 +15,16 @@ and retrieve data via [Strava API service][Strava API].
 
 ## Development
 
+### Prerequisites
+
 To get started developing Strafforts locally,
 please first make sure [Ruby on Rails][Ruby on Rails]
 and [PostgreSQL][PostgreSQL] environment have been properly setup on your machine.
 
 Note that Ruby on Rails uses [Sqlite][Sqlite] by default, which also works fine with Strafforts,
 but configurations in `config/database.yml` and `Gemfile` need to be updated accordingly in that case.
+
+### Instructions
 
 1. Clone and config repository
 
@@ -80,7 +84,7 @@ but configurations in `config/database.yml` and `Gemfile` need to be updated acc
 
 1. Create, migrate and seed database
 
-       bin/rails db:create && bin/rails db:migrate && bin/rails db:seed
+       bundle exec rails db:create && bundle exec rails db:migrate && bundle exec rails db:seed
 
 1. Install JS dependencies
 
@@ -169,7 +173,7 @@ but configurations in `config/database.yml` and `Gemfile` need to be updated acc
 
 1. Play around!
 
-[Strava API]: https://strava.github.io/api/
+[Strava API]: https://developers.strava.com/docs/reference/
 [Strava API settings page]: https://www.strava.com/settings/api
 [estimated best efforts]: https://support.strava.com/hc/en-us/articles/216917127-Estimated-Best-Efforts-for-Running
 [Strafforts]: https:/www.strafforts.com
