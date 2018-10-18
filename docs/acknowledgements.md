@@ -21,12 +21,13 @@
 - [TypeScript](https://www.typescriptlang.org/) - TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.
 - [Yarn](https://yarnpkg.com/en/) - Fast, reliable, and secure dependency management.
 - [Chart.js](http://www.chartjs.org/) - Simple yet flexible JavaScript charting for designers & developers
-- [HTML5 Shiv](https://github.com/aFarkas/html5shiv) - This script is the defacto way to enable use of HTML5 sectioning elements in legacy Internet Explorer.
-- [jQuery Easing](http://gsgd.co.uk/sandbox/jquery/easing/) -  Uses the built in easing capabilities added In jQuery 1.1 to offer multiple easing options
+- ~~[HTML5 Shiv](https://github.com/aFarkas/html5shiv) - This script is the defacto way to enable use of HTML5 sectioning elements in legacy Internet Explorer.~~
+- ~~[jQuery Easing](http://gsgd.co.uk/sandbox/jquery/easing/) -  Uses the built in easing capabilities added In jQuery 1.1 to offer multiple easing options~~
 - [moment.js](http://momentjs.com/) - Parse, validate, manipulate, and display dates in JavaScript.
 - [PACE](http://github.hubspot.com/pace/) - Automatic page load progress bars
-- [Respond.js](https://github.com/scottjehl/Respond) - A fast & lightweight polyfill for min/max-width CSS3 Media Queries (for IE 6-8, and more)
+- ~~[Respond.js](https://github.com/scottjehl/Respond) - A fast & lightweight polyfill for min/max-width CSS3 Media Queries (for IE 6-8, and more)~~
 - [toastr.js](https://github.com/CodeSeven/toastr) - Simple javascript toast notifications
+- [Material Kit React](https://www.creative-tim.com/product/material-kit-react) - Free Material-UI kit
 
 ## Infrastructure
 
