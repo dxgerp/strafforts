@@ -13,7 +13,7 @@ by first creating an application at <https://www.strava.com/settings/api>,
 which allows your Strafforts instance (either in the cloud or local) to connect with Strava
 and retrieve data via [Strava API service][Strava API].
 
-## Development
+## Development (Local)
 
 ### Prerequisites
 
@@ -131,6 +131,32 @@ but configurations in `config/database.yml` and `Gemfile` need to be updated acc
             bundle exec bin/rails test:system
 
       - Alternatively, use `yarn test:all` to run both sets of tests.
+
+## Development (Docker)
+
+### Prerequisites
+
+Make sure [Docker](https://docs.docker.com/) has been installed and configured correctly.
+
+### Instructions
+
+1. Clone and config repository
+
+       git clone https://github.com/yizeng/strafforts.git
+
+1. Build the app
+
+       docker-compose build
+
+1. Boot the app
+
+       docker-compose up
+
+1. In another terminal, run:
+
+       docker-compose run web rake db:create
+       docker-compose run web rake db:migrate
+       docker-compose run web rake db:seed
 
 ## Install on Heroku
 
