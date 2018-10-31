@@ -22,15 +22,10 @@
 
     <%= csrf_meta_tags %>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <%= javascript_include_tag 'html5shiv/dist/html5shiv.min' %>
-      <%= javascript_include_tag 'respond.js/dest/respond.min' %>
-    <![endif]-->
-
+    <link href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" rel="stylesheet">
     <%= stylesheet_pack_tag 'home', media: 'all' %>
   </head>
-
-  <%= yield %>
+  <body>
+    <%= yield %>
+  </body>
 </html>

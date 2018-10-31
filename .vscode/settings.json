@@ -1,7 +1,6 @@
 // Place your settings in this file to overwrite default and user settings.
 {
   "[markdown]": {
-    "editor.formatOnSave": true,
     "editor.wordWrap": "on",
     "editor.renderWhitespace": "all",
     "editor.acceptSuggestionOnEnter": "off"
@@ -9,15 +8,17 @@
   "[javascript]": {
     "editor.formatOnSave": true,
   },
+  "[javascriptreact]": {
+      "editor.formatOnSave": true
+  },
   "[typescript]": {
     "editor.formatOnSave": true,
   },
   "csscomb.formatOnSave": true,
   "csscomb.preset": {
-    "remove-empty-rulesets": true,
     "always-semicolon": true,
     "color-case": "upper",
-    "block-indent": "    ",
+    "block-indent": "  ",
     "color-shorthand": false,
     "element-case": "lower",
     "eof-newline": true,
@@ -349,4 +350,12 @@
   "extensions.ignoreRecommendations": false,
   "tslint.configFile": "config/tslint.json",
   "tslint.autoFixOnSave": true,
+  "typescriptHero.imports.grouping": [
+    "/^core-js/",
+    "/^react/",
+    "Plains",
+    "Modules",
+    "Workspace"
+  ],
+  "typescriptHero.imports.organizeOnSave": false,
 }
