@@ -1,0 +1,9 @@
+.byebug_history
+.dockerignore
+.git
+Gemfile.lock
+log/*
+node_modules/*
+npm-debug.log
+tmp/*
+yarn.lock
