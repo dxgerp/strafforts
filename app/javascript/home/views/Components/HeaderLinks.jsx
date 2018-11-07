@@ -22,8 +22,8 @@ function HeaderLinks({ ...props }) {
         <Button color="transparent" href="#the-demo" className={classes.navLink}>
           <FormattedMessage id="home.sectionDemo.title" />
         </Button>
-        <Button color="transparent" href="#the-gurantees" className={classes.navLink}>
-          <FormattedMessage id="home.sectionGurantees.title" />
+        <Button color="transparent" href="#the-guarantees" className={classes.navLink}>
+          <FormattedMessage id="home.sectionGuarantees.title" />
         </Button>
         <Button color="transparent" href="#the-team" className={classes.navLink}>
           <FormattedMessage id="home.sectionTeam.title" />

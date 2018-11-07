@@ -15,7 +15,7 @@ import Header from './Components/material-kit-react/Header/Header.jsx';
 import Parallax from './Components/material-kit-react/Parallax/Parallax.jsx';
 import { container, title } from './Components/material-kit-react/Styles/material-kit-react.jsx';
 import SectionDemo from './Components/SectionDemo';
-import SectionGurantees from './Components/SectionGurantees';
+import SectionGuarantees from './Components/SectionGuarantees';
 import SectionIdea from './Components/SectionIdea';
 import SectionTeam from './Components/SectionTeam';
 
@@ -105,7 +105,7 @@ class Homepage extends React.Component {
           <div className={classes.container}>
             <SectionIdea />
             <SectionDemo />
-            <SectionGurantees />
+            <SectionGuarantees />
             <SectionTeam />
           </div>
         </div>
