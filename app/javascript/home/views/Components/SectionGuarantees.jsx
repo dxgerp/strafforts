@@ -11,7 +11,7 @@ import GridContainer from './material-kit-react/Grid/GridContainer.jsx';
 import GridItem from './material-kit-react/Grid/GridItem.jsx';
 import { title } from './material-kit-react/Styles/material-kit-react.jsx';
 
-const guranteesStyle = {
+const guaranteesStyle = {
   section: {
     padding: '20px 0',
     textAlign: 'center',
@@ -32,22 +32,22 @@ const guranteesStyle = {
   },
 };
 
-class SectionGurantees extends React.Component {
+class SectionGuarantees extends React.Component {
   render() {
     const { classes } = this.props;
     return (
       <div className={`${classes.section} content-section`}>
-        <h2 id="the-gurantees" className={classes.title + ' placeholder-header'} />
+        <h2 id="the-guarantees" className={classes.title + ' placeholder-header'} />
         <h2 className={classes.title}>
-          <FormattedMessage id="home.sectionGurantees.title" />
+          <FormattedMessage id="home.sectionGuarantees.title" />
         </h2>
         <GridContainer justify="center">
           <GridItem className={classes.itemGrid} xs={12} sm={12} md={8}>
             <h4 className={classes.description}>
-              <FormattedMessage id="home.sectionGurantees.paragraph1" />
+              <FormattedMessage id="home.sectionGuarantees.paragraph1" />
             </h4>
             <h4 className={classes.description}>
-              <FormattedMessage id="home.sectionGurantees.paragraph2" />
+              <FormattedMessage id="home.sectionGuarantees.paragraph2" />
             </h4>
           </GridItem>
         </GridContainer>
@@ -55,26 +55,26 @@ class SectionGurantees extends React.Component {
           <GridContainer>
             <GridItem className={classes.itemGrid} xs={12} sm={12} md={4}>
               <InfoAreaIntl
-                className="infor-area"
-                titleTranslationId="home.sectionGurantees.privacy.title"
-                descriptionTranslationId="home.sectionGurantees.privacy.description"
+                className="info-area"
+                titleTranslationId="home.sectionGuarantees.privacy.title"
+                descriptionTranslationId="home.sectionGuarantees.privacy.description"
                 icon={VerifiedUser}
                 iconColor="success"
               />
             </GridItem>
             <GridItem className={classes.itemGrid} xs={12} sm={12} md={4}>
               <InfoAreaIntl
-                className="infor-area"
-                titleTranslationId="home.sectionGurantees.openSource.title"
-                descriptionTranslationId="home.sectionGurantees.openSource.description"
+                className="info-area"
+                titleTranslationId="home.sectionGuarantees.openSource.title"
+                descriptionTranslationId="home.sectionGuarantees.openSource.description"
                 icon={Code}
                 iconColor="danger"
               />
             </GridItem>
             <GridItem className={classes.itemGrid} xs={12} sm={12} md={4}>
               <InfoAreaIntl
-                titleTranslationId="home.sectionGurantees.support.title"
-                descriptionTranslationId="home.sectionGurantees.support.description"
+                titleTranslationId="home.sectionGuarantees.support.title"
+                descriptionTranslationId="home.sectionGuarantees.support.description"
                 icon={ContactSupport}
                 iconColor="info"
               />
@@ -86,4 +86,4 @@ class SectionGurantees extends React.Component {
   }
 }
 
-export default withStyles(guranteesStyle)(SectionGurantees);
+export default withStyles(guaranteesStyle)(SectionGuarantees);
