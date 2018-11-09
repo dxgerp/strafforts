@@ -64,7 +64,7 @@ class Homepage extends React.Component {
       '&response_type=code&redirect_uri=' +
       redirectUri +
       config.get('app.redirectUriPath') +
-      '&approval_prompt=auto&scope=view_private';
+      '&approval_prompt=auto&scope=read,read_all,profile:read_all,activity:read_all';
 
     return (
       <div>

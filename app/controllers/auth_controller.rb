@@ -56,13 +56,15 @@ class AuthController < ApplicationController
       URI(STRAVA_API_AUTH_TOKEN_URL),
       'code' => code,
       'client_id' => STRAVA_API_CLIENT_ID,
-      'client_secret' => ENV['STRAVA_API_CLIENT_SECRET']
+      'client_secret' => ENV['STRAVA_API_CLIENT_SECRET'],
+      'grant_type' => 'authorization_code'
     )
 
     if response.is_a? Net::HTTPSuccess
       result = JSON.parse(response.body)
       access_token = result['access_token']
       athlete = ::Creators::AthleteCreator.create_or_update(access_token, result['athlete'], false)
+      ::Creators::RefreshTokenCreator.create(access_token, result['refresh_token'], result['expires_at'])
       ::Creators::HeartRateZonesCreator.create_or_update(result['athlete']['id']) # Create default heart rate zones.
 
       if ENV['ENABLE_EARLY_BIRDS_PRO_ON_LOGIN'] == 'true'

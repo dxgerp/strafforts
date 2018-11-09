@@ -3,7 +3,7 @@ class AthletesController < ApplicationController
   include AthleteFoundable
 
   def index
-    @auth_url = ApplicationController.get_auth_url(request)
+    @auth_url = ApplicationController.get_authorize_url(request)
     athlete = find_athlete(params[:id])
 
     @is_current_user = athlete.access_token == cookies.signed[:access_token]
@@ -26,7 +26,7 @@ class AthletesController < ApplicationController
   end
 
   def pro_plans
-    @auth_url = ApplicationController.get_auth_url(request)
+    @auth_url = ApplicationController.get_authorize_url(request)
     athlete_id = params[:id]
     athlete = find_athlete(athlete_id)
 
