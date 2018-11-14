@@ -5,54 +5,22 @@ import { FormattedMessage } from 'react-intl';
 import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
 
-import Footer from '../views/Components/Footer';
 import imgConnectWithStrava from './../assets/img/btn_strava_connectwith_orange.png';
 import imgBackground from './../assets/img/main-bg.jpg';
-import HeaderLinks from './Components/HeaderLinks';
+import Footer from './Components/HomePage/Footer';
+import HeaderLinks from './Components/HomePage/HeaderLinks';
+import SectionDemo from './Components/HomePage/SectionDemo';
+import SectionGuarantees from './Components/HomePage/SectionGuarantees';
+import SectionIdea from './Components/HomePage/SectionIdea';
+import SectionTeam from './Components/HomePage/SectionTeam';
+import LandingPageStyle from './Components/LandingPageStyle.jsx';
 import GridContainer from './Components/material-kit-react/Grid/GridContainer.jsx';
 import GridItem from './Components/material-kit-react/Grid/GridItem.jsx';
 import Header from './Components/material-kit-react/Header/Header.jsx';
 import Parallax from './Components/material-kit-react/Parallax/Parallax.jsx';
-import { container, title } from './Components/material-kit-react/Styles/material-kit-react.jsx';
-import SectionDemo from './Components/SectionDemo';
-import SectionGuarantees from './Components/SectionGuarantees';
-import SectionIdea from './Components/SectionIdea';
-import SectionTeam from './Components/SectionTeam';
+import { title } from './Components/material-kit-react/Styles/material-kit-react.jsx';
 
 const dashboardRoutes = [];
-
-const homepageStyle = {
-  container: {
-    zIndex: '12',
-    color: '#FFFFFF',
-    ...container,
-  },
-  title: {
-    ...title,
-    display: 'inline-block',
-    position: 'relative',
-    marginTop: '30px',
-    minHeight: '32px',
-    color: '#FFFFFF',
-    textDecoration: 'none',
-  },
-  subtitle: {
-    fontSize: '1.313rem',
-    maxWidth: '500px',
-    margin: '10px auto 0',
-  },
-  main: {
-    background: '#FFFFFF',
-    position: 'relative',
-    zIndex: '3',
-  },
-  mainRaised: {
-    margin: '-60px 30px 0px',
-    borderRadius: '6px',
-    boxShadow:
-      '0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)',
-  },
-};
 
 class Homepage extends React.Component {
   render() {
@@ -115,4 +83,4 @@ class Homepage extends React.Component {
   }
 }
 
-export default withStyles(homepageStyle)(Homepage);
+export default withStyles(LandingPageStyle)(Homepage);

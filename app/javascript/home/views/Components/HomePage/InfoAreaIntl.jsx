@@ -3,7 +3,7 @@ import { injectIntl, intlShape } from 'react-intl';
 
 import PropTypes from 'prop-types';
 
-import InfoArea from './material-kit-react/InfoArea/InfoArea.jsx';
+import InfoArea from './../material-kit-react/InfoArea/InfoArea.jsx';
 
 const InfoAreaIntl = ({ intl, titleTranslationId, descriptionTranslationId, icon, iconColor }) => {
   const title = intl.formatMessage({ id: titleTranslationId });

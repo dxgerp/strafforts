@@ -5,17 +5,17 @@ import Carousel from 'react-slick';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import imgBestEfforts from './../../assets/img/screenshots/best-efforts.png';
-import imgOverview from './../../assets/img/screenshots/overview.png';
-import imgPbs from './../../assets/img/screenshots/pbs.png';
-import imgRacesByDistances from './../../assets/img/screenshots/races-by-distances.png';
-import imgRacesByYear from './../../assets/img/screenshots/races-by-year.png';
-import imgRacesTimeline from './../../assets/img/screenshots/races-timeline.png';
-import Card from './material-kit-react/Card/Card.jsx';
-import Button from './material-kit-react/CustomButtons/Button.jsx';
-import GridContainer from './material-kit-react/Grid/GridContainer.jsx';
-import GridItem from './material-kit-react/Grid/GridItem.jsx';
-import { container, title } from './material-kit-react/Styles/material-kit-react.jsx';
+import imgBestEfforts from './../../../assets/img/screenshots/best-efforts.png';
+import imgOverview from './../../../assets/img/screenshots/overview.png';
+import imgPbs from './../../../assets/img/screenshots/pbs.png';
+import imgRacesByDistances from './../../../assets/img/screenshots/races-by-distances.png';
+import imgRacesByYear from './../../../assets/img/screenshots/races-by-year.png';
+import imgRacesTimeline from './../../../assets/img/screenshots/races-timeline.png';
+import Card from './../material-kit-react/Card/Card.jsx';
+import Button from './../material-kit-react/CustomButtons/Button.jsx';
+import GridContainer from './../material-kit-react/Grid/GridContainer.jsx';
+import GridItem from './../material-kit-react/Grid/GridItem.jsx';
+import { container, title } from './../material-kit-react/Styles/material-kit-react.jsx';
 
 const demoStyle = {
   section: {

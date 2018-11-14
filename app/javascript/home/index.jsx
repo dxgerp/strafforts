@@ -12,19 +12,25 @@ import { createBrowserHistory } from 'history';
 
 import configFile from './config';
 import { IntlProvider } from './IntlContext';
-import indexRoutes from './routes/index.jsx';
+import ErrorPage from './views/ErrorPage.jsx';
+import HomePage from './views/HomePage.jsx';
 
 var hist = createBrowserHistory();
 
 config.set(configFile);
 
+const errorPage400 = () => <ErrorPage errorCode="400" />;
+const errorPage404 = () => <ErrorPage errorCode="404" />;
+const errorPage500 = () => <ErrorPage errorCode="500" />;
+
 ReactDOM.render(
   <IntlProvider>
     <Router history={hist}>
       <Switch>
-        {indexRoutes.map((prop, key) => {
-          return <Route path={prop.path} key={key} component={prop.component} />;
-        })}
+        <Route path="/errors/400" key="ErrorPage400" component={errorPage400} />
+        <Route path="/errors/404" key="ErrorPage404" component={errorPage404} />
+        <Route path="/errors/500" key="ErrorPage500" component={errorPage500} />
+        <Route path="/" key="HomePage" component={HomePage} />
       </Switch>
     </Router>
   </IntlProvider>,
