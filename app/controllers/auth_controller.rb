@@ -1,11 +1,18 @@
 class AuthController < ApplicationController
   def exchange_token
     if params[:error].blank?
-      handle_token_exchange(params[:code])
+      if params[:scope] == 'read,read_all,activity:read_all,profile:read_all'
+        handle_token_exchange(params[:code])
+      else
+        Rails.logger.warn("Exchanging token failed due to insufficient scope selected. params[:error]: #{params[:error].inspect}.")
+        redirect_to '/errors/403'
+        return
+      end
     else
       # Error returned from Strava side. E.g. user clicked 'Cancel' and didn't authorize.
-      # Log it and redirect back to homepage.
-      Rails.logger.warn("Exchanging token failed. params[:error]: #{params[:error].inspect}.")
+      Rails.logger.warn("Exchanging token failed due to cancellation of the authorization. params[:error]: #{params[:error].inspect}.")
+      redirect_to '/errors/401'
+      return
     end
 
     redirect_to root_path

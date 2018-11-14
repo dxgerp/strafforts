@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   get 'athletes/:id/cancel-pro' => 'athletes#cancel_pro'
 
   get 'errors/400' => 'home#index'
+  get 'errors/401' => 'home#index'
+  get 'errors/403' => 'home#index'
   get 'errors/404' => 'home#index'
   get 'errors/500' => 'home#index'
 
