@@ -6,7 +6,7 @@ module Creators
     def self.create(access_token, refresh_token, expires_at) # rubocop:disable CyclomaticComplexity, PerceivedComplexity, MethodLength
       athlete = Athlete.find_by_access_token(access_token)
       if athlete.nil?
-        Rails.logger.warn("RefreshTokenCreator - Could not find requested athlete (access_token=#{access_token}.")
+        Rails.logger.warn("RefreshTokenCreator - Could not find requested athlete (access_token=#{access_token}).")
         return
       end
 
@@ -31,7 +31,7 @@ module Creators
       end
 
       # Save to database.
-      Rails.logger.info("RefreshTokenCreator - Update refresh token for athlete #{athlete.id}).")
+      Rails.logger.info("RefreshTokenCreator - Update refresh token for athlete #{athlete.id}.")
       athlete.refresh_token = refresh_token
       athlete.refresh_token_expires_at = Time.at(expires_at)
       athlete.save!

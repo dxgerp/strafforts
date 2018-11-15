@@ -1,10 +1,12 @@
 class AuthController < ApplicationController
+  REQUIRED_SCOPES = ['read', 'read_all', 'activity:read_all', 'profile:read_all'].freeze
+
   def exchange_token
     if params[:error].blank?
-      if params[:scope] == 'read,read_all,activity:read_all,profile:read_all'
+      if params[:scope].split(',').sort == REQUIRED_SCOPES.sort # Make sure all required scopes are returned.
         handle_token_exchange(params[:code])
       else
-        Rails.logger.warn("Exchanging token failed due to insufficient scope selected. params[:error]: #{params[:error].inspect}.")
+        Rails.logger.warn("Exchanging token failed due to insufficient scope selected. params[:scope]: #{params[:scope].inspect}.")
         redirect_to '/errors/403'
         return
       end
