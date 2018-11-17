@@ -20,20 +20,20 @@ var hist = createBrowserHistory();
 config.set(configFile);
 
 const errorPage400 = () => <ErrorPage errorCode="400" />;
-const errorPage401 = () => <ErrorPage errorCode="401" />;
 const errorPage403 = () => <ErrorPage errorCode="403" />;
 const errorPage404 = () => <ErrorPage errorCode="404" />;
 const errorPage500 = () => <ErrorPage errorCode="500" />;
+const errorPage503 = () => <ErrorPage errorCode="503" />;
 
 ReactDOM.render(
   <IntlProvider>
     <Router history={hist}>
       <Switch>
         <Route path="/errors/400" key="ErrorPage400" component={errorPage400} />
-        <Route path="/errors/401" key="ErrorPage401" component={errorPage401} />
         <Route path="/errors/403" key="ErrorPage403" component={errorPage403} />
         <Route path="/errors/404" key="ErrorPage404" component={errorPage404} />
         <Route path="/errors/500" key="ErrorPage500" component={errorPage500} />
+        <Route path="/errors/503" key="ErrorPage503" component={errorPage503} />
         <Route path="/" key="HomePage" component={HomePage} />
       </Switch>
     </Router>

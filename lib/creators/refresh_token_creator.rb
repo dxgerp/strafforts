@@ -26,7 +26,7 @@ module Creators
           expires_at = result['expires_at']
         else
           response_body = response.nil? || response.body.blank? ? '' : "\nResponse Body: #{response.body}"
-          raise "Refreshing token failed. HTTP Status Code: #{response.code}.#{response_body}"
+          raise "RefreshTokenCreator - Getting refreshing token failed. HTTP Status Code: #{response.code}.#{response_body}"
         end
       end
 

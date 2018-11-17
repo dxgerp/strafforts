@@ -47,8 +47,11 @@ class AthletesController < ApplicationController
     athlete = find_athlete(athlete_id)
 
     @is_current_user = athlete.access_token == cookies.signed[:access_token]
-    error_message = "Could not cancel PRO plan for athlete '#{athlete_id}' that is not currently logged in."
-    raise ActionController::BadRequest, error_message unless @is_current_user
+    unless @is_current_user
+      Rails.logger.warn("Could not cancel PRO plan for athlete '#{athlete_id}' that is not currently logged in.")
+      redirect_to '/errors/403'
+      return
+    end
 
     begin
       ::Creators::SubscriptionCreator.cancel(athlete)

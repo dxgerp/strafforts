@@ -21,11 +21,14 @@ Rails.application.routes.draw do
   get 'athletes/:id/get-pro' => 'athletes#pro_plans'
   get 'athletes/:id/cancel-pro' => 'athletes#cancel_pro'
 
-  get 'errors/400' => 'home#index'
-  get 'errors/401' => 'home#index'
-  get 'errors/403' => 'home#index'
-  get 'errors/404' => 'home#index'
-  get 'errors/500' => 'home#index'
+  match '/404', to: 'errors#not_found', via: :all
+  match '/500', to: 'errors#internal_server_error', via: :all
+
+  get 'errors/400' => 'errors#index'
+  get 'errors/403' => 'errors#index'
+  get 'errors/404' => 'errors#index'
+  get 'errors/500' => 'errors#index'
+  get 'errors/503' => 'errors#index'
 
   get 'home/index'
 
