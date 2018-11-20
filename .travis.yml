@@ -10,7 +10,7 @@ cache:
   - yarn
 
 rvm:
-  - 2.5.1
+  - 2.5.3
 
 matrix:
   allow_failures:

@@ -27,12 +27,12 @@ module Creators
 
         @athlete_info = AthleteInfo.find_by(athlete_id: athlete_id)
         if @athlete_info.nil?
-          Rails.logger.info("AthleteCreator - Creating athlete info for athlete '#{athlete_id}'.")
+          Rails.logger.info("AthleteCreator - Creating athlete info for athlete #{athlete_id}.")
 
           @athlete_info = AthleteInfo.new
           @athlete_info.athlete_id = athlete_id
         else
-          Rails.logger.info("AthleteCreator - Updating athlete info for athlete '#{athlete_id}'.")
+          Rails.logger.info("AthleteCreator - Updating athlete info for athlete #{athlete_id}.")
         end
 
         update_athlete_summary(access_token, athlete_hash)

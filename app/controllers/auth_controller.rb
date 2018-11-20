@@ -1,11 +1,22 @@
 class AuthController < ApplicationController
+  REQUIRED_SCOPES = ['read', 'read_all', 'activity:read_all', 'profile:read_all'].freeze
+
   def exchange_token
     if params[:error].blank?
-      handle_token_exchange(params[:code])
+      if params[:scope].split(',').sort == REQUIRED_SCOPES.sort # Make sure all required scopes are returned.
+        success = handle_token_exchange(params[:code])
+        unless success
+          redirect_to '/errors/503'
+          return
+        end
+      else
+        Rails.logger.warn("Exchanging token failed due to insufficient scope selected. params[:scope]: #{params[:scope].inspect}.")
+        redirect_to '/errors/400'
+        return
+      end
     else
       # Error returned from Strava side. E.g. user clicked 'Cancel' and didn't authorize.
-      # Log it and redirect back to homepage.
-      Rails.logger.warn("Exchanging token failed. params[:error]: #{params[:error].inspect}.")
+      Rails.logger.warn("Exchanging token failed due to cancellation of the authorization. params[:error]: #{params[:error].inspect}.")
     end
 
     redirect_to root_path
@@ -56,13 +67,23 @@ class AuthController < ApplicationController
       URI(STRAVA_API_AUTH_TOKEN_URL),
       'code' => code,
       'client_id' => STRAVA_API_CLIENT_ID,
-      'client_secret' => ENV['STRAVA_API_CLIENT_SECRET']
+      'client_secret' => ENV['STRAVA_API_CLIENT_SECRET'],
+      'grant_type' => 'authorization_code'
     )
 
     if response.is_a? Net::HTTPSuccess
       result = JSON.parse(response.body)
       access_token = result['access_token']
       athlete = ::Creators::AthleteCreator.create_or_update(access_token, result['athlete'], false)
+
+      begin
+        ::Creators::RefreshTokenCreator.create(access_token, result['refresh_token'], result['expires_at'])
+      rescue StandardError => e
+        Rails.logger.error('RefreshTokenCreator - Creation failed. '\
+          "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
+        return false # Exit. Don't proceed further.
+      end
+
       ::Creators::HeartRateZonesCreator.create_or_update(result['athlete']['id']) # Create default heart rate zones.
 
       if ENV['ENABLE_EARLY_BIRDS_PRO_ON_LOGIN'] == 'true'
@@ -97,12 +118,10 @@ class AuthController < ApplicationController
 
       # Encrypt and set access_token in cookies.
       cookies.signed[:access_token] = { value: access_token, expires: Time.now + 7.days }
-      return
+      return true
     end
 
-    response_body = response.nil? || response.body.blank? ? '' : "\nResponse Body: #{response.body}"
-    raise ActionController::BadRequest, "Bad request while exchanging token with Strava.#{response_body}" if response.code == '400'
-
-    raise "Exchanging token failed. HTTP Status Code: #{response.code}.#{response_body}"
+    Rails.logger.error("Exchanging token failed from Strava side. HTTP Status Code: #{response.code}.#{response_body}")
+    false
   end
 end

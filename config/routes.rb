@@ -1,15 +1,4 @@
 Rails.application.routes.draw do
-  get 'errors/bad_request'
-  get 'errors/not_found'
-  get 'errors/internal_server_error'
-  match '/400', to: 'errors#bad_request', via: :all
-  match '/404', to: 'errors#not_found', via: :all
-  match '/500', to: 'errors#internal_server_error', via: :all
-
-  get 'athletes/:id' => 'athletes#index'
-  get 'athletes/:id/get-pro' => 'athletes#pro_plans'
-  get 'athletes/:id/cancel-pro' => 'athletes#cancel_pro'
-
   namespace :api do
     get 'athletes/:id/meta' => 'meta#index'
     get 'athletes/:id/best-efforts' => 'best_efforts#index'
@@ -27,6 +16,19 @@ Rails.application.routes.draw do
 
     get 'faqs/index' => 'faqs#index'
   end
+
+  get 'athletes/:id' => 'athletes#index'
+  get 'athletes/:id/get-pro' => 'athletes#pro_plans'
+  get 'athletes/:id/cancel-pro' => 'athletes#cancel_pro'
+
+  match '/404', to: 'errors#not_found', via: :all
+  match '/500', to: 'errors#internal_server_error', via: :all
+
+  get 'errors/400' => 'errors#index'
+  get 'errors/403' => 'errors#index'
+  get 'errors/404' => 'errors#index'
+  get 'errors/500' => 'errors#index'
+  get 'errors/503' => 'errors#index'
 
   get 'home/index'
 

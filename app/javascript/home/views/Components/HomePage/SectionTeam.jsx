@@ -5,15 +5,15 @@ import { FormattedMessage } from 'react-intl';
 import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
 
-import teamMember1 from './../../assets/img/faces/yizeng.jpg';
-import Card from './material-kit-react/Card/Card.jsx';
-import CardBody from './material-kit-react/Card/CardBody.jsx';
-import CardFooter from './material-kit-react/Card/CardFooter.jsx';
-import Button from './material-kit-react/CustomButtons/Button.jsx';
-import GridContainer from './material-kit-react/Grid/GridContainer.jsx';
-import GridItem from './material-kit-react/Grid/GridItem.jsx';
-import imagesStyle from './material-kit-react/Styles/imagesStyles.jsx';
-import { cardTitle, title } from './material-kit-react/Styles/material-kit-react.jsx';
+import teamMember1 from './../../../assets/img/faces/yizeng.jpg';
+import Card from './../material-kit-react/Card/Card.jsx';
+import CardBody from './../material-kit-react/Card/CardBody.jsx';
+import CardFooter from './../material-kit-react/Card/CardFooter.jsx';
+import Button from './../material-kit-react/CustomButtons/Button.jsx';
+import GridContainer from './../material-kit-react/Grid/GridContainer.jsx';
+import GridItem from './../material-kit-react/Grid/GridItem.jsx';
+import imagesStyle from './../material-kit-react/Styles/imagesStyles.jsx';
+import { cardTitle, title } from './../material-kit-react/Styles/material-kit-react.jsx';
 
 const teamStyle = {
   section: {
