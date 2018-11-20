@@ -10,7 +10,7 @@
   "errors.404.descriptionLine2": "If this is your athlete page, please try go back homepage and re-connect with Strava.",
   "errors.500.headline": "Internal Server Error",
   "errors.500.descriptionLine1": "We have been notified and will fix this right away.",
-  "errors.500.descriptionLine2": "Meanwhile, you may return to homepage or contact us.",
+  "errors.500.descriptionLine2": "Meanwhile, you may return to homepage or contact us if the problem persists.",
   "errors.503.headline": "Strava Service Unavailable",
   "errors.503.descriptionLine1": "Strava did not respond to our request accordingly. Their authentication server maybe be out of service temporarily.",
   "errors.503.descriptionLine2": "Please try again later.",

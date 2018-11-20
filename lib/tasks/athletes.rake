@@ -2,7 +2,7 @@ require 'yaml'
 
 namespace :athletes do
   desc 'Grant PRO plan to the given athletes.'
-  # Usage: bundle exec bin/rails athletes:apply_pro PLAN="Lifetime PRO" ID=[Comma Separated list]
+  # Usage: bundle exec bin/rails athletes:apply_pro PLAN="Old Mates PRO" ID=[Comma Separated list]
   task apply_pro: :environment do
     apply_subscription(ENV['PLAN'], ENV['ID'])
   end
