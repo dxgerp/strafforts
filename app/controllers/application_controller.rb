@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     "?client_id=#{STRAVA_API_CLIENT_ID}"\
     '&response_type=code'\
     "&redirect_uri=#{request.protocol}#{request.host}:#{request.port}/auth/exchange-token"\
-    '&approval_prompt=auto&scope=read,read_all,profile:read_all,activity:read_all'
+    '&approval_prompt=auto&scope=read,profile:read_all,activity:read'
   end
 
   def self.get_meta(athlete_id) # rubocop:disable MethodLength

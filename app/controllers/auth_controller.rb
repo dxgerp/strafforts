@@ -1,9 +1,9 @@
 class AuthController < ApplicationController
-  REQUIRED_SCOPES = ['read', 'read_all', 'activity:read_all', 'profile:read_all'].freeze
+  REQUIRED_SCOPES = ['read', 'profile:read_all', 'activity:read'].freeze
 
   def exchange_token
     if params[:error].blank?
-      if params[:scope].split(',').sort == REQUIRED_SCOPES.sort # Make sure all required scopes are returned.
+      if REQUIRED_SCOPES.all? { |scope| params[:scope].split(',').include?(scope) } # Make sure all required scopes are returned.
         success = handle_token_exchange(params[:code])
         unless success
           redirect_to '/errors/503'
