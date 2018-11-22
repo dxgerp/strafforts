@@ -67,6 +67,8 @@ RSpec.describe AuthController, type: :request do
   describe 'GET deauthorize' do
     it 'should deauthorize athlete successfully' do
       # arrange.
+      refresh_token_response_body = { 'access_token' => ACCESS_TOKEN, 'refresh_token' => '1234567898765432112345678987654321', 'expires_at' => 1531385304 }.to_json
+      stub_strava_post_request(Settings.strava.api_auth_token_url, TOKEN_REFRESH_REQUEST_BODY, 200, refresh_token_response_body)
       stub_strava_post_request(Settings.strava.api_auth_deauthorize_url, { 'access_token' => ACCESS_TOKEN }, 200)
       setup_cookie(ACCESS_TOKEN)
 

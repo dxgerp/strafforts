@@ -1,4 +1,4 @@
-class AuthController < ApplicationController
+class AuthController < ApplicationController # rubocop:disable ClassLength
   REQUIRED_SCOPES = ['read', 'profile:read_all', 'activity:read'].freeze
 
   def exchange_token
@@ -22,11 +22,19 @@ class AuthController < ApplicationController
     redirect_to root_path
   end
 
-  def deauthorize
-    unless cookies.signed[:access_token].nil?
+  def deauthorize # rubocop:disable MethodLength
+    access_token = cookies.signed[:access_token]
+    unless access_token.nil?
+      # Renew athlete's refresh token first.
+      begin
+        ::Creators::RefreshTokenCreator.refresh(access_token)
+      rescue StandardError => e
+        Rails.logger.error('Refreshing token while deauthorizing failed. '\
+          "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
+      end
 
       # Delete all data.
-      athlete = Athlete.find_by_access_token(cookies.signed[:access_token])
+      athlete = Athlete.find_by_access_token(access_token)
       unless athlete.nil?
         athlete_id = athlete.id
         Rails.logger.warn("Deauthrozing and destroying all data for athlete #{athlete_id}.")
@@ -42,9 +50,9 @@ class AuthController < ApplicationController
 
       # Revoke Strava access.
       uri = URI(STRAVA_API_AUTH_DEAUTHORIZE_URL)
-      response = Net::HTTP.post_form(uri, 'access_token' => cookies.signed[:access_token])
+      response = Net::HTTP.post_form(uri, 'access_token' => access_token)
       if response.is_a? Net::HTTPSuccess
-        Rails.logger.info("Revoked Strava access for athlete (access_token=#{cookies.signed[:access_token]}).")
+        Rails.logger.info("Revoked Strava access for athlete (access_token=#{access_token}).")
       else
         # Fail to revoke Strava access. Log it and don't throw.
         Rails.logger.error("Revoking Strava access failed. HTTP Status Code: #{response.code}. Response Message: #{response.message}")
@@ -100,9 +108,7 @@ class AuthController < ApplicationController
       if ENV['ENABLE_OLD_MATES_PRO_ON_LOGIN'] == 'true'
         begin
           athlete = athlete.decorate
-          if !athlete.pro_subscription? && athlete.returning_after_inactivity?
-            ::Creators::SubscriptionCreator.create(athlete, 'Old Mates PRO')
-          end
+          ::Creators::SubscriptionCreator.create(athlete, 'Old Mates PRO') if !athlete.pro_subscription? && athlete.returning_after_inactivity?
         rescue StandardError => e
           Rails.logger.error("Automatically applying 'Old Mates PRO' failed for athlete '#{athlete.id}'. "\
             "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
