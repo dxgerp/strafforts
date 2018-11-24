@@ -24,15 +24,16 @@ class AuthController < ApplicationController # rubocop:disable ClassLength
 
   def deauthorize # rubocop:disable MethodLength
     access_token = cookies.signed[:access_token]
-    unless access_token.nil?
-      # Renew athlete's refresh token first.
-      begin
-        ::Creators::RefreshTokenCreator.refresh(access_token)
-      rescue StandardError => e
-        Rails.logger.error('Refreshing token while deauthorizing failed. '\
-          "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
-      end
 
+    # Renew athlete's refresh token first.
+    begin
+      access_token = ::Creators::RefreshTokenCreator.refresh(access_token)
+    rescue StandardError => e
+      Rails.logger.error('Refreshing token while deauthorizing failed. '\
+        "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
+    end
+
+    unless access_token.nil?
       # Delete all data.
       athlete = Athlete.find_by_access_token(access_token)
       unless athlete.nil?
