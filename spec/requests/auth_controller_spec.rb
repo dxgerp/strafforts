@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe AuthController, type: :request do
   ACCESS_TOKEN = '3f2a45886980ebec9f4a689371e95860'.freeze
+  REFRESH_TOKEN = '773099021c1b74d2a61a97878f8b2b41ccd36b51'.freeze
   TOKEN_EXCHANGE_REQUEST_BODY = { 'client_id' => nil, 'client_secret' => nil, 'code' => nil, 'grant_type' => 'authorization_code' }.freeze
-  TOKEN_REFRESH_REQUEST_BODY = { 'client_id' => nil, 'client_secret' => nil, 'grant_type' => 'refresh_token', 'refresh_token' => ACCESS_TOKEN }.freeze
+  TOKEN_REFRESH_REQUEST_BODY = { 'client_id' => nil, 'client_secret' => nil, 'grant_type' => 'refresh_token', 'refresh_token' => REFRESH_TOKEN }.freeze
 
   describe 'GET exchange-token' do
     it 'should redirect to root directly there are errors in params' do
@@ -52,9 +53,9 @@ RSpec.describe AuthController, type: :request do
       ENV['ENABLE_EARLY_BIRDS_PRO_ON_LOGIN'] = 'true'
 
       token_exchange_response_body = { 'access_token' => ACCESS_TOKEN, 'athlete' => Athlete.find_by(id: 789).to_json }.to_json
-      refresh_token_response_body = { 'access_token' => ACCESS_TOKEN, 'refresh_token' => '1234567898765432112345678987654321', 'expires_at' => 1531385304 }.to_json
+      token_refresh_response_body = { 'access_token' => ACCESS_TOKEN, 'refresh_token' => '1234567898765432112345678987654321', 'expires_at' => 1531385304 }.to_json
       stub_strava_post_request(Settings.strava.api_auth_token_url, TOKEN_EXCHANGE_REQUEST_BODY, 200, token_exchange_response_body)
-      stub_strava_post_request(Settings.strava.api_auth_token_url, TOKEN_REFRESH_REQUEST_BODY, 200, refresh_token_response_body)
+      stub_strava_post_request(Settings.strava.api_auth_token_url, TOKEN_REFRESH_REQUEST_BODY, 200, token_refresh_response_body)
 
       # act.
       get '/auth/exchange-token', params: { scope: 'profile:read_all,read,activity:read' }
@@ -67,8 +68,8 @@ RSpec.describe AuthController, type: :request do
   describe 'GET deauthorize' do
     it 'should deauthorize athlete successfully' do
       # arrange.
-      refresh_token_response_body = { 'access_token' => ACCESS_TOKEN, 'refresh_token' => '1234567898765432112345678987654321', 'expires_at' => 1531385304 }.to_json
-      stub_strava_post_request(Settings.strava.api_auth_token_url, TOKEN_REFRESH_REQUEST_BODY, 200, refresh_token_response_body)
+      token_refresh_response_body = { 'access_token' => ACCESS_TOKEN, 'refresh_token' => '1234567898765432112345678987654321', 'expires_at' => 1531385304 }.to_json
+      stub_strava_post_request(Settings.strava.api_auth_token_url, TOKEN_REFRESH_REQUEST_BODY, 200, token_refresh_response_body)
       stub_strava_post_request(Settings.strava.api_auth_deauthorize_url, { 'access_token' => ACCESS_TOKEN }, 200)
       setup_cookie(ACCESS_TOKEN)
 

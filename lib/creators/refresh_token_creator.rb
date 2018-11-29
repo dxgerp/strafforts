@@ -22,6 +22,7 @@ module Creators
         )
         if response.is_a? Net::HTTPSuccess
           result = JSON.parse(response.body)
+          access_token = result['access_token']
           refresh_token = result['refresh_token']
           expires_at = result['expires_at']
         else
@@ -31,7 +32,8 @@ module Creators
       end
 
       # Save to database.
-      Rails.logger.info("RefreshTokenCreator - Update refresh token for athlete #{athlete.id}.")
+      Rails.logger.info("RefreshTokenCreator - Updating refresh token for athlete #{athlete.id}.")
+      athlete.access_token = access_token
       athlete.refresh_token = refresh_token
       athlete.refresh_token_expires_at = Time.at(expires_at)
       athlete.save!

@@ -11,9 +11,6 @@ class ActivityFetcher
     type = options[:type] || %w[best-efforts personal-bests races]
 
     begin
-      # Find the athlete first and renew its refresh token.
-      @access_token = ::Creators::RefreshTokenCreator.refresh(@access_token)
-
       # Call Strava API: to get a detailed view of the current athlete.
       # Create or update the current athlete first.
       current_athlete = @api_wrapper.retrieve_current_athlete

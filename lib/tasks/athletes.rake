@@ -72,8 +72,15 @@ namespace :athletes do
       if athlete.nil?
         puts "Athlete '#{athlete_id}' was not found."
       else
-        fetcher = ActivityFetcher.new(athlete.access_token)
-        fetcher.delay(priority: 3).fetch_all(mode: ENV['MODE'])
+        begin
+          access_token = ::Creators::RefreshTokenCreator.refresh(athlete.access_token)
+
+          fetcher = ActivityFetcher.new(access_token)
+          fetcher.delay(priority: 3).fetch_all(mode: ENV['MODE'])
+        rescue StandardError => e
+          Rails.logger.error("Rake 'athletes:fetch' failed. #{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
+          next
+        end
       end
     end
   end
