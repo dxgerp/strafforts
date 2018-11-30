@@ -38,7 +38,7 @@ module Creators
       athlete.refresh_token_expires_at = Time.at(expires_at)
       athlete.save!
 
-      athlete.access_token
+      access_token
     end
 
     def self.refresh(access_token)
