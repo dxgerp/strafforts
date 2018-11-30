@@ -3,9 +3,9 @@ import { FormattedMessage } from 'react-intl';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import GridContainer from './material-kit-react/Grid/GridContainer.jsx';
-import GridItem from './material-kit-react/Grid/GridItem.jsx';
-import { title } from './material-kit-react/Styles/material-kit-react.jsx';
+import GridContainer from './../material-kit-react/Grid/GridContainer.jsx';
+import GridItem from './../material-kit-react/Grid/GridItem.jsx';
+import { title } from './../material-kit-react/Styles/material-kit-react.jsx';
 
 const ideaStyle = {
   section: {

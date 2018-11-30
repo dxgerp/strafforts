@@ -7,7 +7,7 @@ import Favorite from '@material-ui/icons/Favorite';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import footerStyle from './material-kit-react/Styles/components/footerStyle.jsx';
+import footerStyle from './../material-kit-react/Styles/components/footerStyle.jsx';
 
 function Footer({ ...props }) {
   const { classes, whiteFont } = props;

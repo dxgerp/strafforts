@@ -7,10 +7,15 @@ RSpec.describe AthletesController, type: :request do
         .to raise_error(ActionController::RoutingError, "Could not find the requested athlete '12345678' by id.")
     end
 
-    it 'should raise bad request error when requested athlete is not the current user' do
+    it 'should redirect to 403 page when requested athlete is not the current user' do
+      # arrage.
       setup_cookie(nil)
-      expect { get '/athletes/9123806/cancel-pro' }
-        .to raise_error(ActionController::BadRequest, "Could not cancel PRO plan for athlete '9123806' that is not currently logged in.")
+
+      # act.
+      get '/athletes/9123806/cancel-pro'
+
+      # assert.
+      expect(response).to redirect_to('/errors/403')
     end
 
     it 'should cancel pro subscription successfully' do

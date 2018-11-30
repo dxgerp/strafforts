@@ -31,9 +31,7 @@ class ActivityFetcher
       if mode == 'all' || athlete.total_run_count != current_total_run_count
         activity_ids = get_all_activity_ids(type)
         activity_ids.sort.each do |activity_id|
-          if mode == 'all' || athlete.last_activity_retrieved.blank? || activity_id > athlete.last_activity_retrieved
-            activities_to_retrieve << activity_id
-          end
+          activities_to_retrieve << activity_id if mode == 'all' || athlete.last_activity_retrieved.blank? || activity_id > athlete.last_activity_retrieved
         end
 
         if activities_to_retrieve.count.positive?

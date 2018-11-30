@@ -1,12 +1,16 @@
 import React from 'react';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import localeData_en from 'react-intl/locale-data/en';
+import localeData_de from 'react-intl/locale-data/de';
+import localeData_nl from 'react-intl/locale-data/nl';
 import localeData_zh from 'react-intl/locale-data/zh';
 
 import translations_en from './translations/en.json';
+import translations_de from './translations/de.json';
+import translations_nl from './translations/nl.json';
 import translations_zh_CN from './translations/zh_CN.json';
 
-addLocaleData([...localeData_en, ...localeData_zh]);
+addLocaleData([...localeData_en, ...localeData_de, ...localeData_nl, ...localeData_zh]);
 
 const { Provider, Consumer } = React.createContext();
 
@@ -17,6 +21,8 @@ class IntlProviderWrapper extends React.Component {
 
     const translations = {
       en: translations_en,
+      de: translations_de,
+      nl: translations_nl,
       zh: translations_zh_CN,
     };
 
@@ -26,7 +32,7 @@ class IntlProviderWrapper extends React.Component {
 
     // If there is no translations found for this language,
     // check if the locale is found, otherwise use default 'en'.
-    // For example, when 'en-US' doesn't have tranlastions, but 'en' is found, use 'en' instead.
+    // For example, when 'en-US' doesn't have translations, but 'en' is found, use 'en' instead.
     if (!(language in translations)) {
       if (locale in translations) {
         language = locale;
