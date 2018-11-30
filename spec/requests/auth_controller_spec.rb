@@ -26,7 +26,7 @@ RSpec.describe AuthController, type: :request do
 
     it 'should redirect to 503 page when Strava returns 400 on token refresh' do
       # arrange.
-      token_exchange_response_body = { 'access_token' => ACCESS_TOKEN, 'athlete' => Athlete.find_by(id: 789).to_json }.to_json
+      token_exchange_response_body = { 'access_token' => ACCESS_TOKEN, 'athlete' => Athlete.find_by(id: 123).to_json }.to_json
       stub_strava_post_request(Settings.strava.api_auth_token_url, TOKEN_EXCHANGE_REQUEST_BODY, 200, token_exchange_response_body)
       stub_strava_post_request(Settings.strava.api_auth_token_url, TOKEN_REFRESH_REQUEST_BODY, 400)
 
@@ -52,10 +52,8 @@ RSpec.describe AuthController, type: :request do
       # arrange.
       ENV['ENABLE_EARLY_BIRDS_PRO_ON_LOGIN'] = 'true'
 
-      token_exchange_response_body = { 'access_token' => ACCESS_TOKEN, 'athlete' => Athlete.find_by(id: 123).to_json }.to_json
-      token_refresh_response_body = { 'access_token' => ACCESS_TOKEN, 'refresh_token' => '1234567898765432112345678987654321', 'expires_at' => 1531385304 }.to_json
+      token_exchange_response_body = { 'access_token' => ACCESS_TOKEN, 'athlete' => Athlete.find_by(id: 123).to_json, 'refresh_token' => REFRESH_TOKEN, 'expires_at' => 1531385304 }.to_json
       stub_strava_post_request(Settings.strava.api_auth_token_url, TOKEN_EXCHANGE_REQUEST_BODY, 200, token_exchange_response_body)
-      stub_strava_post_request(Settings.strava.api_auth_token_url, TOKEN_REFRESH_REQUEST_BODY, 200, token_refresh_response_body)
 
       # act.
       get '/auth/exchange-token', params: { scope: 'profile:read_all,read,activity:read' }
