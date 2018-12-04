@@ -7,9 +7,9 @@ import ContactSupport from '@material-ui/icons/ContactSupport';
 import VerifiedUser from '@material-ui/icons/VerifiedUser';
 
 import InfoAreaIntl from './InfoAreaIntl';
-import GridContainer from './material-kit-react/Grid/GridContainer.jsx';
-import GridItem from './material-kit-react/Grid/GridItem.jsx';
-import { title } from './material-kit-react/Styles/material-kit-react.jsx';
+import GridContainer from './../material-kit-react/Grid/GridContainer.jsx';
+import GridItem from './../material-kit-react/Grid/GridItem.jsx';
+import { title } from './../material-kit-react/Styles/material-kit-react.jsx';
 
 const guaranteesStyle = {
   section: {

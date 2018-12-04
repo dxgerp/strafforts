@@ -2,7 +2,7 @@ require 'yaml'
 
 namespace :athletes do
   desc 'Grant PRO plan to the given athletes.'
-  # Usage: bundle exec bin/rails athletes:apply_pro PLAN="Lifetime PRO" ID=[Comma Separated list]
+  # Usage: bundle exec bin/rails athletes:apply_pro PLAN="Old Mates PRO" ID=[Comma Separated list]
   task apply_pro: :environment do
     apply_subscription(ENV['PLAN'], ENV['ID'])
   end
@@ -72,8 +72,15 @@ namespace :athletes do
       if athlete.nil?
         puts "Athlete '#{athlete_id}' was not found."
       else
-        fetcher = ActivityFetcher.new(athlete.access_token)
-        fetcher.delay(priority: 3).fetch_all(mode: ENV['MODE'])
+        begin
+          access_token = ::Creators::RefreshTokenCreator.refresh(athlete.access_token)
+
+          fetcher = ActivityFetcher.new(access_token)
+          fetcher.delay(priority: 3).fetch_all(mode: ENV['MODE'])
+        rescue StandardError => e
+          Rails.logger.error("Rake 'athletes:fetch' failed. #{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
+          next
+        end
       end
     end
   end

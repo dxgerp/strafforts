@@ -16,7 +16,12 @@ RSpec.describe Api::AthletesController, type: :request do
     context 'for an athlete with PRO subscription' do
       it 'should fetch-latest successfully with the correct cookie' do
         # arrange.
-        setup_cookie('4d5cf2bbc714a4e22e309cf5fcf15e40')
+        access_token = '4d5cf2bbc714a4e22e309cf5fcf15e40'
+        token_refresh_request_body = { 'client_id' => nil, 'client_secret' => nil, 'grant_type' => 'refresh_token', 'refresh_token' => access_token }.freeze
+
+        setup_cookie(access_token)
+        refresh_token_response_body = { 'access_token' => access_token, 'refresh_token' => '1234567898765432112345678987654321', 'expires_at' => 1531385304 }.to_json
+        stub_strava_post_request(Settings.strava.api_auth_token_url, token_refresh_request_body, 200, refresh_token_response_body)
 
         # act.
         post '/api/athletes/9123806/fetch-latest'

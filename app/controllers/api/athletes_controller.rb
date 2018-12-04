@@ -22,9 +22,15 @@ module Api
         return
       end
 
-      # Add a delayed_job to fetch the latest data for this athlete.
-      fetcher = ::ActivityFetcher.new(athlete.access_token)
-      fetcher.delay.fetch_all(mode: 'latest')
+      begin
+        access_token = ::Creators::RefreshTokenCreator.refresh(athlete.access_token)
+
+        # Add a delayed_job to fetch the latest data for this athlete.
+        fetcher = ::ActivityFetcher.new(access_token)
+        fetcher.delay.fetch_all(mode: 'latest')
+      rescue StandardError => e
+        Rails.logger.error("AthletesController - Fetch latest failed. #{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
+      end
     end
 
     def subscribe_to_pro # rubocop:disable CyclomaticComplexity, MethodLength, AbcSize
@@ -89,7 +95,7 @@ module Api
       athlete.update(is_public: is_public)
     end
 
-    def reset_profile # rubocop:disable  MethodLength
+    def reset_profile # rubocop:disable  AbcSize, MethodLength
       athlete_id = params[:id]
       athlete = Athlete.find_by(id: athlete_id)
       if athlete.nil?
@@ -124,9 +130,15 @@ module Api
       # Set last_activity_retrieved to nil for this athlete.
       athlete.update(last_activity_retrieved: nil, total_run_count: 0)
 
-      # Add a delayed_job to fetch all data for this athlete.
-      fetcher = ::ActivityFetcher.new(athlete.access_token)
-      fetcher.delay.fetch_all(mode: 'all')
+      begin
+        access_token = ::Creators::RefreshTokenCreator.refresh(athlete.access_token)
+
+        # Add a delayed_job to fetch all data for this athlete.
+        fetcher = ::ActivityFetcher.new(access_token)
+        fetcher.delay.fetch_all(mode: 'all')
+      rescue StandardError => e
+        Rails.logger.error("AthletesController - Reset Profile failed. #{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
+      end
     end
   end
 end

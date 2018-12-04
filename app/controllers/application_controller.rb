@@ -1,8 +1,10 @@
 require 'creators/activity_creator'
 require 'creators/athlete_creator'
 require 'creators/gear_creator'
-require 'creators/location_creator'
 require 'creators/heart_rate_zones_creator'
+require 'creators/location_creator'
+require 'creators/refresh_token_creator'
+require 'creators/subscription_creator'
 require 'activity_fetcher'
 require 'mailer_lite_api_wrapper'
 require 'strava_api_wrapper'
@@ -20,12 +22,12 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
 
-  def self.get_auth_url(request)
+  def self.get_authorize_url(request)
     "#{STRAVA_API_AUTH_AUTHORIZE_URL}"\
     "?client_id=#{STRAVA_API_CLIENT_ID}"\
     '&response_type=code'\
     "&redirect_uri=#{request.protocol}#{request.host}:#{request.port}/auth/exchange-token"\
-    '&approval_prompt=auto&scope=view_private'
+    '&approval_prompt=auto&scope=read,profile:read_all,activity:read'
   end
 
   def self.get_meta(athlete_id) # rubocop:disable MethodLength
