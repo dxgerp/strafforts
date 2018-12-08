@@ -1,431 +1,431 @@
 /* http://bestjquery.com/tutorial/pricing-table/demo82/ */
 .pricingTable {
+  position: relative;
+
+  overflow: hidden;
+
+  padding-bottom: 10px;
+
+  text-align: center;
+
+  border-bottom: 15px solid $color-strava;
+  background: #FFFFFF;
+
+  &::before {
+    position: absolute;
+    top: -150px;
+    left: 0;
+
+    width: 100%;
+    height: 350px;
+
+    content: '';
+    transform: skewY(-20deg);
+
+    background: $color-strava;
+  }
+
+  .pricingTable-header {
     position: relative;
 
-    overflow: hidden;
+    padding: 20px 20px 60px;
 
-    padding-bottom: 10px;
+    text-align: left;
+  }
+
+  .title {
+    font-weight: 600;
+
+    margin: 0;
+
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+  }
+
+  .sub-title {
+    display: block;
+
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+  }
+
+  .year {
+    font-size: 15px;
+    font-weight: 600;
+    font-style: italic;
+
+    position: absolute;
+    z-index: 1;
+    top: 30px;
+    right: 20px;
+
+    width: 80px;
+    height: 55px;
+    padding: 7px 0;
 
     text-align: center;
 
-    border-bottom: 15px solid $color-strava;
+    color: $color-strava;
     background: #FFFFFF;
 
-    &::before {
-        position: absolute;
-        top: -150px;
-        left: 0;
+    &:before,
+    &:after {
+      position: absolute;
+      z-index: -1;
+      top: -28px;
+      left: 50%;
 
-        width: 100%;
-        height: 350px;
+      width: 57px;
+      height: 57px;
 
-        content: '';
-        transform: skewY(-20deg);
+      content: '';
+      transform: translateX(-50%) scaleY(.5) rotate(45deg);
 
-        background: $color-strava;
+      background: #FFFFFF;
+    }
+    &:after {
+      top: auto;
+      bottom: -28px;
+    }
+  }
+
+  .price-value {
+    position: relative;
+
+    display: inline-block;
+
+    width: 170px;
+    height: 110px;
+    padding: 15px;
+
+    border: 2px solid $color-strava;
+    border-top: none;
+    border-bottom: none;
+
+    &:before,
+    &:after {
+      position: absolute;
+      top: -60px;
+      left: 50%;
+
+      width: 121px;
+      height: 121px;
+
+      content: '';
+      transform: translateX(-50%) scaleY(.5) rotate(45deg);
+
+      border: 3px solid $color-strava;
+      border-right: none;
+      border-bottom: none;
+    }
+    &:after {
+      top: auto;
+      bottom: -60px;
+
+      border-top: none;
+      border-right: 3px solid $color-strava;
+      border-bottom: 3px solid $color-strava;
+      border-left: none;
+    }
+  }
+
+  .value {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    height: 100%;
+
+    color: $color-strava;
+    border: 2px solid $color-strava;
+    border-top: none;
+    border-bottom: none;
+    background: #FFFFFF;
+
+    &:before,
+    &:after {
+      position: absolute;
+      z-index: -1;
+      top: -48px;
+      left: 50%;
+
+      width: 97px;
+      height: 97px;
+
+      content: '';
+      transform: translateX(-50%) scaleY(.5) rotate(45deg);
+
+      border: 3px solid $color-strava;
+      border-right: none;
+      border-bottom: none;
+      background: #FFFFFF;
+    }
+    &:after {
+      top: auto;
+      bottom: -48px;
+
+      border-top: none;
+      border-right: 3px solid $color-strava;
+      border-bottom: 3px solid $color-strava;
+      border-left: none;
+    }
+  }
+
+  .currency {
+    font-size: 30px;
+
+    display: inline-block;
+
+    margin-top: 7px;
+
+    vertical-align: top;
+  }
+
+  .month {
+    font-size: 16px;
+    line-height: 0;
+
+    display: block;
+  }
+  .amount {
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 65px;
+
+    display: inline-block;
+
+    span {
+      font-size: 30px;
+      font-weight: normal;
+
+      display: inline-block;
+
+      margin-top: -7px;
+
+      vertical-align: top;
+    }
+  }
+
+  .pricing-content-container {
+    margin-top: 60px;
+
+    .pricing-content-header {
+      font-size: 20px;
     }
 
-    .pricingTable-header {
+    .pricing-content {
+      margin-bottom: 20px;
+      padding: 0 0 0 80px;
+
+      list-style: none;
+
+      transition: all .3s ease 0s;
+      text-align: left;
+
+      li {
         position: relative;
 
-        padding: 20px 20px 60px;
-
-        text-align: left;
-    }
-
-    .title {
-        font-weight: 600;
-
-        margin: 0;
-
-        text-transform: uppercase;
-
-        color: #FFFFFF;
-    }
-
-    .sub-title {
-        display: block;
-
-        text-transform: uppercase;
-
-        color: #FFFFFF;
-    }
-
-    .year {
-        font-size: 15px;
-        font-weight: 600;
-        font-style: italic;
-
-        position: absolute;
-        z-index: 1;
-        top: 30px;
-        right: 20px;
-
-        width: 80px;
-        height: 55px;
         padding: 7px 0;
 
-        text-align: center;
-
-        color: $color-strava;
-        background: #FFFFFF;
-
+        color: $color-grey;
         &:before,
-        &:after {
-            position: absolute;
-            z-index: -1;
-            top: -28px;
-            left: 50%;
+        &.disable:before {
+          font-family: fontawesome;
+          line-height: 25px;
 
-            width: 57px;
-            height: 57px;
+          position: absolute;
+          left: -50px;
 
-            content: '';
-            transform: translateX(-50%) scaleY(.5) rotate(45deg);
+          width: 25px;
+          height: 25px;
 
-            background: #FFFFFF;
+          content: '\f00c';
+          text-align: center;
+
+          color: #FFFFFF;
+          border-radius: 50%;
+          background: $color-light-green;
         }
-        &:after {
-            top: auto;
-            bottom: -28px;
+
+        &.partial-disable:before {
+          content: '\f12a';
+
+          background: $color-yellow;
         }
+        &.disable:before {
+          content: '\f00d';
+
+          background: $color-strava;
+        }
+
+        .has-tooltip {
+          text-decoration: none;
+
+          border: none;
+          border-bottom: 1px dotted $color-light-grey;
+          i {
+            padding-left: 6px;
+          }
+        }
+      }
     }
+  }
 
-    .price-value {
-        position: relative;
+  .pricingTable-signup {
+    @include transition(all .2s ease-in-out);
 
-        display: inline-block;
+    font-weight: 700;
 
-        width: 170px;
-        height: 110px;
-        padding: 15px;
+    position: relative;
 
-        border: 2px solid $color-strava;
-        border-top: none;
-        border-bottom: none;
+    display: inline-block;
 
-        &:before,
-        &:after {
-            position: absolute;
-            top: -60px;
-            left: 50%;
+    width: 60%;
+    height: 50px;
+    margin: 0 auto 10px;
 
-            width: 121px;
-            height: 121px;
+    transition: all .3s ease 0s;
+    text-transform: uppercase;
 
-            content: '';
-            transform: translateX(-50%) scaleY(.5) rotate(45deg);
+    color: #FFFFFF;
+    background: $color-strava;
 
-            border: 3px solid $color-strava;
-            border-right: none;
-            border-bottom: none;
-        }
-        &:after {
-            top: auto;
-            bottom: -60px;
-
-            border-top: none;
-            border-right: 3px solid $color-strava;
-            border-bottom: 3px solid $color-strava;
-            border-left: none;
-        }
+    &:hover {
+      color: $color-strava;
+      border: 2px solid $color-strava;
+      background: none;
     }
-
-    .value {
-        position: relative;
-        z-index: 1;
-
-        width: 100%;
-        height: 100%;
-
-        color: $color-strava;
-        border: 2px solid $color-strava;
-        border-top: none;
-        border-bottom: none;
-        background: #FFFFFF;
-
-        &:before,
-        &:after {
-            position: absolute;
-            z-index: -1;
-            top: -48px;
-            left: 50%;
-
-            width: 97px;
-            height: 97px;
-
-            content: '';
-            transform: translateX(-50%) scaleY(.5) rotate(45deg);
-
-            border: 3px solid $color-strava;
-            border-right: none;
-            border-bottom: none;
-            background: #FFFFFF;
-        }
-        &:after {
-            top: auto;
-            bottom: -48px;
-
-            border-top: none;
-            border-right: 3px solid $color-strava;
-            border-bottom: 3px solid $color-strava;
-            border-left: none;
-        }
-    }
-
-    .currency {
-        font-size: 30px;
-
-        display: inline-block;
-
-        margin-top: 7px;
-
-        vertical-align: top;
-    }
-
-    .month {
-        font-size: 16px;
-        line-height: 0;
-
-        display: block;
-    }
-    .amount {
-        font-size: 40px;
-        font-weight: 600;
-        line-height: 65px;
-
-        display: inline-block;
-
-        span {
-            font-size: 30px;
-            font-weight: normal;
-
-            display: inline-block;
-
-            margin-top: -7px;
-
-            vertical-align: top;
-        }
-    }
-
-    .pricing-content-container {
-        margin-top: 60px;
-
-        .pricing-content-header {
-            font-size: 20px;
-        }
-
-        .pricing-content {
-            margin-bottom: 20px;
-            padding: 0 0 0 80px;
-
-            list-style: none;
-
-            transition: all .3s ease 0s;
-            text-align: left;
-
-            li {
-                position: relative;
-
-                padding: 7px 0;
-
-                color: $color-grey;
-                &:before,
-                &.disable:before {
-                    font-family: fontawesome;
-                    line-height: 25px;
-
-                    position: absolute;
-                    left: -50px;
-
-                    width: 25px;
-                    height: 25px;
-
-                    content: '\f00c';
-                    text-align: center;
-
-                    color: #FFFFFF;
-                    border-radius: 50%;
-                    background: $color-light-green;
-                }
-
-                &.partial-disable:before {
-                    content: '\f12a';
-
-                    background: $color-yellow;
-                }
-                &.disable:before {
-                    content: '\f00d';
-
-                    background: $color-strava;
-                }
-
-                .has-tooltip {
-                    text-decoration: none;
-
-                    border: none;
-                    border-bottom: 1px dotted $color-light-grey;
-                    i {
-                        padding-left: 6px;
-                    }
-                }
-            }
-        }
-    }
-
-    .pricingTable-signup {
-        @include transition(all .2s ease-in-out);
-
-        font-weight: 700;
-
-        position: relative;
-
-        display: inline-block;
-
-        width: 60%;
-        height: 50px;
-        margin: 0 auto 10px;
-
-        transition: all .3s ease 0s;
-        text-transform: uppercase;
-
-        color: #FFFFFF;
-        background: $color-strava;
-
-        &:hover {
-            color: $color-strava;
-            border: 2px solid $color-strava;
-            background: none;
-        }
-    }
+  }
 }
 
 .pricingTable.green {
-    border-bottom-color: $color-light-green;
+  border-bottom-color: $color-light-green;
+  &:before {
+    background: $color-light-green;
+  }
+  .year {
+    color: $color-light-green;
+  }
+  .price-value {
+    border-right-color: $color-light-green;
+    border-left-color: $color-light-green;
     &:before {
-        background: $color-light-green;
+      border-top-color: $color-light-green;
+      border-left-color: $color-light-green;
     }
-    .year {
-        color: $color-light-green;
+    &:after {
+      border-right-color: $color-light-green;
+      border-bottom-color: $color-light-green;
     }
-    .price-value {
-        border-right-color: $color-light-green;
-        border-left-color: $color-light-green;
-        &:before {
-            border-top-color: $color-light-green;
-            border-left-color: $color-light-green;
-        }
-        &:after {
-            border-right-color: $color-light-green;
-            border-bottom-color: $color-light-green;
-        }
-    }
-    .value {
-        color: $color-light-green;
-        border-right-color: $color-light-green;
-        border-left-color: $color-light-green;
+  }
+  .value {
+    color: $color-light-green;
+    border-right-color: $color-light-green;
+    border-left-color: $color-light-green;
 
-        &:before {
-            border-top-color: $color-light-green;
-            border-left-color: $color-light-green;
-        }
-
-        &:after {
-            border-right-color: $color-light-green;
-            border-bottom-color: $color-light-green;
-        }
+    &:before {
+      border-top-color: $color-light-green;
+      border-left-color: $color-light-green;
     }
 
-    .pricingTable-signup {
-        color: #FFFFFF;
-        background: $color-light-green;
-
-        &:hover {
-            color: $color-light-green;
-            border: 2px solid $color-light-green;
-            background: none;
-        }
+    &:after {
+      border-right-color: $color-light-green;
+      border-bottom-color: $color-light-green;
     }
+  }
+
+  .pricingTable-signup {
+    color: #FFFFFF;
+    background: $color-light-green;
+
+    &:hover {
+      color: $color-light-green;
+      border: 2px solid $color-light-green;
+      background: none;
+    }
+  }
 }
 
 .pricingTable.yellow {
-    border-bottom-color: $color-yellow;
+  border-bottom-color: $color-yellow;
+  &:before {
+    background: $color-yellow;
+  }
+  .year {
+    color: $color-yellow;
+  }
+  .price-value {
+    border-right-color: $color-yellow;
+    border-left-color: $color-yellow;
     &:before {
-        background: $color-yellow;
+      border-top-color: $color-yellow;
+      border-left-color: $color-yellow;
     }
-    .year {
-        color: $color-yellow;
+    &:after {
+      border-right-color: $color-yellow;
+      border-bottom-color: $color-yellow;
     }
-    .price-value {
-        border-right-color: $color-yellow;
-        border-left-color: $color-yellow;
-        &:before {
-            border-top-color: $color-yellow;
-            border-left-color: $color-yellow;
-        }
-        &:after {
-            border-right-color: $color-yellow;
-            border-bottom-color: $color-yellow;
-        }
+  }
+  .value {
+    color: $color-yellow;
+    border-right-color: $color-yellow;
+    border-left-color: $color-yellow;
+    &:before {
+      border-top-color: $color-yellow;
+      border-left-color: $color-yellow;
     }
-    .value {
-        color: $color-yellow;
-        border-right-color: $color-yellow;
-        border-left-color: $color-yellow;
-        &:before {
-            border-top-color: $color-yellow;
-            border-left-color: $color-yellow;
-        }
-        &:after {
-            border-right-color: $color-yellow;
-            border-bottom-color: $color-yellow;
-        }
+    &:after {
+      border-right-color: $color-yellow;
+      border-bottom-color: $color-yellow;
     }
+  }
 
-    .pricingTable-signup {
-        color: #FFFFFF;
-        background: $color-yellow;
+  .pricingTable-signup {
+    color: #FFFFFF;
+    background: $color-yellow;
 
-        &:hover {
-            color: $color-yellow;
-            border: 2px solid $color-yellow;
-            background: none;
-        }
+    &:hover {
+      color: $color-yellow;
+      border: 2px solid $color-yellow;
+      background: none;
     }
+  }
 }
 
 .pricingTable-signup {
-    &.disabled,
-    &[disabled] {
-        cursor: not-allowed;
+  &.disabled,
+  &[disabled] {
+    cursor: not-allowed;
 
-        opacity: .65;
-        -webkit-box-shadow: none;
-                box-shadow: none;
+    opacity: .65;
+    -webkit-box-shadow: none;
+            box-shadow: none;
 
-        filter: alpha(opacity=65);
-    }
+    filter: alpha(opacity=65);
+  }
 }
 
 @media only screen and (max-width: 990px) {
-    .pricingTable {
-        margin-bottom: 30px;
-    }
+  .pricingTable {
+    margin-bottom: 30px;
+  }
 }
 @media only screen and (max-width: 767px) {
-    .pricingTable {
-        &:before {
-            transform: skewY(-15deg);
-        }
+  .pricingTable {
+    &:before {
+      transform: skewY(-15deg);
     }
+  }
 }
 
 @media only screen and (max-width: 544px) {
-    .pricingTable {
-        .pricing-content {
-            li {
-                font-size: .9em;
-            }
-        }
+  .pricingTable {
+    .pricing-content {
+      li {
+        font-size: .9em;
+      }
     }
+  }
 }

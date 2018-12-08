@@ -8,9 +8,9 @@ $color-grey: rgba(128, 128, 128, 1);
 $color-light-grey: rgba(128, 128, 128, .5);
 
 @mixin transition($args...) {
-    -webkit-transition: $args;
-       -moz-transition: $args;
-        -ms-transition: $args;
-         -o-transition: $args;
-            transition: $args;
+  -webkit-transition: $args;
+     -moz-transition: $args;
+      -ms-transition: $args;
+       -o-transition: $args;
+          transition: $args;
 }
