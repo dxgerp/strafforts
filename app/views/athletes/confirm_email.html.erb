@@ -27,6 +27,13 @@
       <div class="lockscreen-name">You may submit a new one to verify if you like.</div>
     <% end %>
 
+    <div class="text-center spinner">
+      <div class="overlay">
+        <i class="fa fa-refresh fa-spin"></i>
+        <div class="lockscreen-name">Sending verification email now...</div>
+      </div>
+    </div>
+
     <!-- START LOCK SCREEN ITEM -->
     <div class="lockscreen-item">
       <!-- lockscreen image -->
@@ -72,6 +79,7 @@
           submitEmail();
       });
       function submitEmail() {
+        $('.spinner').show();
         toastr.options.positionClass = 'toast-top-center';
         $.ajax({
           url: $('.form-submit-email').attr('action'),
@@ -79,12 +87,14 @@
           cache: false,
           type: 'post',
           success: function() {
+              $('.spinner').hide();
             toastr.success(`Email address submitted successfully!`);
             setTimeout(function() {
               window.location.href = '/';
             }, 1000);
           },
           error: function(xhr, ajaxOptions, thrownError) {
+            $('.spinner').show();
             toastr.error(`${xhr.status} - ${xhr.statusText}<br /><br />${$.parseJSON(xhr.responseText)['error']}`);
           },
         });
