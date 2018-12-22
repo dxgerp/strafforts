@@ -21,5 +21,12 @@ module Strafforts
 
     # Verifies that versions and hashed value of the package contents in the project's package.json
     config.webpacker.check_yarn_integrity = false
+
+    if ENV["RAILS_LOG_TO_STDOUT"].present?
+      logger           = ActiveSupport::Logger.new(STDOUT)
+      logger.formatter = config.log_formatter
+      config.logger    = ActiveSupport::TaggedLogging.new(logger)
+      config.log_level = ENV["RAILS_LOG_LEVEL"].present? ? ENV['RAILS_LOG_LEVEL'].to_sym : :info
+    end
   end
 end
