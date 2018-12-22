@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe HomeController, type: :request do
   let(:expected_folder) { './spec/requests/expected'.freeze }
+  let(:athlete_id) { '98765' }
 
   describe 'GET index' do
     it 'should render page when there is no access_token in cookies' do
@@ -35,12 +36,13 @@ RSpec.describe HomeController, type: :request do
 
   it 'should redirect to athlete page for the current user' do
     # arrange.
-    setup_cookie('58e42e6f5e496dc5aa0d5ec354da8048')
+    athlete = FactoryBot.build(:athlete_with_public_profile, id: athlete_id)
+    setup_cookie(athlete.access_token)
 
     # act.
     get root_path
 
     # assert.
-    expect(response).to redirect_to('/athletes/456')
+    expect(response).to redirect_to("/athletes/#{athlete_id}")
   end
 end

@@ -11,7 +11,7 @@ namespace :athletes do
   # Usage: bundle exec bin/rails athletes:clean_up
   task clean_up: :environment do
     task_runner = TaskRunner.new
-    task_runner.delay(priority: 5).clean_up_inactive_athletes
+    task_runner.delay(priority: 7).clean_up_inactive_athletes
   end
 
   desc 'Delete all data assiociated with athletes in the given comma separated email/id list.'
@@ -76,7 +76,7 @@ namespace :athletes do
           access_token = ::Creators::RefreshTokenCreator.refresh(athlete.access_token)
 
           fetcher = ActivityFetcher.new(access_token)
-          fetcher.delay(priority: 3).fetch_all(mode: ENV['MODE'])
+          fetcher.delay(priority: 5).fetch_all(mode: ENV['MODE'])
         rescue StandardError => e
           Rails.logger.error("Rake 'athletes:fetch' failed. #{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
           next

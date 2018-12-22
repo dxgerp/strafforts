@@ -1,6 +1,6 @@
 ---
 unit_test_one:
-  id: 123
+  id: 111
   access_token: '3f2a45886980ebec9f4a689371e95860'
   refresh_token: '773099021c1b74d2a61a97878f8b2b41ccd36b51'
   is_public: false
@@ -8,18 +8,20 @@ unit_test_one:
   updated_at: '2017-12-17 15:55:55.12305'
   is_active: false
   total_run_count: 725
+  email_confirmed: true
 unit_test_two:
-  id: 456
+  id: 222
   access_token: '58e42e6f5e496dc5aa0d5ec354da8048'
   is_public: true
   last_activity_retrieved: 9999
 unit_test_three:
-  id: 789
+  id: 333
   access_token: '4e4711b645307480587dd52523e2d5e5'
   is_public: false
 athlete_9123806:
   id: 9123806
   access_token: '4d5cf2bbc714a4e22e309cf5fcf15e40'
+  email_confirmed: true
   is_public: true
   last_activity_retrieved: 690215435
   created_at: '2018-02-10 07:49:31.473168'

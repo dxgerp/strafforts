@@ -4,13 +4,13 @@ RSpec.describe Api::PersonalBestsController, type: :request do
   let(:expected_folder) { './spec/requests/expected'.freeze }
 
   describe 'GET index' do
-    it 'should not find athlete by id who does not exist' do
-      expect { get '/api/athletes/12345678/personal-bests' }
-        .to raise_error(ActionController::RoutingError, "Could not find the requested athlete '12345678' by id.")
+    it 'should raise routing error when the requested athlete does not exist' do
+      expect { get '/api/athletes/987654321/personal-bests' }
+        .to raise_error(ActionController::RoutingError, "Could not find the requested athlete '987654321' by id.")
     end
 
     it 'should be a 404 with an invalid distance' do
-      get '/api/athletes/123/personal-bests/100m'
+      get '/api/athletes/9123806/personal-bests/100m'
       expect(response).to have_http_status(404)
     end
 
@@ -66,7 +66,7 @@ RSpec.describe Api::PersonalBestsController, type: :request do
     context 'for an athlete without PRO subscription' do
       it 'should be successful getting items for overview' do
         # arrange.
-        url = '/api/athletes/123/personal-bests/overview'
+        url = '/api/athletes/111/personal-bests/overview'
 
         # act.
         get url
@@ -77,7 +77,7 @@ RSpec.describe Api::PersonalBestsController, type: :request do
 
       it 'should be successful getting recent items' do
         # arrange.
-        url = '/api/athletes/123/personal-bests/recent'
+        url = '/api/athletes/111/personal-bests/recent'
 
         # act.
         get url
@@ -88,7 +88,7 @@ RSpec.describe Api::PersonalBestsController, type: :request do
 
       it 'should be 403 getting a non-major best effort type' do
         # arrange.
-        url = '/api/athletes/123/personal-bests/1k'
+        url = '/api/athletes/111/personal-bests/1k'
 
         # act.
         get url

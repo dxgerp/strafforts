@@ -5,8 +5,8 @@ RSpec.describe Api::MetaController, type: :request do
 
   describe 'GET index' do
     it 'should not find athlete by id who does not exist' do
-      expect { get '/api/athletes/12345678/meta' }
-        .to raise_error(ActionController::RoutingError, "Could not find the requested athlete '12345678' by id.")
+      expect { get '/api/athletes/987654321/meta' }
+        .to raise_error(ActionController::RoutingError, "Could not find the requested athlete '987654321' by id.")
     end
 
     it 'should be successful for an existing athlete' do

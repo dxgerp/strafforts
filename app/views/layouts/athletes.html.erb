@@ -24,9 +24,9 @@
     <meta property="og:locale" content="en" />
     <meta name="description" content="<%= Settings.app.html_meta_description_for_athletes %><%= (@athlete.nil?) ? "Strava User" : @athlete.fullname %>." />
     <meta property="og:description" content="<%= Settings.app.html_meta_description_for_athletes %><%= (@athlete.nil?) ? "Strava User" : @athlete.fullname %>." />
-    <meta property="og:url" content="<%= Settings.app.url %>" />
+    <meta property="og:url" content="<%= Settings.app.production_url %>" />
     <meta name="keywords" content="<%= Settings.app.html_meta_keywords %><%= (@athlete.nil?) ? "Strava User" : @athlete.fullname %>"/>
-    <script type="application/ld+json">{"@context": "http://schema.org","@type": "WebSite","name": "Straffrots","author":"Yi Zeng","description":"<%= Settings.app.html_meta_description_for_athletes %><%= (@athlete.nil?) ? "Strava User" : @athlete.fullname %>.","url": "<%= Settings.app.url %>/athletes/<%= @athlete.id %>"}</script>
+    <script type="application/ld+json">{"@context": "http://schema.org","@type": "WebSite","name": "Straffrots","author":"Yi Zeng","description":"<%= Settings.app.html_meta_description_for_athletes %><%= (@athlete.nil?) ? "Strava User" : @athlete.fullname %>.","url": "<%= Settings.app.production_url %>/athletes/<%= @athlete.id %>"}</script>
 
     <%= csrf_meta_tags %>
 

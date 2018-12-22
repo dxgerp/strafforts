@@ -1,6 +1,6 @@
 ---
 unit_test_one:
-  athlete_id: 123
+  athlete_id: 111
   username: 'tonystark'
   firstname: 'Tony'
   lastname: 'Stark'
@@ -20,12 +20,12 @@ unit_test_one:
   created_at: '2017-01-01 00:00:00'
   updated_at: '2017-12-17 15:55:55.12305'
 unit_test_two:
-  athlete_id: 456
+  athlete_id: 222
   firstname: 'Jessica'
   lastname: 'Jones'
   username: 'jessicajones'
 unit_test_three:
-  athlete_id: 789
+  athlete_id: 333
   username: 'bruce.banner'
   city_id: 1
   country_id: 1

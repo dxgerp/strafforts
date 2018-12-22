@@ -1,7 +1,7 @@
 ---
 unit_test_one:
   id: -1
-  athlete_id: 456
+  athlete_id: 222
   gear_id: g1313288
   workout_type_id: 1
   name: First recorded running activity
@@ -35,7 +35,7 @@ unit_test_one:
   updated_at: '2018-02-10 07:50:05.917072'
 unit_test_two:
   id: -2
-  athlete_id: 456
+  athlete_id: 222
   gear_id: g1313288
   workout_type_id: 1
   name: 20k Race

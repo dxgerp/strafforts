@@ -3,8 +3,18 @@ require 'rails_helper'
 RSpec.describe AuthController, type: :request do
   ACCESS_TOKEN = '3f2a45886980ebec9f4a689371e95860'.freeze
   REFRESH_TOKEN = '773099021c1b74d2a61a97878f8b2b41ccd36b51'.freeze
-  TOKEN_EXCHANGE_REQUEST_BODY = { 'client_id' => nil, 'client_secret' => nil, 'code' => nil, 'grant_type' => 'authorization_code' }.freeze
-  TOKEN_REFRESH_REQUEST_BODY = { 'client_id' => nil, 'client_secret' => nil, 'grant_type' => 'refresh_token', 'refresh_token' => REFRESH_TOKEN }.freeze
+  TOKEN_EXCHANGE_REQUEST_BODY = {
+    client_id: nil,
+    client_secret: nil,
+    code: nil,
+    grant_type: 'authorization_code'
+  }.freeze
+  TOKEN_REFRESH_REQUEST_BODY = {
+    client_id: nil,
+    client_secret: nil,
+    refresh_token: REFRESH_TOKEN,
+    grant_type: 'refresh_token'
+  }.freeze
 
   describe 'GET exchange-token' do
     it 'should redirect to root directly there are errors in params' do
@@ -28,7 +38,10 @@ RSpec.describe AuthController, type: :request do
       skip 'Failing on TravisCI for some reason'
 
       # arrange.
-      token_exchange_response_body = { 'access_token' => ACCESS_TOKEN, 'athlete' => Athlete.find_by(id: 123).to_json }.to_json
+      token_exchange_response_body = {
+        access_token: ACCESS_TOKEN,
+        athlete: Athlete.find_by(id: 111).to_json
+      }.to_json
       stub_strava_post_request(Settings.strava.api_auth_token_url, TOKEN_EXCHANGE_REQUEST_BODY, 200, token_exchange_response_body)
       stub_strava_post_request(Settings.strava.api_auth_token_url, TOKEN_REFRESH_REQUEST_BODY, 400)
 
@@ -54,7 +67,12 @@ RSpec.describe AuthController, type: :request do
       # arrange.
       ENV['ENABLE_EARLY_BIRDS_PRO_ON_LOGIN'] = 'true'
 
-      token_exchange_response_body = { 'access_token' => ACCESS_TOKEN, 'athlete' => Athlete.find_by(id: 123).to_json, 'refresh_token' => REFRESH_TOKEN, 'expires_at' => 1531385304 }.to_json
+      token_exchange_response_body = {
+        access_token: ACCESS_TOKEN,
+        athlete: { id: 111 }.merge!(AthleteInfo.find_by(athlete_id: 111).attributes),
+        refresh_token: REFRESH_TOKEN,
+        expires_at: 1531385304
+      }.to_json
       stub_strava_post_request(Settings.strava.api_auth_token_url, TOKEN_EXCHANGE_REQUEST_BODY, 200, token_exchange_response_body)
 
       # act.
@@ -77,7 +95,7 @@ RSpec.describe AuthController, type: :request do
       get '/auth/deauthorize'
 
       # assert.
-      expect(Athlete.find_by(id: 123)).to be_nil
+      expect(Athlete.find_by(id: 111)).to be_nil
       expect(cookies[:access_token].blank?).to be true
       expect(response).to redirect_to(root_path)
     end
@@ -90,7 +108,7 @@ RSpec.describe AuthController, type: :request do
       get '/auth/deauthorize'
 
       # assert.
-      expect(Athlete.find_by(id: 123)).not_to be_nil
+      expect(Athlete.find_by(id: 111)).not_to be_nil
       expect(cookies[:access_token].blank?).to be true
       expect(response).to redirect_to(root_path)
     end
@@ -105,7 +123,7 @@ RSpec.describe AuthController, type: :request do
       get '/auth/deauthorize'
 
       # assert.
-      expect(Athlete.find_by(id: 123)).not_to be_nil
+      expect(Athlete.find_by(id: 111)).not_to be_nil
       expect(cookies[:access_token].blank?).to be true
       expect(response).to redirect_to(root_path)
     end

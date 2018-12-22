@@ -18,5 +18,8 @@ module Strafforts
     config.eager_load_paths << Rails.root.join('lib')
     config.exceptions_app = routes
     config.active_job.queue_adapter = :delayed_job
+
+    # Verifies that versions and hashed value of the package contents in the project's package.json
+    config.webpacker.check_yarn_integrity = false
   end
 end

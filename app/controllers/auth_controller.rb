@@ -69,6 +69,29 @@ class AuthController < ApplicationController # rubocop:disable ClassLength
     redirect_to root_path
   end
 
+  def verify_email_confirmation_token
+    athlete = Athlete.find_by(confirmation_token: params[:token])
+    if athlete.nil?
+      Rails.logger.warn("Verifying email confirmation token failed for a token that doesn't match any athlete.")
+
+      redirect_to '/errors/404'
+      return
+    end
+
+    athlete.email_confirmed = true
+    athlete.confirmed_at = Time.now.utc
+    athlete.confirmation_token = nil
+    athlete.save!
+
+    # Subscribe or update to mailing list.
+    SubscribeToMailingListJob.perform_later(athlete)
+
+    # In the situation that there is already another account logged in in the opened browser session. Log it out.
+    cookies.delete(:access_token) unless athlete.access_token == cookies.signed[:access_token]
+
+    redirect_to root_path
+  end
+
   private
 
   def handle_token_exchange(code) # rubocop:disable AbcSize, MethodLength, CyclomaticComplexity, PerceivedComplexity
@@ -116,12 +139,9 @@ class AuthController < ApplicationController # rubocop:disable ClassLength
         end
       end
 
-      # Subscribe or update to mailing list.
-      SubscribeToMailingListJob.perform_later(athlete)
-
       # Add a delayed_job to fetch data for this athlete.
       fetcher = ::ActivityFetcher.new(access_token)
-      fetcher.delay.fetch_all
+      fetcher.delay(priority: 1).fetch_all
 
       # Encrypt and set access_token in cookies.
       cookies.signed[:access_token] = { value: access_token, expires: Time.now + 7.days }

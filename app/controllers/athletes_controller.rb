@@ -9,6 +9,18 @@ class AthletesController < ApplicationController
     @is_current_user = athlete.access_token == cookies.signed[:access_token]
     check_athlete_accessibility(athlete, cookies)
 
+    # New user (i.e. doesn't have an email associated yet).
+    if athlete.athlete_info.email.blank?
+      redirect_to(controller: 'athletes', action: 'confirm_email', new_user: true)
+      return
+    end
+
+    # Returning existing user with unverified email address.
+    if athlete.created_at < 1.day.ago && !athlete.email_confirmed
+      redirect_to(controller: 'athletes', action: 'confirm_email')
+      return
+    end
+
     @athlete = athlete.decorate
 
     raw_personal_bests = BestEffort.find_all_pbs_by_athlete_id(athlete.id)
@@ -61,5 +73,21 @@ class AthletesController < ApplicationController
         "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
       raise e
     end
+  end
+
+  def confirm_email # the page that allows users to enter their email addresses.
+    athlete_id = params[:id]
+    athlete = find_athlete(athlete_id)
+
+    @is_current_user = athlete.access_token == cookies.signed[:access_token]
+    unless @is_current_user
+      Rails.logger.warn("Could not confirm email for athlete '#{athlete_id}' that is not currently logged in.")
+      redirect_to '/errors/403'
+      return
+    end
+
+    @is_editing = params[:editing]
+    @is_new_user = params[:new_user]
+    @athlete = athlete.decorate
   end
 end

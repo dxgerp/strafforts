@@ -12,6 +12,8 @@ class Athlete < ApplicationRecord
   has_many :races
   has_many :subscriptions
 
+  before_create :generate_confirmation_token
+
   def self.find_by_access_token(access_token)
     results = where(access_token: access_token)
     results.empty? ? nil : results.take
@@ -20,5 +22,11 @@ class Athlete < ApplicationRecord
   def self.find_all_by_is_active(is_active = true)
     results = where('is_active = ?', is_active).order('updated_at')
     results.empty? ? [] : results
+  end
+
+  private
+
+  def generate_confirmation_token
+    self.confirmation_token = SecureRandom.urlsafe_base64(32).to_s if confirmation_token.blank?
   end
 end
