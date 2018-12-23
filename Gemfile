@@ -44,6 +44,8 @@ group :development, :test do
   gem 'poltergeist'
   gem 'rspec'
   gem 'rspec-rails'
+  gem "factory_bot_rails", "~> 4.0"
+  gem "faker"
 end
 
 group :development do
