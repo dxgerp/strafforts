@@ -33,7 +33,11 @@
         </label>
         <label class="control-sidebar-subheading">
           Email:
-          <span class="pull-right underline"><a href="/athletes/<%= @athlete.id %>/confirm-your-email?editing=true">edit</a></span>
+          <% if ENV['ALLOW_EDIT_EMAIL'] == 'true' %>
+            <span class="pull-right underline">
+              <a href="/athletes/<%= @athlete.id %>/confirm-your-email?editing=true">edit</a>
+            </span>
+          <% end %>
         </label>
         <p><%= @athlete.athlete_info.email %></p>
       </div>
