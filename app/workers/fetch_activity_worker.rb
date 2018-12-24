@@ -1,6 +1,6 @@
 class FetchActivityWorker
   include Sidekiq::Worker
-  sidekiq_options retry: false
+  sidekiq_options retry: 0
 
   def perform(access_token, options = {})
     fetcher = ::ActivityFetcher.new(access_token)
