@@ -7,14 +7,13 @@ namespace :athletes do
     apply_subscription(ENV['PLAN'], ENV['ID'])
   end
 
-  desc 'Delete all data assiociated with athletes who have been inactive for more 180 days + 7 days of grace period.'
+  desc 'Delete all data associated with athletes who have been inactive for more 180 days + 7 days of grace period.'
   # Usage: bundle exec bin/rails athletes:clean_up
   task clean_up: :environment do
-    task_runner = TaskRunner.new
-    task_runner.delay(priority: 7).clean_up_inactive_athletes
+    CleanUpInactiveAthletesWorker.perform_async
   end
 
-  desc 'Delete all data assiociated with athletes in the given comma separated email/id list.'
+  desc 'Delete all data associated with athletes in the given comma separated email/id list.'
   # Usage: bundle exec bin/rails athletes:destroy EMAIL=[Comma Separated list] ID=[Comma Separated list] DRY_RUN=[true/false]
   # Only to destroy when DRY_RUN is explicitly set to false.
   task destroy: :environment do
@@ -74,9 +73,7 @@ namespace :athletes do
       else
         begin
           access_token = ::Creators::RefreshTokenCreator.refresh(athlete.access_token)
-
-          fetcher = ActivityFetcher.new(access_token)
-          fetcher.delay(priority: 5).fetch_all(mode: ENV['MODE'])
+          FetchActivityWorker.set(queue: :default).perform_async(access_token, mode: ENV['MODE'])
         rescue StandardError => e
           Rails.logger.error("Rake 'athletes:fetch' failed. #{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
           next
