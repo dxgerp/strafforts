@@ -49,13 +49,20 @@ module Creators
       def update_athlete_summary(access_token, athlete_hash)
         @athlete.access_token = access_token
         @athlete.is_active = true
+
+        unless athlete_hash['email'].blank?
+          @athlete_info.email = athlete_hash['email']
+          @athlete.email_confirmed = true
+          @athlete.confirmed_at = Time.now.utc
+          @athlete.confirmation_token = nil
+        end
+
         @athlete_info.username = athlete_hash['username']
         @athlete_info.firstname = athlete_hash['firstname']
         @athlete_info.lastname = athlete_hash['lastname']
         @athlete_info.profile_medium = athlete_hash['profile_medium']
         @athlete_info.profile = athlete_hash['profile']
         @athlete_info.sex = athlete_hash['sex']
-        @athlete_info.email = athlete_hash['email']
         @athlete_info.created_at = athlete_hash['created_at']
         @athlete_info.updated_at = athlete_hash['updated_at']
       end
