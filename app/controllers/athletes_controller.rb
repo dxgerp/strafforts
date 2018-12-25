@@ -75,7 +75,8 @@ class AthletesController < ApplicationController
     end
   end
 
-  def confirm_email # the page that allows users to enter their email addresses.
+  # the page that allows users to enter their email addresses.
+  def confirm_email
     athlete_id = params[:id]
     athlete = find_athlete(athlete_id)
 
