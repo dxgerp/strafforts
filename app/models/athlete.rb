@@ -14,14 +14,20 @@ class Athlete < ApplicationRecord
 
   before_create :generate_confirmation_token
 
-  def self.find_by_access_token(access_token)
-    results = where(access_token: access_token)
-    results.empty? ? nil : results.take
-  end
-
   def self.find_all_by_is_active(is_active = true)
     results = where('is_active = ?', is_active).order('updated_at')
     results.empty? ? [] : results
+  end
+
+  def destroy_all_data
+    BestEffort.where(athlete_id: id).destroy_all
+    Race.where(athlete_id: id).destroy_all
+    Gear.where(athlete_id: id).destroy_all
+    HeartRateZones.where(athlete_id: id).destroy_all
+    Activity.where(athlete_id: id).destroy_all
+    AthleteInfo.where(athlete_id: id).destroy_all
+    Subscription.where(athlete_id: id).update_all(is_deleted: true)
+    Athlete.where(id: id).destroy_all
   end
 
   private

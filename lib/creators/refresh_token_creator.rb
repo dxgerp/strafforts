@@ -4,7 +4,7 @@ module Creators
     STRAVA_API_CLIENT_ID = Settings.strava.api_client_id
 
     def self.create(access_token, refresh_token, expires_at) # rubocop:disable CyclomaticComplexity, PerceivedComplexity, MethodLength
-      athlete = Athlete.find_by_access_token(access_token)
+      athlete = Athlete.find_by(access_token: access_token)
       if athlete.nil?
         Rails.logger.warn("RefreshTokenCreator - Could not find requested athlete (access_token=#{access_token}).")
         return
