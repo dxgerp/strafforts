@@ -7,7 +7,7 @@ module Api
       email_address = params[:email]
       if email_address.blank?
         Rails.logger.warn('Could not confirm email for an empty email.')
-        render json: { error: ApplicationHelper::Message::EMAIL_EMPTY }.to_json, status: 400
+        render json: { error: Messages::EMAIL_EMPTY }.to_json, status: 400
         return
       end
 
@@ -30,7 +30,7 @@ module Api
       rescue StandardError => e
         Rails.logger.error("AthletesController - Could not confirm email address '#{params[:email]}'. "\
           "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
-        render json: { error: ApplicationHelper::Message::EMAIL_SENDING_FAILURE }.to_json, status: 500
+        render json: { error: Messages::EMAIL_SENDING_FAILURE }.to_json, status: 500
         return
       end
     end
@@ -50,7 +50,7 @@ module Api
       subscription_plan = SubscriptionPlan.find_by(id: plan_id)
       if subscription_plan.nil?
         Rails.logger.warn("AthletesController - Could not find the requested subscription plan '#{plan_id}'.")
-        render json: { error: ApplicationHelper::Message::PRO_PLAN_NOT_FOUND }.to_json, status: 404
+        render json: { error: Messages::PRO_PLAN_NOT_FOUND }.to_json, status: 404
         return
       end
 
@@ -62,12 +62,12 @@ module Api
         Rails.logger.error("AthletesController - StripeError while subscribing to PRO plan for athlete '#{@athlete.id}'. "\
           "Status: #{e.http_status}. Message: #{e.json_body.blank? ? '' : e.json_body[:error][:message]}\n"\
           "Backtrace:\n\t#{e.backtrace.join("\n\t")}")
-        render json: { error: "#{ApplicationHelper::Message::STRIPE_ERROR} #{e.json_body.blank? ? '' : e.json_body[:error][:message]}" }.to_json, status: 402
+        render json: { error: "#{Messages::STRIPE_ERROR} #{e.json_body.blank? ? '' : e.json_body[:error][:message]}" }.to_json, status: 402
         return
       rescue StandardError => e
         Rails.logger.error("AthletesController - Subscribing to PRO plan '#{subscription_plan.name}' failed for athlete '#{@athlete.id}'. "\
           "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
-        render json: { error: ApplicationHelper::Message::PAYMENT_FAILED }.to_json, status: 500
+        render json: { error: Messages::PAYMENT_FAILED }.to_json, status: 500
         return
       end
     end
@@ -112,7 +112,7 @@ module Api
       return unless @athlete.nil?
 
       Rails.logger.warn("AthletesController - Could not perform action for an athlete '#{params[:id]}' that could not be found.")
-      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_FOUND }.to_json, status: 404
+      render json: { error: Messages::ATHLETE_NOT_FOUND }.to_json, status: 404
     end
 
     def require_current_user
@@ -121,7 +121,7 @@ module Api
       return if @is_current_user
 
       Rails.logger.warn("AthletesController - Could not perform action for an athlete #{@athlete.id} that is not the currently logged in.")
-      render json: { error: ApplicationHelper::Message::ATHLETE_NOT_ACCESSIBLE }.to_json, status: 403
+      render json: { error: Messages::ATHLETE_NOT_ACCESSIBLE }.to_json, status: 403
     end
 
     def require_pro_subscription
@@ -129,7 +129,7 @@ module Api
 
       return if @athlete.pro_subscription?
 
-      render json: { error: ApplicationHelper::Message::PRO_ACCOUNTS_ONLY }.to_json, status: 403
+      render json: { error: Messages::PRO_ACCOUNTS_ONLY }.to_json, status: 403
     end
   end
 end

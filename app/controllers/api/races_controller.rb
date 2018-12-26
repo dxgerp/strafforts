@@ -28,7 +28,7 @@ module Api
           end
         elsif params[:distance_or_year] =~ /^20\d\d$/
           unless athlete.pro_subscription?
-            render json: { error: ApplicationHelper::Message::PRO_ACCOUNTS_ONLY }.to_json, status: 403
+            render json: { error: Messages::PRO_ACCOUNTS_ONLY }.to_json, status: 403
             return
           end
 
@@ -37,7 +37,7 @@ module Api
 
           if items.blank? # Return 404 if nothing found for this year.
             Rails.logger.warn("Could not find requested race year '#{year}' for athlete '#{athlete.id}'.")
-            render json: { error: ApplicationHelper::Message::YEAR_NOT_FOUND }.to_json, status: 404
+            render json: { error: Messages::YEAR_NOT_FOUND }.to_json, status: 404
             return
           end
 
@@ -52,7 +52,7 @@ module Api
           race_distance = RaceDistance.find_by_name(distance)
           if race_distance.nil?
             Rails.logger.warn("Could not find requested race distance '#{distance}' for athlete '#{athlete.id}'.")
-            render json: { error: ApplicationHelper::Message::DISTANCE_NOT_FOUND }.to_json, status: 404
+            render json: { error: Messages::DISTANCE_NOT_FOUND }.to_json, status: 404
             return
           end
 
@@ -61,7 +61,7 @@ module Api
             item[:name] == race_distance.name
           end
           if major_distance.blank? && !athlete.pro_subscription?
-            render json: { error: ApplicationHelper::Message::PRO_ACCOUNTS_ONLY }.to_json, status: 403
+            render json: { error: Messages::PRO_ACCOUNTS_ONLY }.to_json, status: 403
             return
           end
 

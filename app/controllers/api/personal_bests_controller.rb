@@ -30,7 +30,7 @@ module Api
           best_effort_type = BestEffortType.find_by_name(distance)
           if best_effort_type.nil?
             Rails.logger.warn("Could not find requested best effort type '#{distance}' for athlete '#{athlete.id}'.")
-            render json: { error: ApplicationHelper::Message::DISTANCE_NOT_FOUND }.to_json, status: 404
+            render json: { error: Messages::DISTANCE_NOT_FOUND }.to_json, status: 404
             return
           end
 
@@ -39,7 +39,7 @@ module Api
             item[:name] == best_effort_type.name
           end
           if major_distance.blank? && !athlete.pro_subscription?
-            render json: { error: ApplicationHelper::Message::PRO_ACCOUNTS_ONLY }.to_json, status: 403
+            render json: { error: Messages::PRO_ACCOUNTS_ONLY }.to_json, status: 403
             return
           end
 

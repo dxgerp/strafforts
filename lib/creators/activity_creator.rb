@@ -94,7 +94,7 @@ module Creators
       end
 
       def parse_date_time(date_time)
-        return DateTime.parse(date_time) unless date_time.blank?
+        DateTime.parse(date_time) unless date_time.blank?
       end
     end
   end

@@ -27,8 +27,8 @@ module Creators
           expires_at = result['expires_at']
           Rails.logger.info("RefreshTokenCreator - New access token for athlete #{athlete.id}. #{result['access_token']}")
         else
-          response_body = response.nil? || response.body.blank? ? '' : "\nResponse Body: #{response.body}"
-          raise "RefreshTokenCreator - Getting refreshing token failed. HTTP Status Code: #{response.code}.#{response_body}"
+          response_body = response.nil? || response.body.blank? ? '' : "HTTP Status Code: #{response.code}.\nResponse Body: #{response.body}"
+          raise "RefreshTokenCreator - Getting refreshing token failed. #{response_body}"
         end
       end
 
