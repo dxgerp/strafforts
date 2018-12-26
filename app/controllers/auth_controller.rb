@@ -84,7 +84,7 @@ class AuthController < ApplicationController # rubocop:disable ClassLength
     athlete.save!
 
     # Subscribe or update to mailing list.
-    SubscribeToMailingListJob.perform_later(athlete)
+    SubscribeToMailingListWorker.perform_async(athlete.id)
 
     # In the situation that there is already another account logged in in the opened browser session. Log it out.
     cookies.delete(:access_token) unless athlete.access_token == cookies.signed[:access_token]
@@ -139,9 +139,8 @@ class AuthController < ApplicationController # rubocop:disable ClassLength
         end
       end
 
-      # Add a delayed_job to fetch data for this athlete.
-      fetcher = ::ActivityFetcher.new(access_token)
-      fetcher.delay(priority: 1).fetch_all
+      # Fetch data for this athlete.
+      FetchActivityWorker.set(queue: :critical, retry: true).perform_async(access_token)
 
       # Encrypt and set access_token in cookies.
       cookies.signed[:access_token] = { value: access_token, expires: Time.now + 7.days }

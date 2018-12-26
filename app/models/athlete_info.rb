@@ -16,6 +16,6 @@ class AthleteInfo < ApplicationRecord
   private
 
   def remove_from_mailing_list
-    RemoveFromMailingListJob.perform_later(id, email)
+    RemoveFromMailingListWorker.perform_async(id, email)
   end
 end

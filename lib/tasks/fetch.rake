@@ -39,9 +39,7 @@ namespace :fetch do
 
       begin
         access_token = ::Creators::RefreshTokenCreator.refresh(athlete.access_token)
-
-        fetcher = ActivityFetcher.new(access_token)
-        fetcher.delay(run_at: (index * 3).seconds.from_now, priority: 5).fetch_all(mode: mode, type: type)
+        FetchActivityWorker.set(queue: :low).perform_in((index * 3).seconds, access_token, mode: mode, type: type)
       rescue StandardError => e
         Rails.logger.error("Rake 'fetch' failed. #{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
         next
