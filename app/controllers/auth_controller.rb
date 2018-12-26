@@ -24,41 +24,7 @@ class AuthController < ApplicationController # rubocop:disable ClassLength
 
   def deauthorize # rubocop:disable MethodLength
     access_token = cookies.signed[:access_token]
-
-    # Renew athlete's refresh token first.
-    begin
-      access_token = ::Creators::RefreshTokenCreator.refresh(access_token)
-    rescue StandardError => e
-      Rails.logger.error('Refreshing token while deauthorizing failed. '\
-        "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
-    end
-
-    unless access_token.nil?
-      # Delete all data.
-      athlete = Athlete.find_by_access_token(access_token)
-      unless athlete.nil?
-        athlete_id = athlete.id
-        Rails.logger.warn("Deauthrozing and destroying all data for athlete #{athlete_id}.")
-        BestEffort.where(athlete_id: athlete_id).destroy_all
-        Race.where(athlete_id: athlete_id).destroy_all
-        Gear.where(athlete_id: athlete_id).destroy_all
-        HeartRateZones.where(athlete_id: athlete_id).destroy_all
-        Activity.where(athlete_id: athlete_id).destroy_all
-        AthleteInfo.where(athlete_id: athlete_id).destroy_all
-        Subscription.where(athlete_id: athlete_id).update_all(is_deleted: true)
-        Athlete.where(id: athlete_id).destroy_all
-      end
-
-      # Revoke Strava access.
-      uri = URI(STRAVA_API_AUTH_DEAUTHORIZE_URL)
-      response = Net::HTTP.post_form(uri, 'access_token' => access_token)
-      if response.is_a? Net::HTTPSuccess
-        Rails.logger.info("Revoked Strava access for athlete (access_token=#{access_token}).")
-      else
-        # Fail to revoke Strava access. Log it and don't throw.
-        Rails.logger.error("Revoking Strava access failed. HTTP Status Code: #{response.code}. Response Message: #{response.message}")
-      end
-    end
+    DeauthorizeAthleteWorkerWorker.perform_async(access_token)
 
     # Log the user out.
     logout

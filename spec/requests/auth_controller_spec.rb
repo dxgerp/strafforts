@@ -1,21 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe AuthController, type: :request do
-  ACCESS_TOKEN = '3f2a45886980ebec9f4a689371e95860'.freeze
-  REFRESH_TOKEN = '773099021c1b74d2a61a97878f8b2b41ccd36b51'.freeze
-  TOKEN_EXCHANGE_REQUEST_BODY = {
-    client_id: nil,
-    client_secret: nil,
-    code: nil,
-    grant_type: 'authorization_code'
-  }.freeze
-  TOKEN_REFRESH_REQUEST_BODY = {
-    client_id: nil,
-    client_secret: nil,
-    refresh_token: REFRESH_TOKEN,
-    grant_type: 'refresh_token'
-  }.freeze
-
   describe 'GET exchange-token' do
     it 'should redirect to root directly there are errors in params' do
       get '/auth/exchange-token', params: { error: 'access_denied' }
@@ -92,7 +77,9 @@ RSpec.describe AuthController, type: :request do
       setup_cookie(ACCESS_TOKEN)
 
       # act.
-      get '/auth/deauthorize'
+      Sidekiq::Testing.inline! do
+        get '/auth/deauthorize'
+      end
 
       # assert.
       expect(Athlete.find_by(id: 111)).to be_nil

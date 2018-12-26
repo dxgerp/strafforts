@@ -14,28 +14,6 @@ RSpec.describe Athlete, type: :model do
 
   let(:athlete) { FactoryBot.build(:athlete) }
 
-  describe '.find_by_access_token' do
-    it 'should get nil when access_token is invalid' do
-      # act.
-      item = Athlete.find_by_access_token('invalid_access_token')
-
-      # assert.
-      expect(item).to be_nil
-    end
-
-    it 'should get an athlete matching the provided access_token' do
-      # arrange.
-      access_token = athlete.access_token
-
-      # act.
-      item = Athlete.find_by_access_token(access_token)
-
-      # assert.
-      expect(item.is_a?(Athlete)).to be true
-      expect(item.access_token).to eq(access_token)
-    end
-  end
-
   describe '.find_all_by_is_active' do
     it 'should get inactive athletes when searching for inactive athletes' do
       # arrange.
