@@ -1,11 +1,11 @@
-class DeauthorizeAthleteWorkerWorker
+class DeauthorizeAthleteWorker
   include Sidekiq::Worker
   sidekiq_options queue: 'default', backtrace: true, retry: 0
 
   STRAVA_API_AUTH_DEAUTHORIZE_URL = Settings.strava.api_auth_deauthorize_url
 
   def perform(access_token)
-    raise ArgumentError, 'DeauthorizeAthleteWorkerWorker - Access token is blank.' if access_token.blank?
+    raise ArgumentError, 'DeauthorizeAthleteWorker - Access token is blank.' if access_token.blank?
 
     # Renew athlete's refresh token first.
     begin

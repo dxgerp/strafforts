@@ -1,23 +1,23 @@
 require 'rails_helper'
 
-RSpec.describe DeauthorizeAthleteWorkerWorker, type: :worker do
+RSpec.describe DeauthorizeAthleteWorker, type: :worker do
   it 'should enqueue the job' do
     # act.
-    DeauthorizeAthleteWorkerWorker.perform_async
+    DeauthorizeAthleteWorker.perform_async
 
     # assert.
-    expect(DeauthorizeAthleteWorkerWorker).to have_enqueued_sidekiq_job
-    expect(DeauthorizeAthleteWorkerWorker).to save_backtrace
-    expect(DeauthorizeAthleteWorkerWorker).to be_retryable 0
+    expect(DeauthorizeAthleteWorker).to have_enqueued_sidekiq_job
+    expect(DeauthorizeAthleteWorker).to save_backtrace
+    expect(DeauthorizeAthleteWorker).to be_retryable 0
   end
 
   it 'should raise ArgumentError when access_token is blank' do
     # act & assert.
     expect {
       Sidekiq::Testing.inline! do
-        DeauthorizeAthleteWorkerWorker.perform_async('')
+        DeauthorizeAthleteWorker.perform_async('')
       end
-    }.to raise_error(ArgumentError, 'DeauthorizeAthleteWorkerWorker - Access token is blank.')
+    }.to raise_error(ArgumentError, 'DeauthorizeAthleteWorker - Access token is blank.')
   end
 
   it 'should perform the action' do
@@ -28,7 +28,7 @@ RSpec.describe DeauthorizeAthleteWorkerWorker, type: :worker do
 
     # act.
     Sidekiq::Testing.inline! do
-      DeauthorizeAthleteWorkerWorker.perform_async(ACCESS_TOKEN)
+      DeauthorizeAthleteWorker.perform_async(ACCESS_TOKEN)
     end
 
     # assert.

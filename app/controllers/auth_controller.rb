@@ -24,7 +24,7 @@ class AuthController < ApplicationController # rubocop:disable ClassLength
 
   def deauthorize # rubocop:disable MethodLength
     access_token = cookies.signed[:access_token]
-    DeauthorizeAthleteWorkerWorker.perform_async(access_token)
+    DeauthorizeAthleteWorker.perform_async(access_token)
 
     # Log the user out.
     logout
