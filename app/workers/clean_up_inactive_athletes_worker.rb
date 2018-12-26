@@ -11,7 +11,7 @@ class CleanUpInactiveAthletesWorker
         next if athlete.pro_subscription?
 
         destroyed_ids << athlete.id
-        destroy_athlete(athlete.id)
+        athlete.destroy_all_data
       rescue StandardError => e
         Rails.logger.error("Cleaning up inactive athlete failed for athlete '#{athlete.id}'. "\
           "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")

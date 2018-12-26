@@ -30,14 +30,7 @@ class DeauthorizeAthleteWorkerWorker
     unless athlete.nil?
       athlete_id = athlete.id
       Rails.logger.warn("Deauthorizing and destroying all data for athlete #{athlete_id}.")
-      BestEffort.where(athlete_id: athlete_id).destroy_all
-      Race.where(athlete_id: athlete_id).destroy_all
-      Gear.where(athlete_id: athlete_id).destroy_all
-      HeartRateZones.where(athlete_id: athlete_id).destroy_all
-      Activity.where(athlete_id: athlete_id).destroy_all
-      AthleteInfo.where(athlete_id: athlete_id).destroy_all
-      Subscription.where(athlete_id: athlete_id).update_all(is_deleted: true)
-      Athlete.where(id: athlete_id).destroy_all
+      athlete.destroy_all_data
     end
   end
 end

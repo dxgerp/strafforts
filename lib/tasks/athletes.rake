@@ -35,7 +35,7 @@ namespace :athletes do
         puts "[DRY_RUN] Destroying all data for athlete #{athlete_id} (#{email})."
       else
         puts "Destroying all data for athlete #{athlete_id} (#{email})."
-        destroy_athlete(athlete_id)
+        athlete.destroy_all_data
         counter += 1
       end
     end
@@ -52,7 +52,7 @@ namespace :athletes do
         puts "[DRY_RUN] Destroying all data for athlete #{athlete_id} (#{athlete_email})."
       else
         puts "Destroying all data for athlete #{athlete_id} (#{athlete_email})."
-        destroy_athlete(athlete_id)
+        athlete.destroy_all_data
         counter += 1
       end
     end
@@ -97,16 +97,5 @@ namespace :athletes do
       end
     end
     puts "A total of #{counter} athletes have been applied to."
-  end
-
-  def destroy_athlete(id)
-    BestEffort.where(athlete_id: id).destroy_all
-    Race.where(athlete_id: id).destroy_all
-    Gear.where(athlete_id: id).destroy_all
-    HeartRateZones.where(athlete_id: id).destroy_all
-    Activity.where(athlete_id: id).destroy_all
-    AthleteInfo.where(athlete_id: id).destroy_all
-    Subscription.where(athlete_id: id).update_all(is_deleted: true)
-    Athlete.where(id: id).destroy_all
   end
 end
