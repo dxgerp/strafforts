@@ -77,12 +77,9 @@ RSpec.describe AuthController, type: :request do
       setup_cookie(ACCESS_TOKEN)
 
       # act.
-      Sidekiq::Testing.inline! do
-        get '/auth/deauthorize'
-      end
+      get '/auth/deauthorize'
 
       # assert.
-      expect(Athlete.find_by(id: 111)).to be_nil
       expect(cookies[:access_token].blank?).to be true
       expect(response).to redirect_to(root_path)
     end
@@ -95,7 +92,6 @@ RSpec.describe AuthController, type: :request do
       get '/auth/deauthorize'
 
       # assert.
-      expect(Athlete.find_by(id: 111)).not_to be_nil
       expect(cookies[:access_token].blank?).to be true
       expect(response).to redirect_to(root_path)
     end
@@ -110,7 +106,6 @@ RSpec.describe AuthController, type: :request do
       get '/auth/deauthorize'
 
       # assert.
-      expect(Athlete.find_by(id: 111)).not_to be_nil
       expect(cookies[:access_token].blank?).to be true
       expect(response).to redirect_to(root_path)
     end
