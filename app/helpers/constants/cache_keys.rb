@@ -10,5 +10,5 @@ module CacheKeys
 
   RACES_OVERVIEW = "athletes/%{athlete_id}/races/overview"
   RACES_RECENT = "athletes/%{athlete_id}/races/recent"
-  RACES_DISTANCE = "athletes/%{athlete_id}/races/%{distance}"
+  RACES_DISTANCE = "athletes/%{athlete_id}/races/%{race_distance_id}"
 end

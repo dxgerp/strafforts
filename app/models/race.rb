@@ -12,7 +12,7 @@ class Race < ApplicationRecord
     Rails.cache.delete(CacheKeys::META % { athlete_id: athlete_id })
     Rails.cache.delete(CacheKeys::RACES_OVERVIEW % { athlete_id: athlete.id })
     Rails.cache.delete(CacheKeys::RACES_RECENT % { athlete_id: athlete.id })
-    Rails.cache.delete(CacheKeys::RACES_DISTANCE % { athlete_id: athlete.id, distance: distance })
+    Rails.cache.delete(CacheKeys::RACES_DISTANCE % { athlete_id: athlete.id, race_distance_id: race_distance_id })
   end
 
   def self.find_all_by_athlete_id(athlete_id)
