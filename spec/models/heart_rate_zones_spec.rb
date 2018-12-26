@@ -20,7 +20,7 @@ RSpec.describe HeartRateZones, type: :model do
   describe '.find_by_athlete_id' do
     it 'should get nil when the provided athlete_id matches nothing' do
       # act.
-      item = HeartRateZones.find_by_athlete_id(12345678)
+      item = HeartRateZones.find_by_athlete_id(987654321)
 
       # assert.
       expect(item).to be_nil

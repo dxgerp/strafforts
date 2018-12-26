@@ -1,6 +1,7 @@
 app:
   name: 'Strafforts'
-  url: 'https://www.strafforts.com'
+  base_url: <%= ENV['BASE_URL'] %>
+  production_url: 'https://www.strafforts.com'
   currency: 'gbp'
   currency_symbol: '£'
   demo_athlete: 9123806

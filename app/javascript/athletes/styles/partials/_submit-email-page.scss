@@ -1,0 +1,19 @@
+.lockscreen-wrapper {
+  .lockscreen-logo a {
+    b {
+      color: $color-strava;
+    }
+  }
+
+  .lockscreen-item {
+    margin-top: 50px;
+  }
+
+  .spinner {
+    display: none;
+    margin-top: 20px;
+    .fa-spin {
+      font-size: 30px;
+    }
+  }
+}

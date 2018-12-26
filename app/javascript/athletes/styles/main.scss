@@ -2,146 +2,146 @@
 @import 'partials/variables';
 
 body {
-    font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
 }
 
 input[type='submit'] {
-    font-family: FontAwesome,'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-family: FontAwesome,'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
 }
 
 .bg-strava {
-    color: #FFFFFF !important;
-    background-color: $color-strava !important;
+  color: #FFFFFF !important;
+  background-color: $color-strava !important;
 }
 
 .underline {
-    text-decoration: underline;
+  text-decoration: underline;
 
-    &:hover {
-        cursor: pointer;
-    }
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .no-wrap {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 /* Badge and label styles */
 .badge,
 .label {
-    font-size: 12px;
+  font-size: 12px;
 
-    margin: 4px;
+  margin: 4px;
 }
 
 .subscription-badge span {
-    font-size: .7em;
-    font-weight: bold;
-    line-height: 1;
+  font-size: .7em;
+  font-weight: bold;
+  line-height: 1;
 
-    padding: .2em .8em !important;
+  padding: .2em .8em !important;
 
-    color: $color-light-grey;
-    border: 1px solid $color-light-grey;
-    border-radius: .25em;
+  color: $color-light-grey;
+  border: 1px solid $color-light-grey;
+  border-radius: .25em;
 }
 .subscription-badge .pro-account {
-    color: #FFFFFF;
-    border: none;
-    background-color: $color-strava;
+  color: #FFFFFF;
+  border: none;
+  background-color: $color-strava;
 }
 .subscription-badge .free-account {
-    color: #FFFFFF;
-    border: none;
-    background-color: $color-green;
+  color: #FFFFFF;
+  border: none;
+  background-color: $color-green;
 }
 
 // Also used in app/assets/javascripts/common/helpers.ts.
 // Update there if any color is changed here.
 .hr-zone-na {
-    background-color: #D2D6DE;
+  background-color: #D2D6DE;
 }
 
 .hr-zone-1 {
-    background-color: #BDD6BA;
+  background-color: #BDD6BA;
 }
 
 .hr-zone-2 {
-    background-color: #00A65A;
+  background-color: #00A65A;
 }
 
 .hr-zone-3 {
-    background-color: #F39C12;
+  background-color: #F39C12;
 }
 
 .hr-zone-4 {
-    background-color: #C82300;
+  background-color: #C82300;
 }
 
 .hr-zone-5 {
-    background-color: #111111;
+  background-color: #111111;
 }
 
 .workout-type-run {
-    background-color: $color-light-green;
+  background-color: $color-light-green;
 }
 
 .workout-type-race {
-    background-color: $color-red;
+  background-color: $color-red;
 }
 
 .workout-type-long-run {
-    background-color: $color-green;
+  background-color: $color-green;
 }
 
 .workout-type-workout {
-    background-color: $color-yellow;
+  background-color: $color-yellow;
 }
 
 .form-control:focus {
-    border-color: $color-strava;
+  border-color: $color-strava;
 }
 
 .box.box-primary {
-    border-top-color: $color-strava;
+  border-top-color: $color-strava;
 }
 
 .main-footer a,
 .main-header .logo b {
-    color: $color-strava;
+  color: $color-strava;
 
-    &:hover {
-        color: $color-strava-hover;
-    }
+  &:hover {
+    color: $color-strava-hover;
+  }
 }
 
 .control-sidebar {
-    .alert {
-        padding: 6px 6px 6px 10px;
-    }
+  .alert {
+    padding: 6px 6px 6px 10px;
+  }
 
-    .subscription-badge {
-        margin-top: -2px;
-    }
+  .subscription-badge {
+    margin-top: -2px;
+  }
 }
 
 .content-wrapper {
-    .global-message {
-        font-size: 14px;
-        font-weight: 600;
+  .global-message {
+    font-size: 14px;
+    font-weight: 600;
 
-        z-index: 999999;
+    z-index: 999999;
 
-        padding: 12px 20px;
+    padding: 12px 20px;
 
-        color: #000000;
-    }
+    color: #000000;
+  }
 }
 
 .content-header {
-    h1 {
-        text-transform: capitalize;
-    }
+  h1 {
+    text-transform: capitalize;
+  }
 }
 
 @import 'partials/main-header';
@@ -151,3 +151,4 @@ input[type='submit'] {
 @import 'partials/pricing-table';
 @import 'partials/pace';
 @import 'partials/responsive';
+@import 'partials/submit-email-page';

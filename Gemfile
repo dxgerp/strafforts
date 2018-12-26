@@ -44,6 +44,8 @@ group :development, :test do
   gem 'poltergeist'
   gem 'rspec'
   gem 'rspec-rails'
+  gem "factory_bot_rails", "~> 4.0"
+  gem "faker"
 end
 
 group :development do
@@ -70,6 +72,7 @@ group :test do
   gem 'shoulda', '~> 3.5'
   gem 'shoulda-matchers', '~> 2.0'
   gem 'webmock'
+  gem 'rspec-sidekiq'
 end
 
 group :production do
@@ -89,12 +92,13 @@ gem 'webpacker', '~> 3.5'
 gem 'activemodel-serializers-xml', github: 'rails/activemodel-serializers-xml'
 gem 'draper'
 
-gem 'foreman' # Manager Procfile.dev under develpoment environment.
+gem 'foreman' # Manager Procfile.dev under development environment.
 gem 'bootstrap-sass', '~> 3.3.6' # Bootstrap.
 gem 'config' # Config.
-gem 'daemons' # Add daemons gem to show delayed_job status.
-gem 'delayed_job_active_record' # ActiveRecord backend integration for DelayedJob 3.0+.
 gem 'font-awesome-rails' # Rails Font Awesome.
+
 gem 'mailerlite' # Mailer Lite API wrapper.
 gem 'strava-api-v3' # Strava Ruby API Client.
 gem 'stripe' # Ruby library for the Stripe API.
+
+gem 'sidekiq'

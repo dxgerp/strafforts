@@ -1,16 +1,41 @@
 require 'rails_helper'
 
 RSpec.describe Api::AthletesController, type: :request do
+  let(:athlete_id) { '98765' }
+  let(:url) { "/api/athletes/#{athlete_id}/fetch-latest" }
+
   describe 'POST fetch-latest' do
     it 'should return 404 when the requested athlete does not exist' do
-      post '/api/athletes/12345678/fetch-latest'
+      # act.
+      post url
+
+      # assert.
       expect(response).to have_http_status(404)
     end
 
     it 'should return 403 when requested athlete is not the current user' do
-      setup_cookie(nil)
-      post '/api/athletes/9123806/fetch-latest'
+      # arrange.
+      FactoryBot.build(:athlete, id: athlete_id)
+
+      # act.
+      post url
+
+      # assert.
       expect(response).to have_http_status(403)
+    end
+
+    context 'for an athlete without PRO subscription' do
+      it 'should be 403 even with the correct cookie' do
+        # arrange.
+        athlete = FactoryBot.build(:athlete, id: athlete_id)
+        setup_cookie(athlete.access_token)
+
+        # act.
+        post url
+
+        # assert.
+        expect(response).to have_http_status(403)
+      end
     end
 
     context 'for an athlete with PRO subscription' do
@@ -28,19 +53,6 @@ RSpec.describe Api::AthletesController, type: :request do
 
         # assert.
         expect(response).to have_http_status(:success)
-      end
-    end
-
-    context 'for an athlete without PRO subscription' do
-      it 'should be 403 even with the correct cookie' do
-        # arrange.
-        setup_cookie('58e42e6f5e496dc5aa0d5ec354da8048')
-
-        # act.
-        post '/api/athletes/456/fetch-latest'
-
-        # assert.
-        expect(response).to have_http_status(403)
       end
     end
   end

@@ -2,18 +2,19 @@ require 'rails_helper'
 
 RSpec.describe AthletesController, type: :request do
   let(:expected_folder) { './spec/requests/expected'.freeze }
+  let(:athlete_id) { '98765' }
+  let(:url) { "/athletes/#{athlete_id}/get-pro" }
 
   describe 'GET pro_plans' do
-    it 'should not find athlete when id matches nothing' do
-      expect { get '/athletes/12345678/get-pro' }
-        .to raise_error(ActionController::RoutingError, "Could not find the requested athlete '12345678' by id.")
+    it 'should raise routing error when the requested athlete does not exist' do
+      expect { get url }
+        .to raise_error(ActionController::RoutingError, "Could not find the requested athlete '#{athlete_id}' by id.")
     end
 
     context 'when athlete has a public profile' do
       it 'should render page successfully' do
         # arrange.
-        setup_cookie(nil)
-        url = '/athletes/9123806/get-pro'
+        FactoryBot.build(:athlete_with_public_profile, id: athlete_id)
         expected = "#{expected_folder}#{url}.html"
 
         # act.
@@ -30,16 +31,18 @@ RSpec.describe AthletesController, type: :request do
 
     context 'when athlete has a private profile' do
       it 'should not get page without valid cookie' do
-        setup_cookie(nil)
+        # arrange.
+        FactoryBot.build(:athlete, id: athlete_id)
 
-        expect { get '/athletes/123/get-pro' }
-          .to raise_error(ActionController::RoutingError, "Could not access athlete '123'.")
+        # act & assert.
+        expect { get url }
+          .to raise_error(ActionController::RoutingError, "Could not access athlete '#{athlete_id}'.")
       end
 
       it 'should render page successfully with a valid cookie' do
         # arrange.
-        setup_cookie('3f2a45886980ebec9f4a689371e95860')
-        url = '/athletes/123/get-pro'
+        athlete = FactoryBot.build(:athlete, id: athlete_id)
+        setup_cookie(athlete.access_token)
 
         # act.
         get url

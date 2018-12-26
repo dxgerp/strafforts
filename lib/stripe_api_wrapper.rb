@@ -48,7 +48,7 @@ class StripeApiWrapper
           'First Name' => athlete.athlete_info.firstname,
           'Last Name' => athlete.athlete_info.lastname,
           'Strava Profile URL' => athlete.profile_url,
-          'Strafforts Profile URL' => "#{Settings.app.url}/athletes/#{athlete.id}"
+          'Strafforts Profile URL' => "#{Settings.app.production_url}/athletes/#{athlete.id}"
         }
         customer = Stripe::Customer.create(
           source: stripe_token,

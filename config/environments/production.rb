@@ -96,13 +96,6 @@ config.webpacker.check_yarn_integrity = false
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
-    logger.formatter = config.log_formatter
-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
-    config.log_level = ENV['RAILS_LOG_LEVEL'].to_sym if ENV["RAILS_LOG_LEVEL"]
-  end
-
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 

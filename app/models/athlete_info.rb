@@ -4,6 +4,8 @@ class AthleteInfo < ApplicationRecord
   belongs_to :state, foreign_key: 'state_id', optional: true
   belongs_to :country, foreign_key: 'country_id', optional: true
 
+  validates_format_of :email, allow_nil: true, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/
+
   before_destroy :remove_from_mailing_list
 
   def self.find_by_email(email)
@@ -11,7 +13,9 @@ class AthleteInfo < ApplicationRecord
     results.empty? ? nil : results.take
   end
 
+  private
+
   def remove_from_mailing_list
-    RemoveFromMailingListJob.perform_later(id, email)
+    RemoveFromMailingListWorker.perform_async(id, email)
   end
 end

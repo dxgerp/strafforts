@@ -1,7 +1,7 @@
 ---
 heart_rate_zones_1:
   id: 1
-  athlete_id: 123
+  athlete_id: 111
   custom_zones: false
   zone_1_min: 0
   zone_1_max: 140
