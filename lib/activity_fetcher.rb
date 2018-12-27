@@ -114,7 +114,6 @@ class ActivityFetcher
     # Call Strava API: to get athlete's total run count.
     totals_and_stats = @api_wrapper.totals_and_stats(athlete_id)
     totals_and_stats_json = JSON.parse(totals_and_stats.to_json)
-    total_run_count = totals_and_stats_json['all_run_totals']['count']
-    total_run_count
+    totals_and_stats_json['all_run_totals']['count']
   end
 end

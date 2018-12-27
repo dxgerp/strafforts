@@ -16,6 +16,7 @@ module Strafforts
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
     config.eager_load_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join('app/helpers/constants')
     config.exceptions_app = routes
     config.active_job.queue_adapter = :sidekiq
 
@@ -28,5 +29,8 @@ module Strafforts
       config.logger    = ActiveSupport::TaggedLogging.new(logger)
       config.log_level = ENV["RAILS_LOG_LEVEL"].present? ? ENV['RAILS_LOG_LEVEL'].to_sym : :info
     end
+
+    # Redis for caching.
+    config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL_FOR_CACHING'] ||= 'redis://localhost:6379/10', expires_in: 1.day, namespace: 'app' }
   end
 end

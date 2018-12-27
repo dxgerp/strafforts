@@ -1,25 +1,6 @@
 require 'ostruct'
 
 module ApplicationHelper
-  class ItemType
-    BEST_EFFORTS = 'best-efforts'.freeze
-    PERSONAL_BESTS = 'personal-bests'.freeze
-    RACES = 'races'.freeze
-  end
-
-  class Message
-    ATHLETE_NOT_FOUND = 'The requested athlete could not be found.'
-    ATHLETE_NOT_ACCESSIBLE = 'The requested athlete could not be accessed without logged in.'
-    EMAIL_EMPTY = 'An email address must be provided.'
-    EMAIL_SENDING_FAILURE = 'Your email was not sent successfully.'
-    DISTANCE_NOT_FOUND = 'The requested distance could not be found.'
-    PAYMENT_FAILED = 'Your payment could not be processed at the moment. Please contact us to get your PRO plan.'
-    PRO_ACCOUNTS_ONLY = 'This feature is only available for accounts with PRO plans.'
-    PRO_PLAN_NOT_FOUND = 'The requested PRO plan could not be found.'
-    STRIPE_ERROR = 'Your payment could not be processed by our payment provider:'
-    YEAR_NOT_FOUND = 'The requested year could not be found.'
-  end
-
   class Helper
     MAX_DISTANCES_TO_SHOW = 4
     MAX_ITEM_ALLOWED_PER_DISTANCE = 5
@@ -75,8 +56,8 @@ module ApplicationHelper
       end
 
       def find_items_to_show_in_overview(item_type, items) # rubocop:disable CyclomaticComplexity, PerceivedComplexity
-        is_type_of_pb = item_type == ApplicationHelper::ItemType::PERSONAL_BESTS
-        is_type_of_races = item_type == ApplicationHelper::ItemType::RACES
+        is_type_of_pb = item_type == ItemTypes::PERSONAL_BESTS
+        is_type_of_races = item_type == ItemTypes::RACES
 
         results = {}
 
@@ -136,13 +117,13 @@ module ApplicationHelper
           minutes_text = "#{(minutes + 1).to_s}:"
           seconds_text = "00"
         end
-        return "#{hours_text}#{minutes_text}#{seconds_text}"
+        "#{hours_text}#{minutes_text}#{seconds_text}"
       end
 
       def convert_to_pace_in_seconds(average_speed, is_imperial_unit)
         return 0 if average_speed.blank? || average_speed.to_i.zero?
 
-        seconds = is_imperial_unit ? (1609.344 / average_speed) : (1000 / average_speed)
+        is_imperial_unit ? (1609.344 / average_speed) : (1000 / average_speed)
       end
 
       def create_default_heart_rate_zones
@@ -168,8 +149,7 @@ module ApplicationHelper
             distance.casecmp(item[:race_distance]).zero?
           end
         end
-        activities = activities.take(MAX_ITEM_ALLOWED_PER_DISTANCE)
-        activities
+        activities.take(MAX_ITEM_ALLOWED_PER_DISTANCE)
       end
 
       def get_heart_rate_zone(heart_rate_zones, heart_rate) # rubocop:disable CyclomaticComplexity, PerceivedComplexity
