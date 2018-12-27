@@ -16,6 +16,7 @@ module Strafforts
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
     config.eager_load_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join('app/helpers/constants')
     config.exceptions_app = routes
     config.active_job.queue_adapter = :sidekiq
 
