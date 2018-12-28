@@ -33,17 +33,18 @@ module Api
           end
 
           year = params[:distance_or_year]
-          items = Race.find_all_by_athlete_id_and_year(athlete.id, year)
+          results = Rails.cache.fetch(format(CacheKeys::RACES_YEAR, athlete_id: athlete.id, year: year)) do
+            items = Race.find_all_by_athlete_id_and_year(athlete.id, year)
+            ApplicationHelper::Helper.shape_races(
+                items, heart_rate_zones, athlete.athlete_info.measurement_preference
+            )
+          end
 
-          if items.blank? # Return 404 if nothing found for this year.
+          if results.blank? # Return 404 if nothing found for this year.
             Rails.logger.warn("Could not find requested race year '#{year}' for athlete '#{athlete.id}'.")
             render json: { error: Messages::YEAR_NOT_FOUND }.to_json, status: 404
             return
           end
-
-          results = ApplicationHelper::Helper.shape_races(
-            items, heart_rate_zones, athlete.athlete_info.measurement_preference
-          )
         else
           # Get race distance from distance_or_year parameter.
           # 'Half Marathon' is passed in as half-marathon

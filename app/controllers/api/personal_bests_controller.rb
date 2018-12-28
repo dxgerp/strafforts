@@ -10,18 +10,22 @@ module Api
       results = []
       unless params[:distance].blank?
         if 'overview'.casecmp(params[:distance]).zero?
-          items = BestEffort.find_all_pbs_by_athlete_id(athlete.id)
-          shaped_items = ApplicationHelper::Helper.shape_best_efforts(
-            items, heart_rate_zones, athlete.athlete_info.measurement_preference
-          )
-          @personal_bests = PersonalBestsDecorator.new(shaped_items)
-          results = @personal_bests.to_show_in_overview
+          results = Rails.cache.fetch(format(CacheKeys::PBS_OVERVIEW, athlete_id: athlete.id)) do
+            items = BestEffort.find_all_pbs_by_athlete_id(athlete.id)
+            shaped_items = ApplicationHelper::Helper.shape_best_efforts(
+                items, heart_rate_zones, athlete.athlete_info.measurement_preference
+            )
+            @personal_bests = PersonalBestsDecorator.new(shaped_items)
+            @personal_bests.to_show_in_overview
+          end
         elsif 'recent'.casecmp(params[:distance]).zero?
-          items = BestEffort.find_all_pbs_by_athlete_id(athlete.id)
-          shaped_items = ApplicationHelper::Helper.shape_best_efforts(
-            items, heart_rate_zones, athlete.athlete_info.measurement_preference
-          )
-          results = shaped_items.first(RECENT_ITEMS_LIMIT)
+          results = Rails.cache.fetch(format(CacheKeys::PBS_RECENT, athlete_id: athlete.id)) do
+            items = BestEffort.find_all_pbs_by_athlete_id(athlete.id)
+            shaped_items = ApplicationHelper::Helper.shape_best_efforts(
+                items, heart_rate_zones, athlete.athlete_info.measurement_preference
+            )
+            shaped_items.first(RECENT_ITEMS_LIMIT)
+          end
         else
           # Get best_effort_type from distance parameter.
           # '1/2 mile' should be passed in as 1_2-mile, 'Half Marathon' is passed in as half-marathon
@@ -43,10 +47,10 @@ module Api
             return
           end
 
-          items = BestEffort.find_all_pbs_by_athlete_id_and_best_effort_type_id(athlete.id, best_effort_type.id)
-          results = ApplicationHelper::Helper.shape_best_efforts(
-            items, heart_rate_zones, athlete.athlete_info.measurement_preference
-          )
+          results = Rails.cache.fetch(format(CacheKeys::PBS_DISTANCE, athlete_id: athlete.id, best_effort_type_id: best_effort_type.id)) do
+            items = BestEffort.find_all_pbs_by_athlete_id_and_best_effort_type_id(athlete.id, best_effort_type.id)
+            ApplicationHelper::Helper.shape_best_efforts(items, heart_rate_zones, athlete.athlete_info.measurement_preference)
+          end
         end
       end
       render json: results

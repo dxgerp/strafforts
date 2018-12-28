@@ -8,7 +8,12 @@ module CacheKeys
 
   HEART_RATE_ZONES = 'athletes/%{athlete_id}/heart-rate-zones'.freeze
 
+  PBS_OVERVIEW = 'athletes/%{athlete_id}/personal-bests/overview'.freeze
+  PBS_RECENT = 'athletes/%{athlete_id}/personal-bests/recent'.freeze
+  PBS_DISTANCE = 'athletes/%{athlete_id}/personal-bests/%{best_effort_type_id}'.freeze
+
   RACES_OVERVIEW = 'athletes/%{athlete_id}/races/overview'.freeze
   RACES_RECENT = 'athletes/%{athlete_id}/races/recent'.freeze
+  RACES_YEAR = 'athletes/%{athlete_id}/races/%{year}'.freeze
   RACES_DISTANCE = 'athletes/%{athlete_id}/races/%{race_distance_id}'.freeze
 end

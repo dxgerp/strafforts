@@ -114,6 +114,10 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
   config.include FileHelpers
+
+  config.before(:each) do
+    Rails.cache.clear
+  end
 end
 
 def setup_cookie(access_token)
