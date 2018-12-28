@@ -1,5 +1,5 @@
-import { AppHelpers } from '../helpers/appHelpers';
 import { Helpers } from '../../common/helpers';
+import { AppHelpers } from '../helpers/appHelpers';
 
 abstract class BaseView {
     protected prepareView(viewType: string, itemName?: string) {

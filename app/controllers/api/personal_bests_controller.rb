@@ -13,7 +13,7 @@ module Api
           results = Rails.cache.fetch(format(CacheKeys::PBS_OVERVIEW, athlete_id: athlete.id)) do
             items = BestEffort.find_all_pbs_by_athlete_id(athlete.id)
             shaped_items = ApplicationHelper::Helper.shape_best_efforts(
-                items, heart_rate_zones, athlete.athlete_info.measurement_preference
+              items, heart_rate_zones, athlete.athlete_info.measurement_preference
             )
             @personal_bests = PersonalBestsDecorator.new(shaped_items)
             @personal_bests.to_show_in_overview
@@ -22,7 +22,7 @@ module Api
           results = Rails.cache.fetch(format(CacheKeys::PBS_RECENT, athlete_id: athlete.id)) do
             items = BestEffort.find_all_pbs_by_athlete_id(athlete.id)
             shaped_items = ApplicationHelper::Helper.shape_best_efforts(
-                items, heart_rate_zones, athlete.athlete_info.measurement_preference
+              items, heart_rate_zones, athlete.athlete_info.measurement_preference
             )
             shaped_items.first(RECENT_ITEMS_LIMIT)
           end

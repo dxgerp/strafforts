@@ -36,7 +36,7 @@ module Api
           results = Rails.cache.fetch(format(CacheKeys::RACES_YEAR, athlete_id: athlete.id, year: year)) do
             items = Race.find_all_by_athlete_id_and_year(athlete.id, year)
             ApplicationHelper::Helper.shape_races(
-                items, heart_rate_zones, athlete.athlete_info.measurement_preference
+              items, heart_rate_zones, athlete.athlete_info.measurement_preference
             )
           end
 
