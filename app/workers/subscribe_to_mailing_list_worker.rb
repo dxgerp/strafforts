@@ -2,7 +2,7 @@ require 'mailer_lite_api_wrapper'
 
 class SubscribeToMailingListWorker
   include Sidekiq::Worker
-  sidekiq_options queue: 'default', backtrace: true
+  sidekiq_options queue: 'critical', backtrace: true
 
   def perform(athlete_id)
     athlete = Athlete.find(athlete_id)

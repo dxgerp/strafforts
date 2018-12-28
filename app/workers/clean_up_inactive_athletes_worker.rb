@@ -1,6 +1,6 @@
 class CleanUpInactiveAthletesWorker
   include Sidekiq::Worker
-  sidekiq_options queue: 'default', backtrace: true, retry: 0
+  sidekiq_options queue: 'low', backtrace: true, retry: 0
 
   def perform
     destroyed_ids = []

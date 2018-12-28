@@ -1,6 +1,6 @@
 class DeauthorizeAthleteWorker
   include Sidekiq::Worker
-  sidekiq_options queue: 'default', backtrace: true, retry: 0
+  sidekiq_options queue: 'critical', backtrace: true, retry: 0
 
   STRAVA_API_AUTH_DEAUTHORIZE_URL = Settings.strava.api_auth_deauthorize_url
 
