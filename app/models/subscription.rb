@@ -12,7 +12,7 @@ class Subscription < ApplicationRecord
   after_destroy :expire_cache
 
   def expire_cache
-    Rails.cache.delete(CacheKeys::META % { athlete_id: athlete_id })
+    Rails.cache.delete(format(CacheKeys::META, athlete_id: athlete_id))
   end
 
   def self.find_all_by_athlete_id(athlete_id, is_deleted = false)

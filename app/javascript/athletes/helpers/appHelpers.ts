@@ -1,4 +1,4 @@
-import { Helpers } from './../../common/helpers';
+import { Helpers } from '../../common/helpers';
 import { ViewType } from './viewTypes';
 
 export namespace AppHelpers {

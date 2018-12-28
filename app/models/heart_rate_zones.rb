@@ -13,11 +13,11 @@ class HeartRateZones < ApplicationRecord
   after_destroy :expire_cache
 
   def expire_cache
-    Rails.cache.delete(CacheKeys::HEART_RATE_ZONES % { athlete_id: athlete_id })
+    Rails.cache.delete(format(CacheKeys::HEART_RATE_ZONES, athlete_id: athlete_id))
   end
 
   def self.find_by_athlete_id(athlete_id)
-    Rails.cache.fetch(CacheKeys::HEART_RATE_ZONES % { athlete_id: athlete_id }) do
+    Rails.cache.fetch(format(CacheKeys::HEART_RATE_ZONES, athlete_id: athlete_id)) do
       results = where(athlete_id: athlete_id)
       results.empty? ? nil : results.take
     end

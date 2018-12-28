@@ -1,4 +1,4 @@
-import { HtmlHelpers } from '../helpers/htmlHelpers';
+import { HtmlHelpers } from './htmlHelpers';
 import BestEffortsByDistanceView from '../views/bestEffortsByDistance';
 import NavigationSidebar from '../views/navigationSidebar';
 import Overview from '../views/overview';

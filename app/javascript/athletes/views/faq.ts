@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 
 import { HtmlHelpers } from '../helpers/htmlHelpers';
-import { Helpers } from './../../common/helpers';
+import { Helpers } from '../../common/helpers';
 import BaseView from './baseView';
 
 export default class FaqView extends BaseView {

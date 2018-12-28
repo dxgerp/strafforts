@@ -27,10 +27,10 @@ class DeauthorizeAthleteWorker
 
     # Delete all data.
     athlete = Athlete.find_by(access_token: access_token)
-    unless athlete.nil?
-      athlete_id = athlete.id
-      Rails.logger.warn("Deauthorizing and destroying all data for athlete #{athlete_id}.")
-      athlete.destroy_all_data
-    end
+    return if athlete.nil?
+
+    athlete_id = athlete.id
+    Rails.logger.warn("Deauthorizing and destroying all data for athlete #{athlete_id}.")
+    athlete.destroy_all_data
   end
 end

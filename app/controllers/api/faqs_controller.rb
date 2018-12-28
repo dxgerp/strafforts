@@ -13,9 +13,9 @@ module Api
         results = []
         Faq.all.each do |faq|
           result = {
-              category: categories[faq.faq_category_id],
-              title: faq.title,
-              content: faq.content
+            category: categories[faq.faq_category_id],
+            title: faq.title,
+            content: faq.content
           }
           results << result
         end

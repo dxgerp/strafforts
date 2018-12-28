@@ -8,7 +8,7 @@ class RaceDistance < ApplicationRecord
   after_destroy :expire_cache
 
   def expire_cache
-    Rails.cache.delete(CacheKeys::RACE_DISTANCES % { distance: name.downcase })
+    Rails.cache.delete(format(CacheKeys::RACE_DISTANCES, distance: name.downcase))
   end
 
   def self.find_by_actual_distance(actual_distance)
@@ -24,7 +24,7 @@ class RaceDistance < ApplicationRecord
   end
 
   def self.find_by_name(distance_name)
-    Rails.cache.fetch(CacheKeys::RACE_DISTANCES % { distance: distance_name.downcase }) do
+    Rails.cache.fetch(format(CacheKeys::RACE_DISTANCES, distance: distance_name.downcase)) do
       results = where('lower(name) = ?', distance_name.downcase)
       results.empty? ? nil : results.take
     end

@@ -30,13 +30,13 @@ class ApplicationController < ActionController::Base
   end
 
   def self.get_meta(athlete_id) # rubocop:disable MethodLength
-    Rails.cache.fetch(CacheKeys::META % { athlete_id: athlete_id }) do
+    Rails.cache.fetch(format(CacheKeys::META, athlete_id: athlete_id)) do
       athlete = Athlete.find_by(id: athlete_id)
       return {} if athlete.nil?
 
       athlete = athlete.decorate
       athlete_info = {
-          has_pro_subscription: athlete.pro_subscription?
+        has_pro_subscription: athlete.pro_subscription?
       }
 
       best_efforts_meta = []
@@ -47,9 +47,9 @@ class ApplicationController < ActionController::Base
         # Limit to 1. Only need to check if there are any at this stage.
         best_efforts = BestEffort.find_top_by_athlete_id_and_best_effort_type_id(athlete_id, model.id, 1)
         result = {
-            name: item[:name],
-            count: best_efforts.nil? ? 0 : best_efforts.size,
-            is_major: item[:is_major]
+          name: item[:name],
+          count: best_efforts.nil? ? 0 : best_efforts.size,
+          is_major: item[:is_major]
         }
         best_efforts_meta << result
       end
@@ -61,9 +61,9 @@ class ApplicationController < ActionController::Base
 
         personal_bests = BestEffort.find_all_pbs_by_athlete_id_and_best_effort_type_id(athlete_id, model.id)
         result = {
-            name: item[:name],
-            count: personal_bests.size,
-            is_major: item[:is_major]
+          name: item[:name],
+          count: personal_bests.size,
+          is_major: item[:is_major]
         }
         personal_bests_meta << result
       end
@@ -75,9 +75,9 @@ class ApplicationController < ActionController::Base
 
         races = Race.find_all_by_athlete_id_and_race_distance_id(athlete_id, model.id)
         result = {
-            name: item[:name],
-            count: races.size,
-            is_major: item[:is_major]
+          name: item[:name],
+          count: races.size,
+          is_major: item[:is_major]
         }
         races_by_distance_meta << result
       end
@@ -86,19 +86,19 @@ class ApplicationController < ActionController::Base
       items = Race.find_years_and_counts_by_athlete_id(athlete_id)
       items.each do |item|
         result = {
-            name: item[0].to_i.to_s,
-            count: item[1],
-            is_major: true
+          name: item[0].to_i.to_s,
+          count: item[1],
+          is_major: true
         }
         races_by_year_meta << result
       end
 
       {
-          athlete_info: athlete_info,
-          best_efforts: best_efforts_meta,
-          personal_bests: personal_bests_meta,
-          races_by_distance: races_by_distance_meta,
-          races_by_year: races_by_year_meta
+        athlete_info: athlete_info,
+        best_efforts: best_efforts_meta,
+        personal_bests: personal_bests_meta,
+        races_by_distance: races_by_distance_meta,
+        races_by_year: races_by_year_meta
       }
     end
   end

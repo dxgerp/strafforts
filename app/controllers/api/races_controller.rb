@@ -10,19 +10,19 @@ module Api
       results = []
       unless params[:distance_or_year].blank?
         if 'overview'.casecmp(params[:distance_or_year]).zero?
-          results = Rails.cache.fetch(CacheKeys::RACES_OVERVIEW % { athlete_id: athlete.id }) do
+          results = Rails.cache.fetch(format(CacheKeys::RACES_OVERVIEW, athlete_id: athlete.id)) do
             items = Race.find_all_by_athlete_id(athlete.id)
             shaped_items = ApplicationHelper::Helper.shape_races(
-                items, heart_rate_zones, athlete.athlete_info.measurement_preference
+              items, heart_rate_zones, athlete.athlete_info.measurement_preference
             )
             @races = RacesDecorator.new(shaped_items)
             @races.to_show_in_overview
           end
         elsif 'recent'.casecmp(params[:distance_or_year]).zero?
-          results = Rails.cache.fetch(CacheKeys::RACES_RECENT % { athlete_id: athlete.id }) do
+          results = Rails.cache.fetch(format(CacheKeys::RACES_RECENT, athlete_id: athlete.id)) do
             items = Race.find_all_by_athlete_id(athlete.id)
             shaped_items = ApplicationHelper::Helper.shape_races(
-                items, heart_rate_zones, athlete.athlete_info.measurement_preference
+              items, heart_rate_zones, athlete.athlete_info.measurement_preference
             )
             shaped_items.first(RECENT_ITEMS_LIMIT)
           end
@@ -65,7 +65,7 @@ module Api
             return
           end
 
-          results = Rails.cache.fetch(CacheKeys::RACES_DISTANCE % { athlete_id: athlete.id, race_distance_id: race_distance.id }) do
+          results = Rails.cache.fetch(format(CacheKeys::RACES_DISTANCE, athlete_id: athlete.id, race_distance_id: race_distance.id)) do
             items = Race.find_all_by_athlete_id_and_race_distance_id(athlete.id, race_distance.id)
             ApplicationHelper::Helper.shape_races(items, heart_rate_zones, athlete.athlete_info.measurement_preference)
           end
