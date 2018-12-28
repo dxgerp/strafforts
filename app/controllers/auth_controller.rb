@@ -24,6 +24,15 @@ class AuthController < ApplicationController # rubocop:disable ClassLength
 
   def deauthorize # rubocop:disable MethodLength
     access_token = cookies.signed[:access_token]
+
+    # Reset total count first.
+    # Just in case that worker doesn't run causing next fetch (if reconnected) to skip.
+    athlete = Athlete.find_by(access_token: access_token)
+    unless athlete.nil?
+      athlete.total_run_count = 0
+      athlete.save!
+    end
+
     DeauthorizeAthleteWorker.perform_async(access_token)
 
     # Log the user out.

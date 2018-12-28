@@ -28,6 +28,7 @@ class Athlete < ApplicationRecord
     AthleteInfo.where(athlete_id: id).destroy_all
     Subscription.where(athlete_id: id).update_all(is_deleted: true)
     Athlete.where(id: id).destroy_all
+    Rails.logger.info("Destroying all data for athlete '#{id}' completed.")
   end
 
   private
