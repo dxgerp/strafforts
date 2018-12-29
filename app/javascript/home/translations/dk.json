@@ -1,6 +1,6 @@
 {
   "errors.400.headline": "Der mangler nogle nødvendige tilladelser",
-  "errors.400.descriptionLine1": "For at give Strafforts adgang til alt dit Strava data, skal du vælge alle de nødvendige tilladeser.",
+  "errors.400.descriptionLine1": "For at give Strafforts adgang til alt dit Strava data, skal du vælge alle de nødvendige tilladelser.",
   "errors.400.descriptionLine2": "Venligst gå tilbage til startsiden og prøv igen.",
   "errors.403.headline": "Adgang Forbudt",
   "errors.403.descriptionLine1": "Du har desværre ikke de nødvendige tilladelser til at udføre denne handling.",
