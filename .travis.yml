@@ -36,7 +36,7 @@ before_script:
   - NODE_ENV=test RAILS_ENV=test bundle exec rails webpacker:compile
 
 script:
-  - yarn test:all
+  - yarn test
 
 notifications:
   email: false

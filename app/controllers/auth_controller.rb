@@ -25,40 +25,15 @@ class AuthController < ApplicationController # rubocop:disable ClassLength
   def deauthorize # rubocop:disable MethodLength
     access_token = cookies.signed[:access_token]
 
-    # Renew athlete's refresh token first.
-    begin
-      access_token = ::Creators::RefreshTokenCreator.refresh(access_token)
-    rescue StandardError => e
-      Rails.logger.error('Refreshing token while deauthorizing failed. '\
-        "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
+    # Reset total count first.
+    # Just in case that worker doesn't run causing next fetch (if reconnected) to skip.
+    athlete = Athlete.find_by(access_token: access_token)
+    unless athlete.nil?
+      athlete.total_run_count = 0
+      athlete.save!
     end
 
-    unless access_token.nil?
-      # Delete all data.
-      athlete = Athlete.find_by_access_token(access_token)
-      unless athlete.nil?
-        athlete_id = athlete.id
-        Rails.logger.warn("Deauthrozing and destroying all data for athlete #{athlete_id}.")
-        BestEffort.where(athlete_id: athlete_id).destroy_all
-        Race.where(athlete_id: athlete_id).destroy_all
-        Gear.where(athlete_id: athlete_id).destroy_all
-        HeartRateZones.where(athlete_id: athlete_id).destroy_all
-        Activity.where(athlete_id: athlete_id).destroy_all
-        AthleteInfo.where(athlete_id: athlete_id).destroy_all
-        Subscription.where(athlete_id: athlete_id).update_all(is_deleted: true)
-        Athlete.where(id: athlete_id).destroy_all
-      end
-
-      # Revoke Strava access.
-      uri = URI(STRAVA_API_AUTH_DEAUTHORIZE_URL)
-      response = Net::HTTP.post_form(uri, 'access_token' => access_token)
-      if response.is_a? Net::HTTPSuccess
-        Rails.logger.info("Revoked Strava access for athlete (access_token=#{access_token}).")
-      else
-        # Fail to revoke Strava access. Log it and don't throw.
-        Rails.logger.error("Revoking Strava access failed. HTTP Status Code: #{response.code}. Response Message: #{response.message}")
-      end
-    end
+    DeauthorizeAthleteWorker.perform_async(access_token)
 
     # Log the user out.
     logout
@@ -66,6 +41,29 @@ class AuthController < ApplicationController # rubocop:disable ClassLength
 
   def logout
     cookies.delete(:access_token)
+    redirect_to root_path
+  end
+
+  def verify_email_confirmation_token
+    athlete = Athlete.find_by(confirmation_token: params[:token])
+    if athlete.nil?
+      Rails.logger.warn("Verifying email confirmation token failed for a token that doesn't match any athlete.")
+
+      redirect_to '/errors/404'
+      return
+    end
+
+    athlete.email_confirmed = true
+    athlete.confirmed_at = Time.now.utc
+    athlete.confirmation_token = nil
+    athlete.save!
+
+    # Subscribe or update to mailing list.
+    SubscribeToMailingListWorker.perform_async(athlete.id)
+
+    # In the situation that there is already another account logged in in the opened browser session. Log it out.
+    cookies.delete(:access_token) unless athlete.access_token == cookies.signed[:access_token]
+
     redirect_to root_path
   end
 
@@ -116,12 +114,8 @@ class AuthController < ApplicationController # rubocop:disable ClassLength
         end
       end
 
-      # Subscribe or update to mailing list.
-      SubscribeToMailingListJob.perform_later(athlete)
-
-      # Add a delayed_job to fetch data for this athlete.
-      fetcher = ::ActivityFetcher.new(access_token)
-      fetcher.delay.fetch_all
+      # Fetch data for this athlete.
+      FetchActivityWorker.set(queue: :critical, retry: true).perform_async(access_token)
 
       # Encrypt and set access_token in cookies.
       cookies.signed[:access_token] = { value: access_token, expires: Time.now + 7.days }

@@ -5,6 +5,17 @@ class Race < ApplicationRecord
   belongs_to :athlete, foreign_key: 'athlete_id'
   belongs_to :race_distance, foreign_key: 'race_distance_id'
 
+  after_save    :expire_cache
+  after_destroy :expire_cache
+
+  def expire_cache
+    Rails.cache.delete(format(CacheKeys::META, athlete_id: athlete_id))
+    Rails.cache.delete(format(CacheKeys::RACES_OVERVIEW, athlete_id: athlete_id))
+    Rails.cache.delete(format(CacheKeys::RACES_RECENT, athlete_id: athlete_id))
+    Rails.cache.delete(format(CacheKeys::RACES_YEAR, athlete_id: athlete_id, year: activity.start_date_local.year))
+    Rails.cache.delete(format(CacheKeys::RACES_DISTANCE, athlete_id: athlete_id, race_distance_id: race_distance_id))
+  end
+
   def self.find_all_by_athlete_id(athlete_id)
     results = where(athlete_id: athlete_id)
     results.empty? ? [] : results

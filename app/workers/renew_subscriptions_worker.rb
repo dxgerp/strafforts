@@ -1,24 +1,8 @@
-class TaskRunner
-  def clean_up_inactive_athletes
-    destroyed_ids = []
-    inactive_athletes = Athlete.where('last_active_at < ?', Time.now.utc - 180.days - 7.days)
-    inactive_athletes.each do |athlete|
-      begin
-        athlete = AthleteDecorator.decorate(athlete)
-        next if athlete.pro_subscription?
+class RenewSubscriptionsWorker
+  include Sidekiq::Worker
+  sidekiq_options queue: 'low', backtrace: true, retry: 0
 
-        destroyed_ids << athlete.id
-        destroy_athlete(athlete.id)
-      rescue StandardError => e
-        Rails.logger.error("Cleaning up inactive athlete failed for athlete '#{athlete.id}'. "\
-          "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
-        next
-      end
-    end
-    Rails.logger.warn("[athlete:clean_up] - A total of #{destroyed_ids.count} inactive athletes destroyed: #{destroyed_ids.join(',')}.")
-  end
-
-  def renew_subscriptions
+  def perform
     renewed_ids = []
     athletes = Athlete.find_all_by_is_active(true)
     athletes.each do |athlete|

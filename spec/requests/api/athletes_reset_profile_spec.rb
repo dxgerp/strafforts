@@ -2,24 +2,36 @@ require 'rails_helper'
 
 RSpec.describe Api::AthletesController, type: :request do
   describe 'POST reset-profile' do
+    let(:athlete_id) { '98765' }
+    let(:url) { "/api/athletes/#{athlete_id}/reset-profile" }
+
     it 'should return 404 when the requested athlete does not exist' do
-      post '/api/athletes/12345678/reset-profile'
+      # act.
+      post url
+
+      # assert.
       expect(response).to have_http_status(404)
     end
 
     it 'should return 403 when requested athlete is not the current user' do
-      setup_cookie(nil)
-      post '/api/athletes/9123806/reset-profile'
+      # arrange.
+      FactoryBot.build(:athlete, id: athlete_id)
+
+      # act.
+      post url
+
+      # assert.
       expect(response).to have_http_status(403)
     end
 
     context 'for an athlete without PRO subscription' do
       it 'should return 403 when soft reset-profile even with the correct cookie' do
         # arrange.
-        setup_cookie('58e42e6f5e496dc5aa0d5ec354da8048')
+        athlete = FactoryBot.build(:athlete, id: athlete_id)
+        setup_cookie(athlete.access_token)
 
         # act.
-        post '/api/athletes/456/reset-profile'
+        post url
 
         # assert.
         expect(response).to have_http_status(403)
@@ -27,10 +39,11 @@ RSpec.describe Api::AthletesController, type: :request do
 
       it 'should return 403 when hard reset-profile even with the correct cookie' do
         # arrange.
-        setup_cookie('58e42e6f5e496dc5aa0d5ec354da8048')
+        athlete = FactoryBot.build(:athlete, id: athlete_id)
+        setup_cookie(athlete.access_token)
 
         # act.
-        post '/api/athletes/456/reset-profile', params: { is_hard_reset: true }
+        post url, params: { is_hard_reset: true }
 
         # assert.
         expect(response).to have_http_status(403)
@@ -41,12 +54,11 @@ RSpec.describe Api::AthletesController, type: :request do
       it 'should soft reset-profile successfully with the correct cookie' do
         # arrange.
         access_token = '4d5cf2bbc714a4e22e309cf5fcf15e40'
-        token_refresh_request_body = { 'client_id' => nil, 'client_secret' => nil, 'grant_type' => 'refresh_token', 'refresh_token' => access_token }.freeze
+        token_refresh_request_body = {:client_id => nil, :client_secret => nil, :grant_type => 'refresh_token', :refresh_token => access_token }.freeze
 
         setup_cookie(access_token)
-        refresh_token_response_body = { 'access_token' => access_token, 'refresh_token' => '1234567898765432112345678987654321', 'expires_at' => 1531385304 }.to_json
+        refresh_token_response_body = {:access_token => access_token, :refresh_token => '1234567898765432112345678987654321', :expires_at => 1531385304 }.to_json
         stub_strava_post_request(Settings.strava.api_auth_token_url, token_refresh_request_body, 200, refresh_token_response_body)
-
 
         athlete = Athlete.find_by(id: 9123806)
         expect(athlete).not_to be_nil
@@ -77,12 +89,11 @@ RSpec.describe Api::AthletesController, type: :request do
       it 'should hard reset-profile successfully with the correct cookie' do
         # arrange.
         access_token = '4d5cf2bbc714a4e22e309cf5fcf15e40'
-        token_refresh_request_body = { 'client_id' => nil, 'client_secret' => nil, 'grant_type' => 'refresh_token', 'refresh_token' => access_token }.freeze
+        token_refresh_request_body = {:client_id => nil, :client_secret => nil, :grant_type => 'refresh_token', :refresh_token => access_token }.freeze
 
         setup_cookie(access_token)
-        refresh_token_response_body = { 'access_token' => access_token, 'refresh_token' => '1234567898765432112345678987654321', 'expires_at' => 1531385304 }.to_json
+        refresh_token_response_body = {:access_token => access_token, :refresh_token => '1234567898765432112345678987654321', :expires_at => 1531385304 }.to_json
         stub_strava_post_request(Settings.strava.api_auth_token_url, token_refresh_request_body, 200, refresh_token_response_body)
-
 
         athlete = Athlete.find_by(id: 9123806)
         expect(athlete).not_to be_nil

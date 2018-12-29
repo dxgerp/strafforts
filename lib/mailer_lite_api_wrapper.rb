@@ -50,7 +50,7 @@ class MailerLiteApiWrapper
       country: country,
       city: city,
       athlete_id: athlete.id.to_s,
-      profile_url: "#{Settings.app.url}/athletes/#{athlete.id}",
+      profile_url: "#{Settings.app.production_url}/athletes/#{athlete.id}",
       strava_profile_url: "#{Settings.strava.url}/athletes/#{athlete.id}",
       join_date: athlete.created_at.strftime('%Y/%m/%d'),
       last_active_date: Time.now.utc.to_date.strftime('%Y/%m/%d'),

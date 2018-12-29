@@ -12,7 +12,7 @@ RSpec.describe Race, type: :model do
   describe '.find_all_by_athlete_id' do
     it 'should get empty array when the provided athlete_id matches nothing' do
       # act.
-      items = Race.find_all_by_athlete_id(12345678)
+      items = Race.find_all_by_athlete_id(987654321)
 
       # assert.
       expect(items).to eq([])
@@ -34,7 +34,7 @@ RSpec.describe Race, type: :model do
   describe '.find_all_by_athlete_id_and_race_distance_id' do
     it 'should get empty array when the provided athlete_id and race_distance_id together match nothing' do
       # act.
-      items = Race.find_all_by_athlete_id_and_race_distance_id(12345678, 4)
+      items = Race.find_all_by_athlete_id_and_race_distance_id(987654321, 4)
 
       # assert.
       expect(items).to eq([])
@@ -80,7 +80,7 @@ RSpec.describe Race, type: :model do
   describe '.find_years_and_counts_by_athlete_id' do
     it 'should get empty results when the provided athlete_id matches nothing' do
       # act.
-      results = Race.find_years_and_counts_by_athlete_id(12345678)
+      results = Race.find_years_and_counts_by_athlete_id(987654321)
 
       # assert.
       expect(results.count).to eq(0)

@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181107065653) do
+ActiveRecord::Schema.define(version: 20181224112753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "uuid-ossp"
   enable_extension "pgcrypto"
+  enable_extension "uuid-ossp"
 
   create_table "activities", id: :serial, force: :cascade do |t|
     t.integer "athlete_id"
@@ -91,7 +91,12 @@ ActiveRecord::Schema.define(version: 20181107065653) do
     t.datetime "last_active_at"
     t.string "refresh_token"
     t.datetime "refresh_token_expires_at"
+    t.boolean "email_confirmed", default: false
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
     t.index ["access_token"], name: "index_athletes_on_access_token"
+    t.index ["confirmation_token"], name: "index_athletes_on_confirmation_token", unique: true
   end
 
   create_table "best_effort_types", id: :serial, force: :cascade do |t|
@@ -132,21 +137,6 @@ ActiveRecord::Schema.define(version: 20181107065653) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_countries_on_name"
-  end
-
-  create_table "delayed_jobs", id: :serial, force: :cascade do |t|
-    t.integer "priority", default: 0, null: false
-    t.integer "attempts", default: 0, null: false
-    t.text "handler", null: false
-    t.text "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string "locked_by"
-    t.string "queue"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
   create_table "faq_categories", force: :cascade do |t|

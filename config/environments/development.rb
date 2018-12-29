@@ -1,7 +1,4 @@
 Rails.application.configure do
-  # Verifies that versions and hashed value of the package contents in the project's package.json
-  config.webpacker.check_yarn_integrity = false
-
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -16,41 +13,36 @@ Rails.application.configure do
   config.consider_all_requests_local = true
 
   # Enable/disable caching. By default caching is disabled.
-  if Rails.root.join('tmp/caching-dev.txt').exist?
-    config.action_controller.perform_caching = true
+  # Run rails dev:cache to toggle caching.
+  # if Rails.root.join('tmp', 'caching-dev.txt').exist?
+  #   config.action_controller.perform_caching = true
+  #
+  #   config.cache_store = :memory_store
+  #   config.public_file_server.headers = {
+  #     'Cache-Control' => "public, max-age=#{2.days.to_i}"
+  #   }
+  # else
+  #   config.action_controller.perform_caching = false
+  #
+  #   config.cache_store = :null_store
+  # end
 
-    config.cache_store = :memory_store
-    config.public_file_server.headers = {
-      'Cache-Control' => "public, max-age=#{2.days.seconds.to_i}"
-    }
-  else
-    config.action_controller.perform_caching = false
+  # Store uploaded files on the local file system (see config/storage.yml for options)
+  config.active_storage.service = :local
 
-    config.cache_store = :null_store
-  end
+  # Don't care if the mailer can't send.
+  config.action_mailer.raise_delivery_errors = false
 
-  config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
   config.action_mailer.perform_caching = false
-  config.action_mailer.perform_deliveries = true
-  config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address:              'smtp.zoho.com',
-    port:                 465,
-    domain:               'strafforts.com',
-    user_name:            ENV['SMTP_PROVIDER_USERNAME'],
-    password:             ENV['SMTP_PROVIDER_PASSWORD'],
-    authentication:       'plain',
-    ssl:                  true,
-    tls:                  true,
-    enable_starttls_auto: true
-  }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
+
+  # Highlight code that triggered database queries in logs.
+  config.active_record.verbose_query_logs = true
 
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
@@ -67,7 +59,27 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  # Set up logger rotation for 2 files * 5 MB. https://stackoverflow.com/a/37499712/1177636
-  config.logger = ActiveSupport::Logger.new(Rails.root.join('log', "#{Rails.env}.log"), 2, 5 * 1024 * 1024)
-  config.log_level = :info
+  config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
+
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      address:              'smtp.zoho.com',
+      port:                 465,
+      domain:               'strafforts.com',
+      user_name:            ENV['SMTP_PROVIDER_USERNAME'],
+      password:             ENV['SMTP_PROVIDER_PASSWORD'],
+      authentication:       'plain',
+      ssl:                  true,
+      tls:                  true,
+      enable_starttls_auto: true
+  }
+
+  unless ENV["RAILS_LOG_TO_STDOUT"].present?
+    # Set up logger rotation for 2 files * 5 MB. https://stackoverflow.com/a/37499712/1177636
+    config.logger = ActiveSupport::Logger.new(Rails.root.join('log', "#{Rails.env}.log"), 2, 5 * 1024 * 1024)
+    config.log_level = :info
+  end
 end
+

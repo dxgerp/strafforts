@@ -13,7 +13,6 @@ require 'stripe_api_wrapper'
 class ApplicationController < ActionController::Base
   STRAVA_API_AUTH_AUTHORIZE_URL = Settings.strava.api_auth_authorize_url
   STRAVA_API_AUTH_TOKEN_URL = Settings.strava.api_auth_token_url
-  STRAVA_API_AUTH_DEAUTHORIZE_URL = Settings.strava.api_auth_deauthorize_url
   STRAVA_API_CLIENT_ID = Settings.strava.api_client_id
   STRAVA_ATHLETES_BASE_URL = "#{Settings.strava.url}/athletes".freeze
 
@@ -31,75 +30,77 @@ class ApplicationController < ActionController::Base
   end
 
   def self.get_meta(athlete_id) # rubocop:disable MethodLength
-    athlete = Athlete.find_by(id: athlete_id)
-    return {} if athlete.nil?
+    Rails.cache.fetch(format(CacheKeys::META, athlete_id: athlete_id)) do
+      athlete = Athlete.find_by(id: athlete_id)
+      return {} if athlete.nil?
 
-    athlete = athlete.decorate
-    athlete_info = {
-      has_pro_subscription: athlete.pro_subscription?
-    }
-
-    best_efforts_meta = []
-    ApplicationHelper::Helper.all_best_effort_types.each do |item|
-      model = BestEffortType.find_by_name(item[:name])
-      next if model.nil?
-
-      # Limit to 1. Only need to check if there are any at this stage.
-      best_efforts = BestEffort.find_top_by_athlete_id_and_best_effort_type_id(athlete_id, model.id, 1)
-      result = {
-        name: item[:name],
-        count: best_efforts.nil? ? 0 : best_efforts.size,
-        is_major: item[:is_major]
+      athlete = athlete.decorate
+      athlete_info = {
+        has_pro_subscription: athlete.pro_subscription?
       }
-      best_efforts_meta << result
-    end
 
-    personal_bests_meta = []
-    ApplicationHelper::Helper.all_best_effort_types.each do |item|
-      model = BestEffortType.find_by_name(item[:name])
-      next if model.nil?
+      best_efforts_meta = []
+      ApplicationHelper::Helper.all_best_effort_types.each do |item|
+        model = BestEffortType.find_by_name(item[:name])
+        next if model.nil?
 
-      personal_bests = BestEffort.find_all_pbs_by_athlete_id_and_best_effort_type_id(athlete_id, model.id)
-      result = {
-        name: item[:name],
-        count: personal_bests.size,
-        is_major: item[:is_major]
+        # Limit to 1. Only need to check if there are any at this stage.
+        best_efforts = BestEffort.find_top_by_athlete_id_and_best_effort_type_id(athlete_id, model.id, 1)
+        result = {
+          name: item[:name],
+          count: best_efforts.nil? ? 0 : best_efforts.size,
+          is_major: item[:is_major]
+        }
+        best_efforts_meta << result
+      end
+
+      personal_bests_meta = []
+      ApplicationHelper::Helper.all_best_effort_types.each do |item|
+        model = BestEffortType.find_by_name(item[:name])
+        next if model.nil?
+
+        personal_bests = BestEffort.find_all_pbs_by_athlete_id_and_best_effort_type_id(athlete_id, model.id)
+        result = {
+          name: item[:name],
+          count: personal_bests.size,
+          is_major: item[:is_major]
+        }
+        personal_bests_meta << result
+      end
+
+      races_by_distance_meta = []
+      ApplicationHelper::Helper.all_race_distances.each do |item|
+        model = RaceDistance.find_by_name(item[:name])
+        next if model.nil?
+
+        races = Race.find_all_by_athlete_id_and_race_distance_id(athlete_id, model.id)
+        result = {
+          name: item[:name],
+          count: races.size,
+          is_major: item[:is_major]
+        }
+        races_by_distance_meta << result
+      end
+
+      races_by_year_meta = []
+      items = Race.find_years_and_counts_by_athlete_id(athlete_id)
+      items.each do |item|
+        result = {
+          name: item[0].to_i.to_s,
+          count: item[1],
+          is_major: true
+        }
+        races_by_year_meta << result
+      end
+
+      {
+        athlete_info: athlete_info,
+        best_efforts: best_efforts_meta,
+        personal_bests: personal_bests_meta,
+        races_by_distance: races_by_distance_meta,
+        races_by_year: races_by_year_meta
       }
-      personal_bests_meta << result
     end
-
-    races_by_distance_meta = []
-    ApplicationHelper::Helper.all_race_distances.each do |item|
-      model = RaceDistance.find_by_name(item[:name])
-      next if model.nil?
-
-      races = Race.find_all_by_athlete_id_and_race_distance_id(athlete_id, model.id)
-      result = {
-        name: item[:name],
-        count: races.size,
-        is_major: item[:is_major]
-      }
-      races_by_distance_meta << result
-    end
-
-    races_by_year_meta = []
-    items = Race.find_years_and_counts_by_athlete_id(athlete_id)
-    items.each do |item|
-      result = {
-        name: item[0].to_i.to_s,
-        count: item[1],
-        is_major: true
-      }
-      races_by_year_meta << result
-    end
-
-    {
-      athlete_info: athlete_info,
-      best_efforts: best_efforts_meta,
-      personal_bests: personal_bests_meta,
-      races_by_distance: races_by_distance_meta,
-      races_by_year: races_by_year_meta
-    }
   end
 
   def self.set_last_active_at(athlete) # rubocop:disable AccessorMethodName

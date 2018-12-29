@@ -9,13 +9,28 @@ Bundler.require(*Rails.groups)
 module Strafforts
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.1
+    config.load_defaults 5.2
 
     # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+    # the framework and any gems in your application.
     config.eager_load_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join('app/helpers/constants')
     config.exceptions_app = routes
-    config.active_job.queue_adapter = :delayed_job
+    config.active_job.queue_adapter = :sidekiq
+
+    # Verifies that versions and hashed value of the package contents in the project's package.json
+    config.webpacker.check_yarn_integrity = false
+
+    if ENV["RAILS_LOG_TO_STDOUT"].present?
+      logger           = ActiveSupport::Logger.new(STDOUT)
+      logger.formatter = config.log_formatter
+      config.logger    = ActiveSupport::TaggedLogging.new(logger)
+      config.log_level = ENV["RAILS_LOG_LEVEL"].present? ? ENV['RAILS_LOG_LEVEL'].to_sym : :info
+    end
+
+    # Redis for caching.
+    config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL_FOR_CACHING'] ||= 'redis://localhost:6379/10', expires_in: 1.day, namespace: 'app' }
   end
 end

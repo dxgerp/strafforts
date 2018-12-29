@@ -114,6 +114,10 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
   config.include FileHelpers
+
+  config.before(:each) do
+    Rails.cache.clear
+  end
 end
 
 def setup_cookie(access_token)
@@ -139,3 +143,18 @@ def stub_strava_post_request(request_url, request_body, return_status, return_bo
     )
     .to_return(status: return_status, body: return_body || '', headers: {})
 end
+
+ACCESS_TOKEN = '3f2a45886980ebec9f4a689371e95860'.freeze
+REFRESH_TOKEN = '773099021c1b74d2a61a97878f8b2b41ccd36b51'.freeze
+TOKEN_EXCHANGE_REQUEST_BODY = {
+    client_id: nil,
+    client_secret: nil,
+    code: nil,
+    grant_type: 'authorization_code'
+}.freeze
+TOKEN_REFRESH_REQUEST_BODY = {
+    client_id: nil,
+    client_secret: nil,
+    refresh_token: REFRESH_TOKEN,
+    grant_type: 'refresh_token'
+}.freeze

@@ -24,7 +24,7 @@ module Api
         best_effort_type = BestEffortType.find_by_name(distance)
         if best_effort_type.nil?
           Rails.logger.warn("Could not find requested best effort type '#{distance}' for athlete '#{athlete.id}'.")
-          render json: { error: ApplicationHelper::Message::DISTANCE_NOT_FOUND }.to_json, status: 404
+          render json: { error: Messages::DISTANCE_NOT_FOUND }.to_json, status: 404
           return
         end
 

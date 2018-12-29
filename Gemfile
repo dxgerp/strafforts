@@ -8,17 +8,17 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.6'
+gem 'rails', '~> 5.2.2'
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 1.1'
+gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+# gem 'mini_racer', platforms: :ruby
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
@@ -31,8 +31,14 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# Use ActiveStorage variant
+# gem 'mini_magick', '~> 4.8'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -44,6 +50,8 @@ group :development, :test do
   gem 'poltergeist'
   gem 'rspec'
   gem 'rspec-rails'
+  gem "factory_bot_rails", "~> 4.0"
+  gem "faker"
 end
 
 group :development do
@@ -70,6 +78,7 @@ group :test do
   gem 'shoulda', '~> 3.5'
   gem 'shoulda-matchers', '~> 2.0'
   gem 'webmock'
+  gem 'rspec-sidekiq'
 end
 
 group :production do
@@ -89,12 +98,13 @@ gem 'webpacker', '~> 3.5'
 gem 'activemodel-serializers-xml', github: 'rails/activemodel-serializers-xml'
 gem 'draper'
 
-gem 'foreman' # Manager Procfile.dev under develpoment environment.
+gem 'foreman' # Manager Procfile.dev under development environment.
 gem 'bootstrap-sass', '~> 3.3.6' # Bootstrap.
 gem 'config' # Config.
-gem 'daemons' # Add daemons gem to show delayed_job status.
-gem 'delayed_job_active_record' # ActiveRecord backend integration for DelayedJob 3.0+.
 gem 'font-awesome-rails' # Rails Font Awesome.
+
 gem 'mailerlite' # Mailer Lite API wrapper.
 gem 'strava-api-v3' # Strava Ruby API Client.
 gem 'stripe' # Ruby library for the Stripe API.
+
+gem 'sidekiq'

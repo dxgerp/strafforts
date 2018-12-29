@@ -8,10 +8,10 @@
 
   <span class="pull-right">
       <a class="bg-strava btn label" href="mailto:<%= Settings.app.emailer.default_sender_email %>" target="_blank">Contact Us</a>
-      <% unless Settings.app.version.blank? %>
-          <small><%= Settings.app.version %></small>
+      <% if Settings.app.version.blank? %>
+          <small>v1.7.2</small>
       <% else %>
-          <small>v1.7.1</small>
+          <small><%= Settings.app.version %></small>
       <% end %>
   </span>
 </footer>

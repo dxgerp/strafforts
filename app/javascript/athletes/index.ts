@@ -1,4 +1,4 @@
-import { Helpers } from './../common/helpers';
+import { Helpers } from '../common/helpers';
 import { AppHelpers } from './helpers/appHelpers';
 import { EventBinders } from './helpers/eventBinders';
 import { Toastr } from './helpers/toastr';

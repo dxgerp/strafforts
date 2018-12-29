@@ -2,7 +2,7 @@
 unit_test_one:
   id: -1
   activity_id: -1
-  athlete_id: 456
+  athlete_id: 222
   best_effort_type_id: 14
   pr_rank: 
   distance: 400.0

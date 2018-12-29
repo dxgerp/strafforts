@@ -5,16 +5,12 @@ RSpec.describe Subscription, type: :model do
   it { should validate_presence_of(:subscription_plan_id) }
   it { should validate_presence_of(:starts_at) }
 
-  it { should validate_inclusion_of(:is_deleted).in_array([true, false]) }
-  it { should validate_inclusion_of(:is_active).in_array([true, false]) }
-  it { should validate_inclusion_of(:cancel_at_period_end).in_array([true, false]) }
-
   it { should belong_to(:athlete) }
   it { should belong_to(:subscription_plan) }
 
   it 'should get subscriptions by athlete ID' do
     # act.
-    items = Subscription.find_all_by_athlete_id(789)
+    items = Subscription.find_all_by_athlete_id(333)
 
     # assert.
     expect(items.count).to eq(2)
@@ -25,7 +21,7 @@ RSpec.describe Subscription, type: :model do
 
   it 'should get deleted subscriptions by athlete ID' do
     # act.
-    items = Subscription.find_all_by_athlete_id(789, true)
+    items = Subscription.find_all_by_athlete_id(333, true)
 
     # assert.
     expect(items.count).to eq(1)
