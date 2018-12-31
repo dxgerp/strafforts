@@ -73,7 +73,7 @@ namespace :athletes do
       else
         begin
           access_token = ::Creators::RefreshTokenCreator.refresh(athlete.access_token)
-          FetchActivityWorker.set(queue: :default).perform_async(access_token, mode: ENV['MODE'])
+          FetchActivityWorker.perform_async(access_token, mode: ENV['MODE'])
         rescue StandardError => e
           Rails.logger.error("Rake 'athletes:fetch' failed. #{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
           next
