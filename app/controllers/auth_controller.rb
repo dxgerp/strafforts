@@ -115,7 +115,7 @@ class AuthController < ApplicationController # rubocop:disable ClassLength
       end
 
       # Fetch data for this athlete.
-      FetchActivityWorker.set(queue: :critical, retry: true).perform_async(access_token)
+      FetchActivityWorker.set(retry: true).perform_async(access_token)
 
       # Encrypt and set access_token in cookies.
       cookies.signed[:access_token] = { value: access_token, expires: Time.now + 7.days }

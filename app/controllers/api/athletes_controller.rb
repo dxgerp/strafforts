@@ -39,7 +39,7 @@ module Api
       access_token = ::Creators::RefreshTokenCreator.refresh(@athlete.access_token)
 
       # Fetch the latest data for this athlete.
-      FetchActivityWorker.set(queue: :default).perform_async(access_token)
+      FetchActivityWorker.perform_async(access_token)
     rescue StandardError => e
       Rails.logger.error('AthletesController - Could not fetch latest. '\
         "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
@@ -92,7 +92,7 @@ module Api
         access_token = ::Creators::RefreshTokenCreator.refresh(@athlete.access_token)
 
         # Fetch all data for this athlete.
-        FetchActivityWorker.set(queue: :default).perform_async(access_token, mode: 'all')
+        FetchActivityWorker.perform_async(access_token, mode: 'all')
       rescue StandardError => e
         Rails.logger.error("AthletesController - Could not reset profile for athlete '#{athlete_id}'. "\
           "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
