@@ -29,8 +29,8 @@ class ApplicationController < ActionController::Base
     '&approval_prompt=auto&scope=read,profile:read_all,activity:read'
   end
 
-  def self.get_meta(athlete_id) # rubocop:disable MethodLength
-    Rails.cache.fetch(format(CacheKeys::META, athlete_id: athlete_id)) do
+  def self.get_meta(athlete_id) # rubocop:disable AbcSize, MethodLength
+    Rails.cache.fetch(format(CacheKeys::META, athlete_id: athlete_id)) do # rubocop:disable BlockLength
       athlete = Athlete.find_by(id: athlete_id)
       return {} if athlete.nil?
 

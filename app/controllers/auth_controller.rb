@@ -3,7 +3,7 @@ class AuthController < ApplicationController
   ACTIVITY_SCOPES = ['activity:read', 'activity:read_all'].freeze
   PROFILE_SCOPES = ['profile:read_all'].freeze
 
-  def exchange_token
+  def exchange_token # rubocop:disable PerceivedComplexity
     if params[:error].blank?
       has_read_scope = READ_SCOPES.any? { |scope| params[:scope].split(',').include?(scope) }
       has_activity_scope = ACTIVITY_SCOPES.any? { |scope| params[:scope].split(',').include?(scope) }
@@ -27,7 +27,7 @@ class AuthController < ApplicationController
     redirect_to root_path
   end
 
-  def deauthorize # rubocop:disable MethodLength
+  def deauthorize
     access_token = cookies.signed[:access_token]
 
     # Reset total count first.
