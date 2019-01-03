@@ -1,9 +1,14 @@
-class AuthController < ApplicationController # rubocop:disable ClassLength
-  REQUIRED_SCOPES = ['read', 'profile:read_all', 'activity:read'].freeze
+class AuthController < ApplicationController
+  READ_SCOPES = %w[read read_all].freeze
+  ACTIVITY_SCOPES = ['activity:read', 'activity:read_all'].freeze
+  PROFILE_SCOPES = ['profile:read_all'].freeze
 
   def exchange_token
     if params[:error].blank?
-      if REQUIRED_SCOPES.all? { |scope| params[:scope].split(',').include?(scope) } # Make sure all required scopes are returned.
+      has_read_scope = READ_SCOPES.any? { |scope| params[:scope].split(',').include?(scope) }
+      has_activity_scope = ACTIVITY_SCOPES.any? { |scope| params[:scope].split(',').include?(scope) }
+      has_profile_scope = PROFILE_SCOPES.any? { |scope| params[:scope].split(',').include?(scope) }
+      if has_read_scope && has_activity_scope && has_profile_scope # Make sure all required scopes are returned.
         success = handle_token_exchange(params[:code])
         unless success
           redirect_to '/errors/503'
