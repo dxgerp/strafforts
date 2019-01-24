@@ -36,8 +36,10 @@
   "home.sectionGuarantees.support.title": "Support",
   "home.sectionGuarantees.support.description": "I will try my best to answer any queries via email, Facebook, GitHub or even on my Strava profile",
   "home.sectionTeam.title": "The Team",
-  "home.sectionTeam.founder": "Founder",
-  "home.sectionTeam.founderDescription": "Very amateur runner. Strava addict. Strafforts founder, creator, coder, marketer and the customer service guy.",
+  "home.sectionTeam.teamMember1": "Founder",
+  "home.sectionTeam.teamMember1Description": "Very amateur runner. Strava addict. Strafforts founder, creator, coder, marketer and the customer service guy.",
+  "home.sectionTeam.teamMember2": "Contributor",
+  "home.sectionTeam.teamMember2Description": "Underachieved runner. Not yet a cyclist or swimmer. But keen on coding and working in start-ups. Happy father of two.",
   "home.footer.github": "GitHub",
   "home.footer.license": "License",
   "home.footer.copyrightMessagePartial": "from New Zealand with"

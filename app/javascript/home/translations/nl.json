@@ -36,8 +36,10 @@
   "home.sectionGuarantees.support.title": "Support",
   "home.sectionGuarantees.support.description": "Ik zal mijn best doen om jullie vragen te beantwoorden via email, Facebook, GitHub of zelfs mijn Strava profiel",
   "home.sectionTeam.title": "Het team",
-  "home.sectionTeam.founder": "Oprichter",
-  "home.sectionTeam.founderDescription": "Amateur hardloper. Strava addict. Strafforts oprichter, maker, programmeur, marketeer en klantenservice medewerker.",
+  "home.sectionTeam.teamMember1": "Oprichter",
+  "home.sectionTeam.teamMember1Description": "Amateur hardloper. Strava addict. Strafforts oprichter, maker, programmeur, marketeer en klantenservice medewerker.",
+  "home.sectionTeam.teamMember2": "Contributor",
+  "home.sectionTeam.teamMember2Description": "Underachieved runner. Not yet a cyclist or swimmer. But keen on coding and working in start-ups. Happy father of two.",
   "home.footer.github": "GitHub",
   "home.footer.license": "Licentie",
   "home.footer.copyrightMessagePartial": "vanuit New Zealand met"

@@ -36,8 +36,10 @@
   "home.sectionGuarantees.support.title": "技术支持",
   "home.sectionGuarantees.support.description": "我将尽我的最大能力通过电子邮件，Facebook, GitHub 甚至我的 Strava 个人页面来回答大家的任何问题。",
   "home.sectionTeam.title": "团队",
-  "home.sectionTeam.founder": "创始人",
-  "home.sectionTeam.founderDescription": "超级业余的跑步爱好者。 Strava 重度沉迷。Strafforts 的创始人，执行者，码农，市场营销和客户支持提供者。",
+  "home.sectionTeam.teamMember1": "创始人",
+  "home.sectionTeam.teamMember1Description": "超级业余的跑步爱好者。 Strava 重度沉迷。Strafforts 的创始人，执行者，码农，市场营销和客户支持提供者。",
+  "home.sectionTeam.teamMember2": "贡献者",
+  "home.sectionTeam.teamMember2Description": "不怎么跑步的潜力跑者。也不怎么骑车或游泳。但是超爱软件开发和创业。是两个可爱孩子的爹。",
   "home.footer.github": "GitHub",
   "home.footer.license": "开源许可证",
   "home.footer.copyrightMessagePartial": "来自新西兰的"

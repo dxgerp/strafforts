@@ -36,8 +36,10 @@
   "home.sectionGuarantees.support.title": "Untersützung",
   "home.sectionGuarantees.support.description": "Ich versuche, all Ihre Fragen per E-Mail, Facebook, GitHub oder über mein Strava-Profil zu beantworten",
   "home.sectionTeam.title": "Das Team",
-  "home.sectionTeam.founder": "Gründer ",
-  "home.sectionTeam.founderDescription": "Amateurläufer, Strava-verbunden, Strafforts-Gründer, Programmierer, Vermarkter und Kundendienstmitarbeiter.",
+  "home.sectionTeam.teamMember1": "Gründer ",
+  "home.sectionTeam.teamMember1Description": "Amateurläufer, Strava-verbunden, Strafforts-Gründer, Programmierer, Vermarkter und Kundendienstmitarbeiter.",
+  "home.sectionTeam.teamMember2": "Contributor",
+  "home.sectionTeam.teamMember2Description": "Underachieved runner. Not yet a cyclist or swimmer. But keen on coding and working in start-ups. Happy father of two.",
   "home.footer.github": "GitHub",
   "home.footer.license": "Lizenz",
   "home.footer.copyrightMessagePartial": "aus Neuseeland mit"
