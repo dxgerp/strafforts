@@ -19,16 +19,13 @@ import { container, title } from './../material-kit-react/Styles/material-kit-re
 
 const demoStyle = {
   section: {
-    padding: '0 0',
+    padding: '20px 0',
+    textAlign: 'center',
   },
   container,
   marginAuto: {
     marginLeft: 'auto !important',
     marginRight: 'auto !important',
-  },
-  section: {
-    padding: '20px 0',
-    textAlign: 'center',
   },
   textCenter: {
     textAlign: 'center',

@@ -6,6 +6,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
 
 import teamMember1 from './../../../assets/img/faces/yizeng.jpg';
+import teamMember2 from './../../../assets/img/faces/shanezheng.jpg';
 import Card from './../material-kit-react/Card/Card.jsx';
 import CardBody from './../material-kit-react/Card/CardBody.jsx';
 import CardFooter from './../material-kit-react/Card/CardFooter.jsx';
@@ -78,12 +79,12 @@ class SectionTeam extends React.Component {
                   Yi Zeng
                   <br />
                   <small className={classes.smallTitle}>
-                    <FormattedMessage id="home.sectionTeam.founder" />
+                    <FormattedMessage id="home.sectionTeam.teamMember1" />
                   </small>
                 </h4>
                 <CardBody>
                   <p className={classes.description}>
-                    <FormattedMessage id="home.sectionTeam.founderDescription" />
+                    <FormattedMessage id="home.sectionTeam.teamMember1Description" />
                   </p>
                 </CardBody>
                 <CardFooter className={classes.justifyCenter}>
@@ -104,6 +105,45 @@ class SectionTeam extends React.Component {
                     target="_blank"
                   >
                     <i className={classes.socials + ' fab fa-strava'} />
+                  </Button>
+                </CardFooter>
+              </Card>
+            </GridItem>
+            <GridItem xs={12} sm={12} md={4} className={classes.itemGrid}>
+              <Card plain>
+                <GridItem xs={6} sm={4} md={6} className={classes.itemGrid}>
+                  <img src={teamMember2} alt="Strafforts Contributor" className={imageClasses} />
+                </GridItem>
+                <h4 className={classes.cardTitle}>
+                  Shane Zheng
+                  <br />
+                  <small className={classes.smallTitle}>
+                    <FormattedMessage id="home.sectionTeam.teamMember2" />
+                  </small>
+                </h4>
+                <CardBody>
+                  <p className={classes.description}>
+                    <FormattedMessage id="home.sectionTeam.teamMember2Description" />
+                  </p>
+                </CardBody>
+                <CardFooter className={classes.justifyCenter}>
+                  <Button
+                      justIcon
+                      color="transparent"
+                      className={classes.margin5}
+                      href="https://www.linkedin.com/in/shanezheng/"
+                      target="_blank"
+                  >
+                    <i className={classes.socials + ' fab fa-linkedin'} />
+                  </Button>
+                  <Button
+                      justIcon
+                      color="transparent"
+                      className={classes.margin5}
+                      href="https://github.com/ShaneZhengNZ"
+                      target="_blank"
+                  >
+                    <i className={classes.socials + ' fab fa-github'} />
                   </Button>
                 </CardFooter>
               </Card>

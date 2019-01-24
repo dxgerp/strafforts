@@ -36,8 +36,10 @@
   "home.sectionGuarantees.support.title": "Поддержка.",
   "home.sectionGuarantees.support.description": "Я сделаю все возможно и отвечу Вам по почте, а также на Facebook, GitHub, Strava.",
   "home.sectionTeam.title": "Команда.",
-  "home.sectionTeam.founder": "Основатель.",
-  "home.sectionTeam.founderDescription": "Страстный любитель бега.??? Поклонник Strava. Основатель Straffrots, изобретатель, программист, продавец и покупатель???",
+  "home.sectionTeam.teamMember1": "Основатель.",
+  "home.sectionTeam.teamMember1Description": "Страстный любитель бега.??? Поклонник Strava. Основатель Straffrots, изобретатель, программист, продавец и покупатель???",
+  "home.sectionTeam.teamMember2": "Contributor",
+  "home.sectionTeam.teamMember2Description": "Underachieved runner. Not yet a cyclist or swimmer. But keen on coding and working in start-ups. Happy father of two.",
   "home.footer.github": "GitHub.",
   "home.footer.license": "Лицензия.",
   "home.footer.copyrightMessagePartial": "Из Новой Зеландии с"

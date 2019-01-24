@@ -36,8 +36,10 @@
   "home.sectionGuarantees.support.title": "Podpora",
   "home.sectionGuarantees.support.description": "Vaše dotazy zodpovím na e-mailu, Facebooku, Githubu nebo na mém Strava profilu",
   "home.sectionTeam.title": "Kdo za tím stojí?",
-  "home.sectionTeam.founder": "Zakladatel",
-  "home.sectionTeam.founderDescription": "Amatérský běžec. Závislák na Stravě. Strafforts zakladatel, tvůrce, kodér, markeťák a člověk na zákaznické podpoře.",
+  "home.sectionTeam.teamMember1": "Zakladatel",
+  "home.sectionTeam.teamMember1Description": "Amatérský běžec. Závislák na Stravě. Strafforts zakladatel, tvůrce, kodér, markeťák a člověk na zákaznické podpoře.",
+  "home.sectionTeam.teamMember2": "Contributor",
+  "home.sectionTeam.teamMember2Description": "Underachieved runner. Not yet a cyclist or swimmer. But keen on coding and working in start-ups. Happy father of two.",
   "home.footer.github": "GitHub",
   "home.footer.license": "Licence",
   "home.footer.copyrightMessagePartial": "z Nového Zélandu s"

@@ -36,8 +36,10 @@
   "home.sectionGuarantees.support.title": "Kundeservice",
   "home.sectionGuarantees.support.description": "Jeg vil gøre mit bedste for at svare på henvendelser via email, Facebook, Github eller selv min Strava profil",
   "home.sectionTeam.title": "Teamet",
-  "home.sectionTeam.founder": "Stifter",
-  "home.sectionTeam.founderDescription": "Amatørløber med stort A. Afhængig af Strava. Stifter, programmør, marketer og kundeservice for Strafforts.",
+  "home.sectionTeam.teamMember1": "Stifter",
+  "home.sectionTeam.teamMember1Description": "Amatørløber med stort A. Afhængig af Strava. Stifter, programmør, marketer og kundeservice for Strafforts.",
+  "home.sectionTeam.teamMember2": "Contributor",
+  "home.sectionTeam.teamMember2Description": "Underachieved runner. Not yet a cyclist or swimmer. But keen on coding and working in start-ups. Happy father of two.",
   "home.footer.github": "GitHub",
   "home.footer.license": "Licens",
   "home.footer.copyrightMessagePartial": "fra New Zealand med"
