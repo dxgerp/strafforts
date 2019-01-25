@@ -26,7 +26,7 @@ module Api
             )
             shaped_items.first(RECENT_ITEMS_LIMIT)
           end
-        elsif params[:distance_or_year] =~ /^20\d\d$/
+        elsif /^20\d\d$/.match?(params[:distance_or_year])
           unless athlete.pro_subscription?
             render json: { error: Messages::PRO_ACCOUNTS_ONLY }.to_json, status: 403
             return

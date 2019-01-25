@@ -10,7 +10,7 @@ AllCops:
     - 'test/test_helper.rb'
     - 'tmp/**/*'
     - 'vendor/**/*'
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.5
 Documentation:
   Enabled: false
 Lint/UriEscapeUnescape:
@@ -19,7 +19,7 @@ Metrics/AbcSize:
   Max: 50
 Metrics/BlockLength:
   Exclude:
-    - '**/*.rake'
+    - 'lib/**/*.rake'
     - 'spec/**/*.rb'
 Metrics/ClassLength:
   Exclude:
@@ -31,12 +31,19 @@ Metrics/MethodLength:
   Max: 25
 Style/BlockComments:
   Exclude:
-    - '**/spec_helper.rb'
+    - "spec/spec_helper.rb"
 Style/BlockDelimiters:
   Exclude:
     - 'spec/**/*.rb'
+Style/ClassAndModuleChildren:
+  Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
+Style/HashSyntax:
+  Exclude:
+    - "db/migrate/*.rb"
+Style/FormatStringToken:
+  EnforcedStyle: template
 Style/DateTime:
   Enabled: false
 Style/NumericLiterals:

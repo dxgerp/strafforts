@@ -1,22 +1,28 @@
 import React from 'react';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import localeData_en from 'react-intl/locale-data/en';
+import localeData_cs from 'react-intl/locale-data/cs';
 import localeData_da from 'react-intl/locale-data/da';
 import localeData_de from 'react-intl/locale-data/de';
 import localeData_nl from 'react-intl/locale-data/nl';
+import localeData_ru from 'react-intl/locale-data/ru';
 import localeData_zh from 'react-intl/locale-data/zh';
 
 import translations_en from './translations/en.json';
+import translations_cs from './translations/cs.json';
 import translations_da from './translations/da.json';
 import translations_de from './translations/de.json';
 import translations_nl from './translations/nl.json';
+import translations_ru from './translations/ru.json';
 import translations_zh_CN from './translations/zh_CN.json';
 
 addLocaleData([
   ...localeData_en,
+  ...localeData_cs,
   ...localeData_da,
   ...localeData_de,
   ...localeData_nl,
+  ...localeData_ru,
   ...localeData_zh
 ]);
 
@@ -29,9 +35,11 @@ class IntlProviderWrapper extends React.Component {
 
     const translations = {
       en: translations_en,
+      cs: translations_cs,
       da: translations_da,
       de: translations_de,
       nl: translations_nl,
+      ru: translations_ru,
       zh: translations_zh_CN,
     };
 

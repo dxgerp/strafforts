@@ -37,9 +37,9 @@ function Footer({ ...props }) {
           </List>
         </div>
         <div className={classes.right}>
-          &copy; {1900 + new Date().getYear()} , <FormattedMessage id="home.footer.copyrightMessagePartial" />{' '}
+          &copy; {1900 + new Date().getYear()}, <FormattedMessage id="home.footer.copyrightMessagePartial" />{' '}
           <Favorite className={classes.icon} /> by{' '}
-          <a href={config.get('app.founder.website')} className={aClasses} target="_blank">
+          <a href={config.get('app.founder.website')} className={aClasses} target="_blank" rel="noopener noreferrer">
             Yi Zeng
           </a>
           .

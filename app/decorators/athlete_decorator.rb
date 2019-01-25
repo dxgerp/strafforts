@@ -65,6 +65,7 @@ class AthleteDecorator < Draper::Decorator
   def display_name
     return fullname unless fullname.length > MAX_INFO_TEXT_LENGTH
     return object.athlete_info.firstname unless object.athlete_info.firstname.blank?
+
     object.athlete_info.lastname unless object.athlete_info.lastname.blank?
   end
 
@@ -83,6 +84,7 @@ class AthleteDecorator < Draper::Decorator
   def display_location
     return location unless location.length > MAX_INFO_TEXT_LENGTH
     return object.athlete_info.city.name unless object.athlete_info.city.nil? || object.athlete_info.city.name.blank?
+
     object.athlete_info.country.name unless object.athlete_info.country.nil? || object.athlete_info.country.name.blank?
   end
 
