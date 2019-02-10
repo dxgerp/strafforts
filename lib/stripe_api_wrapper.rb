@@ -43,7 +43,7 @@ class StripeApiWrapper
       # Create a new customer if it does not exist yet or it has been deleted.
       if customer.blank? || customer.deleted?
         customer_metadata = {
-          'Athelte ID' => athlete.id,
+          'Athlete ID' => athlete.id,
           'Email' => athlete.athlete_info.email,
           'First Name' => athlete.athlete_info.firstname,
           'Last Name' => athlete.athlete_info.lastname,
