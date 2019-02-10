@@ -119,6 +119,9 @@ class AuthController < ApplicationController
         end
       end
 
+      # Subscribe or update to mailing list.
+      SubscribeToMailingListWorker.perform_async(athlete.id) if athlete.email_confirmed
+
       # Fetch data for this athlete.
       FetchActivityWorker.set(retry: true).perform_async(access_token)
 
