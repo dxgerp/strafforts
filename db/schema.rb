@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181224112753) do
+ActiveRecord::Schema.define(version: 2019_02_15_170650) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
   enable_extension "pgcrypto"
+  enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
-  create_table "activities", id: :serial, force: :cascade do |t|
+  create_table "activities", force: :cascade do |t|
     t.integer "athlete_id"
     t.string "gear_id"
     t.integer "workout_type_id"
@@ -93,8 +93,8 @@ ActiveRecord::Schema.define(version: 20181224112753) do
     t.datetime "refresh_token_expires_at"
     t.boolean "email_confirmed", default: false
     t.string "confirmation_token"
-    t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.datetime "confirmed_at"
     t.index ["access_token"], name: "index_athletes_on_access_token"
     t.index ["confirmation_token"], name: "index_athletes_on_confirmation_token", unique: true
   end
