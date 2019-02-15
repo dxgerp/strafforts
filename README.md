@@ -7,6 +7,14 @@
 [![Codecov](https://img.shields.io/codecov/c/github/yizeng/strafforts/master.svg?style=flat-square)][Strafforts Codecov]
 [![Code Climate](https://img.shields.io/codeclimate/maintainability/yizeng/strafforts.svg?style=flat-square)][Strafforts Code Climate]
 
+## [DEPRECATING]
+
+This is repository is currently in maintenance mode
+and being re-written to a separate Rails API back-end with React Front-end,
+due to the increasing popularity and greater userbase.
+
+All requests please go to <https://github.com/strafforts>.
+
 ## An Analytics App for Your Strava Running Best Efforts, PBs/PRs and Races
 
 Strafforts is a web app that calls [Strava API][Strava API]
