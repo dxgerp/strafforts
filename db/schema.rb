@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_16_105132) do
+ActiveRecord::Schema.define(version: 2019_02_16_120140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 2019_02_16_105132) do
     t.index ["workout_type_id"], name: "index_activities_on_workout_type_id"
   end
 
-  create_table "athlete_infos", primary_key: "athlete_id", id: :integer, default: nil, force: :cascade do |t|
+  create_table "athlete_infos", primary_key: "athlete_id", id: :serial, force: :cascade do |t|
     t.string "username"
     t.string "firstname"
     t.string "lastname"
@@ -99,7 +99,7 @@ ActiveRecord::Schema.define(version: 2019_02_16_105132) do
     t.index ["confirmation_token"], name: "index_athletes_on_confirmation_token", unique: true
   end
 
-  create_table "best_effort_types", id: :serial, force: :cascade do |t|
+  create_table "best_effort_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(version: 2019_02_16_105132) do
   end
 
   create_table "best_efforts", force: :cascade do |t|
-    t.integer "activity_id"
+    t.bigint "activity_id"
     t.integer "athlete_id"
     t.integer "best_effort_type_id"
     t.integer "pr_rank"
@@ -123,7 +123,7 @@ ActiveRecord::Schema.define(version: 2019_02_16_105132) do
     t.index ["best_effort_type_id"], name: "index_best_efforts_on_best_effort_type_id"
   end
 
-  create_table "cities", id: :serial, force: :cascade do |t|
+  create_table "cities", force: :cascade do |t|
     t.integer "country_id"
     t.string "name"
     t.datetime "created_at", null: false
@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(version: 2019_02_16_105132) do
     t.index ["name"], name: "index_cities_on_name"
   end
 
-  create_table "countries", id: :serial, force: :cascade do |t|
+  create_table "countries", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -183,7 +183,7 @@ ActiveRecord::Schema.define(version: 2019_02_16_105132) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "race_distances", id: :serial, force: :cascade do |t|
+  create_table "race_distances", force: :cascade do |t|
     t.float "distance"
     t.string "name"
     t.datetime "created_at", null: false
@@ -191,8 +191,8 @@ ActiveRecord::Schema.define(version: 2019_02_16_105132) do
     t.index ["name"], name: "index_race_distances_on_name"
   end
 
-  create_table "races", id: :serial, force: :cascade do |t|
-    t.integer "activity_id"
+  create_table "races", force: :cascade do |t|
+    t.bigint "activity_id"
     t.integer "athlete_id"
     t.integer "race_distance_id"
     t.datetime "created_at", null: false
@@ -202,7 +202,7 @@ ActiveRecord::Schema.define(version: 2019_02_16_105132) do
     t.index ["race_distance_id"], name: "index_races_on_race_distance_id"
   end
 
-  create_table "states", id: :serial, force: :cascade do |t|
+  create_table "states", force: :cascade do |t|
     t.integer "country_id"
     t.string "name"
     t.datetime "created_at", null: false
@@ -240,7 +240,7 @@ ActiveRecord::Schema.define(version: 2019_02_16_105132) do
     t.boolean "cancel_at_period_end", default: false
   end
 
-  create_table "workout_types", id: :serial, force: :cascade do |t|
+  create_table "workout_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
