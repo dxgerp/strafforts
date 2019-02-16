@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_15_170650) do
+ActiveRecord::Schema.define(version: 2019_02_16_105132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 2019_02_15_170650) do
     t.index ["username"], name: "index_athlete_infos_on_username"
   end
 
-  create_table "athletes", id: :serial, force: :cascade do |t|
+  create_table "athletes", force: :cascade do |t|
     t.string "access_token"
     t.boolean "is_public"
     t.integer "last_activity_retrieved"
