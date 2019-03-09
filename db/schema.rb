@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 2019_02_16_120140) do
   create_table "athletes", force: :cascade do |t|
     t.string "access_token"
     t.boolean "is_public"
-    t.integer "last_activity_retrieved"
+    t.bigint "last_activity_retrieved"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_active", default: true

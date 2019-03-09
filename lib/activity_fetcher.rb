@@ -71,6 +71,7 @@ class ActivityFetcher
           athlete.save!
         end
       end
+      raise
     end
   end
 
