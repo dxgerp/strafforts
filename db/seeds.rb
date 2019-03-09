@@ -67,7 +67,7 @@ Faq.find_or_create_by(faq_category_id: 1, title: 'Does Strafforts store my credi
   "No sensitive information shall be passed to or stored on Strafforts servers.</p>"
 )
 Faq.find_or_create_by(faq_category_id: 1, title: 'Is it possible to remove all my data on Strafforts?', content:
-  "<p>Yes, abusolutely. First make sure you have connected and logged into Strafforts, "\
+  "<p>Yes, absolutely. First make sure you have connected and logged into Strafforts, "\
   "then go to your 'Settings' sidebar by clicking <code><i class='fa fa-gears'></i></code> at top right corner of the app, "\
   "and choosing <code><i class='fa fa-wrench'></i></code> tab, "\
   "then click 'Delete' button to remove yourself from Strafforts server.</p>"\
@@ -83,7 +83,7 @@ Faq.find_or_create_by(faq_category_id: 1, title: 'Does Strafforts share my data 
 Faq.find_or_create_by(faq_category_id: 2, title: 'How is "Best Efforts" different from "Personal Bests"?', content:
   "<p>As the names suggest, 'Personal bests' on Strafforts are PBs/PRs, "\
   "more specifically, they are those gold best estimated efforts trophies on Strava running activities, "\
-  "while 'Best Efforts' are not neccessarily PBs/PRs, "\
+  "while 'Best Efforts' are not necessarily PBs/PRs, "\
   "but your top 100 best bests of each distance.</p>"\
   "<p>For example, if your current 5k PB is 17:00, and you ran 17:10 today, "\
   "17:10 is not your PB/PR and won't show up in 'Personal Bests' view, "\
