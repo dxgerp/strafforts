@@ -46,6 +46,7 @@ SubscriptionPlan.find_or_create_by(name: '90-day PRO', description: '90-day PRO 
 SubscriptionPlan.find_or_create_by(name: 'Old Mates PRO', description: 'Free 30-day PRO Plan for athletes who have been inactive for some time', duration: 30,amount: 0, amount_per_month: 0)
 SubscriptionPlan.find_or_create_by(name: 'Facebook Kudos PRO', description: 'Free 30-day PRO Plan for athletes who have liked Strafforts and given a review on Facebook', duration: 30,amount: 0, amount_per_month: 0)
 SubscriptionPlan.find_or_create_by(name: 'Translators PRO', description: 'Free annual PRO Plan for athletes who have helped translating Strafforts', duration: 365,amount: 0, amount_per_month: 0)
+SubscriptionPlan.find_or_create_by(name: 'Compensation PRO', description: 'Free 30-day PRO Plan for athletes who suffered a major bug at Strafforts end', duration: 30,amount: 0, amount_per_month: 0)
 
 FaqCategory.find_or_create_by(name: 'account')
 FaqCategory.find_or_create_by(name: 'best-efforts')
