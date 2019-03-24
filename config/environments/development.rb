@@ -79,10 +79,7 @@ Rails.application.configure do
       domain:               ENV['SMTP_PROVIDER_DOMAIN'],
       user_name:            ENV['SMTP_PROVIDER_USERNAME'],
       password:             ENV['SMTP_PROVIDER_PASSWORD'],
-      authentication:       'plain',
-      ssl:                  true,
-      tls:                  true,
-      enable_starttls_auto: true
+      authentication:       'login'
   }
 
   unless ENV["RAILS_LOG_TO_STDOUT"].present?
