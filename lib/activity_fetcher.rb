@@ -43,10 +43,12 @@ class ActivityFetcher
               activity = @api_wrapper.retrieve_an_activity(activity_id)
               Creators::ActivityCreator.create_or_update(activity)
             rescue StandardError => e
+              # Don't proceed when athlete has deauthorized or API rate limit reached.
+              raise if e.message.include?("Authorization Error") # rubocop:disable BlockNesting
+              raise if e.message.include?("Rate Limit Exceeded") # rubocop:disable BlockNesting
+
               Rails.logger.error("ActivityCreator - Error creating or updating activity '#{activity_id}'. "\
                 "#{e.message}\nBacktrace:\n\t#{e.backtrace.join("\n\t")}")
-              raise if e.message.include?('Authorization Error') # rubocop:disable BlockNesting
-
               next
             end
             athlete.last_activity_retrieved = activity_id
