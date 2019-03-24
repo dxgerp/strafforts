@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: subscription_plans
+#
+#  id               :uuid             not null, primary key
+#  name             :string
+#  description      :string
+#  duration         :integer
+#  amount           :float
+#  amount_per_month :float
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
+
 ---
 subscription_plan_001:
   id: 29402173-0b5c-47de-a000-93dcc01c819f

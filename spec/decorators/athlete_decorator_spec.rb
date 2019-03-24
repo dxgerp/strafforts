@@ -334,7 +334,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
     context 'when athlete.city and athlete.country are both nil' do
       it 'should be ""' do
         # arrange.
-        athlete = Athlete.find_by(id: 9123806)
+        athlete = Athlete.includes(athlete_info: [:city, :country]).find_by(id: 9123806)
         athlete.athlete_info.city = nil
         athlete.athlete_info.country = nil
 
@@ -347,7 +347,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
     end
 
     context 'when one of athlete.city and athlete.country is nil' do
-      let(:athlete) { Athlete.find_by(id: 9123806) }
+      let(:athlete) { Athlete.includes(athlete_info: [:city, :country]).find_by(id: 9123806) }
 
       it 'should be country name when athlete.city is nil but not athlete.country' do
         # arrange.
@@ -373,7 +373,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
     end
 
     context 'when both athlete.city and athlete.country are not nil' do
-      let(:athlete) { Athlete.find_by(id: 9123806) }
+      let(:athlete) { Athlete.includes(athlete_info: [:city, :country]).find_by(id: 9123806) }
 
       it 'should be "" when both athlete.city.name and athlete.country.name are blank' do
         # arrange.
@@ -423,7 +423,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
     context 'when location is under length limit' do
       it 'should be the location' do
         # arrange.
-        athlete = Athlete.find_by(id: 9123806)
+        athlete = Athlete.includes(athlete_info: [:city, :country]).find_by(id: 9123806)
 
         # act.
         decorator = AthleteDecorator.decorate(athlete)
@@ -434,7 +434,7 @@ RSpec.describe AthleteDecorator, type: :decorator do
     end
 
     context 'when location is over length limit' do
-      let(:athlete) { Athlete.find_by(id: 9123806) }
+      let(:athlete) { Athlete.includes(athlete_info: [:city, :country]).find_by(id: 9123806) }
 
       it 'should be the city name when athlete.city.name is not blank' do
         # arrange.

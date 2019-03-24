@@ -17,14 +17,16 @@ class BestEffort < ApplicationRecord
   end
 
   def self.find_top_by_athlete_id_and_best_effort_type_id(athlete_id, best_effort_type_id, limit)
-    results = where(athlete_id: athlete_id, best_effort_type_id: best_effort_type_id)
-              .order('elapsed_time')
-              .limit(limit)
+    results = includes(:best_effort_type, activity: [:workout_type, :gear])
+                .where(athlete_id: athlete_id, best_effort_type_id: best_effort_type_id)
+                .order('elapsed_time')
+                .limit(limit)
     results.empty? ? [] : results
   end
 
   def self.find_top_one_of_each_year(athlete_id, best_effort_type_id)
-    items = where(athlete_id: athlete_id, best_effort_type_id: best_effort_type_id)
+    items = includes(:best_effort_type, activity: [:workout_type, :gear])
+              .where(athlete_id: athlete_id, best_effort_type_id: best_effort_type_id)
 
     return [] if items.empty?
 
@@ -37,12 +39,14 @@ class BestEffort < ApplicationRecord
   end
 
   def self.find_all_pbs_by_athlete_id(athlete_id)
-    results = where(athlete_id: athlete_id, pr_rank: 1)
+    results = includes(:best_effort_type, activity: [:workout_type, :gear])
+                .where(athlete_id: athlete_id, pr_rank: 1)
     results.empty? ? [] : results
   end
 
   def self.find_all_pbs_by_athlete_id_and_best_effort_type_id(athlete_id, best_effort_type_id)
-    results = where(athlete_id: athlete_id, best_effort_type_id: best_effort_type_id, pr_rank: 1)
+    results = includes(:best_effort_type, activity: [:workout_type, :gear])
+                .where(athlete_id: athlete_id, best_effort_type_id: best_effort_type_id, pr_rank: 1)
     results.empty? ? [] : results
   end
 end

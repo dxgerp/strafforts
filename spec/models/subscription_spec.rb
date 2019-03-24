@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: subscriptions
+#
+#  id                   :bigint(8)        not null, primary key
+#  athlete_id           :integer
+#  subscription_plan_id :uuid
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  starts_at            :datetime
+#  expires_at           :datetime
+#  is_deleted           :boolean          default(FALSE)
+#  is_active            :boolean          default(TRUE)
+#  cancel_at_period_end :boolean          default(FALSE)
+#
+
 require 'rails_helper'
 
 RSpec.describe Subscription, type: :model do

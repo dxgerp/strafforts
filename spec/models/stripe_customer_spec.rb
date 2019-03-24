@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: stripe_customers
+#
+#  id         :string           not null, primary key
+#  athlete_id :integer
+#  email      :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe StripeCustomer, type: :model do

@@ -1,3 +1,21 @@
+# == Schema Information
+#
+# Table name: best_efforts
+#
+#  id                  :bigint(8)        not null, primary key
+#  activity_id         :bigint(8)
+#  athlete_id          :integer
+#  best_effort_type_id :integer
+#  pr_rank             :integer
+#  distance            :float
+#  moving_time         :integer
+#  elapsed_time        :integer
+#  start_date          :datetime
+#  start_date_local    :datetime
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe BestEffort, type: :model do

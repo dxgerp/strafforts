@@ -52,6 +52,8 @@ group :development, :test do
   gem 'rspec-rails'
   gem "factory_bot_rails", "~> 4.0"
   gem "faker"
+  gem 'bullet' # Help to kill N+1 queries and unused eager loading.
+  gem 'fuubar' # The instafailing RSpec progress bar formatter.
 end
 
 group :development do
@@ -69,6 +71,8 @@ group :development do
   gem 'rubocop', require: false
   gem 'wdm', '>= 0.1.0' if Gem.win_platform? # Require wdm for Windows.
   gem 'solargraph', require: false
+
+  gem 'annotate' # Annotate Rails classes with schema and routes info.
 end
 
 group :test do

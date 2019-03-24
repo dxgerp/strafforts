@@ -23,13 +23,6 @@ module Strafforts
     # Verifies that versions and hashed value of the package contents in the project's package.json
     config.webpacker.check_yarn_integrity = false
 
-    if ENV["RAILS_LOG_TO_STDOUT"].present?
-      logger           = ActiveSupport::Logger.new(STDOUT)
-      logger.formatter = config.log_formatter
-      config.logger    = ActiveSupport::TaggedLogging.new(logger)
-      config.log_level = ENV["RAILS_LOG_LEVEL"].present? ? ENV['RAILS_LOG_LEVEL'].to_sym : :info
-    end
-
     # Redis for caching.
     config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL_FOR_CACHING'] ||= 'redis://localhost:6379/10', expires_in: 1.day, namespace: 'app' }
   end

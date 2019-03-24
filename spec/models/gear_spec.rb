@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: gears
+#
+#  gear_id     :string           not null, primary key
+#  athlete_id  :integer
+#  name        :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  primary     :boolean          default(FALSE)
+#  distance    :float
+#  brand_name  :string
+#  model       :string
+#  description :string
+#
+
 require 'rails_helper'
 
 RSpec.describe Gear, type: :model do

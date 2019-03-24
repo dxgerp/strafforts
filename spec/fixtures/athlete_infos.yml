@@ -1,3 +1,28 @@
+# == Schema Information
+#
+# Table name: athlete_infos
+#
+#  athlete_id             :integer          not null, primary key
+#  username               :string
+#  firstname              :string
+#  lastname               :string
+#  email                  :string
+#  profile_medium         :string
+#  profile                :string
+#  city_id                :integer
+#  state_id               :integer
+#  country_id             :integer
+#  sex                    :string
+#  follower_count         :integer
+#  friend_count           :integer
+#  athlete_type           :integer
+#  date_preference        :string
+#  measurement_preference :string
+#  weight                 :float
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#
+
 ---
 unit_test_one:
   athlete_id: 111

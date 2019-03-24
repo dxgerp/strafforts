@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: states
+#
+#  id         :bigint(8)        not null, primary key
+#  country_id :integer
+#  name       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe State, type: :model do

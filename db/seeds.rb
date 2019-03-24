@@ -158,7 +158,7 @@ Faq.find_or_create_by(faq_category_id: 4, title: 'What are "Races" and how to cr
   "<p>Strava offers four different sub-categories within the Running activity type to allow "\
   "for more detailed and focused analysis of your training. "\
   "Those four tags are Run, Race, Long Run, and Workout.</p>"\
-  "<p>Activties that are tagged as <code>Race</code> will be fetched and analyzed by Strafforts, "\
+  "<p>Activities that are tagged as <code>Race</code> will be fetched and analyzed by Strafforts, "\
   "then displayed within distance or year view, as well as timeline view.</p>"\
   "<p><img src='/screenshots/doc-tag-run-as-race.png' style='width:85%;'></p>"\
   "<p>For more details, "\
@@ -193,7 +193,7 @@ Faq.find_or_create_by(faq_category_id: 5, title: 'How to contribute to Straffort
   "<a href='https://github.com/yizeng/strafforts/pulls' target='_blank'>provide PRs</a>.</p>"
 )
 Faq.find_or_create_by(faq_category_id: 5, title: 'Where was the homepage background photo taken?', content:
-  "<p>The photo was taken in Listbon, Portugal, and the bridge in the background is the "\
+  "<p>The photo was taken in Lisbon, Portugal, and the bridge in the background is the "\
   "<a href='https://en.wikipedia.org/wiki/25_de_Abril_Bridge' target='_blank'>25 de Abril Bridge</a>.</p>"\
   "<p>It was the period I started this project while travelling in Europe, "\
   "where I did Lisbon Rock'n'Roll half marathon.</p>"

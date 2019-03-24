@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: race_distances
+#
+#  id         :bigint(8)        not null, primary key
+#  distance   :float
+#  name       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class RaceDistance < ApplicationRecord
   validates :distance, presence: true
   validates :distance, uniqueness: true

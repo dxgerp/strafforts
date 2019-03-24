@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: races
+#
+#  id               :bigint(8)        not null, primary key
+#  activity_id      :bigint(8)
+#  athlete_id       :integer
+#  race_distance_id :integer
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe Race, type: :model do

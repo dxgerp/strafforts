@@ -1,3 +1,24 @@
+# == Schema Information
+#
+# Table name: athletes
+#
+#  id                       :bigint(8)        not null, primary key
+#  access_token             :string
+#  is_public                :boolean
+#  last_activity_retrieved  :bigint(8)
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  is_active                :boolean          default(TRUE)
+#  total_run_count          :integer          default(0)
+#  last_active_at           :datetime
+#  refresh_token            :string
+#  refresh_token_expires_at :datetime
+#  email_confirmed          :boolean          default(FALSE)
+#  confirmation_token       :string
+#  confirmation_sent_at     :datetime
+#  confirmed_at             :datetime
+#
+
 class Athlete < ApplicationRecord
   validates :access_token, presence: true
   validates :is_active, :is_public, inclusion: { in: [true, false] }

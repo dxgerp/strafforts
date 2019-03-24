@@ -1,3 +1,24 @@
+# == Schema Information
+#
+# Table name: heart_rate_zones
+#
+#  id           :bigint(8)        not null, primary key
+#  athlete_id   :integer
+#  custom_zones :boolean
+#  zone_1_min   :integer
+#  zone_1_max   :integer
+#  zone_2_min   :integer
+#  zone_2_max   :integer
+#  zone_3_min   :integer
+#  zone_3_max   :integer
+#  zone_4_min   :integer
+#  zone_4_max   :integer
+#  zone_5_min   :integer
+#  zone_5_max   :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
 class HeartRateZones < ApplicationRecord
   validates :athlete_id,
             :zone_1_min, :zone_1_max,

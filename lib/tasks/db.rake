@@ -39,12 +39,12 @@ namespace :db do
       ActiveRecord::Base.connection.tables.each do |table_name|
         next if TABLES_TO_SKIP.include?(table_name)
 
-        conter = '000'
+        counter = '000'
         file_path = "#{Rails.root}/spec/fixtures/#{table_name}.yml"
         File.open(file_path, 'w') do |file|
           rows = ActiveRecord::Base.connection.select_all("SELECT * FROM #{table_name}")
           data = rows.each_with_object({}) do |record, hash|
-            suffix = record['id'].blank? ? conter.succ! : record['id']
+            suffix = record['id'].blank? ? counter.succ! : record['id']
             hash["#{table_name.singularize}_#{suffix}"] = record
           end
           puts "Writing table '#{table_name}' to '#{file_path}'"

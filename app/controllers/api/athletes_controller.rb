@@ -78,7 +78,7 @@ module Api
       if params[:is_hard_reset].to_s == 'true'
         # Delete all activity data except for the athlete itself.
         BestEffort.where(athlete_id: athlete_id).destroy_all
-        Race.where(athlete_id: athlete_id).destroy_all
+        Race.includes(:activity).where(athlete_id: athlete_id).destroy_all
         Activity.where(athlete_id: athlete_id).destroy_all
         Rails.logger.warn("Hard resetting all activity data for athlete #{athlete_id}.")
       else

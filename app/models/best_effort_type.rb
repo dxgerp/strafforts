@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: best_effort_types
+#
+#  id         :bigint(8)        not null, primary key
+#  name       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class BestEffortType < ApplicationRecord
   validates :name, presence: true
   validates :name, uniqueness: true
