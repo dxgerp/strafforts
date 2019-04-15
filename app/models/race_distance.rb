@@ -10,6 +10,10 @@
 #
 
 class RaceDistance < ApplicationRecord
+  # Default allowed margin: 3% under or 2.5% over.
+  LOWER_MARGIN = Settings.app.race_distance_lower_margin || 0.97
+  UPPER_MARGIN = Settings.app.race_distance_upper_margin || 1.025
+
   validates :distance, presence: true
   validates :distance, uniqueness: true
 
@@ -25,7 +29,7 @@ class RaceDistance < ApplicationRecord
   def self.find_by_actual_distance(actual_distance)
     all.each do |race_distance|
       distance = race_distance.distance
-      next unless actual_distance.between?(distance * 0.965, distance * 1.055) # Allowed margin: 3.5% under or 5.5% over.
+      next unless actual_distance.between?(distance * LOWER_MARGIN, distance * UPPER_MARGIN)
 
       return race_distance
     end

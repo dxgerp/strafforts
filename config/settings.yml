@@ -15,6 +15,8 @@ app:
   html_meta_keywords: 'strava,strafforts,bestefforts,pb,races,running,data,visualizer,analytics'
   title: 'Strafforts - An Analytics App for Your Strava Running Best Efforts, PBs/PRs and Races'
   version: <%= ENV['APP_VERSION'] %>
+  race_distance_lower_margin: <%= ENV['RACE_DISTANCE_LOWER_MARGIN'] %>
+  race_distance_upper_margin: <%= ENV['RACE_DISTANCE_UPPER_MARGIN'] %>
 strava:
   api_auth_authorize_url: 'https://www.strava.com/oauth/authorize'
   api_auth_deauthorize_url: 'https://www.strava.com/oauth/deauthorize'
