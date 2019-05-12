@@ -82,8 +82,7 @@ class AthletesController < ApplicationController
 
     @is_current_user = athlete.access_token == cookies.signed[:access_token]
     unless @is_current_user
-      Rails.logger.warn("Could not confirm email for athlete '#{athlete_id}' that is not currently logged in.")
-      redirect_to '/errors/403'
+      redirect_to '/errors/401'
       return
     end
 

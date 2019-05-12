@@ -28,7 +28,12 @@ module Creators
           Rails.logger.info("RefreshTokenCreator - New access token for athlete #{athlete.id}. #{result['access_token']}")
         else
           response_body = response.nil? || response.body.blank? ? '' : "HTTP Status Code: #{response.code}.\nResponse Body: #{response.body}"
-          raise "RefreshTokenCreator - Getting refreshing token failed. #{response_body}"
+          if response.code.to_s == "400"
+            athlete.is_active = false
+            athlete.save!
+            Rails.logger.warn("RefreshTokenCreator - Getting refreshing token failed. #{response_body}")
+            return
+          end
         end
       end
 

@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   match '/500', to: 'errors#internal_server_error', via: :all
 
   get 'errors/400' => 'errors#index'
+  get 'errors/401' => 'errors#index'
   get 'errors/403' => 'errors#index'
   get 'errors/404' => 'errors#index'
   get 'errors/500' => 'errors#index'

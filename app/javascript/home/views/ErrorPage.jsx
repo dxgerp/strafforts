@@ -12,10 +12,26 @@ import GridContainer from './Components/material-kit-react/Grid/GridContainer.js
 import GridItem from './Components/material-kit-react/Grid/GridItem.jsx';
 import Header from './Components/material-kit-react/Header/Header.jsx';
 import Parallax from './Components/material-kit-react/Parallax/Parallax.jsx';
+import ButtonConnectWithStrava from "./Components/ButtonConnectWithStrava";
 
 class ErrorPage extends React.Component {
   render() {
     const { classes, errorCode, ...rest } = this.props;
+
+    let buttons;
+    if (errorCode === "401") {
+      buttons = <ButtonConnectWithStrava />;
+    } else {
+      buttons = <div>
+        <Button href="/" className="btn-default">
+          <FormattedMessage id="errors.goToHomePage" />
+          </Button>
+        <Button href="mailto:support@strafforts.com" className="btn-default">
+          <FormattedMessage id="errors.contactUs" />
+        </Button>
+      </div>;
+    }
+
     return (
       <div>
         <Header
@@ -39,12 +55,7 @@ class ErrorPage extends React.Component {
                   <FormattedMessage id={`errors.${errorCode}.descriptionLine2`} />
                 </h4>
                 <br />
-                <Button href="/" className="btn-default">
-                  <FormattedMessage id="errors.goToHomePage" />
-                </Button>
-                <Button href="mailto:support@strafforts.com" className="btn-default">
-                  <FormattedMessage id="errors.contactUs" />
-                </Button>
+                {buttons}
               </GridItem>
             </GridContainer>
           </div>

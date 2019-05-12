@@ -13,6 +13,7 @@
 require 'rails_helper'
 
 RSpec.describe Race, type: :model do
+  it { should validate_uniqueness_of(:activity_id) }
   it { should validate_presence_of(:activity_id) }
   it { should validate_presence_of(:athlete_id) }
   it { should validate_presence_of(:race_distance_id) }

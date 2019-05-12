@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl';
 import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
 
-import imgConnectWithStrava from './../assets/img/btn_strava_connectwith_orange.png';
 import imgBackground from './../assets/img/main-bg.jpg';
 import Footer from './Components/HomePage/Footer';
 import HeaderLinks from './Components/HomePage/HeaderLinks';
@@ -19,6 +18,7 @@ import GridItem from './Components/material-kit-react/Grid/GridItem.jsx';
 import Header from './Components/material-kit-react/Header/Header.jsx';
 import Parallax from './Components/material-kit-react/Parallax/Parallax.jsx';
 import { title } from './Components/material-kit-react/Styles/material-kit-react.jsx';
+import ButtonConnectWithStrava from "./Components/ButtonConnectWithStrava";
 
 const dashboardRoutes = [];
 
@@ -62,9 +62,7 @@ class Homepage extends React.Component {
                   <FormattedMessage id="home.parallax.descriptionLine2" />
                 </h4>
                 <br />
-                <a href={authUrl} title="Connect With Strava">
-                  <img alt="Connect With Strava" src={imgConnectWithStrava} />
-                </a>
+                <ButtonConnectWithStrava />
               </GridItem>
             </GridContainer>
           </div>
