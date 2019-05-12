@@ -52,7 +52,7 @@ RSpec.describe RaceDistance, type: :model do
 
       it 'should get the race distance when actual_distance is under pre-defined upper margin' do
         # act.
-        item = RaceDistance.find_by_actual_distance(5225)
+        item = RaceDistance.find_by_actual_distance(5120)
 
         # assert.
         expect(item.is_a?(RaceDistance)).to be true
