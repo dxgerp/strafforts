@@ -31,7 +31,7 @@ module Creators
           if response.code.to_s == "400"
             athlete.is_active = false
             athlete.save!
-            Rails.logger.warn("RefreshTokenCreator - Getting refreshing token failed. #{response_body}")
+            raise "RefreshTokenCreator - Getting refreshing token failed. #{response_body}"
             return
           end
         end
