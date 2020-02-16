@@ -4,8 +4,7 @@ module Api
     before_action :require_pro_subscription, only: %i[fetch_latest reset_profile]
 
     def submit_email
-      email_address = params[:email]
-      if email_address.blank?
+      if params[:email].blank?
         Rails.logger.warn('Could not confirm email for an empty email.')
         render json: { error: Messages::EMAIL_EMPTY }.to_json, status: 400
         return
@@ -13,7 +12,7 @@ module Api
 
       begin
         # Set the new email address to athlete info.
-        @athlete.athlete_info.email = email_address
+        @athlete.athlete_info.email = params[:email].downcase
         @athlete.athlete_info.save!
 
         # Reset the email confirmation.
