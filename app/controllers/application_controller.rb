@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   STRAVA_ATHLETES_BASE_URL = "#{Settings.strava.url}/athletes".freeze
 
   RECENT_ITEMS_LIMIT = 20
-  BEST_EFFORTS_LIMIT = 100
+  BEST_EFFORTS_LIMIT = 200
 
   protect_from_forgery with: :exception
 
