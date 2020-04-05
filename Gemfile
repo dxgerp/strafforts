@@ -103,7 +103,7 @@ gem 'activemodel-serializers-xml', github: 'rails/activemodel-serializers-xml'
 gem 'draper'
 
 gem 'foreman' # Manager Procfile.dev under development environment.
-gem 'bootstrap-sass', '~> 3.3.6' # Bootstrap.
+gem 'bootstrap-sass', '~> 3.4.1' # Bootstrap.
 gem 'config' # Config.
 gem 'font-awesome-rails' # Rails Font Awesome.
 
