@@ -4,7 +4,7 @@ class CleanUpInactiveAthletesWorker
 
   def perform
     destroyed_ids = []
-    inactive_athletes = Athlete.where('last_active_at < ?', Time.now.utc - 180.days - 7.days)
+    inactive_athletes = Athlete.where('last_active_at < ?', Time.now.utc - 90.days - 7.days)
     inactive_athletes.each do |athlete|
       athlete = AthleteDecorator.decorate(athlete)
       next if athlete.pro_subscription?
