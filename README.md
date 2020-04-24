@@ -7,13 +7,11 @@
 [![Codecov](https://img.shields.io/codecov/c/github/yizeng/strafforts/master.svg?style=flat-square)][Strafforts Codecov]
 [![Code Climate](https://img.shields.io/codeclimate/maintainability/yizeng/strafforts.svg?style=flat-square)][Strafforts Code Climate]
 
-## [DEPRECATING]
+## [DEPRECATED]
 
-This is repository is currently in maintenance mode
-and being re-written to a separate Rails API back-end with React Front-end,
-due to the increasing popularity and greater userbase.
-
-All requests please go to <https://github.com/strafforts>.
+This repository has been in maintenance mode since 2018.
+It is being re-written to a Rails 6 API back-end with GraphQL with React or Vue front-end (to be started),
+due to the increasing popularity and greater user-base.
 
 ## An Analytics App for Your Strava Running Best Efforts, PBs/PRs and Races
 
