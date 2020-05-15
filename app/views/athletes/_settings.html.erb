@@ -74,7 +74,12 @@
       <% end %>
 
       <%= form_tag({controller: 'api/athletes', action: 'save_profile'}, class: 'form-save-profile') do %>
-      <h3 class="control-sidebar-heading">Profile Settings</h3>
+      <h3 class="control-sidebar-heading">
+        Profile Settings
+        <span class='subscription-badge pull-right'>
+          <span class="label">PRO</span>
+        </span>
+      </h3>
       <div class="form-group">
         <label class="control-sidebar-subheading">
           Measurement Unit:
@@ -97,7 +102,7 @@
       </div>
       <div class="form-group">
         <%= label_tag(:is_public, 'Public Profile:', class: 'control-sidebar-subheading checkbox inline') %>
-        <%= check_box_tag(:is_public, @athlete.is_public, @athlete.is_public, class: 'pull-right') %>
+        <%= check_box_tag(:is_public, @athlete.is_public, @athlete.is_public, class: 'pull-right', disabled: !@athlete.pro_subscription?) %>
         <p>
           Allows you to share this page.
         </p>
@@ -105,7 +110,7 @@
           <small>If your profile was previously shared to anyone, they can no longer access this page.</small>
         </p>
       </div>
-      <button class="btn btn-block btn-default btn-flat submit-form" type="submit">
+      <button class="btn btn-block btn-default btn-flat submit-form" type="submit" <%= @athlete.pro_subscription? ? '' : 'disabled' %>>
         Save
       </button>
       <% end %>

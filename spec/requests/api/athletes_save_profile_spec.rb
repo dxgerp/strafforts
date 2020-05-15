@@ -11,7 +11,7 @@ RSpec.describe Api::AthletesController, type: :request do
     end
 
     it 'should return 403 when requested athlete is not the current user' do
-      # arrage.
+      # arrange.
       FactoryBot.build(:athlete, id: athlete_id)
 
       # act.
@@ -22,14 +22,14 @@ RSpec.describe Api::AthletesController, type: :request do
     end
 
     context 'should set is_public to true' do
-      let(:athlete) { FactoryBot.build(:athlete, id: athlete_id) }
+      let(:athlete_id) { '9123806' }
+      let(:athlete) { Athlete.find_by(id: athlete_id) }
 
       it 'when POST without parameters' do
         # arrange.
         setup_cookie(athlete.access_token)
 
         expect(athlete).not_to be_nil
-        expect(athlete.is_public).to be false
 
         # act.
         post url
@@ -44,7 +44,6 @@ RSpec.describe Api::AthletesController, type: :request do
         setup_cookie(athlete.access_token)
 
         expect(athlete).not_to be_nil
-        expect(athlete.is_public).to be false
 
         # act.
         post url, params: { is_public: true }
@@ -56,14 +55,14 @@ RSpec.describe Api::AthletesController, type: :request do
     end
 
     context 'should set is_public to false' do
-      let(:athlete) { FactoryBot.build(:athlete_with_public_profile, id: athlete_id) }
+      let(:athlete_id) { '9123806' }
+      let(:athlete) { Athlete.find_by(id: athlete_id) }
 
       it 'when POST with is_public = false' do
         # arrange.
         setup_cookie(athlete.access_token)
 
         expect(athlete).not_to be_nil
-        expect(athlete.is_public).to be true
 
         # act.
         post url, params: { is_public: false }

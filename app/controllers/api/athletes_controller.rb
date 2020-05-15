@@ -1,7 +1,7 @@
 module Api
   class AthletesController < ApplicationController
     before_action :find_athlete, :require_current_user
-    before_action :require_pro_subscription, only: %i[fetch_latest reset_profile]
+    before_action :require_pro_subscription, only: %i[save_profile fetch_latest reset_profile]
 
     def submit_email
       if params[:email].blank?

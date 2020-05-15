@@ -10,7 +10,7 @@ RSpec.describe AthletesController, type: :request do
     end
 
     it 'should redirect to 403 page when requested athlete is not the current user' do
-      # arrage.
+      # arrange.
       FactoryBot.build(:athlete_with_public_profile, id: athlete_id)
 
       # act.
